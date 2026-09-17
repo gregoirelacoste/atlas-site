@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Le manuel d'Atlas
+    url: https://gregoirelacoste.github.io/atlas-site/manuel
+    about: Ce qu'Atlas fait, page par page — et ce qu'il ne fait pas.

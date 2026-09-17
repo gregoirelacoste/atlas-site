@@ -1,0 +1,75 @@
+# ─── la bêta — une porte publique, un geste de choix ────────────────────────────────────────────
+#
+# Une demande = une issue du formulaire `beta.yml`. Rien n'est automatique à l'OUVERTURE : on répond
+# qu'on a reçu, et c'est tout. L'invitation part quand un humain pose le label `beta-ok` — c'est LE
+# geste de choix, il ne coûte qu'un clic, et un formulaire public attire du bruit.
+#
+# Le droit d'installer un paquet privé sur GitHub Packages EST l'accès en lecture au dépôt lié :
+# inviter l'auteur en `pull` sur `atlas-dist` suffit, et le retirer révoque. Il faut pour ça un jeton
+# à portée administration sur `atlas-dist` (`ATLAS_DIST_ADMIN`) : le jeton de la CI n'écrit que chez
+# lui.
+#
+# ⚠️ TROIS ÉTATS, et le troisième s'écrit DANS L'ISSUE : invité · avait déjà l'accès · pas pu (jeton
+# absent ou refus de l'API). Un automate qui échoue en silence laisse une demande sans réponse.
+#
+# ⚠️ Les textes vivent en `env`, jamais en heredoc dans `run` : un heredoc au ras de la marge FERME
+# le bloc YAML — le premier jet a été refusé par GitHub à la poussée (« workflow file issue »).
+name: bêta
+
+on:
+  issues:
+    types: [opened, labeled]
+
+permissions:
+  issues: write
+
+jobs:
+  recu:
+    if: github.event.action == 'opened' && contains(github.event.issue.labels.*.name, 'beta')
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          NUM: ${{ github.event.issue.number }}
+          CORPS: >-
+            Reçu, merci. On répond sous quelques jours. Si c'est oui, l'invitation en lecture sur
+            `atlas-dist` arrive par le mail de ton compte GitHub, et ce fil te donne les trois
+            lignes à taper.
+        run: gh issue comment "$NUM" --repo "$GITHUB_REPOSITORY" --body "$CORPS"
+
+  inviter:
+    if: github.event.action == 'labeled' && github.event.label.name == 'beta-ok'
+    runs-on: ubuntu-latest
+    env:
+      QUI: ${{ github.event.issue.user.login }}
+      NUM: ${{ github.event.issue.number }}
+      ADMIN: ${{ secrets.ATLAS_DIST_ADMIN }}
+      SUITE: |
+        Ensuite, trois lignes, une seule fois — le jeton est un PAT classique à toi, portée `read:packages` :
+
+        ```
+        npm config set @gregoirelacoste:registry https://npm.pkg.github.com
+        npm config set //npm.pkg.github.com/:_authToken <ton PAT>
+        npm i -g @gregoirelacoste/atlas@latest
+        ```
+
+        Puis `cd` dans le dossier qui héberge tes repos, `atlas init`, `atlas`. La page [Installer](https://gregoirelacoste.github.io/atlas-site/installer) dit le reste, et ce qui se passe quand ça échoue.
+    steps:
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set +e
+          if [ -z "$ADMIN" ]; then
+            gh issue comment "$NUM" --repo "$GITHUB_REPOSITORY" --body "⚠️ Je n'ai pas pu envoyer l'invitation : le jeton \`ATLAS_DIST_ADMIN\` n'est pas posé sur ce dépôt. Un humain s'en charge à la main."
+            exit 1
+          fi
+          CODE=$(GH_TOKEN="$ADMIN" gh api -X PUT "/repos/gregoirelacoste/atlas-dist/collaborators/$QUI" -f permission=pull -i 2>/dev/null | head -1 | grep -oE '[0-9]{3}')
+          case "$CODE" in
+            201) ETAT="Invitation envoyée à @$QUI — elle arrive par mail, et elle expire au bout de sept jours." ;;
+            204) ETAT="@$QUI a déjà l'accès en lecture sur \`atlas-dist\` : rien à envoyer." ;;
+            *)
+              gh issue comment "$NUM" --repo "$GITHUB_REPOSITORY" --body "⚠️ Je n'ai pas pu envoyer l'invitation à @$QUI (réponse de l'API : \`${CODE:-aucune}\`). Un humain s'en charge à la main."
+              exit 1 ;;
+          esac
+          gh issue comment "$NUM" --repo "$GITHUB_REPOSITORY" --body "$ETAT"$'\n\n'"$SUITE"
+          gh issue close "$NUM" --repo "$GITHUB_REPOSITORY" --reason completed

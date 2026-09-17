@@ -1,0 +1,70 @@
+name: S'inscrire à la bêta
+description: Demander un accès au paquet d'Atlas pendant la bêta fermée.
+title: "Accès bêta"
+labels: [beta]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ⚠️ **Cette demande est publique** : tout ce que tu écris ici se lit par n'importe qui. Pas de nom de client, pas de dépôt privé, pas d'adresse — ton compte GitHub suffit, l'invitation lui sera envoyée.
+
+        Si c'est oui, tu reçois une **invitation en lecture** sur le dépôt de distribution `atlas-dist` (il ne contient aucun code : il porte le droit d'installer). Ensuite, un jeton `read:packages` à toi et les trois lignes de la page [Installer](https://gregoirelacoste.github.io/atlas-site/installer).
+  - type: dropdown
+    id: stack
+    attributes:
+      label: Ta stack
+      description: Atlas lit du TypeScript, et sait ce que sont Nest, Angular, GraphQL et Jest.
+      options:
+        - Nest
+        - Angular
+        - Nest et Angular
+        - Autre TypeScript
+        - Pas de TypeScript (dis-le, on saura à quoi Atlas ne répond pas encore)
+    validations:
+      required: true
+  - type: dropdown
+    id: hebergeur
+    attributes:
+      label: Ton hébergeur de dépôts
+      description: Atlas lit la conversation des merge requests chez GitLab ; GitHub n'est pas encore tenu.
+      options:
+        - GitLab
+        - GitHub
+        - Autre
+    validations:
+      required: true
+  - type: dropdown
+    id: repos
+    attributes:
+      label: Combien de repos une feature traverse-t-elle chez toi ?
+      options:
+        - Un seul
+        - Deux à cinq
+        - Plus de cinq
+    validations:
+      required: true
+  - type: dropdown
+    id: ia
+    attributes:
+      label: Ton assistant de code
+      description: Les skills d'Atlas sont écrits pour Claude Code ; le serveur MCP parle à tout client MCP.
+      options:
+        - Claude Code
+        - Un autre client MCP
+        - Aucun
+    validations:
+      required: true
+  - type: textarea
+    id: attente
+    attributes:
+      label: Ce que tu veux en faire
+      description: Une ou deux phrases, facultatif. Sans nom de projet ni de client.
+    validations:
+      required: false
+  - type: checkboxes
+    id: public
+    attributes:
+      label: Le formulaire est public
+      options:
+        - label: J'ai lu que cette demande est lisible par tous et je n'y ai rien mis de privé.
+          required: true
