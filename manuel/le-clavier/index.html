@@ -1,0 +1,644 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Le clavier · Atlas</title><meta name="description" content="Atlas se pilote entier depuis une seule touche. Espace ouvre une boîte qui liste les raccourcis à l'écran, une lettre choisit une colonne, une lettre agit. Cette page est la référence : la table complète, ce qui reste direct, et ce que fait le clavier quand il ne part pas."><link rel="canonical" href="https://gregoirelacoste.github.io/atlas-site/manuel/le-clavier"><meta property="og:title" content="Le clavier · Atlas"><meta property="og:description" content="Atlas se pilote entier depuis une seule touche. Espace ouvre une boîte qui liste les raccourcis à l'écran, une lettre choisit une colonne, une lettre agit. Cette page est la référence : la table complète, ce qui reste direct, et ce que fait le clavier quand il ne part pas."><meta property="og:type" content="website"><meta property="og:url" content="https://gregoirelacoste.github.io/atlas-site/manuel/le-clavier"><meta name="twitter:card" content="summary"><link rel="icon" href="/atlas-site/favicon.svg" type="image/svg+xml"><script>
+    (() => { try { const t = localStorage.getItem('atlas-site-theme');
+      if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t; } catch {} })();
+  </script><link rel="stylesheet" href="/atlas-site/_astro/Base.D32RNicN.css"></head><body><header class="tete"><a class="marque" href="/atlas-site">🗺️ Atlas</a><nav><a href="/atlas-site/installer">Installer</a><a href="/atlas-site/manuel/prise-en-main" aria-current="page">Manuel</a><a href="/atlas-site/articles">Écrits</a><button class="theme-bt" id="theme-bt" type="button" aria-label="Changer de thème">◐</button></nav></header><main class="doc"><nav class="cote" aria-label="Le manuel"><h2>Le manuel</h2><ol><li><a href="/atlas-site/manuel/prise-en-main">Prise en main</a></li><li><a href="/atlas-site/manuel/l-arbre">L&#39;Arbre</a></li><li><a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a></li><li><a href="/atlas-site/manuel/le-code">Le Code</a></li><li><a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a></li><li><a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et inventaire</a></li><li><a href="/atlas-site/manuel/le-panneau-git">Le panneau Git</a></li><li><a href="/atlas-site/manuel/le-tableau">Le Tableau</a></li><li><a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a></li><li><a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a></li><li><a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a></li><li><a href="/atlas-site/manuel/brancher-l-ia">Brancher l&#39;IA</a></li><li><a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l&#39;IA lit et écrit</a></li><li><a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a></li><li><a href="/atlas-site/manuel/la-ligne-de-commande">La ligne de commande</a></li><li><a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a></li><li><a href="/atlas-site/manuel/le-clavier" aria-current="page">Le clavier</a></li></ol></nav><article class="corps"><h1>Le clavier</h1><p class="chapo">Atlas se pilote entier depuis une seule touche. Espace ouvre une boîte qui liste les raccourcis à l&#39;écran, une lettre choisit une colonne, une lettre agit. Cette page est la référence : la table complète, ce qui reste direct, et ce que fait le clavier quand il ne part pas.</p><blockquote>
+<p>Atlas se pilote entier depuis une seule touche. <code>Espace</code> ouvre une boîte qui liste les raccourcis
+à l’écran, une lettre choisit une colonne, une lettre agit. Cette page est la référence : la table
+complète, ce qui reste direct, et ce que fait le clavier quand il ne part pas.</p>
+</blockquote>
+<h2 id="une-touche-maîtresse-et-rien-à-mémoriser">Une touche maîtresse, et rien à mémoriser</h2>
+<p><code>Espace</code> ouvre une <strong>boîte</strong> en bas à droite de l’écran. Elle affiche le préfixe déjà tapé, un
+titre, puis une ligne par lettre disponible — c’est la liste des raccourcis, à l’écran, au moment où
+tu en as besoin.</p>
+<p>Au premier niveau, la boîte s’intitule <code>une colonne…</code> et montre les sept <strong>colonnes</strong> de l’écran.
+Une lettre en choisit une : la boîte se repeint sur les gestes de cette colonne. Une deuxième lettre
+agit, et la boîte se ferme.</p>
+<p>Trois frappes, jamais plus : la touche maîtresse, la colonne, le geste. Il n’y a <strong>pas de délai</strong>
+entre elles — la boîte attend aussi longtemps qu’il faut, et rien ne part tant que tu n’as pas fini.</p>
+<table>
+<thead>
+<tr>
+<th>Lettre</th>
+<th>Colonne de l’écran</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>d</code></td>
+<td>disposition</td>
+</tr>
+<tr>
+<td><code>v</code></td>
+<td>volet gauche</td>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td>Arbre</td>
+</tr>
+<tr>
+<td><code>c</code></td>
+<td>Code</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td>recherche</td>
+</tr>
+<tr>
+<td><code>g</code></td>
+<td>Git</td>
+</tr>
+<tr>
+<td><code>p</code></td>
+<td>pages</td>
+</tr>
+</tbody>
+</table>
+<p>Six d’entre elles désignent un endroit de l’écran ; la septième, <code>s</code>, n’est pas un endroit mais une
+<strong>porte</strong> — elle ouvre une fenêtre par-dessus tout le reste.</p>
+<p>Le mot du produit, celui que la boîte emploie, est <strong>touche maîtresse</strong> ; c’est ce qu’on appelle
+ailleurs une <em>touche leader</em>, et c’est la même chose.</p>
+<h2 id="les-sept-colonnes-geste-par-geste">Les sept colonnes, geste par geste</h2>
+<p>Chaque table ci-dessous est ce que la boîte affiche quand tu as tapé <code>Espace</code> puis la lettre de la
+colonne. Les libellés sont les siens, et les colonnes sont dans l’ordre où elle les liste.</p>
+<h3 id="espace-d--disposition"><code>Espace d</code> — disposition</h3>
+<table>
+<thead>
+<tr>
+<th>Lettre</th>
+<th>Geste</th>
+<th>Ce qu’il fait</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>a</code></td>
+<td>plein Arbre</td>
+<td>donne tout l’écran à l’Arbre : le volet gauche et le Code se replient. Rejoué, il rend l’écran. S’il était en côte à côte, il en sort d’abord</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td>côte à côte</td>
+<td>le Code passe en deux colonnes — l’avant à gauche, l’après à droite — et prend la place : le volet gauche et l’Arbre se replient avec. Rejoué, retour à l’affichage unifié</td>
+</tr>
+</tbody>
+</table>
+<p>Le détail de ces deux vues est dans <a href="/atlas-site/manuel/le-code">Le Code</a>.</p>
+<h3 id="espace-v--volet-gauche"><code>Espace v</code> — volet gauche</h3>
+<table>
+<thead>
+<tr>
+<th>Lettre</th>
+<th>Geste</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>r</code></td>
+<td>Relecture</td>
+</tr>
+<tr>
+<td><code>f</code></td>
+<td>Fichiers</td>
+</tr>
+<tr>
+<td><code>i</code></td>
+<td>Inventaire</td>
+</tr>
+<tr>
+<td><code>t</code></td>
+<td>Ticket</td>
+</tr>
+<tr>
+<td><code>p</code></td>
+<td>Parcours</td>
+</tr>
+<tr>
+<td><code>j</code></td>
+<td>Journal</td>
+</tr>
+<tr>
+<td><code>m</code></td>
+<td>masquer / montrer</td>
+</tr>
+</tbody>
+</table>
+<p>Une lettre de vue ouvre le volet gauche sur cette vue s’il était masqué, et bascule dessus s’il
+était sur une autre. <strong>Si tu y es déjà, elle referme le volet</strong> : une lettre, les deux sens. <code>f</code>
+pose en plus le curseur dans le champ de recherche de la vue Fichiers : on y arrive pour chercher.
+Les six vues sont décrites dans <a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a>,
+<a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et Inventaire</a> et
+<a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a>.</p>
+<h3 id="espace-a--arbre"><code>Espace a</code> — Arbre</h3>
+<table>
+<thead>
+<tr>
+<th>Lettre</th>
+<th>Geste</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>a</code></td>
+<td>par flux ⇄ par fichier</td>
+</tr>
+<tr>
+<td><code>c</code></td>
+<td>index des contrats</td>
+</tr>
+<tr>
+<td><code>p</code></td>
+<td>tout plier ⇄ déplier</td>
+</tr>
+<tr>
+<td><code>m</code></td>
+<td>masquer / montrer</td>
+</tr>
+</tbody>
+</table>
+<p>La lettre de la colonne redoublée — <code>Espace a a</code> — pose <strong>la</strong> question de cette colonne : comment
+l’Arbre est rangé. <code>Espace a p</code> plie ou déplie <strong>tout</strong>, enfants compris, en une bascule. Voir
+<a href="/atlas-site/manuel/l-arbre">L’Arbre</a> et, pour l’index des contrats,
+<a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a>.</p>
+<h3 id="espace-c--code"><code>Espace c</code> — Code</h3>
+<table>
+<thead>
+<tr>
+<th>Lettre</th>
+<th>Geste</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>u</code></td>
+<td>usages du symbole</td>
+</tr>
+<tr>
+<td><code>m</code></td>
+<td>masquer / montrer</td>
+</tr>
+</tbody>
+</table>
+<p><code>Espace c u</code> vise le symbole <strong>survolé</strong> ; sans survol, celui qui est affiché dans le Code. C’est une
+recherche par nom, dite comme telle — <a href="/atlas-site/manuel/le-code">Le Code</a> explique ce qu’elle trouve et ce
+qu’elle coupe.</p>
+<h3 id="espace-s--recherche"><code>Espace s</code> — recherche</h3>
+<table>
+<thead>
+<tr>
+<th>Lettre</th>
+<th>Geste</th>
+<th>Ce qu’il ouvre</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>f</code></td>
+<td>un fichier par son nom</td>
+<td>une fenêtre où tu tapes un nom : la liste des fichiers du chapeau se filtre à la frappe, <code>Entrée</code> ouvre le fichier dans le Code</td>
+</tr>
+<tr>
+<td><code>g</code></td>
+<td>grep dans les fichiers</td>
+<td>une fenêtre où tu tapes une chaîne : Atlas la cherche dans le <strong>contenu</strong> des fichiers, <code>Entrée</code> ouvre la ligne trouvée</td>
+</tr>
+</tbody>
+</table>
+<p>Le <em>chapeau</em>, c’est le dossier qui héberge tes repos : les deux recherches couvrent tous ses repos,
+pas seulement ceux que la feature touche.</p>
+<p>Cette colonne est la seule qui ne désigne aucun panneau. Ses deux lettres ouvrent une <strong>fenêtre
+modale</strong> par-dessus l’écran, avec un aperçu du code à droite de la liste ; elles ne portent donc
+jamais le <code>●</code> de « déjà à l’écran » — une recherche n’a pas d’état à montrer, et la refermer oublie
+tout, y compris la base de comparaison que la fenêtre des fichiers te laisse choisir. Ce que chacune
+trouve, son plafond et son aperçu sont dans <a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et Inventaire</a> ;
+le clavier qui vit <strong>dans</strong> ces fenêtres est plus bas, sur cette page.</p>
+<h3 id="espace-g--git"><code>Espace g</code> — Git</h3>
+<table>
+<thead>
+<tr>
+<th>Lettre</th>
+<th>Geste</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>m</code></td>
+<td>masquer / montrer</td>
+</tr>
+<tr>
+<td><code>l</code></td>
+<td>Local</td>
+</tr>
+<tr>
+<td><code>b</code></td>
+<td>Branches &amp; repos</td>
+</tr>
+<tr>
+<td><code>r</code></td>
+<td>Revue</td>
+</tr>
+</tbody>
+</table>
+<p>Demander un mode <strong>ouvre le panneau</strong> s’il était replié : l’accord fait ce que tu voulais dire, sans
+te demander d’ouvrir d’abord. Il ne le referme jamais — c’est <code>Espace g m</code> qui masque. Les trois
+modes sont dans <a href="/atlas-site/manuel/le-panneau-git">Le panneau Git</a>.</p>
+<h3 id="espace-p--pages"><code>Espace p</code> — pages</h3>
+<table>
+<thead>
+<tr>
+<th>Lettre</th>
+<th>Geste</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>t</code></td>
+<td>Tableau</td>
+</tr>
+<tr>
+<td><code>c</code></td>
+<td>Config</td>
+</tr>
+</tbody>
+</table>
+<p>Ces deux-là <strong>cliquent le bouton du header</strong>, exactement comme ta souris : un seul propriétaire du
+geste, donc le même comportement dans les deux sens. Voir <a href="/atlas-site/manuel/le-tableau">Le Tableau</a> et
+<a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a>.</p>
+<h2 id="m--la-même-lettre-dans-les-quatre-colonnes"><code>m</code> : la même lettre dans les quatre colonnes</h2>
+<p>Masquer et montrer une colonne de l’écran, c’est toujours <code>m</code> — <code>Espace v m</code>, <code>Espace a m</code>,
+<code>Espace c m</code>, <code>Espace g m</code>. Une bascule, une lettre, la même partout : il n’y a pas une touche pour
+ouvrir et une autre pour fermer.</p>
+<p>C’est vrai des autres bascules aussi : plier et déplier l’Arbre, ouvrir et refermer une page, entrer
+et sortir du côte à côte. <strong>Un geste, une lettre, dans les deux sens.</strong> Si un accord ne fait rien de
+visible quand tu le rejoues, c’est qu’il n’est pas une bascule — et il n’y en a pas.</p>
+<h2 id="ce-qui-reste-direct">Ce qui reste direct</h2>
+<p>Ce qu’on répète trente fois par séance ne paie pas une boîte. Sept gestes partent donc <strong>sans
+préfixe</strong>, et la boîte les rappelle en pied de sa première liste :</p>
+<table>
+<thead>
+<tr>
+<th>Touche</th>
+<th>Ce qu’elle fait</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0</code></td>
+<td>endosser — relu, non jugé</td>
+</tr>
+<tr>
+<td><code>1</code> – <code>4</code></td>
+<td>endosser en notant la criticité</td>
+</tr>
+<tr>
+<td><code>?</code></td>
+<td>je n’ai pas compris</td>
+</tr>
+<tr>
+<td><code>↑</code> <code>↓</code> <code>←</code> <code>→</code></td>
+<td>se déplacer, plier, déplier</td>
+</tr>
+<tr>
+<td><code>Alt+←</code> / <code>Alt+→</code></td>
+<td>diff précédente / suivante</td>
+</tr>
+<tr>
+<td><code>Backspace</code></td>
+<td>revenir</td>
+</tr>
+<tr>
+<td><code>Échap</code></td>
+<td>dépiler le dernier geste</td>
+</tr>
+</tbody>
+</table>
+<p>Les trois premiers sont le geste de relecture — <em>endosser</em>, c’est dire « j’ai lu cette ligne et je
+la prends à mon compte » : leur sens exact, ce qu’ils écrivent et ce qu’ils retirent sont dans
+<a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a>. Ils veulent tous les trois une ligne
+<strong>sélectionnée</strong> dans l’Arbre : sans sélection, ils ne font rien. Les flèches veulent le focus du
+centre ; <code>Alt+←</code> et <code>Alt+→</code> sautent de bloc de changement en bloc de changement, puis de nœud en
+nœud (<a href="/atlas-site/manuel/le-code">Le Code</a>).</p>
+<p><code>Échap</code> <strong>dépile</strong> : il défait le dernier geste qui a pris de la place, dans l’ordre inverse où tu
+les as posés — le tiroir des usages, les appelants allumés, la loupe d’inventaire, la loupe de repo,
+la loupe d’impact, le tiroir d’impact, puis le flux isolé (un <em>flux</em> est un itinéraire d’appel
+entier, du point d’entrée jusqu’au bout). Un <code>Échap</code> de plus quand il n’y a plus rien à dépiler ne
+fait rien.</p>
+<h2 id="ce-que-la-boîte-dit-delle-même">Ce que la boîte dit d’elle-même</h2>
+<p>Trois marques, et elles portent des faits, pas des suggestions :</p>
+<table>
+<thead>
+<tr>
+<th>Marque</th>
+<th>Ce qu’elle dit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>●</code> en bout de ligne</td>
+<td>ce geste est <strong>déjà à l’écran</strong> — le volet est sur cette vue, l’Arbre est déjà par fichier, la page est ouverte</td>
+</tr>
+<tr>
+<td>une lettre atténuée, suivie d’une raison</td>
+<td>elle ne peut <strong>rien faire ici</strong>, et la raison est écrite en clair</td>
+</tr>
+<tr>
+<td>une ligne rouge sous la liste</td>
+<td>ta dernière frappe n’a rien donné, et la boîte reste ouverte</td>
+</tr>
+</tbody>
+</table>
+<p>En pied, la boîte rappelle <code>Échap ferme</code>.</p>
+<h2 id="les-cinq-raisons-de-griser-une-lettre">Les cinq raisons de griser une lettre</h2>
+<p>Une lettre grise sans explication ressemble à une lettre morte. Atlas en donne toujours la cause :</p>
+<table>
+<thead>
+<tr>
+<th>Raison affichée</th>
+<th>Quand</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pas sur une page</code></td>
+<td>le Tableau ou Config occupent l’écran : seule la colonne <code>p</code> peut encore agir</td>
+</tr>
+<tr>
+<td><code>sans feature</code></td>
+<td>aucune feature n’est ouverte : il ne reste que les pages et le panneau Git</td>
+</tr>
+<tr>
+<td><code>sans carte</code></td>
+<td>aucune carte n’est chargée — les gestes de l’Arbre et les usages n’ont rien à viser</td>
+</tr>
+<tr>
+<td><code>aucun contrat à relire</code></td>
+<td>l’index des contrats n’a rien à montrer sur cette feature</td>
+</tr>
+<tr>
+<td><code>aucun symbole ouvert</code></td>
+<td>ni symbole survolé, ni symbole affiché dans le Code</td>
+</tr>
+</tbody>
+</table>
+<p>Elles se lisent dans cet ordre, et la première qui s’applique gagne : sur une page, même les lettres
+de Git disent <code>pas sur une page</code>, parce que le panneau n’y est pas à l’écran.</p>
+<p><strong>Taper une lettre grisée ne ferme pas la boîte.</strong> Elle reste, et répète la raison en rouge sous la
+liste, sous la forme <code>index des contrats — aucun contrat à relire</code>. Tu n’as rien à défaire : tape la
+bonne lettre, ou <code>Échap</code>.</p>
+<h2 id="quand-aucune-feature-nest-ouverte">Quand aucune feature n’est ouverte</h2>
+<p>Atlas s’ouvre alors sur son accueil (<a href="/atlas-site/manuel/prise-en-main">Prise en main</a>), qui affiche lui-même les
+sept colonnes et rappelle en pied <code>Espace pour commencer</code>. La touche maîtresse y marche comme
+partout : <code>Espace</code> ouvre la boîte.</p>
+<p>Ce qui change est ce qu’elle contient. Toutes les lettres des colonnes <code>d</code>, <code>v</code>, <code>a</code>, <code>c</code> et <code>s</code>
+disent alors <code>sans feature</code> : elles pilotent une carte qui n’est pas là, et les deux recherches ont
+besoin d’une feature pour savoir à quelle version lire chaque repo. Restent vivantes les <strong>pages</strong>
+(<code>p</code>), pour choisir une feature ou
+régler le projet, et le panneau <strong>Git</strong> (<code>g</code>), qui liste les repos du chapeau sans avoir besoin
+d’une carte. Les gestes de relecture ne font rien non plus : ils n’ont aucune ligne à viser.</p>
+<h2 id="se-tromper-fermer-laisser-passer">Se tromper, fermer, laisser passer</h2>
+<table>
+<thead>
+<tr>
+<th>Ce que tu tapes</th>
+<th>Ce qui se passe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>une lettre inconnue</td>
+<td>la boîte le dit — <code>rien sous « Espace d » : x</code> — et <strong>attend</strong></td>
+</tr>
+<tr>
+<td><code>Shift+</code> ou <code>Alt+</code> avec une lettre</td>
+<td>jamais un accord : la boîte l’affiche telle quelle dans sa ligne rouge</td>
+</tr>
+<tr>
+<td><code>Ctrl</code> ou <code>⌘</code> avec n’importe quoi</td>
+<td>la touche appartient au navigateur : Atlas la laisse passer, la boîte reste ouverte</td>
+</tr>
+<tr>
+<td><code>Espace</code> à nouveau</td>
+<td>la boîte se ferme</td>
+</tr>
+<tr>
+<td><code>Échap</code></td>
+<td>la boîte se ferme — et c’est elle qui l’a, pas le panneau Git ni la page</td>
+</tr>
+<tr>
+<td>un clic n’importe où</td>
+<td>la boîte se ferme, comme un menu</td>
+</tr>
+</tbody>
+</table>
+<p>Si un dialogue s’ouvre <strong>tout seul</strong> pendant que la boîte est là — une mise à jour disponible, une
+proposition de partage —, la boîte se referme et la touche part au dialogue. Aucun accord n’agit
+derrière un voile.</p>
+<h2 id="là-où-le-clavier-ne-part-pas">Là où le clavier ne part pas</h2>
+<p>C’est la contrepartie d’une touche unique : <strong>une seule garde</strong>, posée sur la touche maîtresse, dont
+tout le reste hérite.</p>
+<ul>
+<li><strong>Dans un champ de saisie</strong> — zone de texte, liste déroulante, texte éditable —, rien ne part.
+<code>Espace</code> y écrit un espace, <code>0</code> y écrit un zéro. La page Config, pleine de champs, en dépend.</li>
+<li><strong>Sur un élément qui a le focus</strong> — un bouton, un lien, la tête d’un fil, une carte du Tableau,
+une rangée de branche —, <code>Espace</code> reste <strong>son clic</strong> : c’est la grammaire du navigateur, et la
+boîte ne s’ouvre pas par-dessus. Deux exceptions, qui sont des conteneurs de navigation et non des
+contrôles : le centre de l’écran et le panneau Git. C’est de là que la boîte s’ouvre.</li>
+<li><strong>Derrière une fenêtre modale</strong>, rien ne part : ni la boîte, ni un geste direct. Les deux fenêtres
+de recherche en sont : tant que l’une est ouverte, <code>0</code> n’endosse rien et <code>Espace</code> n’ouvre pas la
+boîte — il écrit un espace dans le champ, qui a le focus dès l’ouverture.</li>
+</ul>
+<blockquote>
+<p>⚠️ Si une touche « ne marche pas », c’est presque toujours <strong>le focus</strong>. Tu viens de cliquer un
+bouton, une carte ou une rangée : il garde tes frappes. Clique une ligne de l’Arbre, ou dans le
+vide du centre, et retente.</p>
+</blockquote>
+<ul>
+<li><strong>Pendant qu’une page occupe l’écran</strong> (Tableau, Config), la boîte s’ouvre encore — elle y dit ce
+qui est vivant et pourquoi le reste ne l’est pas —, mais aucun geste direct n’agit. <code>0</code>, en
+particulier, écrirait un endossement sur un nœud que l’écran ne montre plus. <code>Échap</code> referme la
+page et revient à la carte.</li>
+</ul>
+<h2 id="sur-un-azerty-et-sur-un-clavier-sans-lettre-latine">Sur un AZERTY, et sur un clavier sans lettre latine</h2>
+<p>Une lettre est un <strong>mnémonique</strong> : <code>a</code> pour Arbre, <code>g</code> pour Git. C’est donc ce qui est <strong>écrit sur
+la touche</strong> qui compte, pas où elle se trouve. Sur un AZERTY, <code>a</code> est bien la touche marquée <code>a</code>.</p>
+<p>Les chiffres, eux, se lisent à la <strong>position</strong>. Sur un AZERTY, la rangée du haut ne produit pas de
+chiffres sans <code>Shift</code> — et c’est justement pour ça : la touche marquée <code>0</code>, qui produit <code>à</code>, endosse
+quand même, et celles marquées <code>1</code> à <code>4</code> notent la criticité, avec ou sans <code>Shift</code>. Le pavé
+numérique marche aussi.</p>
+<p>Le <code>?</code> se lit au <strong>caractère</strong>, parce qu’il n’a pas de place commune d’un clavier à l’autre : tape
+un point d’interrogation, quelle que soit la combinaison qui le produit chez toi.</p>
+<p>Enfin, sur un clavier qui ne produit <strong>aucune</strong> lettre latine — cyrillique, grec —, Atlas retombe
+sur la position physique de la touche : les lettres redeviennent celles d’un QWERTY.</p>
+<h2 id="les-claviers-locaux">Les claviers locaux</h2>
+<p>Trois endroits ont leur propre navigation, en plus des accords.</p>
+<p><strong>Les deux fenêtres de recherche</strong> (<code>Espace s f</code> et <code>Espace s g</code>), où tout se fait sans quitter le
+champ :</p>
+<table>
+<thead>
+<tr>
+<th>Touche</th>
+<th>Effet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>↑</code> <code>↓</code></td>
+<td>changer de ligne dans la liste ; l’aperçu de droite suit</td>
+</tr>
+<tr>
+<td><code>Entrée</code></td>
+<td>ouvrir la ligne choisie dans le Code — la fenêtre se ferme</td>
+</tr>
+<tr>
+<td><code>PageDown</code> / <code>PageUp</code></td>
+<td>faire défiler l’aperçu, sans perdre le champ</td>
+</tr>
+<tr>
+<td><code>Tab</code></td>
+<td>dans la fenêtre des fichiers seulement : passer à la base de comparaison suivante (<code>Shift+Tab</code> revient)</td>
+</tr>
+<tr>
+<td><code>Échap</code></td>
+<td>fermer la fenêtre — un clic dans le vide fait pareil</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Le panneau Git</strong>, quand il est ouvert et qu’il a le focus :</p>
+<table>
+<thead>
+<tr>
+<th>Touche</th>
+<th>Effet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Tab</code></td>
+<td>mode suivant : Branches &amp; repos → Revue → Local → …</td>
+</tr>
+<tr>
+<td><code>←</code> <code>→</code></td>
+<td>passer de la liste des repos à l’historique (mode Branches &amp; repos)</td>
+</tr>
+<tr>
+<td><code>↑</code> <code>↓</code></td>
+<td>se déplacer dans la colonne qui a le focus</td>
+</tr>
+<tr>
+<td><code>Entrée</code> ou <code>Espace</code> sur une rangée de branche</td>
+<td>lire ce rang partout</td>
+</tr>
+<tr>
+<td><code>Échap</code></td>
+<td>refermer le panneau — jamais l’ouvrir, et jamais quand la boîte est à l’écran</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Le Tableau</strong> : <code>Tab</code> déplace le focus d’un élément au suivant, cartes comprises ; <code>Entrée</code> ou
+<code>Espace</code> sur une carte ouvre cette feature et quitte la page.</p>
+<h2 id="raccourcis">Raccourcis</h2>
+<table>
+<thead>
+<tr>
+<th>Touche</th>
+<th>Effet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Espace</code></td>
+<td>ouvre la boîte des raccourcis, en bas à droite</td>
+</tr>
+<tr>
+<td><code>Espace d a</code> · <code>d s</code></td>
+<td>plein Arbre · côte à côte</td>
+</tr>
+<tr>
+<td><code>Espace v r</code> <code>v f</code> <code>v i</code> <code>v t</code> <code>v p</code> <code>v j</code></td>
+<td>Relecture · Fichiers · Inventaire · Ticket · Parcours · Journal</td>
+</tr>
+<tr>
+<td><code>Espace a a</code> <code>a c</code> <code>a p</code></td>
+<td>par flux ⇄ par fichier · index des contrats · tout plier ⇄ déplier</td>
+</tr>
+<tr>
+<td><code>Espace c u</code></td>
+<td>usages du symbole</td>
+</tr>
+<tr>
+<td><code>Espace s f</code> · <code>s g</code></td>
+<td>un fichier par son nom · grep dans les fichiers</td>
+</tr>
+<tr>
+<td><code>Espace g l</code> <code>g b</code> <code>g r</code></td>
+<td>Local · Branches &amp; repos · Revue (ouvre le panneau)</td>
+</tr>
+<tr>
+<td><code>Espace p t</code> · <code>p c</code></td>
+<td>Tableau · Config</td>
+</tr>
+<tr>
+<td><code>Espace v m</code> <code>a m</code> <code>c m</code> <code>g m</code></td>
+<td>masquer / montrer la colonne</td>
+</tr>
+<tr>
+<td><code>0</code> · <code>1</code>–<code>4</code> · <code>?</code></td>
+<td>endosser · endosser en notant · « je n’ai pas compris »</td>
+</tr>
+<tr>
+<td><code>↑</code> <code>↓</code> <code>←</code> <code>→</code></td>
+<td>se déplacer, plier, déplier</td>
+</tr>
+<tr>
+<td><code>Alt+←</code> / <code>Alt+→</code></td>
+<td>diff précédente / suivante</td>
+</tr>
+<tr>
+<td><code>Backspace</code></td>
+<td>revenir</td>
+</tr>
+<tr>
+<td><code>Échap</code></td>
+<td>dépiler le dernier geste, ou refermer la page</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</h2>
+<ul>
+<li><strong>Il ne laisse pas redéfinir une touche.</strong> Il n’y a aucun réglage de clavier, ni dans Config, ni
+dans un fichier du projet. La table est celle de cette page, partout, pour tout le monde.</li>
+<li><strong>Il n’attend jamais.</strong> Aucun délai entre deux frappes, donc aucun geste qui part parce que tu as
+été trop lent, ni aucun qui se perd parce que tu as été trop rapide.</li>
+<li><strong>Il ne prend aucun raccourci clavier à <code>Ctrl</code> ou <code>⌘</code>.</strong> Ces touches-là restent au navigateur et à
+ton système ; la seule chose qu’Atlas en lit, c’est <code>Ctrl</code>/<code>⌘</code> <strong>maintenue</strong>, qui allume les liens
+du Code pour le clic suivant. Le seul modificateur qui déclenche un geste est <code>Alt</code>, pour la
+navigation par diff.</li>
+<li><strong>Il n’agit jamais hors de ce que tu vois.</strong> Pas d’accord derrière un dialogue, pas d’endossement
+derrière une page, pas de raccourci depuis un champ de saisie.</li>
+<li><strong>Il n’enregistre pas tes gestes.</strong> Ce qui se retient d’une session à l’autre, c’est l’<strong>état</strong> de
+l’écran — la vue ouverte, les colonnes repliées, les plis de l’Arbre —, jamais la suite de touches
+qui l’a produit.</li>
+</ul>
+<h2 id="limites-connues">Limites connues</h2>
+<ul>
+<li><strong>La boîte ne se cherche pas.</strong> Il n’y a ni filtre, ni recherche par mot : on l’ouvre et on lit.
+Sur les colonnes à six ou sept lettres, c’est une liste à parcourir des yeux.</li>
+<li><strong>Le premier niveau ne grise rien.</strong> Les sept colonnes s’affichent toujours, même quand aucune de
+leurs lettres ne peut agir — une page ouverte n’éteint <code>d</code>, <code>v</code>, <code>a</code>, <code>c</code>, <code>s</code>, <code>g</code> qu’<strong>après</strong>
+que tu sois entré dedans, où chaque lettre dit alors <code>pas sur une page</code>.</li>
+<li><strong>Les gestes rappelés en pied ne sont là qu’au premier niveau.</strong> Une fois dans une colonne, la
+boîte montre ses lettres et rien d’autre.</li>
+<li><strong><code>Tab</code> n’a rien d’un accord.</strong> Dans le panneau Git il change de mode, dans la fenêtre des
+fichiers il fait tourner la base de comparaison, ailleurs il déplace le focus du navigateur : trois
+comportements pour une touche, dont un seul est du navigateur.</li>
+</ul>
+<nav class="suite" aria-label="Page suivante et précédente"><a href="/atlas-site/manuel/gitlab-et-github"><small>← précédent</small>GitLab et GitHub</a></nav></article><nav class="cote toc" aria-label="Sur cette page"><h2>Sur cette page</h2><ul><li><a href="#une-touche-maîtresse-et-rien-à-mémoriser">Une touche maîtresse, et rien à mémoriser</a></li><li><a href="#les-sept-colonnes-geste-par-geste">Les sept colonnes, geste par geste</a></li><li><a class="h3" href="#espace-d--disposition">Espace d — disposition</a></li><li><a class="h3" href="#espace-v--volet-gauche">Espace v — volet gauche</a></li><li><a class="h3" href="#espace-a--arbre">Espace a — Arbre</a></li><li><a class="h3" href="#espace-c--code">Espace c — Code</a></li><li><a class="h3" href="#espace-s--recherche">Espace s — recherche</a></li><li><a class="h3" href="#espace-g--git">Espace g — Git</a></li><li><a class="h3" href="#espace-p--pages">Espace p — pages</a></li><li><a href="#m--la-même-lettre-dans-les-quatre-colonnes">m : la même lettre dans les quatre colonnes</a></li><li><a href="#ce-qui-reste-direct">Ce qui reste direct</a></li><li><a href="#ce-que-la-boîte-dit-delle-même">Ce que la boîte dit d’elle-même</a></li><li><a href="#les-cinq-raisons-de-griser-une-lettre">Les cinq raisons de griser une lettre</a></li><li><a href="#quand-aucune-feature-nest-ouverte">Quand aucune feature n’est ouverte</a></li><li><a href="#se-tromper-fermer-laisser-passer">Se tromper, fermer, laisser passer</a></li><li><a href="#là-où-le-clavier-ne-part-pas">Là où le clavier ne part pas</a></li><li><a href="#sur-un-azerty-et-sur-un-clavier-sans-lettre-latine">Sur un AZERTY, et sur un clavier sans lettre latine</a></li><li><a href="#les-claviers-locaux">Les claviers locaux</a></li><li><a href="#raccourcis">Raccourcis</a></li><li><a href="#ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</a></li><li><a href="#limites-connues">Limites connues</a></li></ul></nav></main><footer class="pied"><div class="dedans"><span>Atlas — suivi et validation de code.</span><a href="/atlas-site/manuel/prise-en-main">Manuel</a></div></footer><script>
+    document.getElementById('theme-bt')?.addEventListener('click', () => {
+      const r = document.documentElement;
+      // clair → sombre → système, et le tour recommence. « Système » RETIRE la clé : c'est ce qui
+      // rend le choix distinct d'une absence de choix.
+      const suite = { clair: 'sombre', sombre: '', '': 'clair' };
+      const v = suite[r.dataset.theme || ''];
+      if (v) { r.dataset.theme = v; try { localStorage.setItem('atlas-site-theme', v); } catch {} }
+      else { delete r.dataset.theme; try { localStorage.removeItem('atlas-site-theme'); } catch {} }
+    });
+  </script></body></html>

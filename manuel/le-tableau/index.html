@@ -1,0 +1,322 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Le Tableau · Atlas</title><meta name="description" content="Toutes tes features d'un coup d'œil, rangées par ce qu'il reste à faire — jamais par ce que quelqu'un a coché."><link rel="canonical" href="https://gregoirelacoste.github.io/atlas-site/manuel/le-tableau"><meta property="og:title" content="Le Tableau · Atlas"><meta property="og:description" content="Toutes tes features d'un coup d'œil, rangées par ce qu'il reste à faire — jamais par ce que quelqu'un a coché."><meta property="og:type" content="website"><meta property="og:url" content="https://gregoirelacoste.github.io/atlas-site/manuel/le-tableau"><meta name="twitter:card" content="summary"><link rel="icon" href="/atlas-site/favicon.svg" type="image/svg+xml"><script>
+    (() => { try { const t = localStorage.getItem('atlas-site-theme');
+      if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t; } catch {} })();
+  </script><link rel="stylesheet" href="/atlas-site/_astro/Base.D32RNicN.css"></head><body><header class="tete"><a class="marque" href="/atlas-site">🗺️ Atlas</a><nav><a href="/atlas-site/installer">Installer</a><a href="/atlas-site/manuel/prise-en-main" aria-current="page">Manuel</a><a href="/atlas-site/articles">Écrits</a><button class="theme-bt" id="theme-bt" type="button" aria-label="Changer de thème">◐</button></nav></header><main class="doc"><nav class="cote" aria-label="Le manuel"><h2>Le manuel</h2><ol><li><a href="/atlas-site/manuel/prise-en-main">Prise en main</a></li><li><a href="/atlas-site/manuel/l-arbre">L&#39;Arbre</a></li><li><a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a></li><li><a href="/atlas-site/manuel/le-code">Le Code</a></li><li><a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a></li><li><a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et inventaire</a></li><li><a href="/atlas-site/manuel/le-panneau-git">Le panneau Git</a></li><li><a href="/atlas-site/manuel/le-tableau" aria-current="page">Le Tableau</a></li><li><a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a></li><li><a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a></li><li><a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a></li><li><a href="/atlas-site/manuel/brancher-l-ia">Brancher l&#39;IA</a></li><li><a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l&#39;IA lit et écrit</a></li><li><a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a></li><li><a href="/atlas-site/manuel/la-ligne-de-commande">La ligne de commande</a></li><li><a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a></li><li><a href="/atlas-site/manuel/le-clavier">Le clavier</a></li></ol></nav><article class="corps"><h1>Le Tableau</h1><p class="chapo">Toutes tes features d&#39;un coup d&#39;œil, rangées par ce qu&#39;il reste à faire — jamais par ce que quelqu&#39;un a coché.</p><blockquote>
+<p>Toutes tes features d’un coup d’œil, rangées par ce qu’il reste à faire — jamais par ce que
+quelqu’un a coché.</p>
+</blockquote>
+<p>La lignée, les worktrees et la Revue des reviews sont dans le
+<a href="/atlas-site/manuel/le-panneau-git">panneau Git</a> ; la spec et les critères, dans l’<a href="/atlas-site/manuel/ticket-fils-et-journal">onglet
+Ticket</a> ; la ligne de production et les repos exclus, dans
+<a href="/atlas-site/manuel/configurer-un-projet">configurer un projet</a>.</p>
+<h2 id="ouvrir-et-fermer-le-tableau">Ouvrir et fermer le Tableau</h2>
+<p>Le Tableau est une <strong>page</strong>, pas un panneau de plus : elle remplace la carte (l’Arbre, le Code, le
+volet gauche) et masque le panneau Git. Pour y entrer : le bouton <strong>▦ Tableau</strong> du header · l’accord
+<strong><code>Espace p t</code></strong> (la boîte des raccourcis est décrite dans <a href="/atlas-site/manuel/le-clavier">Le clavier</a> ; <code>p</code> est la colonne
+« pages ») · la <strong>chip</strong> d’état à côté du numéro de la feature, qui se clique. Pour en sortir :
+<code>Espace p t</code> de nouveau, <code>Échap</code>, ou le bouton <strong>← Carte</strong>. Page ouverte, les gestes de l’Arbre et du
+Code (endosser, noter, <code>?</code>, la navigation par diff) n’agissent plus, et la boîte des raccourcis grise tout
+accord hors de la colonne « pages », avec la raison <em>« pas sur une page »</em>.</p>
+<p>À l’ouverture, le Tableau lit l’état des branches (ce que le dernier <code>git fetch</code> a rapporté sur ton
+poste), l’état des reviews chez l’hébergeur — lu en direct, sans fetch — et l’état de ton disque. Les deux premières sont deux horloges
+séparées, affichées en haut de page (« refs il y a 16 h », « review il y a 3 min »). Le bouton
+<strong>↻</strong> relance un <code>git fetch origin --prune</code> sur tout le chapeau (tous les repos du projet) — une
+écriture dans tes dépôts, qui retire les branches distantes disparues, mais jamais un commit ni un
+checkout.</p>
+<p>À côté, le total : « ▦ Tableau — 131 features » — ou « liste non chargée », sans chiffre, quand elle
+n’a pas pu être lue : un « 0 » à côté d’une erreur se lirait comme un fait.</p>
+<h2 id="les-colonnes--un-statut-qui-se-dérive-pas-qui-se-déclare">Les colonnes : un statut qui se dérive, pas qui se déclare</h2>
+<p>Six colonnes, de gauche à droite : <strong>Déclarée</strong>, <strong>En cours</strong>, <strong>↗ En review</strong>, <strong>👍 Approuvée</strong>,
+<strong>🚀 À déployer</strong>, <strong>✅ Terminé</strong>. Chacune a une raison, lisible dans l’infobulle de son titre.</p>
+<table>
+<thead>
+<tr>
+<th>Colonne</th>
+<th>D’où vient le verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Déclarée</td>
+<td>une déclaration existe, aucune branche ne porte encore le ticket — les branches naissent au premier besoin, ce n’est pas un retard</td>
+</tr>
+<tr>
+<td>En cours</td>
+<td>au moins une branche porte le ticket, aucune n’est encore rentrée dans une base, et aucune review n’est ouverte</td>
+</tr>
+<tr>
+<td>↗ En review</td>
+<td>au moins une review non-brouillon est ouverte chez l’hébergeur — sa preuve ne vient pas de git</td>
+</tr>
+<tr>
+<td>👍 Approuvée</td>
+<td>toutes les reviews ouvertes non-brouillon sont approuvées — il ne reste qu’à merger</td>
+</tr>
+<tr>
+<td>🚀 À déployer</td>
+<td>au moins un repo est rentré dans une base, mais pas tous en production</td>
+</tr>
+<tr>
+<td>✅ Terminé</td>
+<td>plus rien à faire nulle part — ou fermée à la main, faute de code à dériver</td>
+</tr>
+</tbody>
+</table>
+<p><strong>L’ordre des questions est la règle</strong> : c’est lui qui tranche quand deux lignes du tableau
+pourraient répondre. Atlas demande, dans cet ordre : est-ce rentré quelque part (🚀 ou ✅) ? sinon,
+une review est-elle ouverte (↗ ou 👍) ? sinon, une branche existe-t-elle (En cours) ? sinon, l’as-tu
+fermée à la main (✅) ? sinon, l’as-tu déclarée (Déclarée) ? Une feature qui a une branche <strong>et</strong> une
+review ouverte est donc en review, jamais « En cours ».</p>
+<p>C’est dans cette colonne que tu déclares une feature, avec le bouton <strong>＋</strong> de son en-tête : un
+identifiant — un numéro de ticket, un nom, <strong>ou le nom de la branche collé tel quel</strong>, dont Atlas
+extrait l’identifiant — et un titre optionnel.</p>
+<p>Une feature peut d’ailleurs apparaître <strong>sans avoir jamais été déclarée</strong> : une branche qui porte le
+numéro du ticket suffit, avec la pastille <strong>détectée</strong> (« détecté = suggestion, déclaré = vérité »).
+Et un repo <em>déclaré</em> qui n’a pas encore de branche n’est pas en retard : il est <strong>lazy</strong>.</p>
+<h2 id="ce-quune-carte-montre">Ce qu’une carte montre</h2>
+<p>Trois étages. <strong>La ligne d’identité</strong> : le numéro ou le nom de la feature, la branche qui la porte
+(le premier nom et un <code>+2</code> quand les repos en portent plusieurs, la liste en infobulle), puis les
+chips. <strong>Le titre</strong>, s’il y en a un. <strong>La ligne de détail</strong> : les repos porteurs, ceux qui sont encore
+sans branche, ceux qui ne sont que détectés, qui porte le travail et quand on a poussé, puis les
+reviews ouvertes une à une (<code>projet-api!172</code>, <code>#</code> au lieu de <code>!</code> sur GitHub, <code>(brouillon)</code> quand
+c’en est un) — quatre au plus, le reste compté en « +2 autres ».</p>
+<p><strong>Qui porte et qui a poussé sont deux faits</strong>, jamais fondus : quand une review est assignée, la
+ligne affiche « ✎ il y a 4 j · 👤 alice » — le <code>✎</code> porte la date, le <code>👤</code> la personne,
+l’infobulle les deux en toutes lettres. Sans assigné, elle retombe sur l’adresse git de qui a poussé
+en dernier. Deux chips de plus viennent de <strong>ta machine</strong> quand ton disque contredit la colonne
+(« 🌳 2 worktrees obsolètes », « ● 3 modifs non commités ») : voir le
+<a href="/atlas-site/manuel/le-panneau-git">panneau Git</a>.</p>
+<h2 id="porteuse-par-porteuse--où-en-est-chaque-repo">Porteuse par porteuse : où en est chaque repo</h2>
+<p>Une feature vit rarement sur un seul repo. Le Tableau lit chaque <strong>porteuse</strong> — un repo et sa branche
+pour ce ticket — séparément, puis compose la colonne à partir de l’ensemble. Quatre états :</p>
+<ul>
+<li><strong>en production</strong> — rentrée dans la ligne qui déploie (<code>master</code>/<code>main</code>) ; et si ce repo n’a pas
+d’étape de mise en production distincte, être rentré dans <strong>n’importe laquelle</strong> de ses bases
+vaut déployé ;</li>
+<li><strong>dans l’intégration</strong> — rentrée dans une base comme <code>develop</code>, mais pas encore en production ;</li>
+<li><strong>encore sur sa branche</strong> — rien n’est rentré nulle part ;</li>
+<li><strong>aucune base connue</strong> — ce repo n’a aucune des lignes qu’Atlas interroge : la base déclarée du
+projet (<code>develop</code> par défaut), <code>master</code>, <code>main</code>. Atlas n’a donc <strong>aucune</strong> ligne où chercher. Ce
+n’est jamais « pas mergé » — c’est « je n’ai pas pu regarder ».</li>
+</ul>
+<p>La colonne 🚀 se gagne dès qu’<strong>une</strong> porteuse est rentrée quelque part ; elle ne se quitte pour ✅
+Terminé que quand <strong>toutes</strong> le sont, et en production.</p>
+<p><strong>La colonne dit ce qu’il reste à faire, jamais où le ticket est arrivé.</strong> Un repo déjà en
+production ne « vide » pas la colonne : tant qu’un seul autre attend une MEP (mise en production),
+ou n’a jamais été mergé, la feature reste 🚀 À déployer. Une porteuse à l’état « aucune base
+connue » suffit d’ailleurs à interdire ✅ Terminé — le doute range vers le bas.</p>
+<h2 id="la-ventilation-et-le-seul-rouge-du-tableau">La ventilation, et le seul rouge du Tableau</h2>
+<p>Sur la ligne d’identité, une suite de chips dit <strong>où en est chaque repo</strong>, du plus avancé au moins
+avancé : « 1 sur master · 2 sur develop · 1 sur sa branche ». C’est la <strong>ventilation</strong>. Chaque repo
+n’y apparaît qu’une fois, à sa position la plus basse, avec le <strong>nom réel</strong> de la ligne quand tous
+les repos du groupe partagent le même. Sinon (<code>master</code> chez les uns, <code>main</code> chez les autres), Atlas
+n’en choisit aucun et écrit l’état : « 2 en production », « 3 dans l’intégration ». Un repo sans
+ligne connue se dit « 1 non situé ». Le groupe « sur leur branche » ne s’affiche que si autre chose a
+déjà atterri quelque part ; le groupe « non situé », lui, peut apparaître partout.</p>
+<p>Une feature dont les porteuses ne sont pas toutes au même endroit — un repo en production pendant
+qu’un autre est encore sur sa branche — est une <strong>anomalie</strong> : la chip du groupe en retard passe au
+rouge, la carte prend un bord gauche rouge plein, et elle remonte <strong>en tête de sa colonne</strong>. En
+pratique, seule la colonne 🚀 À déployer peut en porter une.</p>
+<p>Le retard est toujours <strong>relatif</strong> : trois repos tous dans <code>develop</code> ne sont pas une anomalie (c’est
+le 🚀 À déployer normal), et un repo à l’état « aucune base connue » n’est jamais compté en retard —
+le rouge ne se gagne pas sur une ignorance. Un repo compte par sa porteuse la <strong>plus basse</strong>.</p>
+<p>Le rouge <strong>désigne</strong>, il n’affirme pas : les repos en retard apparaissent aussi en rouge dans la
+liste des repos de la carte. Le libellé « pas au même endroit » ne s’écrit jamais sur la carte —
+c’est le texte de l’infobulle du groupe en retard, et de celle du titre de la colonne 🚀. <strong>La
+preuve, les noms et le jugement vivent dans l’infobulle.</strong></p>
+<h2 id="lordre-des-cartes-dans-une-colonne">L’ordre des cartes dans une colonne</h2>
+<p>Trois critères, dans cet ordre :</p>
+<ol>
+<li><strong>l’anomalie d’abord</strong> — une carte rouge remonte en tête de sa colonne : c’est la seule chose du
+Tableau qui appelle un geste précis ;</li>
+<li><strong>puis l’activité</strong> — la dernière poussée sur une branche de la feature, la plus récente en
+premier. Une feature que rien ne date (une déclarée sans branche) passe <strong>après</strong> celles qui ont
+une date, jamais devant ;</li>
+<li><strong>puis l’identifiant</strong>, en comparaison numérique et décroissante : <code>PROJ-412</code> passe devant
+<code>PROJ-98</code>, et non l’inverse.</li>
+</ol>
+<p>Ce que tu vois de ce tri, c’est l’<strong>âge relatif</strong> de la dernière poussée : « ✎ il y a 4 j ». Jamais
+une date absolue — elle est dans l’infobulle, avec le repo, la branche et l’adresse git de qui a
+poussé en dernier (celle du commit, pas celle de son auteur d’origine : après un rebase ou un
+cherry-pick, les deux diffèrent). Une feature sans poussée connue n’affiche aucun <code>✎</code> : Atlas ne
+fabrique pas une date pour trier. Les dormantes échappent à ce tri, de la plus ancienne à la plus
+récente.</p>
+<h2 id="qui-doit-relire">Qui doit relire</h2>
+<p>Une carte en review dit <strong>qui est chargé de la relire</strong>, tel que l’hébergeur le déclare : une chip
+« 👁 alice, carol +1 ». Deux noms visibles, le reste compté, <strong>tous</strong> dans l’infobulle — jamais
+agrégés en un « 2 reviewers ».</p>
+<p>Trois états, et ils ne se rendent pas pareil :</p>
+<table>
+<thead>
+<tr>
+<th>ce que dit l’hébergeur</th>
+<th>ce que la carte affiche</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>des personnes sont désignées</td>
+<td>« 👁 alice, carol +1 »</td>
+</tr>
+<tr>
+<td>personne n’est désigné</td>
+<td>« 👁 aucun reviewer » — en ambre : il y a un geste à faire</td>
+</tr>
+<tr>
+<td>Atlas n’a pas pu lire le champ</td>
+<td><strong>rien du tout</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Le troisième est celui qui compte. D’où la règle — <strong>« aucun reviewer » ne s’écrit que sur une
+lecture complète</strong> : si une partie seulement des reviews a rendu son champ, la chip nomme les
+personnes lues et l’infobulle compte celles qui restent illisibles.</p>
+<p>Le mot ne recouvre pas la même chose des deux côtés, et l’infobulle le dit : GitLab garde ses
+reviewers après la relecture, GitHub rend les relectures <strong>demandées</strong>, d’où l’on sort dès qu’on a
+soumis sa review. Sur GitHub, la liste se lit donc « qui doit <strong>encore</strong> relire », et une équipe
+demandée y compte comme une personne.</p>
+<p>Un brouillon n’attend personne : il ne compte ni dans les noms, ni dans le « aucun reviewer », et la
+chip disparaît sur une feature rangée.</p>
+<h2 id="les-labels-de-léquipe">Les labels de l’équipe</h2>
+<p>Une carte porte les <strong>labels</strong> posés sur ses reviews — <code>On Hold</code>, <code>High Priority</code>, <code>bug</code> : le
+vocabulaire de ton équipe, rendu tel quel. Atlas ne les interprète pas et n’en dérive <strong>aucune
+colonne, aucun tri</strong>, mais ils disent ce que git ne dira jamais : qu’un travail est suspendu, ou
+urgent. Trois labels visibles, le reste dans un « +2 » qui les nomme tous au survol.</p>
+<p>La couleur de l’hébergeur vit dans une <strong>pastille</strong> devant le nom. Une couleur qu’Atlas ne reconnaît
+pas comme hexadécimale est jetée — le label garde son nom et perd sa pastille.</p>
+<p>L’envers d’un label <strong>ne se dit pas</strong>, et c’est la différence avec les reviewers : un label est
+facultatif, tandis qu’une review sans reviewer attend quelqu’un qui ne viendra pas. Une feature sans
+label n’affiche donc rien, et un label illisible n’a pas de chip non plus : c’est l’infobulle des
+labels lus qui précise que la liste peut être incomplète. Contrairement aux reviewers, <strong>les
+brouillons comptent</strong> ici.</p>
+<h2 id="en-review-puis-approuvée">En review, puis approuvée</h2>
+<p>Un brouillon ne compte pour rien : ni pour entrer en ↗ En review, ni pour en sortir vers 👍 Approuvée.
+Une feature à plusieurs repos entre dans <strong>Approuvée</strong> seulement quand <strong>toutes</strong> ses reviews
+non-brouillon le sont — une seule qui manque, ou une approbation qu’Atlas n’a pas pu lire, et la
+carte reste en review.</p>
+<p>La chip d’approbation dit l’avancement : « ✓ 3 des 4 » tant qu’il en manque, puis les <strong>noms</strong> de qui
+a approuvé une fois que tout l’est (deux au plus sur la chip, tous dans l’infobulle : « ✓ alice,
+carol »). Une approbation illisible s’ajoute à part, jamais fondue dans un refus : « · 1 non lue ».
+Tant que personne n’a approuvé, il n’y a pas de chip du tout.</p>
+<p>Cette lecture peut échouer entièrement (jeton absent, hôte muet) : le Tableau le dit alors une
+seule fois, en tête de page — et dans ce cas la colonne « En review » ne dit <strong>rien</strong>, ni dans un
+sens ni dans l’autre. La phrase nomme la raison telle quelle, et cette raison dit quoi faire :
+poser un jeton, et lequel. Un échec partiel reste sur la carte concernée :
+« ? review non vérifiée », avec le nom des repos et la raison pour chacun.</p>
+<p>Une feature rangée dont une review traîne encore ouverte ne redescend jamais dans les colonnes de
+travail — git prime — mais la carte porte une chip « ↗ 1 encore ouverte » : un geste reste à faire
+là-bas.</p>
+<h2 id="comment-atlas-sait-quun-repo-est-rentré">Comment Atlas sait qu’un repo est rentré</h2>
+<p>Deux preuves, jamais confondues, et les deux comptent :</p>
+<ul>
+<li><strong>la topologie</strong> — la branche est contenue dans la base, au sens strict de git : le cas d’une
+branche qu’on n’a pas supprimée après son merge ;</li>
+<li><strong>la convention</strong> — le numéro du ticket est cité dans le <strong>sujet</strong> d’un commit de la base. Elle ne
+se limite pas aux branches supprimées : elle répond aussi quand la branche vit encore et que la
+topologie a dit non — après un squash ou un rebase, où le travail est passé sans que la branche
+soit contenue dans la ligne.</li>
+</ul>
+<p>Quand cette seconde preuve est la seule à répondre, l’infobulle de la chip « en production » le
+précise : « ⌁ La branche n’est PAS contenue dans la base — la preuve est le ticket lu dans un
+message de commit (squash, rebase, ou une locale restée après le merge). »</p>
+<blockquote>
+<p>⚠️ La preuve par convention n’existe que pour les features identifiées par un <strong>numéro de ticket</strong>.
+Sur un projet où une feature est un nom de branche, chercher <code>login-bug</code> dans de la prose prouverait
+n’importe quoi : seule la topologie répond, et une branche supprimée après merge y devient
+invisible. Le choix se fait dans <a href="/atlas-site/manuel/configurer-un-projet">la configuration du projet</a>.</p>
+</blockquote>
+<h2 id="fermer-sans-coder-et-rouvrir">Fermer sans coder, et rouvrir</h2>
+<p>Une investigation peut se conclure sans une ligne de code. Sur une feature <strong>déclarée</strong>, sans aucune
+branche nulle part, sans rien de rentré et sans review ouverte, un bouton <strong>✋ Fermer</strong> la fait passer
+directement en ✅ Terminé. C’est le seul endroit du Tableau qui accepte une décision plutôt qu’un
+fait.</p>
+<p>Le geste est réversible (<strong>↩ Rouvrir</strong>) et ne demande aucun motif. Il ne verrouille rien : si une
+branche apparaît plus tard, la feature ressort d’elle-même en « En cours » au prochain chargement —
+une clôture ne résiste jamais à un fait qui la contredit.</p>
+<h2 id="les-branches-qui-dorment">Les branches qui dorment</h2>
+<p>Une branche « En cours » sans la moindre poussée depuis plus de 60 jours est dite <strong>dormante</strong> : elle
+reste dans sa colonne, repliée sous un repère « 💤 10 dormantes (&gt; 60 j) ». Le compte total ne bouge
+pas — le titre annonce les deux (« En cours 28 · 10 💤 »). Seule cette colonne replie ses branches
+mortes : ailleurs, quelqu’un attend un geste.</p>
+<p>Une feature dont la date de dernière poussée est inconnue n’est <strong>jamais</strong> dormante : on ne replie pas
+ce qu’on n’a pas mesuré. Et <strong>Atlas ne supprime jamais une branche</strong> : il montre laquelle est
+probablement morte, le <code>push --delete</code> reste ton geste, chez l’hébergeur.</p>
+<h2 id="ce-qui-ne-rentre-dans-aucune-colonne">Ce qui ne rentre dans aucune colonne</h2>
+<p>Deux choses apparaissent, séparément, sous les colonnes plutôt que dans une carte : un <strong>dossier</strong> du
+workspace sans déclaration ni branche (un fichier y a été écrit, rien ne le rattache à une feature),
+et un <strong>ticket</strong> vu sur le nom d’une branche que le motif de nommage déclaré pour ce repo n’apparie
+pas. Chacun a sa ligne, qui les nomme tous (« ⚠ 2 dossiers sans déclaration ni branche : … »). Aucun
+n’est une feature au sens du Tableau — mais aucun n’est tu non plus.</p>
+<p>Une troisième ligne dit <strong>ce que ton réglage cache</strong> : sur un projet où une feature est un numéro de
+ticket, une branche poussée sans jeton n’est pas une feature — même avec une merge request ouverte.
+Elle se compte au lieu de disparaître : « ⊘ 2 branches sans ticket ignorées par réglage —
+docs/webhook, fix/sdk · ce qui fait une feature ». Trois noms sur la ligne, tous dans l’infobulle ; un
+clic ouvre le réglage, chapitre déplié (<a href="/atlas-site/manuel/configurer-un-projet">configurer un projet</a>). La ligne
+se tait quand rien n’est ignoré, et quand Atlas n’a pas pu lire les branches.</p>
+<h2 id="raccourcis">Raccourcis</h2>
+<table>
+<thead>
+<tr>
+<th>Accord / touche</th>
+<th>Effet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Espace p t</code></td>
+<td>ouvre le Tableau, ou le referme si tu es dessus</td>
+</tr>
+<tr>
+<td><code>Échap</code></td>
+<td>referme le Tableau</td>
+</tr>
+<tr>
+<td><code>Tab</code></td>
+<td>déplace le focus d’un élément au suivant — les cartes en font partie, les boutons aussi</td>
+</tr>
+<tr>
+<td><code>Entrée</code> / <code>Espace</code> sur une carte focalisée</td>
+<td>ouvre cette feature et quitte le Tableau</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</h2>
+<ul>
+<li>Il ne déplace jamais une carte : le glisser-déposer n’existe pas. Deux colonnes seulement
+s’atteignent par un clic — <strong>Déclarée</strong> avec le <strong>＋</strong>, et <strong>✅ Terminé</strong> avec <strong>✋ Fermer</strong>, offert
+seulement là où aucune dérivation n’est possible. Les quatre autres se dérivent de l’état des
+branches et des reviews.</li>
+<li>Il ne range jamais une feature sur une ignorance : un repo sans ligne connue, une review qu’on n’a
+pas pu lire, restent des questions ouvertes — jamais un « non » silencieux.</li>
+<li>Il n’assigne personne, ne pose ni ne retire un label, n’approuve rien, ne supprime aucune branche et
+ne retire aucun worktree : ces gestes restent les tiens, ou ceux de l’hébergeur. Et aucune colonne,
+aucun tri ne se dérive d’un label.</li>
+<li>Il ne juge jamais deux fois la même feature : la chip d’état affichée à côté du numéro du ticket,
+ailleurs dans l’outil, vient du même calcul que la colonne où tu la vois ici.</li>
+</ul>
+<h2 id="limites-connues">Limites connues</h2>
+<p>Les refs locales portent tout ce qui se dérive de git — Déclarée, En cours, 🚀 À déployer, ✅
+Terminé — et elles peuvent avoir des heures de retard si tu n’as pas relancé un fetch : l’âge affiché
+en haut de page le dit, et un fetch automatique ne part qu’au-delà d’une heure. L’âge annoncé est
+celui des refs <strong>les plus vieilles</strong>, jamais une moyenne. Un repo jamais fetché a un âge <strong>inconnu</strong>,
+pas « vieux » : il ne compte pas dans cet âge, et l’infobulle dit combien il y en a.</p>
+<p>Le seuil de dormance (60 jours) est un choix, pas une mesure.</p>
+<p><strong>Ce que le Tableau lit chez GitHub n’a jamais été éprouvé contre un vrai serveur</strong> : reviewers,
+labels, assignés et approbations y sont lus comme sur GitLab, et leur échec est écrit pour être le bon
+(un champ absent produit une ignorance, jamais un « personne »). Poser le jeton et vérifier qu’il est
+trouvé : <a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a>.</p>
+<p>Enfin, la Revue du <a href="/atlas-site/manuel/le-panneau-git">panneau Git</a> ne dit ni les reviewers, ni les labels, ni
+l’assigné : ces faits ne vivent que sur le Tableau. Et dans l’autre sens, les infobulles des cartes
+disent encore « MR » là où la review est une pull request : le mot de l’hébergeur, exact partout
+ailleurs, ne descend pas jusqu’à elles.</p>
+<nav class="suite" aria-label="Page suivante et précédente"><a href="/atlas-site/manuel/le-panneau-git"><small>← précédent</small>Le panneau Git</a><a class="droite" href="/atlas-site/manuel/ticket-fils-et-journal"><small>suivant →</small>Ticket, fils et Journal</a></nav></article><nav class="cote toc" aria-label="Sur cette page"><h2>Sur cette page</h2><ul><li><a href="#ouvrir-et-fermer-le-tableau">Ouvrir et fermer le Tableau</a></li><li><a href="#les-colonnes--un-statut-qui-se-dérive-pas-qui-se-déclare">Les colonnes : un statut qui se dérive, pas qui se déclare</a></li><li><a href="#ce-quune-carte-montre">Ce qu’une carte montre</a></li><li><a href="#porteuse-par-porteuse--où-en-est-chaque-repo">Porteuse par porteuse : où en est chaque repo</a></li><li><a href="#la-ventilation-et-le-seul-rouge-du-tableau">La ventilation, et le seul rouge du Tableau</a></li><li><a href="#lordre-des-cartes-dans-une-colonne">L’ordre des cartes dans une colonne</a></li><li><a href="#qui-doit-relire">Qui doit relire</a></li><li><a href="#les-labels-de-léquipe">Les labels de l’équipe</a></li><li><a href="#en-review-puis-approuvée">En review, puis approuvée</a></li><li><a href="#comment-atlas-sait-quun-repo-est-rentré">Comment Atlas sait qu’un repo est rentré</a></li><li><a href="#fermer-sans-coder-et-rouvrir">Fermer sans coder, et rouvrir</a></li><li><a href="#les-branches-qui-dorment">Les branches qui dorment</a></li><li><a href="#ce-qui-ne-rentre-dans-aucune-colonne">Ce qui ne rentre dans aucune colonne</a></li><li><a href="#raccourcis">Raccourcis</a></li><li><a href="#ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</a></li><li><a href="#limites-connues">Limites connues</a></li></ul></nav></main><footer class="pied"><div class="dedans"><span>Atlas — suivi et validation de code.</span><a href="/atlas-site/manuel/prise-en-main">Manuel</a></div></footer><script>
+    document.getElementById('theme-bt')?.addEventListener('click', () => {
+      const r = document.documentElement;
+      // clair → sombre → système, et le tour recommence. « Système » RETIRE la clé : c'est ce qui
+      // rend le choix distinct d'une absence de choix.
+      const suite = { clair: 'sombre', sombre: '', '': 'clair' };
+      const v = suite[r.dataset.theme || ''];
+      if (v) { r.dataset.theme = v; try { localStorage.setItem('atlas-site-theme', v); } catch {} }
+      else { delete r.dataset.theme; try { localStorage.removeItem('atlas-site-theme'); } catch {} }
+    });
+  </script></body></html>

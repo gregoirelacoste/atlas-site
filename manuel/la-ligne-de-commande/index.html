@@ -1,0 +1,407 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>La ligne de commande · Atlas</title><meta name="description" content="Toutes les commandes de l'exécutable atlas : ouvrir une carte, déclarer un projet, piloter le daemon, se mettre à jour, brancher ton IA. Pour chacune : ce qu'elle fait, ce qu'elle écrit, ce qu'elle ne fait pas."><link rel="canonical" href="https://gregoirelacoste.github.io/atlas-site/manuel/la-ligne-de-commande"><meta property="og:title" content="La ligne de commande · Atlas"><meta property="og:description" content="Toutes les commandes de l'exécutable atlas : ouvrir une carte, déclarer un projet, piloter le daemon, se mettre à jour, brancher ton IA. Pour chacune : ce qu'elle fait, ce qu'elle écrit, ce qu'elle ne fait pas."><meta property="og:type" content="website"><meta property="og:url" content="https://gregoirelacoste.github.io/atlas-site/manuel/la-ligne-de-commande"><meta name="twitter:card" content="summary"><link rel="icon" href="/atlas-site/favicon.svg" type="image/svg+xml"><script>
+    (() => { try { const t = localStorage.getItem('atlas-site-theme');
+      if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t; } catch {} })();
+  </script><link rel="stylesheet" href="/atlas-site/_astro/Base.D32RNicN.css"></head><body><header class="tete"><a class="marque" href="/atlas-site">🗺️ Atlas</a><nav><a href="/atlas-site/installer">Installer</a><a href="/atlas-site/manuel/prise-en-main" aria-current="page">Manuel</a><a href="/atlas-site/articles">Écrits</a><button class="theme-bt" id="theme-bt" type="button" aria-label="Changer de thème">◐</button></nav></header><main class="doc"><nav class="cote" aria-label="Le manuel"><h2>Le manuel</h2><ol><li><a href="/atlas-site/manuel/prise-en-main">Prise en main</a></li><li><a href="/atlas-site/manuel/l-arbre">L&#39;Arbre</a></li><li><a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a></li><li><a href="/atlas-site/manuel/le-code">Le Code</a></li><li><a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a></li><li><a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et inventaire</a></li><li><a href="/atlas-site/manuel/le-panneau-git">Le panneau Git</a></li><li><a href="/atlas-site/manuel/le-tableau">Le Tableau</a></li><li><a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a></li><li><a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a></li><li><a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a></li><li><a href="/atlas-site/manuel/brancher-l-ia">Brancher l&#39;IA</a></li><li><a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l&#39;IA lit et écrit</a></li><li><a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a></li><li><a href="/atlas-site/manuel/la-ligne-de-commande" aria-current="page">La ligne de commande</a></li><li><a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a></li><li><a href="/atlas-site/manuel/le-clavier">Le clavier</a></li></ol></nav><article class="corps"><h1>La ligne de commande</h1><p class="chapo">Toutes les commandes de l&#39;exécutable atlas : ouvrir une carte, déclarer un projet, piloter le daemon, se mettre à jour, brancher ton IA. Pour chacune : ce qu&#39;elle fait, ce qu&#39;elle écrit, ce qu&#39;elle ne fait pas.</p><blockquote>
+<p>Toutes les commandes de l’exécutable <code>atlas</code> : ouvrir une carte, déclarer un projet, piloter le
+daemon, se mettre à jour, brancher ton IA. Pour chacune : ce qu’elle fait, ce qu’elle écrit, ce
+qu’elle ne fait pas.</p>
+</blockquote>
+<p>Cette page ne couvre pas l’installation du paquet ni le premier <code>atlas init</code> — voir
+<a href="/atlas-site/manuel/prise-en-main">Prise en main</a>. Elle ne couvre pas non plus le détail de <code>.atlas-workspace/</code>
+et de ses clés — voir <a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a> et
+<a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a> — ni ce qu’une IA fait une fois
+branchée — voir <a href="/atlas-site/manuel/brancher-l-ia">Brancher l’IA</a>. Ici : la commande, ses arguments, sa
+sortie, et rien d’inventé — tape <code>atlas help</code> pour la même liste, en plus court.</p>
+<p>Quelques mots avant la liste : une <strong>feature</strong> est le ticket (ou la fonctionnalité) qu’Atlas suit
+une à la fois, et sa <strong>carte</strong> le flux d’appels qu’il en reconstruit.
+Le <strong>daemon</strong> est le process qui tourne en arrière-plan et sert à la fois l’API et la page web. Un
+<strong>workspace</strong> — ou <strong>chapeau</strong> — est le dossier qui héberge plusieurs repos d’un même projet, sous
+<code>.atlas-workspace/</code> ; le <strong>registre</strong> est la liste des projets connus, tenue hors de tout workspace.
+Le <strong>plugin</strong> pose les <strong>skills</strong> Atlas dans Claude Code ; <strong>MCP</strong> est le protocole par lequel un
+client IA interroge Atlas.</p>
+<h2 id="toutes-les-commandes-dun-coup-dœil">Toutes les commandes, d’un coup d’œil</h2>
+<table>
+<thead>
+<tr>
+<th>Commande</th>
+<th>À quoi elle sert</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>atlas</code></td>
+<td>démarre le daemon si besoin, ouvre la carte du projet du dossier courant</td>
+</tr>
+<tr>
+<td><code>atlas init</code></td>
+<td>déclare un dossier comme projet Atlas</td>
+</tr>
+<tr>
+<td><code>atlas start</code></td>
+<td>démarre le daemon</td>
+</tr>
+<tr>
+<td><code>atlas stop</code></td>
+<td>l’arrête</td>
+</tr>
+<tr>
+<td><code>atlas restart</code></td>
+<td>l’arrête puis le redémarre</td>
+</tr>
+<tr>
+<td><code>atlas status</code></td>
+<td>l’état et la version de l’instance qui tourne</td>
+</tr>
+<tr>
+<td><code>atlas version</code></td>
+<td>la version de l’instance, en JSON</td>
+</tr>
+<tr>
+<td><code>atlas logs</code></td>
+<td>suit les journaux du daemon</td>
+</tr>
+<tr>
+<td><code>atlas update</code></td>
+<td>installe la dernière version publiée</td>
+</tr>
+<tr>
+<td><code>atlas promote</code></td>
+<td>(contributeurs d’Atlas) installe TON code dans TON instance</td>
+</tr>
+<tr>
+<td><code>atlas plugin [install]</code></td>
+<td>branche les skills Atlas sur ta session de code</td>
+</tr>
+<tr>
+<td><code>atlas mcp</code></td>
+<td>le serveur que ton IA interroge (lancé par elle, pas à la main)</td>
+</tr>
+<tr>
+<td><code>atlas guide [MOMENT]</code></td>
+<td>le mode d’emploi d’Atlas pour un skill de review maison</td>
+</tr>
+<tr>
+<td><code>atlas brief &lt;TICKET&gt;</code></td>
+<td>la carte d’une feature en une page de texte</td>
+</tr>
+<tr>
+<td><code>atlas precedents --build</code></td>
+<td>reconstruit l’index des reviews passées</td>
+</tr>
+<tr>
+<td><code>atlas precedents &lt;TICKET&gt;</code></td>
+<td>ce qu’une review passée dit sur cette feature</td>
+</tr>
+<tr>
+<td><code>atlas claude</code></td>
+<td>(contributeurs d’Atlas) une session Claude Code isolée aux skills d’Atlas</td>
+</tr>
+<tr>
+<td><code>atlas help</code></td>
+<td>cette liste</td>
+</tr>
+</tbody>
+</table>
+<p><code>-h</code> et <code>--help</code> sont les mêmes que <code>help</code>. Toute commande inconnue affiche
+<code>commande inconnue : …</code>, réimprime cette aide et sort en erreur.</p>
+<h2 id="ouvrir-une-carte">Ouvrir une carte</h2>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#6A737D;--shiki-dark:#6A737D">   # démarre le daemon si besoin, active le projet du dossier courant, ouvre le navigateur</span></span></code></pre>
+<p>Tapée sans argument (ou avec <code>open</code>), <code>atlas</code> fait trois choses dans l’ordre : elle démarre le
+daemon s’il ne répond pas déjà ; elle cherche un <code>.atlas-workspace/</code> en remontant depuis le dossier
+courant — comme git remonte à son <code>.git/</code> — et si elle en trouve un, elle bascule le daemon sur ce
+projet ; puis elle ouvre le navigateur sur la carte.</p>
+<blockquote>
+<p>⚠️ Cette bascule est un effet de bord réel, pas un détail d’affichage : un daemon ne sert <strong>qu’un
+projet actif à la fois</strong>. Taper <code>atlas</code> dans un autre chapeau change ce que voit quiconque a déjà
+la page ouverte ailleurs — y compris <code>atlas brief</code> ou <code>atlas precedents</code> lancés depuis un troisième
+dossier, qui font la même bascule en silence (leur sortie part sur stderr, pas sur le texte qu’ils
+produisent). Si aucun <code>.atlas-workspace/</code> n’est trouvé, rien ne bascule : Atlas garde le dernier
+projet actif du registre.</p>
+</blockquote>
+<p>Si aucun navigateur ne peut s’ouvrir (poste sans interface), la commande imprime l’URL au lieu
+d’échouer. Elle n’écrit rien de nouveau elle-même : au plus le pidfile et le journal du daemon
+qu’elle vient de démarrer (voir plus bas), et l’enregistrement du projet détecté dans le registre —
+détaillé dans <a href="/atlas-site/manuel/prise-en-main">Prise en main</a>.</p>
+<h2 id="déclarer-un-projet">Déclarer un projet</h2>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> init</span><span style="color:#6A737D;--shiki-dark:#6A737D">                        # déclare le dossier courant</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> init</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> /chemin/vers/chapeau</span><span style="color:#6A737D;--shiki-dark:#6A737D">   # déclare un autre dossier</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> init</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> --stack</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> nest,angular</span><span style="color:#6A737D;--shiki-dark:#6A737D">   # force les stacks au lieu de les laisser se déduire</span></span></code></pre>
+<p><code>atlas init</code> crée <code>.atlas-workspace/</code> dans le dossier cible : <code>project.json</code>, un dossier <code>features/</code>
+vide, un <code>.gitignore</code> (pour que versionner ce dossier soit sûr) et <code>ESPACES.md</code> (qui écrit quoi
+dedans). Le détail de ce que contient <code>project.json</code> — couches, familles, repos exclus — est dans
+<a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a> ; le déroulé complet du premier lancement
+(détection des stacks, des repos front, déclaration de la première feature) est dans
+<a href="/atlas-site/manuel/prise-en-main">Prise en main</a>.</p>
+<p>Ce qui est propre à la commande elle-même :</p>
+<ul>
+<li>
+<p><code>DIR</code> est optionnel (défaut : le dossier courant) et doit déjà exister sur le disque, sinon la
+commande sort en erreur.</p>
+</li>
+<li>
+<p><code>--stack a,b</code> accepte aussi <code>--stack=a,b</code> ; une stack inconnue (ni détectée, ni dans la liste
+livrée) fait échouer la commande en listant les stacks disponibles. Quinze sont livrées :
+<code>angular</code>, <code>axios</code>, <code>express</code>, <code>fastify</code>, <code>graphql</code>, <code>hono</code>, <code>jest</code>, <code>koa</code>, <code>nest</code>, <code>next</code>, <code>nuxt</code>,
+<code>react</code>, <code>svelte</code>, <code>typescript</code>, <code>vue</code>.</p>
+</li>
+<li>
+<p><strong>Sans <code>--stack</code>, elle n’écrit aucune liste de stacks</strong> : elle imprime ce que les dépendances
+prouvent, et le serveur le redérive à chaque chargement. Avec <code>--stack</code>, ton choix gagne : il est
+écrit tel quel, et ce qui était détecté en plus est écrit comme un refus. La commande signale
+l’écart sans rien changer.</p>
+</li>
+<li>
+<p>Un projet en <strong>JavaScript pur</strong> est reconnu : la seule présence d’un <code>package.json</code> prouve le
+langage, donc les familles de fichiers et les appels <code>fetch</code> fonctionnent sans TypeScript.</p>
+</li>
+<li>
+<p>Elle lit les branches des repos membres pour écrire <strong>ce qui fait une feature ici</strong> — un jeton de
+ticket dans le nom, ou bien chaque branche — et la <strong>ligne de base</strong> du projet. Deux décisions,
+modifiables ensuite depuis Config › Projet (<a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a>).</p>
+</li>
+<li>
+<p>Les stacks se prouvent par les dépendances <strong>de tous les paquets</strong> d’un dépôt à espaces de travail,
+pas seulement de sa racine : un <code>package.json</code> de racine qui ne déclare rien ne fait pas conclure
+« aucune stack ».</p>
+</li>
+<li>
+<p>Elle refuse de s’exécuter sur le repo d’Atlas lui-même — un garde-fou contre un
+<code>.atlas-workspace/</code> parasite niché dans l’outil, pas dans ton projet.</p>
+</li>
+<li>
+<p>Si <code>.atlas-workspace/</code> existe déjà, elle le dit et <strong>n’écrase rien</strong> — ni <code>project.json</code>, ni une
+stack déposée à la main — mais elle continue quand même : elle réenregistre le projet dans le
+registre si le daemon tourne.</p>
+</li>
+<li>
+<p>Elle ne fait <strong>pas</strong> <code>git init</code>, ne crée aucune branche, et n’installe <strong>pas</strong> le plugin IA : ce
+dernier geste touche ta configuration Claude Code, pas ce projet, et se prend à part avec
+<code>atlas plugin install</code> (plus bas).</p>
+</li>
+</ul>
+<p>Ce qu’elle imprime, sur un chapeau à un repo :</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>✓ stacks DÉTECTÉES dans 1 repo(s) : fastify, typescript  (dépendances déclarées)</span></span>
+<span class="line"><span>✓ features par BRANCHE : aucun jeton de ticket dans 4 branche(s) — chaque branche est une feature,</span></span>
+<span class="line"><span>  nommée par son dernier segment (`featureId: "branch"`, éditable dans Config › Projet)</span></span>
+<span class="line"><span>✓ ligne de base : `master` — détectée dans 1 repo(s) (`base` dans project.json, éditable dans Config › Projet)</span></span>
+<span class="line"><span>✓ ~/dev/atlas-ws/.atlas-workspace créé (project.json + features/ + .gitignore + ESPACES.md)</span></span>
+<span class="line"><span>  · stacks actives : fastify, typescript (prouvées par les dépendances — re-dérivées à chaque chargement)</span></span></code></pre>
+<p>La ligne de base est détectée par repo : la branche que désigne <code>origin/HEAD</code> quand ce n’est pas une
+feature, sinon la première présente parmi <code>develop</code>, <code>master</code>, <code>main</code>. Deux cas ne s’écrivent pas, et
+se disent : <code>⚠ bases hétérogènes</code> quand les repos ne sont pas d’accord — la déclaration reste à toi,
+par projet ou par feature —, et <code>⚠ aucune ligne de base détectée</code> quand aucun repo n’en montre ;
+Atlas cherchera alors <code>develop</code>, et le dira repo par repo.</p>
+<h2 id="le-daemon">Le daemon</h2>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> start</span><span style="color:#6A737D;--shiki-dark:#6A737D">     # démarre le daemon (port 3030 par défaut)</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> stop</span><span style="color:#6A737D;--shiki-dark:#6A737D">      # l'arrête</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> restart</span><span style="color:#6A737D;--shiki-dark:#6A737D">   # stop puis start</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> status</span><span style="color:#6A737D;--shiki-dark:#6A737D">    # état + version de l'instance qui tourne</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> version</span><span style="color:#6A737D;--shiki-dark:#6A737D">   # la version, en JSON brut</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> logs</span><span style="color:#6A737D;--shiki-dark:#6A737D">      # suit les journaux (20 dernières lignes, puis en direct)</span></span></code></pre>
+<p>Le daemon sert l’API <strong>et</strong> la page web sur le <strong>même port</strong> — jamais deux process. <code>atlas start</code>
+ne fait rien s’il répond déjà (« atlas déjà en marche ») au lieu de tenter un second lancement ;
+sinon il le démarre détaché, capable de survivre à la fermeture du terminal, puis attend jusqu’à
+30 secondes qu’il réponde avant d’abandonner.</p>
+<p><code>atlas stop</code> envoie un signal d’arrêt propre et attend jusqu’à 10 secondes ; passé ce délai, elle
+force l’arrêt. Si rien ne répond sur le port, elle le dit et nettoie le pidfile sans rien tuer. Et
+si quelque chose répond sur le port mais que le pidfile ne porte pas ce process — un daemon lancé
+autrement, par <code>npm run dev</code> par exemple — elle <strong>refuse de tuer à l’aveugle</strong> : elle te dit
+d’arrêter ce process là où tu l’as lancé.</p>
+<p><code>atlas status</code> affiche <code>● en marche</code> avec l’adresse et, quand elle le connaît, le pid du process
+qu’elle a lancé (elle peut répondre sans pid si le daemon vient d’ailleurs), suivi de la version en
+JSON. Sans daemon, elle affiche <code>○ arrêté</code> — jamais un troisième état ici, la question est binaire.</p>
+<p><code>atlas version</code> répond <strong>selon ce qu’elle a pu voir</strong>, de la source la plus fiable à la moins
+précise : si le daemon répond, c’est lui qui donne la version qui tourne réellement ; sinon, si un
+paquet est installé, la version vient du fichier écrit par ce paquet à sa fabrication ; si aucun des
+deux n’existe (aucun daemon, aucun paquet buildé), elle rend <code>{"version":"?"}</code>. Elle ne dit
+<strong>jamais</strong> si cette version est la dernière disponible — savoir si tu es en retard est une question
+différente, posée par <code>atlas update</code> (juste après) ou affichée par Config › Atlas en trois états
+(à jour, une version existe, ou « je n’ai pas pu regarder » — voir
+<a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a>) ; <code>atlas version</code> dit ce qui tourne, jamais si
+c’est suffisant.</p>
+<p><code>atlas logs</code> affiche les 20 dernières lignes puis suit le fichier en direct (l’équivalent d’un
+<code>tail -f</code>), sans dépendre d’aucun outil système. Sans journal (daemon jamais lancé), elle le dit et
+s’arrête.</p>
+<p><strong>Le port</strong> se règle avec <code>ATLAS_PORT</code> (ou <code>PORT</code>), défaut <code>3030</code> ; pidfile et journal sont indexés
+par port dans le dossier d’état d’Atlas (<code>~/.local/state/atlas/</code>, ou <code>$XDG_STATE_HOME/atlas</code>) — deux
+instances sur deux ports coexistent sans se marcher dessus. <code>start</code>, <code>stop</code>, <code>restart</code> et <code>status</code>
+pilotent le daemon lui-même, quel que soit le dossier où tu te trouves ; c’est <code>atlas</code> (sans
+argument) qui, lui, bascule le <strong>projet actif</strong> sur ce daemon.</p>
+<h2 id="se-mettre-à-jour">Se mettre à jour</h2>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> update</span><span style="color:#6A737D;--shiki-dark:#6A737D">                        # installe la dernière version PUBLIÉE, redémarre, rafraîchit le plugin</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> promote</span><span style="color:#6A737D;--shiki-dark:#6A737D">                       # (contributeurs d'Atlas) reconstruit TON code, l'installe, redémarre</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> promote</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> --from</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> ~/dev/atlas</span><span style="color:#6A737D;--shiki-dark:#6A737D">    # depuis un dossier qui n'est pas ton clone courant</span></span></code></pre>
+<p>Les deux commandes se ressemblent — même fin (redémarrage, rafraîchissement du plugin, affichage de
+la version) — et ne servent <strong>pas la même personne</strong> :</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><code>atlas update</code></th>
+<th><code>atlas promote</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pour qui</td>
+<td>tout le monde, y compris un contributeur</td>
+<td>seulement un contributeur, dans un clone du dépôt Atlas</td>
+</tr>
+<tr>
+<td>installe quoi</td>
+<td>la dernière version <strong>publiée</strong> au registre npm</td>
+<td><strong>ton code local</strong>, empaqueté puis installé</td>
+</tr>
+<tr>
+<td>trouvée où</td>
+<td>n’importe où</td>
+<td>remonte depuis le dossier courant jusqu’à trouver un clone du dépôt Atlas</td>
+</tr>
+<tr>
+<td>en échec</td>
+<td>dit qu’il manque le registre et le jeton, avec les deux lignes <code>npm config set</code> à taper</td>
+<td>dit qu’aucun clone n’est trouvable ; <code>--from CHEMIN</code> en donne un explicitement</td>
+</tr>
+</tbody>
+</table>
+<p><code>atlas promote</code> n’apparaît dans <code>atlas help</code> que si un tel clone existe à portée — elle reste tapable
+sinon, juste absente de l’aide, pour ne pas annoncer une capacité que tu ne peux pas utiliser.</p>
+<blockquote>
+<p>⚠️ Depuis un clone du dépôt Atlas, <code>atlas update</code> <strong>fait ce qu’elle dit</strong>, pas ce qu’on croit
+vouloir : elle prévient (« ceci installe la dernière version PUBLIÉE, pas ton code ») puis
+installe quand même la version publiée — qui peut être <strong>en dessous</strong> du code que tu viens
+d’écrire. C’est <code>atlas promote</code> qu’il faut taper pour tester son propre code.</p>
+</blockquote>
+<p>Les deux commandes <strong>écrivent</strong> : elles installent un paquet npm en global (donc hors d’Atlas et hors
+de ton projet), redémarrent le daemon par le binaire global fraîchement posé, et — seulement si le
+plugin Claude Code est déjà installé — le rafraîchissent (<code>plugin update</code> ou une réinstallation
+complète selon que le numéro de version suffit à prouver la différence). Ni l’une ni l’autre ne
+touche un repo analysé, une branche, ou <code>.atlas-workspace/</code>.</p>
+<h2 id="brancher-ton-ia">Brancher ton IA</h2>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> plugin</span><span style="color:#6A737D;--shiki-dark:#6A737D">            # affiche les deux commandes à lancer, sans les exécuter</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> plugin</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> install</span><span style="color:#6A737D;--shiki-dark:#6A737D">    # les exécute : branche les skills Atlas sur ta session de code</span></span></code></pre>
+<p>Le plugin installe les skills Atlas dans Claude Code — les trois qu’on retape le plus souvent sont
+<code>/atlas:as-coded</code>, <code>/atlas:review</code> et <code>/atlas:answer</code>. Sans argument, <code>atlas plugin</code> <strong>imprime</strong> les deux commandes
+Claude Code à taper (elles marchent aussi en <code>/plugin …</code> dans une session déjà ouverte) — elle
+n’exécute rien elle-même. <code>install</code> les exécute : elle écrit dans <strong>ta configuration Claude Code</strong>
+globale, jamais dans ce projet ni dans un repo. Si le plugin est déjà posé, <code>install</code> ne répond pas
+juste « déjà installé » : elle le <strong>réinstalle entièrement</strong> (elle ne peut pas se fier au numéro de
+version pour savoir s’il y a du neuf) — le même geste que fait <code>atlas promote</code> en fin de parcours,
+pas celui, plus léger, d’<code>atlas update</code>.</p>
+<p><code>atlas init</code> ne fait jamais ce geste à ta place — c’est délibéré, un plugin touche ta session
+entière, pas seulement ce projet. Ce que le plugin permet une fois posé — les skills, le serveur
+MCP, ce qu’une IA peut écrire et ce qu’elle ne peut pas — est dans
+<a href="/atlas-site/manuel/brancher-l-ia">Brancher l’IA</a> et <a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l’IA lit et écrit</a>.</p>
+<h2 id="les-commandes-qui-servent-lia">Les commandes qui servent l’IA</h2>
+<p>Cinq commandes ne sont pas pensées pour être tapées de mémoire tous les jours : elles sont la
+surface par laquelle une IA (ou un skill que tu écris toi-même) parle à Atlas.</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> mcp</span><span style="color:#6A737D;--shiki-dark:#6A737D">                          # le serveur MCP — lancé par ton client IA, pas à la main</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> guide</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> review</span><span style="color:#6A737D;--shiki-dark:#6A737D">                 # le mode d'emploi d'Atlas pour un skill de review maison</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> brief</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> PROJ-412</span><span style="color:#6A737D;--shiki-dark:#6A737D">                # la carte d'une feature, en une page de texte</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> precedents</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> --build</span><span style="color:#6A737D;--shiki-dark:#6A737D">           # reconstruit l'index des reviews passées</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> precedents</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> PROJ-412</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> --json</span><span style="color:#6A737D;--shiki-dark:#6A737D">    # ce que les reviews passées disent, ligne par ligne, sur cette feature</span></span></code></pre>
+<p><strong><code>atlas mcp</code></strong> démarre le serveur <strong>MCP</strong> (le protocole qui laisse un client IA interroger Atlas)
+sur l’entrée/sortie standard — ce n’est pas une commande qu’on tape : c’est ton client IA qui la
+lance lui-même, une fois branché. Elle résout le projet actif depuis le dossier où la session a été
+ouverte, avec une garde stricte : si le daemon sert déjà un <strong>autre</strong> projet que celui de cette
+session, elle refuse de répondre plutôt que de rendre une carte plausible et fausse. Elle n’écrit
+rien elle-même — ce que les outils qu’elle expose peuvent écrire (des annotations, des fils de
+conversation, jamais ta validation ni le code) est détaillé dans
+<a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l’IA lit et écrit</a>.</p>
+<p><strong><code>atlas guide [MOMENT]</code></strong> imprime, sur la sortie standard, le mode d’emploi d’Atlas pour un moment
+donné — aujourd’hui <code>review</code> et <code>answer</code> — à coller dans un skill de review <strong>maison</strong> qui doit
+continuer à écrire dans Atlas (fils, notes) sans passer par les skills d’Atlas eux-mêmes. Sans
+argument, elle liste les moments disponibles. Elle ne fait que lire des fichiers du plugin ; rien
+n’est écrit.</p>
+<p><strong><code>atlas brief &lt;TICKET&gt;</code></strong> imprime, sur la sortie standard, la carte d’une feature réduite à du
+texte — de quoi la coller dans une revue, un message, ou la donner à lire à un agent qui n’ouvre pas
+Atlas. <code>--base &lt;branche&gt;</code> force la branche de comparaison pour cet appel. Elle démarre le daemon si
+besoin (en silence, sur l’erreur standard, pour ne pas polluer le texte produit) et active le projet
+du dossier courant — le même effet de bord que <code>atlas</code> tout court. Elle laisse jusqu’à 5 minutes
+avant d’abandonner : une grosse feature multi-repos peut prendre du temps, et une réponse lente
+n’est pas une panne.</p>
+<p><strong><code>atlas precedents</code></strong> a deux visages. Un <strong>précédent</strong> est le souvenir de ce qu’une review a déjà
+dit sur un nœud du même genre (une méthode, un contrat…) ailleurs — de quoi éviter de rouvrir un
+débat déjà tranché. <code>--build [--full]</code> reconstruit cet <strong>index des précédents</strong> : elle rejoue les
+features qui ont déjà porté un fil de review, et <strong>écrit</strong> <code>.atlas-workspace/precedents.json</code> — un
+fichier partagé, pas seulement local à toi. C’est une passe longue (des dizaines de cartes
+rejouées, jusqu’à une heure avant qu’Atlas l’abandonne), et elle affiche des chiffres bruts
+(combien de fils retrouvés, combien suivis d’un changement, combien de réponses humaines) plutôt
+qu’un jugement : elle sert à savoir si le mécanisme vaut la peine, pas à le lire au quotidien.
+<code>--full</code> la refait sans repartir de l’index déjà là. <code>atlas precedents &lt;TICKET&gt;</code> — sans <code>--build</code> —
+<strong>lit</strong> cet index et sert, pour chaque nœud de cette feature, le précédent le plus proche du même
+type : ce qu’il disait, si un humain a répondu, si le code a changé après, si les tests ont bougé.
+<code>--json</code> rend la réponse brute plutôt que le texte mis en forme. Cette seconde forme ne modifie
+rien.</p>
+<p><strong><code>atlas claude [--dry-run] [ARGS…]</code></strong> ouvre une session Claude Code <strong>isolée</strong> aux skills d’Atlas —
+elle ne charge ni les skills, ni le <code>CLAUDE.md</code> du projet que tu es en train de faire relire. Elle
+n’a de sens que si tu as le dépôt d’Atlas lui-même sur ta machine (elle sert au dogfooding d’Atlas
+sur son propre code) : si tu utilises Atlas sur <em>ton</em> projet, tu n’en as pas besoin — c’est
+<code>atlas plugin install</code>, plus haut, qui te concerne. <code>--dry-run</code> affiche la commande qu’elle
+lancerait sans la lancer. Elle échoue si aucun <code>.atlas-workspace/</code> n’est trouvable (ni sous le
+dossier courant, ni comme projet actif du registre) ou si le binaire <code>claude</code> n’est pas dans le
+PATH.</p>
+<h2 id="variables-denvironnement-et-options-globales">Variables d’environnement et options globales</h2>
+<p>Trois seulement changent directement ce que fait une commande de cette page ; la liste complète
+(jetons GitLab/GitHub, trace de debug…) est dans
+<a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Effet</th>
+<th>Défaut</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ATLAS_PORT</code> ou <code>PORT</code></td>
+<td>le port du daemon — <code>start</code>, <code>stop</code>, <code>status</code>, <code>logs</code> s’appliquent à <em>ce</em> port</td>
+<td><code>3030</code></td>
+</tr>
+<tr>
+<td><code>ATLAS_WORKSPACE</code></td>
+<td>force un workspace au <strong>tout premier démarrage</strong> du daemon seulement — ensuite le registre décide</td>
+<td>la remontée depuis le dossier courant</td>
+</tr>
+<tr>
+<td><code>ATLAS_CLAUDE_BIN</code></td>
+<td>le binaire lancé par <code>atlas claude</code> et par <code>atlas plugin</code></td>
+<td><code>claude</code></td>
+</tr>
+</tbody>
+</table>
+<p>Aucune option globale (<code>--verbose</code>, <code>--json</code>…) ne s’applique à toutes les commandes : chaque
+commande a les siennes, listées ci-dessus.</p>
+<h2 id="ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</h2>
+<ul>
+<li>Aucune commande ne se met à jour toute seule : <code>atlas update</code> est toujours un geste que tu tapes.</li>
+<li><code>atlas init</code> ne fait pas <code>git init</code>, ne crée aucune branche, et n’installe pas le plugin IA à ta
+place.</li>
+<li>Aucune commande de cette page ne touche un repo analysé : ni son contenu, ni ses branches, ni un
+dépôt distant. La seule écriture qui sorte d’Atlas est celle des skills une fois branchés (voir
+<a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l’IA lit et écrit</a>), jamais celle de la ligne de commande
+elle-même.</li>
+<li><code>atlas mcp</code> ne se tape pas à la main : c’est un serveur de protocole, lancé par ton client IA.</li>
+<li>Un daemon ne sert jamais deux projets à la fois : toute commande qui parle d’une feature bascule
+le projet actif plutôt que de répondre sur le mauvais.</li>
+<li><code>atlas update</code> ne vérifie pas elle-même si tu es en retard : elle installe directement ce que le
+registre appelle « la dernière version ». C’est Config › Atlas qui juge, en trois états, s’il
+vaut la peine de la taper (voir <a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a>).</li>
+</ul>
+<h2 id="limites-connues">Limites connues</h2>
+<p><code>atlas update</code> et <code>atlas promote</code> ne sont éprouvées que sous Linux : la façon dont elles retrouvent
+le binaire fraîchement installé ne tient pas encore sous Windows (détail dans
+<a href="/atlas-site/manuel/prise-en-main">Prise en main</a>). <code>atlas plugin</code> et <code>atlas claude</code> supposent un binaire
+<code>claude</code> dans le PATH — sans lui, elles le disent et s’arrêtent, elles ne l’installent pas.</p>
+<nav class="suite" aria-label="Page suivante et précédente"><a href="/atlas-site/manuel/quand-atlas-ne-voit-pas"><small>← précédent</small>Quand Atlas ne voit pas</a><a class="droite" href="/atlas-site/manuel/gitlab-et-github"><small>suivant →</small>GitLab et GitHub</a></nav></article><nav class="cote toc" aria-label="Sur cette page"><h2>Sur cette page</h2><ul><li><a href="#toutes-les-commandes-dun-coup-dœil">Toutes les commandes, d’un coup d’œil</a></li><li><a href="#ouvrir-une-carte">Ouvrir une carte</a></li><li><a href="#déclarer-un-projet">Déclarer un projet</a></li><li><a href="#le-daemon">Le daemon</a></li><li><a href="#se-mettre-à-jour">Se mettre à jour</a></li><li><a href="#brancher-ton-ia">Brancher ton IA</a></li><li><a href="#les-commandes-qui-servent-lia">Les commandes qui servent l’IA</a></li><li><a href="#variables-denvironnement-et-options-globales">Variables d’environnement et options globales</a></li><li><a href="#ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</a></li><li><a href="#limites-connues">Limites connues</a></li></ul></nav></main><footer class="pied"><div class="dedans"><span>Atlas — suivi et validation de code.</span><a href="/atlas-site/manuel/prise-en-main">Manuel</a></div></footer><script>
+    document.getElementById('theme-bt')?.addEventListener('click', () => {
+      const r = document.documentElement;
+      // clair → sombre → système, et le tour recommence. « Système » RETIRE la clé : c'est ce qui
+      // rend le choix distinct d'une absence de choix.
+      const suite = { clair: 'sombre', sombre: '', '': 'clair' };
+      const v = suite[r.dataset.theme || ''];
+      if (v) { r.dataset.theme = v; try { localStorage.setItem('atlas-site-theme', v); } catch {} }
+      else { delete r.dataset.theme; try { localStorage.removeItem('atlas-site-theme'); } catch {} }
+    });
+  </script></body></html>

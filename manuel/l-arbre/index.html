@@ -1,0 +1,417 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>L&#39;Arbre · Atlas</title><meta name="description" content="Le panneau central d'Atlas : tout le diff d'une feature, rangé par chemin d'exécution ou par fichier. C'est là qu'on décide par quoi commencer, et là qu'on voit ce qu'on n'a pas encore regardé."><link rel="canonical" href="https://gregoirelacoste.github.io/atlas-site/manuel/l-arbre"><meta property="og:title" content="L'Arbre · Atlas"><meta property="og:description" content="Le panneau central d'Atlas : tout le diff d'une feature, rangé par chemin d'exécution ou par fichier. C'est là qu'on décide par quoi commencer, et là qu'on voit ce qu'on n'a pas encore regardé."><meta property="og:type" content="website"><meta property="og:url" content="https://gregoirelacoste.github.io/atlas-site/manuel/l-arbre"><meta name="twitter:card" content="summary"><link rel="icon" href="/atlas-site/favicon.svg" type="image/svg+xml"><script>
+    (() => { try { const t = localStorage.getItem('atlas-site-theme');
+      if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t; } catch {} })();
+  </script><link rel="stylesheet" href="/atlas-site/_astro/Base.D32RNicN.css"></head><body><header class="tete"><a class="marque" href="/atlas-site">🗺️ Atlas</a><nav><a href="/atlas-site/installer">Installer</a><a href="/atlas-site/manuel/prise-en-main" aria-current="page">Manuel</a><a href="/atlas-site/articles">Écrits</a><button class="theme-bt" id="theme-bt" type="button" aria-label="Changer de thème">◐</button></nav></header><main class="doc"><nav class="cote" aria-label="Le manuel"><h2>Le manuel</h2><ol><li><a href="/atlas-site/manuel/prise-en-main">Prise en main</a></li><li><a href="/atlas-site/manuel/l-arbre" aria-current="page">L&#39;Arbre</a></li><li><a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a></li><li><a href="/atlas-site/manuel/le-code">Le Code</a></li><li><a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a></li><li><a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et inventaire</a></li><li><a href="/atlas-site/manuel/le-panneau-git">Le panneau Git</a></li><li><a href="/atlas-site/manuel/le-tableau">Le Tableau</a></li><li><a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a></li><li><a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a></li><li><a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a></li><li><a href="/atlas-site/manuel/brancher-l-ia">Brancher l&#39;IA</a></li><li><a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l&#39;IA lit et écrit</a></li><li><a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a></li><li><a href="/atlas-site/manuel/la-ligne-de-commande">La ligne de commande</a></li><li><a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a></li><li><a href="/atlas-site/manuel/le-clavier">Le clavier</a></li></ol></nav><article class="corps"><h1>L&#39;Arbre</h1><p class="chapo">Le panneau central d&#39;Atlas : tout le diff d&#39;une feature, rangé par chemin d&#39;exécution ou par fichier. C&#39;est là qu&#39;on décide par quoi commencer, et là qu&#39;on voit ce qu&#39;on n&#39;a pas encore regardé.</p><blockquote>
+<p>Le panneau central d’Atlas : tout le diff d’une feature, rangé par chemin d’exécution ou par
+fichier. C’est là qu’on décide par quoi commencer, et là qu’on voit ce qu’on n’a pas encore regardé.</p>
+</blockquote>
+<h2 id="deux-dispositions-du-même-diff">Deux dispositions du même diff</h2>
+<p>L’Arbre montre <strong>tout le diff</strong> de la feature — chaque fichier touché, chaque symbole modifié — et il
+le range de deux façons, au choix : par <strong>flux</strong> (un chemin d’exécution complet, d’un point d’entrée
+jusqu’au bout de ce qu’il appelle, même à travers plusieurs services) ou par <strong>fichier</strong>. En tête de
+la colonne, un sélecteur de deux mots — <strong><code>par flux</code></strong> et <strong><code>par fichier</code></strong> — marque la disposition
+active et bascule au clic ; <strong><code>Espace a a</code></strong> fait de même. Ni l’un ni l’autre tant qu’aucune carte
+n’est chargée. Aucun appel réseau : deux mises en page de la même carte. Le choix est retenu
+sur cette machine.</p>
+<p>Dans les deux cas, l’assemblage <strong>réorganise, il ne filtre jamais</strong>. Et quand rien n’est reconnu,
+Atlas le dit au lieu d’afficher une page vide, en distinguant le diff vide de la détection en échec :
+« Aucun flux reconnu — ni entrée (http/ui/cron/hook) ni composant porteur » nomme le second.</p>
+<h3 id="par-flux">Par flux</h3>
+<p>Le niveau 0, ce sont les flux, triés par <strong>densité de diff possédé</strong> : celui qui porte le plus de
+code modifié en propre passe en premier. À égalité, les entrées passent d’abord (HTTP, puis UI, puis
+CRON, puis hook), et l’ordre d’origine tranche. Un flux qui ne porte aucune modification reste
+affiché : il répond à « quel endpoint mène au changement ». Dessous, un séparateur <strong>RESTE DU DIFF</strong>,
+sous-titré <em>hors flux — rangé par repo</em>, recueille ce que ne porte aucun flux, avec un bandeau
+<code>📦 &lt;repo&gt;</code> par repo ; les cinq groupes qu’on y trouve sont dans
+<a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a>.</p>
+<h3 id="par-fichier">Par fichier</h3>
+<p>Le diff rangé comme le panneau « Changes » d’un IDE : <code>📦 repo</code> → dossiers → fichier → ses symboles,
+les chaînes de dossiers à enfant unique compactées sur une ligne (<code>src/domains/order/dto</code>). Dossiers
+et fichiers sont par ordre alphabétique ; dans un fichier, les symboles gardent l’ordre de l’Arbre —
+celui des appels, pas celui des lignes.</p>
+<p>Elle ajoute un <strong>compte à chaque étage</strong> : sur la ligne d’un fichier, d’un dossier et sur le bandeau
+du repo, une pastille dit <code>3/7 · 128 l.</code> — endossés sur total, puis les lignes restant à relire
+dessous. <code>✓</code> quand tout est endossé et à jour ; <code>—</code> quand il n’y a rien à endosser là (contexte,
+« de côté », tests). Sur la ligne d’un fichier, une pastille <code>? 3</code> compte à part les symboles à relire
+dont Atlas ignore le poids : ni comptés, ni oubliés. Ces chiffres se refont à chaque endossement.</p>
+<p><strong>La relecture est la même des deux côtés</strong> : même ligne, même rond d’état, même poids, même
+<code>0</code>, mêmes notes, mêmes fils. Ce qui est endossé l’est par l’identité du symbole, pas par la
+disposition. Le curseur suit la bascule par cette même identité ; quand la ligne n’a pas d’équivalent
+en face (une ligne de dossier n’en a pas), la sélection tombe au lieu de se poser « à peu près ».</p>
+<p><strong>Le nœud-fichier EST la ligne du fichier.</strong> Quand l’Arbre connaît un nœud pour le fichier lui-même —
+un contrat, un template, un fichier hors flux —, c’est la ligne du titre qui porte son rond, son
+poids et son endossement. Un fichier dont l’Arbre ne connaît que des méthodes n’en a pas : sa ligne
+est un repère, sans rond.</p>
+<p>Trois choses que cette vue n’a <strong>pas</strong>, et qu’elle dit :</p>
+<ul>
+<li><strong>pas de tronc</strong> — la ligne forte affirme une continuité d’appel, une liste de fichiers n’en a pas ;</li>
+<li><strong>pas le contexte hors diff</strong> — appelants remontés hors du diff, lignées de <strong>ricochet</strong> (les
+entrées intactes que le changement atteint quand même, voir
+<a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a>) : ils n’appartiennent à aucun fichier touché
+et vivent dans la vue par flux, ce que l’infobulle du sélecteur rappelle. Les bandes de ricochet ne
+suivent pas non plus ;</li>
+<li><strong>pas de groupes</strong> — ni « RESTE DU DIFF », ni « 🗂 de côté » : chaque ligne est sous son fichier, et
+ce qui est « de côté » y est visible à sa place, toujours sans rond.</li>
+</ul>
+<p>Si des symboles du diff n’avaient aucun fichier dans la liste, la vue les <strong>dirait</strong> au lieu de les
+escamoter : <code>⚠ N symboles sans fichier listé</code>, sous-titré <em>leur fichier n’est pas dans le diff lu par
+Atlas — dit, jamais escamoté</em>.</p>
+<blockquote>
+<p>⚠️ Ce n’est pas l’onglet <strong>🗂 Fichiers</strong> du volet gauche : celui-là liste les fichiers sans rond, et
+on n’y relit pas (voir <a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et Inventaire</a>).</p>
+</blockquote>
+<h2 id="le-vocabulaire-dune-ligne">Le vocabulaire d’une ligne</h2>
+<table>
+<thead>
+<tr>
+<th>Mot</th>
+<th>Ce que c’est</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>nœud</strong></td>
+<td>une ligne de l’Arbre : un symbole, un fichier, ou un groupe</td>
+</tr>
+<tr>
+<td><strong>racine</strong></td>
+<td>un nœud de niveau 1 — la tête d’un flux</td>
+</tr>
+<tr>
+<td><strong>enfant</strong></td>
+<td>un appel sortant résolu : Atlas a prouvé que ce symbole en appelle un autre</td>
+</tr>
+<tr>
+<td><strong>nœud-référence</strong></td>
+<td><code>voir ↑</code> — ce symbole est déjà affiché en entier plus haut</td>
+</tr>
+<tr>
+<td><strong>en-tête de classe</strong></td>
+<td>la déclaration d’une classe (décorateurs, signature), sans son corps</td>
+</tr>
+<tr>
+<td><strong>nœud-fichier</strong></td>
+<td>un fichier pris comme un tout : template, feuille de style, migration, surface</td>
+</tr>
+</tbody>
+</table>
+<p><strong>La première occurrence d’un symbole emporte ses enfants</strong>, les suivantes deviennent des <code>voir ↑</code>.
+Une entrée passe d’abord, puis on départage par repo, fichier, ligne.</p>
+<p>Une racine qui porte du code modifié sans qu’Atlas ait su nommer son appelant est quand même promue
+en flux, et le dit : <code>⌁ sans entrée reconnue</code>, avec en infobulle <em>aucun appelant résolu par l’AST
+(hook, event, injection…) — le flux part d’ici faute de mieux</em>. Ce n’est pas « il n’y en a pas »,
+c’est « je n’ai pas pu le prouver ».</p>
+<p>Un en-tête de classe s’écrit <code>Nom { }</code> et non <code>Nom()</code> : parenthèses = ça s’exécute, accolades = ça se
+déclare. Il apparaît dès que le diff touche les lignes de la déclaration — un décorateur de classe
+ajouté, un <code>extends</code> modifié —, y compris quand des méthodes de la même classe ont bougé à côté : ces
+lignes-là n’appartiennent à aucune d’elles. Il les rejoint alors en frère, juste avant la première,
+jamais au-dessus : personne n’appelle une déclaration.</p>
+<p><strong>Un fichier né de la feature n’a pas de badge : le nom de ses symboles passe en vert.</strong> L’infobulle
+dit ce que ça change à la relecture — rien n’appelait ce code avant, donc il ne peut pas régresser,
+seulement être faux.</p>
+<blockquote>
+<p>⚠️ Un <strong>contrat</strong> neuf garde la teinte du contrat : deux faits pour un seul canal — l’encre du nom —
+et c’est la classe qui gagne, parce qu’elle dit par quoi commencer. « Neuf » reste alors dans
+l’infobulle. Le badge <code>⊕ neuf</code> survit, lui, dans l’onglet 🗂 Fichiers, qui n’est pas un Arbre.</p>
+</blockquote>
+<p>Ce qui se pose encore à droite du nom :</p>
+<table>
+<thead>
+<tr>
+<th>Badge</th>
+<th>Ce qu’il dit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>⊘ supprimé</code></td>
+<td>le fichier n’existe plus ; le nom est barré, son code se lit à la base, il se relit comme le reste</td>
+</tr>
+<tr>
+<td><code>🚫 non atteint</code></td>
+<td>ce symbole est touché et <strong>aucun</strong> appelant n’a été trouvé dans son repo</td>
+</tr>
+<tr>
+<td><code>⇄ PATCH</code></td>
+<td>appel réseau prouvé — la ligne ne porte que le <strong>verbe</strong></td>
+</tr>
+<tr>
+<td><code>🧪 décor de test · 3 specs</code></td>
+<td>un fichier de simulation que seules des specs importent</td>
+</tr>
+</tbody>
+</table>
+<p>Un appel réseau dont l’endpoint n’a pas pu être apparié garde son badge — le fait est prouvé, seule
+la destination manque —, et Atlas le note en <strong>angle mort</strong> : un endroit où le moteur a renoncé et le
+déclare, au lieu de laisser croire à une carte complète.</p>
+<h2 id="les-déclencheurs-et-les-routes">Les déclencheurs et les routes</h2>
+<p>Une racine de flux porte son <strong>déclencheur</strong> — ce qui la met en route :</p>
+<table>
+<thead>
+<tr>
+<th>Badge</th>
+<th>Déclencheur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>▶ HTTP</code></td>
+<td>une entrée HTTP</td>
+</tr>
+<tr>
+<td><code>⏱ CRON</code></td>
+<td>une tâche planifiée</td>
+</tr>
+<tr>
+<td><code>↗ &lt;service&gt;</code></td>
+<td>un appel venu d’un autre service</td>
+</tr>
+<tr>
+<td><code>⚡ (&lt;événement&gt;)</code></td>
+<td>une entrée UI : un événement de template relié à la méthode du composant</td>
+</tr>
+<tr>
+<td><code>⎇ HOOK</code></td>
+<td>un cycle de vie ou un événement interne</td>
+</tr>
+</tbody>
+</table>
+<p>Quand le verbe est lu, le badge HTTP le porte à la place de sa catégorie : <code>▶ GET</code>, <code>▶ PATCH</code>. <strong>Et
+c’est tout ce que la ligne affiche</strong> : le verbe vient d’un décorateur, il est prouvé ; le chemin, lui,
+est le morceau dont Atlas est le moins sûr. Sans verbe lu, on retombe sur la catégorie (<code>▶ HTTP</code>),
+jamais sur un chemin deviné. Un appel réseau suit la même règle : <code>⇄ PATCH</code> quand le verbe est lu,
+<code>⇄ inter-service</code> sinon.</p>
+<p>L’étiquette entière descend en chip dans la tête du panneau <a href="/atlas-site/manuel/le-code">Code</a> —
+<code>▶ GET …/orders/history · v5</code> —, avec ce qu’elle avoue. Le <code>…/</code> dit que le <strong>montage</strong> du module
+n’est pas lu : il manque un préfixe devant. Déclare <code>routePrefix</code> sur le repo (voir
+<a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a>) et le <code>…</code> disparaît — son absence devient
+l’information <em>« ce lien est exact »</em> ; tant qu’il manque, Atlas l’inscrit en angle mort. La version
+(<code>· v5</code>) est un qualificatif, pas un segment d’URL ; un <code>*</code> est un segment dynamique non résolu. La
+ligne, au survol, rend le chemin.</p>
+<p>Ce qui protège une entrée d’être avalée comme enfant, c’est son <strong>déclencheur</strong>, pas sa couche : un
+<code>@Cron</code> posé sur un service reste une racine, une méthode privée d’un contrôleur reste un enfant.</p>
+<h2 id="les-couches--la-couleur-de-la-pastille">Les couches : la couleur de la pastille</h2>
+<p>La couleur est portée par la <strong>pastille</strong> (une lettre sur un carré coloré), jamais par le nom. Voici
+les six couches que pose <code>atlas init</code> : lettres et couleurs s’écrivent dans la config du projet, où tu
+les changes ; les motifs qui rangent un symbole dans une couche viennent des stacks qu’Atlas embarque,
+et le projet en ajoute (voir <a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a>).</p>
+<table>
+<thead>
+<tr>
+<th>Pastille</th>
+<th>Couche</th>
+<th>Couleur</th>
+<th>Quoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>C</code></td>
+<td>Controller</td>
+<td>rouge</td>
+<td>point d’entrée HTTP ou inter-service</td>
+</tr>
+<tr>
+<td><code>S</code></td>
+<td>Service</td>
+<td>jaune</td>
+<td>logique métier (la couche par défaut)</td>
+</tr>
+<tr>
+<td><code>R</code></td>
+<td>Repository</td>
+<td>bleu</td>
+<td>accès aux données</td>
+</tr>
+<tr>
+<td><code>↗</code></td>
+<td>Inter-service</td>
+<td>violet</td>
+<td>appel réseau vers un autre service</td>
+</tr>
+<tr>
+<td><code>H</code></td>
+<td>Helper</td>
+<td>vert</td>
+<td>utilitaire</td>
+</tr>
+<tr>
+<td><code>◇</code></td>
+<td>Contrat</td>
+<td>orange</td>
+<td>surface publique : entité, DTO, type, enum, constante</td>
+</tr>
+</tbody>
+</table>
+<p>Un nœud-fichier reçoit la pastille de son type de fichier (<code>TS</code>, <code>&lt;&gt;</code>, <code>#</code>, <code>{}</code>) et son nom s’écrit en
+gris italique.</p>
+<p>Au-dessus de la couche, un second axe range chaque nœud par ce dont d’autres dépendent — contrat,
+frontière non comparée, implémentation. Il a sa page :
+<a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a>, avec l’index des contrats, les types qu’une
+ligne prend et qu’elle rend, l’impact par ricochet, et ce que l’Arbre coupe.</p>
+<h2 id="le-tronc-les-territoires-les-stations">Le tronc, les territoires, les stations</h2>
+<p>En vue par flux, chaque flux reçoit une <strong>ligne forte de 6 pixels à gauche</strong> : le <strong>tronc</strong>, tracé
+comme une ligne de métro, qui ne s’interrompt jamais. Il porte le <strong>territoire</strong> — le repo vu depuis
+ce flux, avec sa couleur — et change de teinte à mi-chemin entre deux territoires : la ligne change,
+elle ne se coupe pas. Un <strong>terminus</strong> le ferme à chaque bout, sans quoi le blanc entre deux flux se
+lirait comme une continuité.</p>
+<p>Dessus, à hauteur de chaque ligne, une <strong>station</strong>, muette par choix et qui porte cinq faits : sa
+<strong>couleur</strong> dit le territoire · <strong>pleine ou creuse</strong> dit diff ou contexte · <strong>carrée</strong> dit un bout de
+branche à valeur (un contrat, un appel réseau) · <strong>double anneau</strong> dit un <code>voir ↑</code> · sa <strong>taille</strong> dit
+combien il reste à relire dessus. Une ligne de tests n’est pas une station.</p>
+<p>Deux repères s’y ajoutent : la <strong>correspondance</strong> <code>⇄ &lt;repo&gt; via &lt;méthode&gt;</code>, une ligne à elle seule à
+chaque changement de territoire — quand le flux réel vit ailleurs elle propose <code>voir ↓</code>, et
+<code>Backspace</code> ramène ; et le <strong>filet de fichier</strong>, un trait d’un pixel au changement de fichier, arrêté
+avant la colonne du tronc.</p>
+<p>Trois règles tiennent sa fidélité : <strong>un tronc par flux</strong> — ni le reste du diff, ni les bandes de
+ricochet n’en reçoivent ; <strong>une frontière n’existe que le long d’un appel</strong> ; <strong>un <code>voir ↑</code> ne teinte
+pas le tronc</strong>. La légende des couleurs de territoire vit dans le volet gauche, onglet <strong>● Relecture</strong>.</p>
+<h2 id="les-tests-sous-un-nœud">Les tests sous un nœud</h2>
+<p>Quand une stack de test est active, une ligne <code>🧪 N tests</code> apparaît <strong>sous le nœud que les tests
+appellent</strong>, suivie du nom du fichier. Elle n’a ni rond ni poids — <strong>un test se lit, il ne se relit
+pas</strong> —, et l’ouvrir affiche le fichier <strong>titres seuls</strong> dans le panneau <a href="/atlas-site/manuel/le-code">Code</a>. Tout
+le reste — le grain, les cas sautés, ce qu’un test atteint — est dans
+<a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et Inventaire</a>.</p>
+<h2 id="le-poids--combien-il-reste-à-relire">Le poids : combien il reste à relire</h2>
+<p>Le poids d’un nœud, ce sont les <strong>lignes ajoutées</strong> qui tombent dans son étendue. Il ne s’écrit pas
+sur la ligne : la question « combien reste-t-il » a un seul lieu, l’onglet
+<a href="/atlas-site/manuel/relire-et-endosser">Relecture</a> — un chiffre unique, une jauge graduée en séances de 400
+lignes, la ventilation par classe. La vue par fichier en fait la somme par fichier, dossier et repo,
+jamais un second comptage.</p>
+<p>Quand Atlas ne sait pas (fichier non suivi, diff en échec), le poids est <strong>absent</strong>, jamais zéro :
+zéro est une réponse à part, celle d’un symbole dont la feature n’a fait que supprimer des lignes.</p>
+<h2 id="les-replis-les-loupes">Les replis, les loupes</h2>
+<p><strong>Rien ne naît replié.</strong> Un flux s’ouvre d’une traite, un fichier montre ses symboles : le repli est
+un geste, et c’est le tien. Seuls les groupes de rangement du reste du diff (<code>🗂 N de côté</code>,
+<code>N fichiers touchés hors flux</code>, <code>N infra transverse…</code>) gardent un repli d’origine, et ils annoncent
+sur leur ligne ce qu’il reste à relire dessous.</p>
+<p>Ce que tu plies ou déplies se <strong>retient sur cette machine</strong>, une feature à la fois : rouvrir la carte
+rend l’écran que tu avais laissé, et les deux dispositions puisent dans la même mémoire. Changer de
+feature l’écrase — ce n’est pas un historique de gestes, c’est le dernier état de l’écran.</p>
+<p>En vue par flux, un repli <strong>dit ce qu’il cache</strong> : <code>▸ 12 lignes</code>, ou <code>▸ 12 · relu</code> quand tout ce qui
+est dessous est endossé et à jour — la ligne s’atténue alors. La chip se refait au dépli : un repli
+qui ne cache plus rien se tait. En vue par fichier, le compte de la ligne le disait déjà. Endosser ne replie jamais rien sous ton doigt ; ce qui est relu <strong>s’atténue</strong> — le nom
+recule en gardant sa couleur, le vert du neuf comme la teinte du contrat — sans se cacher.</p>
+<p>Trois loupes, trois questions, un même <code>Échap</code> pour en sortir :</p>
+<table>
+<thead>
+<tr>
+<th>Loupe</th>
+<th>Comment</th>
+<th>Ce qu’elle fait</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>repo</strong></td>
+<td>clic sur une pastille de repo dans l’onglet ● Relecture</td>
+<td>garde ce territoire à pleine encre, <strong>atténue</strong> les autres — elle ne masque jamais ; recliquer la même pastille la lève</td>
+</tr>
+<tr>
+<td><strong>inventaire</strong></td>
+<td>clic sur un décompte de l’onglet Inventaire</td>
+<td><strong>taille</strong> l’Arbre : ce qui n’est ni un résultat ni un chemin vers un résultat disparaît, les ancêtres restent en échafaudage</td>
+</tr>
+<tr>
+<td><strong>impact</strong></td>
+<td><code>◎ situer dans l'Arbre</code>, depuis le tiroir <code>⊚</code> (<a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a>)</td>
+<td>allume les occurrences du nœud et leur lignée, atténue le reste, ouvre la bande correspondante</td>
+</tr>
+</tbody>
+</table>
+<p>Les deux dernières posent en tête de colonne une barre qui dit sur quoi elles portent, avec un bouton
+<code>← revenir à tout</code>. Celle de l’inventaire annonce deux chiffres quand ils diffèrent — les
+<strong>identités</strong> que compte l’inventaire, et les <strong>occurrences</strong> allumées dans l’Arbre : un symbole
+appelé de trois endroits y figure trois fois, et les deux chiffres sont justes.</p>
+<p>Enfin, cliquer une étape de <strong>🧭 Parcours</strong> isole le flux qui la porte (<code>🎯 étape isolée</code>) ; naviguer
+hors de ce flux le lève tout seul.</p>
+<h2 id="ce-que-lia-écrit-sur-une-ligne">Ce que l’IA écrit sur une ligne</h2>
+<p>Quand une IA est branchée (voir <a href="/atlas-site/manuel/brancher-l-ia">Brancher l’IA</a>), elle peut remplacer le nom d’un
+symbole par une <strong>intention</strong> de quelques mots — le vrai nom passe à droite, en muet — et ajouter une
+sous-ligne métier. Deux marques : <strong><code>~</code></strong>, ce qui a été dit n’est plus garanti (le fichier a bougé
+depuis) ; <strong><code>?</code></strong> collé au nom, l’IA n’a <strong>pas pu vérifier</strong>. Ce <code>?</code>-là n’est pas le tien : la touche
+<code>?</code> pose <strong>ton</strong> « je n’ai pas compris » (voir <a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a>).</p>
+<h2 id="raccourcis">Raccourcis</h2>
+<p>Une seule touche à retenir : <strong><code>Espace</code></strong>, la touche maîtresse. Elle ouvre la <strong>boîte</strong> des
+raccourcis, une lettre y choisit une colonne de l’écran, la suivante agit — <code>Espace a a</code> range
+l’Arbre par fichier. Le mécanisme entier (les sept colonnes, ce qui reste direct, ce que la boîte
+grise et pourquoi, les claviers non-QWERTY) est dans <a href="/atlas-site/manuel/le-clavier">Le clavier</a> ; ci-dessous,
+ce qui pilote l’Arbre.</p>
+<table>
+<thead>
+<tr>
+<th>Touche</th>
+<th>Effet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Espace a a</code></td>
+<td>par flux ⇄ par fichier</td>
+</tr>
+<tr>
+<td><code>Espace a c</code></td>
+<td>l’index des contrats (<a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a>)</td>
+</tr>
+<tr>
+<td><code>Espace a p</code></td>
+<td>tout plier ⇄ tout déplier, enfants compris — une bascule</td>
+</tr>
+<tr>
+<td><code>Espace a m</code> · <code>Espace d a</code></td>
+<td>masquer / montrer la colonne · plein Arbre, tout le reste masqué</td>
+</tr>
+<tr>
+<td><code>↑</code> <code>↓</code> · <code>→</code> <code>←</code></td>
+<td>se déplacer · déplier puis descendre, replier puis remonter</td>
+</tr>
+<tr>
+<td><code>0</code> · <code>1</code>–<code>4</code> · <code>?</code></td>
+<td>endosser, noter, « pas compris » (<a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a>)</td>
+</tr>
+<tr>
+<td><code>Backspace</code></td>
+<td>revenir à la position précédente</td>
+</tr>
+<tr>
+<td><code>Échap</code></td>
+<td>dépiler : tiroir d’usages et appelants allumés, loupes d’inventaire, de repo, d’impact, tiroir d’impact, flux isolé</td>
+</tr>
+</tbody>
+</table>
+<p>Les flèches veulent le focus du centre : clique une ligne de l’Arbre avant de t’en servir. Les
+autres colonnes se lisent avec leur panneau — <a href="/atlas-site/manuel/fichiers-et-inventaire">volet gauche</a>,
+<a href="/atlas-site/manuel/le-code">Code</a>, <a href="/atlas-site/manuel/le-panneau-git">Git</a>, <a href="/atlas-site/manuel/le-tableau">pages</a>.</p>
+<h2 id="ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</h2>
+<ul>
+<li><strong>Il ne pose jamais un appel qu’il n’a pas prouvé.</strong> La résolution passe par le type du récepteur,
+puis <code>this</code> — jamais par le nom. Type connu qui ne porte pas la méthode, récepteur sans type,
+plusieurs symboles portant le nom appelé : Atlas refuse l’arête, l’écrit en angle mort et <strong>nomme
+l’homonyme</strong> pour qu’on ne le croie pas non plus. Il ne déduit jamais à travers une frontière de
+repo, sauf pour apparier un appel réseau à son endpoint.</li>
+<li><strong>Il ne trie pas par risque.</strong> Pas de score : le tri est la densité de diff, et le degré de ricochet
+ne filtre jamais.</li>
+<li><strong>Il n’arrive avec aucun plan de repli</strong> : rien ne naît replié hors des groupes de rangement. Il
+déplie en revanche ce qu’il faut pour montrer la ligne où il t’emmène.</li>
+<li><strong>Il n’ouvre aucune définition depuis l’Arbre.</strong> On y sélectionne une ligne ; les liens vers un
+symbole vivent dans le panneau <a href="/atlas-site/manuel/le-code">Code</a>.</li>
+<li><strong>Il ne lance aucun test.</strong> Il lit les phrases des cas, il ne les exécute pas.</li>
+</ul>
+<h2 id="limites-connues">Limites connues</h2>
+<ul>
+<li><strong>Le poids ne compte que les lignes ajoutées.</strong> Un refactor qui retire 200 lignes pèse 0 : une ligne
+supprimée n’a pas de numéro côté feature. Limite assumée, pas un oubli.</li>
+<li><strong>« supprimé » et « neuf » se lisent au grain du fichier.</strong> Un symbole supprimé dans un fichier qui
+survit n’a pas de marque à lui, et un fichier renommé n’est jamais marqué neuf.</li>
+</ul>
+<nav class="suite" aria-label="Page suivante et précédente"><a href="/atlas-site/manuel/prise-en-main"><small>← précédent</small>Prise en main</a><a class="droite" href="/atlas-site/manuel/ce-qui-depend-de-quoi"><small>suivant →</small>Ce qui dépend de quoi</a></nav></article><nav class="cote toc" aria-label="Sur cette page"><h2>Sur cette page</h2><ul><li><a href="#deux-dispositions-du-même-diff">Deux dispositions du même diff</a></li><li><a class="h3" href="#par-flux">Par flux</a></li><li><a class="h3" href="#par-fichier">Par fichier</a></li><li><a href="#le-vocabulaire-dune-ligne">Le vocabulaire d’une ligne</a></li><li><a href="#les-déclencheurs-et-les-routes">Les déclencheurs et les routes</a></li><li><a href="#les-couches--la-couleur-de-la-pastille">Les couches : la couleur de la pastille</a></li><li><a href="#le-tronc-les-territoires-les-stations">Le tronc, les territoires, les stations</a></li><li><a href="#les-tests-sous-un-nœud">Les tests sous un nœud</a></li><li><a href="#le-poids--combien-il-reste-à-relire">Le poids : combien il reste à relire</a></li><li><a href="#les-replis-les-loupes">Les replis, les loupes</a></li><li><a href="#ce-que-lia-écrit-sur-une-ligne">Ce que l’IA écrit sur une ligne</a></li><li><a href="#raccourcis">Raccourcis</a></li><li><a href="#ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</a></li><li><a href="#limites-connues">Limites connues</a></li></ul></nav></main><footer class="pied"><div class="dedans"><span>Atlas — suivi et validation de code.</span><a href="/atlas-site/manuel/prise-en-main">Manuel</a></div></footer><script>
+    document.getElementById('theme-bt')?.addEventListener('click', () => {
+      const r = document.documentElement;
+      // clair → sombre → système, et le tour recommence. « Système » RETIRE la clé : c'est ce qui
+      // rend le choix distinct d'une absence de choix.
+      const suite = { clair: 'sombre', sombre: '', '': 'clair' };
+      const v = suite[r.dataset.theme || ''];
+      if (v) { r.dataset.theme = v; try { localStorage.setItem('atlas-site-theme', v); } catch {} }
+      else { delete r.dataset.theme; try { localStorage.removeItem('atlas-site-theme'); } catch {} }
+    });
+  </script></body></html>

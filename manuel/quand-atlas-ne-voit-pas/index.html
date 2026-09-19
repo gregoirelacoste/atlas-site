@@ -1,0 +1,382 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Quand Atlas ne voit pas · Atlas</title><meta name="description" content="La page de la confiance : ce qu'Atlas a prouvé, ce qu'il n'a pas pu prouver, et où il te le dit — pour que tu saches ce que tu signes au moment où tu valides."><link rel="canonical" href="https://gregoirelacoste.github.io/atlas-site/manuel/quand-atlas-ne-voit-pas"><meta property="og:title" content="Quand Atlas ne voit pas · Atlas"><meta property="og:description" content="La page de la confiance : ce qu'Atlas a prouvé, ce qu'il n'a pas pu prouver, et où il te le dit — pour que tu saches ce que tu signes au moment où tu valides."><meta property="og:type" content="website"><meta property="og:url" content="https://gregoirelacoste.github.io/atlas-site/manuel/quand-atlas-ne-voit-pas"><meta name="twitter:card" content="summary"><link rel="icon" href="/atlas-site/favicon.svg" type="image/svg+xml"><script>
+    (() => { try { const t = localStorage.getItem('atlas-site-theme');
+      if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t; } catch {} })();
+  </script><link rel="stylesheet" href="/atlas-site/_astro/Base.D32RNicN.css"></head><body><header class="tete"><a class="marque" href="/atlas-site">🗺️ Atlas</a><nav><a href="/atlas-site/installer">Installer</a><a href="/atlas-site/manuel/prise-en-main" aria-current="page">Manuel</a><a href="/atlas-site/articles">Écrits</a><button class="theme-bt" id="theme-bt" type="button" aria-label="Changer de thème">◐</button></nav></header><main class="doc"><nav class="cote" aria-label="Le manuel"><h2>Le manuel</h2><ol><li><a href="/atlas-site/manuel/prise-en-main">Prise en main</a></li><li><a href="/atlas-site/manuel/l-arbre">L&#39;Arbre</a></li><li><a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a></li><li><a href="/atlas-site/manuel/le-code">Le Code</a></li><li><a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a></li><li><a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et inventaire</a></li><li><a href="/atlas-site/manuel/le-panneau-git">Le panneau Git</a></li><li><a href="/atlas-site/manuel/le-tableau">Le Tableau</a></li><li><a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a></li><li><a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a></li><li><a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a></li><li><a href="/atlas-site/manuel/brancher-l-ia">Brancher l&#39;IA</a></li><li><a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l&#39;IA lit et écrit</a></li><li><a href="/atlas-site/manuel/quand-atlas-ne-voit-pas" aria-current="page">Quand Atlas ne voit pas</a></li><li><a href="/atlas-site/manuel/la-ligne-de-commande">La ligne de commande</a></li><li><a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a></li><li><a href="/atlas-site/manuel/le-clavier">Le clavier</a></li></ol></nav><article class="corps"><h1>Quand Atlas ne voit pas</h1><p class="chapo">La page de la confiance : ce qu&#39;Atlas a prouvé, ce qu&#39;il n&#39;a pas pu prouver, et où il te le dit — pour que tu saches ce que tu signes au moment où tu valides.</p><blockquote>
+<p>La page de la confiance : ce qu’Atlas a prouvé, ce qu’il n’a pas pu prouver, et où il te le dit —
+pour que tu saches ce que tu signes au moment où tu valides.</p>
+</blockquote>
+<h2 id="oui-non-je-nai-pas-pu-regarder">Oui, non, je n’ai pas pu regarder</h2>
+<p>Atlas n’a qu’un mandat : <strong>ce qu’il montre est exact</strong>. Tout le reste en découle. Quand une question
+n’a pas de réponse prouvée, il y a <strong>trois</strong> réponses possibles, jamais deux : <em>oui</em>, <em>non</em>, et <em>je
+n’ai pas pu regarder</em>. Un compteur ne tombe donc jamais à zéro parce que personne n’a cherché ; une
+colonne ne se gagne jamais sur une ignorance ; un lien ne se pose jamais sur une ressemblance de nom.</p>
+<p>L’exemple tient en une ligne de l’<strong>Arbre</strong> — le panneau central, qui reconstruit le chemin d’une
+fonctionnalité à travers les services. Une méthode qui appelle un autre service en HTTP porte le
+badge <code>⇄ PATCH</code> : Atlas a résolu le récepteur, lu le verbe, lu l’URL. Si l’endpoint visé n’est pas
+retrouvable, le badge <strong>reste</strong>, son contour passe en pointillé, et son infobulle dit pourquoi la
+ligne s’arrête là. <strong>Une déduction ratée n’emporte jamais le fait qui l’a permise</strong> : sans cette
+règle, la ligne se lirait comme un appel local — un mensonge, pour cacher une ignorance.</p>
+<p>La même mécanique tient partout. Dans le panneau Git, un dossier illisible s’affiche <code>pas pu regarder</code>
+avec la date de la dernière lecture réussie, jamais « propre ». Dans le Tableau, un repo sans aucune
+ligne d’intégration connue compte comme <code>non situé</code>, jamais comme « pas mergé ». Et quand le moteur
+s’arrête pour de bon, il l’<strong>inscrit</strong> : c’est un <strong>angle mort</strong> — un endroit où Atlas a renoncé à
+déduire, situé, compté, affiché. Un angle mort ne se coche pas : il se regarde.</p>
+<h2 id="où-les-aveux-se-rassemblent">Où les aveux se rassemblent</h2>
+<p>Trois endroits, et un seul est exhaustif.</p>
+<table>
+<thead>
+<tr>
+<th>Où</th>
+<th>Ce que tu y lis</th>
+<th>Pour quoi faire</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Inventaire</strong> (volet gauche), section « Ce que je n’ai pas pu prouver »</td>
+<td>une barre par <strong>nature</strong> d’angle mort, avec son compte</td>
+<td>savoir <em>de quoi</em> les trous sont faits, et lesquels se règlent</td>
+</tr>
+<tr>
+<td><strong>Relecture</strong> (volet gauche, <code>Espace v r</code>)</td>
+<td>une ligne en bas : <code>⚠ 7 angles morts — ce qu'Atlas n'a pas pu prouver</code></td>
+<td>savoir qu’il y en a, sans quitter le décompte de relecture</td>
+</tr>
+<tr>
+<td><code>atlas brief &lt;id-de-la-feature&gt;</code></td>
+<td>la section <code>CE QUE JE N'AI PAS PU PROUVER   (à regarder à la main)</code> : une ligne par nature, puis <strong>jusqu’à cinq</strong> entrées nommées avec leur repo, fichier et ligne, puis « … et N autres »</td>
+<td>aller voir <strong>lesquels</strong>, ou coller le texte dans une merge request</td>
+</tr>
+</tbody>
+</table>
+<p>Quand une carte n’a aucun angle mort, le brief l’écrit :
+<code>(rien — toutes les arêtes de cette carte sont prouvées)</code>.</p>
+<p>Le panneau Relecture les compte <strong>à côté</strong> de ce qui reste à relire, jamais dedans : un angle mort
+n’est pas une tâche. Le détail des deux panneaux est dans
+<a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a> et
+<a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et Inventaire</a>.</p>
+<blockquote>
+<p>⚠️ Les libellés ci-dessous sont ceux de l’<strong>Inventaire</strong> — courts, parce que la colonne est étroite.
+Le brief emploie pour les mêmes natures des phrases plus longues : deux surfaces du même fait.</p>
+</blockquote>
+<h2 id="les-angles-morts-un-par-un">Les angles morts, un par un</h2>
+<h3 id="une-déclaration-manque--ça-se-règle">Une déclaration manque — ça se règle</h3>
+<p>Ceux-là ne sont pas des déductions ratées : ce sont des <strong>cases vides</strong> dans la configuration du
+projet. Une capacité livrée avec un défaut vide étant indistinguable d’une capacité absente, Atlas
+dit laquelle remplir. Les clés se posent dans <code>.atlas-workspace/project.json</code> ou dans un
+<code>.atlas-workspace/stack/*.json</code> — voir <a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Libellé</th>
+<th>Ce qu’il dit</th>
+<th>Quoi faire</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>base absente</strong></td>
+<td>ce repo porte la feature, et la <strong>ligne de base</strong> cherchée n’existe pas chez lui — ni <code>develop</code>, ni <code>master</code>, ni <code>main</code>. Atlas n’a aucun point de départ pour le diff : le repo <strong>sort de la carte</strong>, et il le dit plutôt que de prendre la feature elle-même pour sa base</td>
+<td>déclarer la ligne de base du projet, ou celle de cette feature (<a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a>)</td>
+</tr>
+<tr>
+<td><strong>tests à déclarer</strong></td>
+<td>aucune stack active ne déclare les noms des cas de test, ou aucune famille <code>test</code> n’est reconnue : les tests ne se distinguent plus du code, donc chaque spec redevient un fichier ordinaire à relire</td>
+<td>activer la stack de test (<code>jest</code> couvre aussi Vitest, Jasmine et Mocha) et celle du langage — par une dépendance dans un <code>package.json</code> membre, ou par <code>recognizers</code></td>
+</tr>
+<tr>
+<td><strong>enveloppes à déclarer</strong></td>
+<td><code>builtinTypes</code> n’est déclaré nulle part : Atlas ne sait pas quels noms <strong>entourent</strong> une donnée sans en être une (<code>Promise</code>, <code>Observable</code>…), donc il ne peint aucun type d’entrée ni de sortie sur les lignes</td>
+<td>déclarer <code>builtinTypes</code> — la stack du langage le porte</td>
+</tr>
+<tr>
+<td><strong>préfixe à déclarer</strong></td>
+<td>des endpoints de ce repo s’affichent en route <strong>relative</strong>, avec un <code>…/</code> de tête : le préfixe de montage du module n’est pas lu. Une route tirée du <strong>chemin du fichier</strong> (Next, Nuxt, SvelteKit) ne le déclenche jamais — elle est complète par construction</td>
+<td>déclarer <code>routePrefix</code> sur le repo. Le <code>…</code> disparaît, et son absence devient l’information <em>« cette route est exacte »</em></td>
+</tr>
+<tr>
+<td><strong>stack à déclarer</strong></td>
+<td>aucun <code>behaviorDecorators</code> : toute classe décorée compte comme une classe-<strong>donnée</strong>, donc des fichiers sont jugés « surface » alors qu’ils ne le sont pas. Dit seulement là où le verdict a <strong>pu</strong> basculer</td>
+<td>déclarer la stack du projet (<code>atlas init --stack nest,angular</code>), ou la clé dans un <code>stack/*.json</code></td>
+</tr>
+<tr>
+<td><strong>selectors à déclarer</strong></td>
+<td>des balises de composant sont écrites dans les templates et aucun <code>selectorDecorators</code> n’est déclaré : aucun composant n’est relié à sa balise, donc ses enfants remontent en racine</td>
+<td>idem, avec la stack front du projet</td>
+</tr>
+<tr>
+<td><strong>entrée à déclarer</strong></td>
+<td>un fichier rangé en couche controller n’expose <strong>aucun</strong> point d’entrée. Atlas ne tranche pas : soit il n’expose rien, soit le décorateur qui marque les entrées n’est pas déclaré — et alors ces méthodes ne portent aucun flux</td>
+<td>ouvrir le fichier nommé, regarder le décorateur posé sur ses méthodes, et l’ajouter à <code>entries</code> s’il manque</td>
+</tr>
+</tbody>
+</table>
+<h3 id="un-plafond-a-été-atteint--borne-du-moteur">Un plafond a été atteint — borne du moteur</h3>
+<p>Atlas borne son propre coût : une remontée vers les appelants ne dure pas indéfiniment. Ces bornes ne
+se règlent pas — elles se <strong>disent</strong>, parce qu’un plafond tu se lit comme un fait (« il n’y a que ces
+appelants-là »).</p>
+<table>
+<thead>
+<tr>
+<th>Libellé</th>
+<th>Ce qu’il dit</th>
+<th>Quoi faire</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>remontée (cap)</strong></td>
+<td>la remontée vers les appelants s’est arrêtée à la profondeur maximale : la racine que tu vois n’est peut-être qu’un palier</td>
+<td>remonter à la main depuis le symbole nommé dans le brief</td>
+</tr>
+<tr>
+<td><strong>descente (cap)</strong></td>
+<td>la descente vers la frontière réseau s’est arrêtée. Dit seulement là où ça <strong>désigne</strong> quelque chose : un appel sort peut-être plus bas</td>
+<td>ouvrir ce symbole et suivre ce qu’il appelle</td>
+</tr>
+<tr>
+<td><strong>fichiers (cap)</strong></td>
+<td>plus de fichiers candidats que le cap de lecture pendant une remontée : certains n’ont pas été ouverts</td>
+<td>ne pas lire la liste des appelants comme exhaustive</td>
+</tr>
+<tr>
+<td><strong>transverse (cap)</strong></td>
+<td>un transverse (garde, intercepteur) est greffé sous une <strong>partie</strong> de ses sites : la liste affichée n’est pas exhaustive</td>
+<td>lire « ces entrées-là, <strong>et d’autres</strong> », jamais « ces entrées-là, pas les autres »</td>
+</tr>
+</tbody>
+</table>
+<h3 id="un-appel-ou-une-entrée-quatlas-refuse-de-poser">Un appel ou une entrée qu’Atlas refuse de poser</h3>
+<p>Une arête de la carte n’est posée que si le <strong>type</strong> du récepteur ou un <strong>import</strong> réel la prouve. Un
+nom qui correspond n’est pas une preuve : c’est une coïncidence de vocabulaire, que l’écran
+afficherait au même trait qu’un appel réel. Atlas refuse l’arête, et nomme l’homonyme qu’il aurait pu
+croire. Même règle pour une racine de flux : elle ne se gagne jamais sur un nom de méthode.</p>
+<table>
+<thead>
+<tr>
+<th>Libellé</th>
+<th>Ce qu’il dit</th>
+<th>Quoi faire</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>appel ambigu</strong></td>
+<td>plusieurs symboles du repo portent le nom appelé, et le récepteur ne tranche pas</td>
+<td>suivre l’appel à la main ; dans le code, typer le récepteur lève le doute</td>
+</tr>
+<tr>
+<td><strong>appel non porté par le type</strong></td>
+<td>le récepteur <strong>a</strong> un type, et la classe de ce type ne déclare pas la méthode — héritée, hors du champ lu, ou venue d’un paquet externe — alors qu’un homonyme existe dans le repo</td>
+<td>vérifier à la main. Rien à configurer : c’est le cas normal d’une méthode héritée ou d’une lib</td>
+</tr>
+<tr>
+<td><strong>récepteur sans type</strong></td>
+<td>deux cas, le même refus : le récepteur n’a aucun type déclaré (variable locale, paramètre, champ sans annotation ni injecteur connu) ; ou la fonction appelée <strong>sans récepteur</strong> n’est ni déclarée dans ce fichier ni importée. Dans les deux cas, un symbole du repo porte ce nom</td>
+<td>annoter le champ, ou importer explicitement la fonction. Si le projet type ses champs par une fonction d’injection, la déclarer en <code>fieldInjectors</code> fait revenir ces arêtes</td>
+</tr>
+<tr>
+<td><strong>entrée sans type</strong></td>
+<td>un appel a la <strong>forme</strong> d’une entrée déclarée (<code>app.get('/x', fn)</code>) mais son récepteur n’a ni fabrique connue ni type déclaré ; ou le handler passé par son <strong>nom</strong> n’est ni déclaré ici ni importé. L’entrée n’est pas posée, et l’endpoint ne disparaît pas en silence</td>
+<td>typer le récepteur dans le code (<code>app: FastifyInstance</code>), ou ajouter le nom de sa fabrique à <code>recvFrom</code> de la stack</td>
+</tr>
+<tr>
+<td><strong>appel réseau ⇄ ?</strong></td>
+<td>un appel réseau <strong>reconnu</strong> dont l’endpoint n’a pas été apparié : aucun candidat, plusieurs, ou trop de fichiers portant ce chemin pour les ouvrir tous. Vaut aussi dans l’autre sens, pour un appelant entrant dont le chemin est exposé par plusieurs services. ⚠️ La phrase dit <strong>ce qui a été cherché</strong> : dans une stack où les routes ne se déclarent pas par un décorateur, les seuls candidats sont les endpoints que la carte porte déjà — « pas apparié » n’y veut pas dire « inexistant »</td>
+<td>vérifier que le service visé fait partie des repos de la feature ; déclarer <code>routePrefix</code> si son préfixe est réécrit</td>
+</tr>
+<tr>
+<td><strong>aucun lien prouvé</strong></td>
+<td>deux repos ou plus portent du code dans cette carte et <strong>aucune</strong> frontière n’a été prouvée entre eux. C’est le silence qui se déclare : sans lui, « ces services ne se parlent pas ici » et « Atlas n’a pas su le voir » se ressembleraient</td>
+<td>chercher le lien à la main : il passe peut-être par une file, un événement, ou une URL qui n’est pas un littéral</td>
+</tr>
+</tbody>
+</table>
+<h3 id="un-repère-qui-natterrit-nulle-part">Un repère qui n’atterrit nulle part</h3>
+<table>
+<thead>
+<tr>
+<th>Libellé</th>
+<th>Ce qu’il dit</th>
+<th>Quoi faire</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>fil sans nœud</strong></td>
+<td>un fil de conversation est ancré sur un symbole que la carte ne montre pas : il ne s’affiche <strong>nulle part</strong> dans l’Arbre ni dans le Code</td>
+<td>le Journal le rend quand même et dit pourquoi il n’atterrit pas — <code>hors du diff</code>, <code>pas de nœud</code>, ou le repo nommé « hors carte ». Voir <a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a></td>
+</tr>
+<tr>
+<td><strong>ancre ambiguë</strong></td>
+<td>un fil d’<strong>hypothèse</strong> — posé avant que le code existe — dont le symbole a été écrit depuis, mais sous un nom porté par plusieurs symboles du repo. Le fil reste sur l’hypothèse plutôt que de s’accrocher au mauvais code</td>
+<td>rouvrir le fil sur la bonne référence, ou renommer le symbole</td>
+</tr>
+<tr>
+<td><strong>endossé sans nœud</strong></td>
+<td>du code que tu avais <strong>endossé</strong> — marqué relu, à ta main — n’a plus aucun nœud dans la carte. La cause est <strong>constatée</strong>, jamais supposée : <em>aucun nœud de ce repo</em> · <em>de ce fichier</em> · <em>fichier présent, symbole absent</em></td>
+<td>voir <a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a> : ta relecture n’est pas perdue, elle n’a plus de ligne où se poser</td>
+</tr>
+<tr>
+<td><strong>repo absent ici</strong></td>
+<td>un repo est cité par quelque chose de <strong>partagé</strong> (un fil, la relecture d’un collègue) et aucun dossier ne porte ce nom dans ton chapeau. Un signalement par repo, pas par ancre</td>
+<td>cloner le repo manquant, ou renommer ton dossier : une ancre commence par le <strong>nom du dossier</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="une-lecture-en-échec-ou-hors-de-portée">Une lecture en échec, ou hors de portée</h3>
+<table>
+<thead>
+<tr>
+<th>Libellé</th>
+<th>Ce qu’il dit</th>
+<th>Quoi faire</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>recherche KO</strong></td>
+<td>une recherche dans le dépôt a échoué — celle des appelants d’un symbole, ou celle des fichiers qui importent un mock de test. Atlas ne conclut donc <strong>pas</strong> « personne ne l’appelle »</td>
+<td>relancer la carte ; si ça persiste, le dépôt ou sa référence est illisible (voir <a href="/atlas-site/manuel/le-panneau-git">Le panneau Git</a>)</td>
+</tr>
+<tr>
+<td><strong>templates front</strong></td>
+<td>ce repo porte au moins un <strong>fichier</strong> front touché par la feature — un composant <code>.vue</code>/<code>.svelte</code>, un fichier à template frère, ou un fichier qui porte une entrée <code>⚡</code>. Les méthodes d’un composant sont appelées depuis le balisage et par le cycle de vie du framework : une recherche dans les fichiers de code ne les voit pas, donc le signal « non atteint » y est désactivé</td>
+<td>ne pas conclure d’un composant sans alerte qu’il est atteint. Limite structurelle, dite une fois par repo concerné — un mono-repo ne l’annonce plus pour son back</td>
+</tr>
+</tbody>
+</table>
+<h2 id="les-aveux-qui-ne-sont-pas-des-angles-morts">Les aveux qui ne sont pas des angles morts</h2>
+<p>Ceux-là ne sont ni comptés ni listés : ils vivent <strong>sur la ligne où la question se pose</strong>. On les
+confond avec des angles morts, alors qu’ils disent une ignorance locale, pas un renoncement du
+moteur.</p>
+<table>
+<thead>
+<tr>
+<th>Ce que tu vois</th>
+<th>Où</th>
+<th>Ce que ça dit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>↑ ?</code></td>
+<td>sur une ligne de <strong>contrat</strong> (une surface publique : entité, DTO, type) et dans l’index des contrats</td>
+<td><em>combien de choses dépendent de ce contrat ?</em> — <strong>personne n’a lu</strong>. Jamais <code>↑ 0</code> : zéro affirmerait qu’on a cherché</td>
+</tr>
+<tr>
+<td><code>⌁ sans entrée reconnue</code></td>
+<td>en tête d’un <strong>flux</strong> (une racine de l’Arbre et tout ce qu’elle appelle)</td>
+<td>ce code porte du diff, mais aucun appelant n’a été résolu — hook, événement, injection… Le flux part de là <strong>faute de mieux</strong> : ce n’est pas une preuve qu’il n’a pas d’entrée</td>
+</tr>
+<tr>
+<td><code>🚫 non atteint</code></td>
+<td>sur une ligne de l’Arbre</td>
+<td>ce symbole est touché et <strong>aucun appelant n’a été trouvé</strong> dans son repo. Quand des tests l’atteignent quand même, l’infobulle le dit</td>
+</tr>
+<tr>
+<td><code>frontière non comparée</code></td>
+<td>au survol de la pastille d’un nœud — il porte un <code>◌</code> et un contour en tirets</td>
+<td>une route, un appel réseau ou un en-tête de classe que la feature <strong>touche</strong>, et dont Atlas ne sait pas dire s’il a <strong>changé</strong>. Voir <a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a></td>
+</tr>
+<tr>
+<td>rien du tout</td>
+<td>sur une ligne dont un appel n’a pas été résolu</td>
+<td>un appel refusé ne laisse <strong>aucune marque</strong> : la ligne n’a pas d’enfant, et dans le Code l’identifiant n’est pas cliquable. Le compte est dans l’Inventaire, les noms dans le brief</td>
+</tr>
+<tr>
+<td><code>? l.</code> et « au poids inconnu »</td>
+<td>index des contrats, panneau Relecture</td>
+<td>le nombre de lignes à relire n’est pas connu pour ce symbole. Ni compté, ni oublié — <strong>jamais zéro</strong></td>
+</tr>
+<tr>
+<td><code>N pas pu regarder (récepteur sans type)</code></td>
+<td>tête du panneau Code, sur un fichier de tests</td>
+<td>les cas de test dont Atlas n’a pas pu dire ce qu’ils éprouvent — à côté de <code>n'atteignent rien de la carte</code>, qui est un vrai <em>non</em></td>
+</tr>
+<tr>
+<td><code>pas pu regarder</code> · <code>2 dossiers illisibles — je n'ai pas pu regarder</code></td>
+<td>panneau Git, vue <code>● Local</code></td>
+<td>la lecture du dossier a échoué. Ce qui reste à l’écran est la <strong>dernière lecture réussie</strong>, datée — jamais « propre »</td>
+</tr>
+<tr>
+<td><code>∅ rien hors de develop</code></td>
+<td>panneau Git, vue <code>⎇ Branches &amp; repos</code></td>
+<td>plus aucun commit hors de la base, et <strong>aucun merge trouvé</strong> : intégration en avance rapide, ou branche sans commit propre. Ce n’est pas la chip verte de la base, elle, qui est une preuve</td>
+</tr>
+<tr>
+<td><code>1 non situé</code></td>
+<td>carte du Tableau</td>
+<td>ce repo n’a aucune ligne d’intégration connue. Ce n’est pas « pas mergé », c’est « je n’ai pas pu regarder ». Voir <a href="/atlas-site/manuel/le-tableau">Le Tableau</a></td>
+</tr>
+<tr>
+<td><code>? review non vérifiée</code></td>
+<td>carte du Tableau, et en tête du Tableau</td>
+<td>l’hébergeur n’a pas pu être interrogé : la colonne « En review » ne dit <strong>rien</strong>, ni dans un sens ni dans l’autre. Les autres colonnes viennent de git, et restent exactes</td>
+</tr>
+<tr>
+<td><code>?</code> accolé à un titre posé par l’IA</td>
+<td>sur une ligne de l’Arbre</td>
+<td><em>l’IA n’a pas pu vérifier</em> ce qu’elle annonce, et elle l’a écrit. Un aveu <strong>déclaré</strong>, pas une mesure : le brief le range sous son propre titre, séparé des angles morts. Voir <a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l’IA lit et écrit</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="quand-la-carte-se-trompe-quand-même">Quand la carte se trompe quand même</h2>
+<p>Un angle mort dit <em>je n’ai pas pu</em>. Reste le cas où Atlas <strong>a</strong> conclu, et s’est trompé. Quatre
+gestes existent, et aucun ne touche au code de tes repos.</p>
+<p><strong>Déclarer ce qui manque.</strong> Premier réflexe : beaucoup d’erreurs de carte viennent d’une case vide —
+une famille de fichiers qu’aucune règle ne reconnaît, un décorateur d’entrée inconnu, une ligne de
+base absente. L’Inventaire les nomme, et sa section « Non classé » propose les motifs à déclarer.
+Tout se passe dans <a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a>.</p>
+<p><strong>Faire corriger la structure par l’IA.</strong> Quand une méthode est rangée dans la mauvaise couche ou
+qu’un nœud n’a rien à faire dans ta liste de relecture, c’est l’IA branchée sur Atlas qui l’écrit,
+dans un <strong>recouvrement</strong> posé à côté de la carte : <code>drop</code> plie un nœud hors de la liste de travail,
+<code>layer</code> corrige la couche, <code>group</code> range. Le recouvrement ne réécrit jamais ce qu’Atlas a lu. Voir
+<a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l’IA lit et écrit</a>.</p>
+<p><strong>Ranger d’office ce qui n’est jamais à relire.</strong> Fichiers générés, modules, schémas :
+<code>defaultSetAside</code> les sort de la liste de travail pour tout le projet. Ils restent dans l’Arbre,
+groupés sous <code>🗂 N de côté</code>, sans rond.</p>
+<p><strong>Le dire.</strong> Sur un nœud, <code>?</code> pose « <strong>je n’ai pas compris ce que ça fait</strong> » : partagé, nommé, et ça
+retire la relecture — deux <code>?</code> sur un même nœud, c’est un nœud à réécrire. Un fil ancré sur le
+symbole garde la question au bon endroit pour la prochaine personne. Les deux sont dans
+<a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a> et
+<a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a>.</p>
+<h2 id="ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</h2>
+<ul>
+<li><strong>Il ne propose aucun bouton « signaler une erreur ».</strong> Rien à l’écran ne corrige une arête, ne
+supprime un nœud, ni n’envoie de rapport : ce qui se corrige se corrige par la configuration ou par
+le recouvrement, deux fichiers de ton projet.</li>
+<li><strong>Il n’explique pas un angle mort à l’écran.</strong> L’Inventaire en donne la <strong>nature</strong> et le <strong>compte</strong>,
+rien de plus : ni le symbole, ni le fichier, ni la raison. Pour savoir lesquels, il faut le brief.</li>
+<li><strong>Il ne note pas un angle mort.</strong> Le brief les range dans un ordre fixe — le plus coûteux à ignorer
+d’abord —, l’Inventaire par effectif. Ni score, ni étiquette.</li>
+<li><strong>Il ne comble jamais un trou par une hypothèse.</strong> Pas de lien « probable », pas de route devinée,
+pas de zéro à la place d’une absence de mesure. Quand il ne sait pas, la ligne le dit et s’arrête.</li>
+</ul>
+<h2 id="limites-connues">Limites connues</h2>
+<ul>
+<li><strong>La raison longue de chaque angle mort n’arrive nulle part.</strong> Atlas la calcule — une phrase qui
+nomme le plafond atteint, l’homonyme écarté ou la clé à déclarer — mais ni l’écran ni le brief ne la
+rendent. Tu as le libellé, le symbole et sa position ; pour le reste, il faut ouvrir le code.</li>
+<li><strong>Le brief coupe à cinq entrées par nature</strong>, puis écrit « … et N autres » : sur une feature large,
+la liste nommée n’est pas la liste entière.</li>
+<li><strong>Ce que l’IA reçoit en continu ne contient pas les angles morts.</strong> Elle lit le code, les tests et
+les fils ; les angles morts ne sont que dans le brief, qu’elle doit demander.</li>
+<li><strong>Les seuils ne se règlent pas.</strong> Profondeur de remontée, nombre de fichiers ouverts, nombre de
+sites d’un transverse : ce sont des constantes du moteur, pas des clés de configuration.</li>
+<li><strong>Un angle mort absent ne prouve rien.</strong> Certains ne se déclenchent que là où ils <strong>désignent</strong>
+quelque chose à aller voir : une descente bornée ne parle que si la classe injecte un client réseau.
+Silence veut dire « rien à montrer ici », pas « tout est prouvé » — cette phrase-là, seul le brief
+la dit.</li>
+</ul>
+<nav class="suite" aria-label="Page suivante et précédente"><a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit"><small>← précédent</small>Ce que l&#39;IA lit et écrit</a><a class="droite" href="/atlas-site/manuel/la-ligne-de-commande"><small>suivant →</small>La ligne de commande</a></nav></article><nav class="cote toc" aria-label="Sur cette page"><h2>Sur cette page</h2><ul><li><a href="#oui-non-je-nai-pas-pu-regarder">Oui, non, je n’ai pas pu regarder</a></li><li><a href="#où-les-aveux-se-rassemblent">Où les aveux se rassemblent</a></li><li><a href="#les-angles-morts-un-par-un">Les angles morts, un par un</a></li><li><a class="h3" href="#une-déclaration-manque--ça-se-règle">Une déclaration manque — ça se règle</a></li><li><a class="h3" href="#un-plafond-a-été-atteint--borne-du-moteur">Un plafond a été atteint — borne du moteur</a></li><li><a class="h3" href="#un-appel-ou-une-entrée-quatlas-refuse-de-poser">Un appel ou une entrée qu’Atlas refuse de poser</a></li><li><a class="h3" href="#un-repère-qui-natterrit-nulle-part">Un repère qui n’atterrit nulle part</a></li><li><a class="h3" href="#une-lecture-en-échec-ou-hors-de-portée">Une lecture en échec, ou hors de portée</a></li><li><a href="#les-aveux-qui-ne-sont-pas-des-angles-morts">Les aveux qui ne sont pas des angles morts</a></li><li><a href="#quand-la-carte-se-trompe-quand-même">Quand la carte se trompe quand même</a></li><li><a href="#ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</a></li><li><a href="#limites-connues">Limites connues</a></li></ul></nav></main><footer class="pied"><div class="dedans"><span>Atlas — suivi et validation de code.</span><a href="/atlas-site/manuel/prise-en-main">Manuel</a></div></footer><script>
+    document.getElementById('theme-bt')?.addEventListener('click', () => {
+      const r = document.documentElement;
+      // clair → sombre → système, et le tour recommence. « Système » RETIRE la clé : c'est ce qui
+      // rend le choix distinct d'une absence de choix.
+      const suite = { clair: 'sombre', sombre: '', '': 'clair' };
+      const v = suite[r.dataset.theme || ''];
+      if (v) { r.dataset.theme = v; try { localStorage.setItem('atlas-site-theme', v); } catch {} }
+      else { delete r.dataset.theme; try { localStorage.removeItem('atlas-site-theme'); } catch {} }
+    });
+  </script></body></html>

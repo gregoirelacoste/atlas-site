@@ -1,0 +1,167 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Endosser, c&#39;est juger · Atlas</title><meta name="description" content="Valider du code écrit par une IA ne le fait pas entrer dans votre tête. Comment on a cherché le geste qui manquait, et pourquoi ce n'était pas celui qu'on croyait."><link rel="canonical" href="https://gregoirelacoste.github.io/atlas-site/articles/2026-09-09-endosser-cest-juger"><meta property="og:title" content="Endosser, c'est juger · Atlas"><meta property="og:description" content="Valider du code écrit par une IA ne le fait pas entrer dans votre tête. Comment on a cherché le geste qui manquait, et pourquoi ce n'était pas celui qu'on croyait."><meta property="og:type" content="website"><meta property="og:url" content="https://gregoirelacoste.github.io/atlas-site/articles/2026-09-09-endosser-cest-juger"><meta name="twitter:card" content="summary"><link rel="icon" href="/atlas-site/favicon.svg" type="image/svg+xml"><script>
+    (() => { try { const t = localStorage.getItem('atlas-site-theme');
+      if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t; } catch {} })();
+  </script><link rel="stylesheet" href="/atlas-site/_astro/Base.D32RNicN.css"></head><body><header class="tete"><a class="marque" href="/atlas-site">🗺️ Atlas</a><nav><a href="/atlas-site/installer">Installer</a><a href="/atlas-site/manuel/prise-en-main">Manuel</a><a href="/atlas-site/articles" aria-current="page">Écrits</a><button class="theme-bt" id="theme-bt" type="button" aria-label="Changer de thème">◐</button></nav></header><main class><article class="corps" style="margin: 0 auto; padding-left: 1.25rem; padding-right: 1.25rem;"><div style="color: var(--encre-2); font-size: .85rem;">9 septembre 2026</div><h1 id="endosser-cest-juger">Endosser, c’est juger</h1>
+<p>Atlas est un outil de relecture. On lui donne un ticket, il reconstruit le chemin que prend
+une fonctionnalité à travers plusieurs services — quelle route d’entrée, quelles méthodes
+appelées, quels contrats de données touchés — et il vous suit pendant que vous validez tout
+ça, ligne par ligne. Il est écrit en se servant de lui-même, ce qui est commode : les
+défauts se voient vite.</p>
+<p>Un de ces défauts a mis deux mois à devenir visible, parce que ce n’en était pas un au sens
+habituel. Rien ne plantait. Simplement, en relisant du code que je n’avais pas écrit, je
+finissais par tout valider correctement sans rien en retenir. Deux semaines plus tard, sur
+la même partie, je repartais de zéro.</p>
+<p>Le 6 septembre, la question a fini par être posée dans ces termes-là : <em>« cognitivement, un
+humain a besoin de pratiquer pour retenir quelque chose. Atlas essaie de redonner la
+connaissance du code à la personne qui relit celui d’un collègue ou d’une IA. Endosser n’est
+pas suffisant. Ça pourrait être quoi ? »</em></p>
+<h2 id="le-mode--confirmer-">Le mode « confirmer »</h2>
+<p>Ce que je prenais pour un manque de sérieux de ma part a un nom, et il est plus vieux que
+moi. Lisanne Bainbridge l’a décrit en 1983 sous le titre <em>Ironies of Automation</em>, à propos
+des salles de contrôle : quand on retire à un opérateur la conduite d’un système pour ne lui
+laisser que sa surveillance, il perd la compétence dont on aura besoin le jour où le système
+lâchera. Il reste là, il regarde, il approuve — et il désapprend. Endsley et Kiris ont
+mesuré la même chose en 1995 sur des tâches de décision : le superviseur d’un automate a une
+conscience de situation nettement dégradée par rapport à celui qui décide lui-même.</p>
+<p>C’est exactement la position dans laquelle une IA qui code nous installe. Le volume de code
+qu’aucun humain n’a vraiment lu augmente, et le seul geste qu’on nous laisse pour y répondre
+est une case à cocher. La case ne ment pas : j’ai bien lu. Elle ne laisse simplement aucune
+trace.</p>
+<h2 id="une-dizaine-didées-une-seule-survivante">Une dizaine d’idées, une seule survivante</h2>
+<p>La première réaction, quand on veut faire retenir, c’est de faire produire. On en a listé
+une dizaine, sur deux jours. Redessiner à la main l’ordre des étapes d’un flux, en
+glissé-déposé, et voir où on se trompe. Écrire une phrase par fonction, puis la confronter à
+ce que l’IA dit de la même fonction. Dicter le contrat de données avant de l’ouvrir. Pointer
+chaque critère d’acceptation du ticket sur le bout de code censé le remplir.</p>
+<p>Toutes ces idées apprennent quelque chose. Aucune n’a survécu à la question qui les a
+triées :</p>
+<blockquote>
+<p>Est-ce que je garderais ce geste s’il n’apprenait rien ?</p>
+</blockquote>
+<p>La réponse était non partout. Or un geste qu’on ne garde que pour son bénéfice pédagogique
+est un geste qu’on saute le jour où la livraison est vendredi. Un outil qui propose des
+exercices devient une école, et les écoles ferment quand ça urge. La contrainte s’est donc
+retournée : interdiction d’ajouter une étape. On ne pouvait que changer la forme d’une étape
+déjà là.</p>
+<p>Il n’en restait qu’une, celle qu’on faisait déjà des dizaines de fois par jour : marquer un
+bout de code comme relu. Et il n’y avait qu’une manière de la changer sans l’alourdir :
+demander, au moment où on la fait, ce que ce code casse s’il est faux.</p>
+<p>Ça tient parce que ce n’est pas un exercice déguisé. C’est du triage, la chose qu’un
+relecteur fait déjà dans sa tête et qu’il ne dit à personne. On l’aurait gardé même sans
+aucun effet sur la mémoire, pour une raison indépendante : ce triage dirige la relecture
+automatique qui repasse derrière. <em>Regarde surtout ici.</em></p>
+<h2 id="quatre-niveaux-définis-par-ce-quils-déclenchent">Quatre niveaux, définis par ce qu’ils déclenchent</h2>
+<p>La question posée au relecteur est toujours la même : si c’est faux, qu’est-ce que ça casse ?
+Pas « est-ce que c’est buggé » — on ne le sait pas encore, c’est justement ce qu’on cherche.
+Pas non plus « est-ce que j’en suis sûr » : la confiance est un deuxième axe, et mélanger
+deux axes dans un chiffre donne un chiffre illisible.</p>
+<p>Quatre niveaux, pas cinq. Sur une échelle impaire, le point du milieu sert de sortie de
+secours à tous ceux qui n’ont pas voulu trancher, et personne ne voit la différence entre
+« moyen » et « je n’ai pas regardé ». Une échelle paire force à choisir un côté ; autant dire
+lequel, et c’est la seule phrase que l’interface affiche à ce sujet : <strong>ce qu’on ne sait pas
+juger n’est jamais un 1.</strong></p>
+<p>La règle qui compte vraiment, en revanche, est ailleurs. Un niveau se définit par ce qu’il
+déclenche, jamais par ce qu’il décrit. Si deux niveaux produisent le même comportement, ce
+sont deux noms pour un seul niveau, et l’échelle devient décorative. Ici, ce qu’ils
+déclenchent est le comportement de la relecture assistée :</p>
+<ul>
+<li><strong>1</strong> — elle relit à plat, et vous conteste si elle n’est pas d’accord : <em>tu as posé 1, je
+poserais 3, ça touche la facturation.</em></li>
+<li><strong>2</strong> — elle relit à plat.</li>
+<li><strong>3</strong> — elle creuse : les modes d’échec qu’elle voit sur ce bout de code précis, et la
+garde qui manque en face de chacun.</li>
+<li><strong>4</strong> — elle remonte le fil jusqu’au point d’entrée et de l’autre côté de la frontière de
+service, et elle répond toujours, y compris pour dire qu’elle n’a rien trouvé et lister ce
+qu’elle a vérifié.</li>
+</ul>
+<p>Avec un garde-fou qu’on s’est imposé dès le cadrage : un chiffre n’achète jamais moins
+d’attention qu’un simple « lu ». Un 1 veut dire « conteste-moi », en aucun cas « saute-moi ».
+Sans cette asymétrie, il suffirait d’un relecteur pressé tapant 1 partout pour éloigner la
+machine de tout ce qu’il n’a pas regardé. Le triage se retournerait contre celui qui le fait.</p>
+<h2 id="ce-qui-apprend-cest-de-se-faire-contredire">Ce qui apprend, c’est de se faire contredire</h2>
+<p>Le chiffre n’évalue pas votre intuition. Il l’expose.</p>
+<p>Kahneman et Klein, en 2009, se sont mis d’accord sur une chose alors qu’ils s’opposaient sur
+presque tout : une intuition d’expert ne devient fiable que dans un environnement qui rend un
+retour régulier. Un anesthésiste en a un. Un relecteur de code, non — personne ne vient
+jamais lui dire que la fonction qu’il a survolée était le point de rupture.</p>
+<p>Poser un chiffre crée ce retour, et le crée sur cette base de code là, pas sur le métier en
+général. Vous mettez 1 quelque part, la relecture assistée vous répond que ça touche la
+facturation, et vous venez d’apprendre quelque chose qu’aucune quantité de lecture passive
+ne vous aurait donné. Un détail encourageant au passage : on retient mieux la correction
+d’une erreur qu’on avait commise avec assurance que celle d’une hésitation. Le 1 est une
+affirmation, c’est pour ça qu’on l’a choisi comme cible de la contestation.</p>
+<h2 id="-je-nai-pas-compris-">« Je n’ai pas compris »</h2>
+<p>Transformer l’endossement en jugement ouvre un trou, et il est apparu tout de suite : que
+faire devant du code opaque ?</p>
+<p>Les deux gestes disponibles étaient mauvais tous les deux. Valider quand même, c’est-à-dire
+retomber dans le mode « confirmer » qu’on essayait précisément de quitter. Ou passer sans
+rien dire, et le code reste marqué « à relire », impossible à distinguer de « pas encore
+ouvert ».</p>
+<p>D’où une touche de plus, <code>?</code>, qui dit : je ne sais pas ce que ça fait. Elle a été décidée le
+8 septembre en trois mots — <em>partagé et nommé, les deux skills, pour le 3 je sais pas</em> — et
+chacun des trois compte.</p>
+<p><em>Partagé et nommé</em> : le point d’interrogation n’est pas privé. C’est le choix qui fait toute
+la valeur du geste. Un <code>?</code> isolé est un aveu personnel, un peu gênant. Deux <code>?</code> de deux
+relecteurs différents sur la même fonction, c’est un verdict sur cette fonction, et c’est une
+information qui n’existe que si elle circule.</p>
+<p><em>Les deux skills</em> : la relecture assistée et la session de questions lisent le même drapeau,
+et répondent au même endroit — dans un fil de discussion posé sur le code, jamais dans une
+annotation qui viendrait se substituer à votre lecture. L’explication doit dire ce que ça
+fait pour l’écran, pour la donnée, pour l’utilisateur ; d’où ça vient et où ça va. Pas
+paraphraser les lignes qu’on a sous les yeux.</p>
+<p><em>Pour le 3, je sais pas</em> : la troisième question était de savoir si l’écran de suivi devait
+afficher un compteur de « pas compris ». On ne l’a pas mis. On verra à l’usage si le manque
+se fait sentir, et ça ne coûte rien de l’ajouter plus tard, alors qu’un compteur inutile ne
+se retire jamais vraiment.</p>
+<p>Le point d’interrogation exclut l’endossement, et réciproquement : le poser retire la
+validation, valider le retire. On ne juge pas ce qu’on ne comprend pas. En revanche, seule
+la personne qui l’a posé peut l’enlever. La machine explique ; elle ne décrète pas que c’est
+devenu clair.</p>
+<h2 id="ce-que-lia-na-pas-le-droit-de-faire">Ce que l’IA n’a pas le droit de faire</h2>
+<p>Dans Atlas, l’IA dispose d’outils pour lire la carte, décrire ce qu’un bout de code cherche à
+faire, ouvrir un fil, tracer un parcours. Elle n’en a aucun pour valider à votre place, poser
+une note, ou retirer votre point d’interrogation. Ce n’est pas un manque qu’on comblera dans
+une prochaine version : ce qui n’a pas d’outil est inatteignable, et c’est là que se trouve
+la garantie. Une IA capable de cocher « relu » à votre place transforme le dernier geste
+humain de la chaîne en formalité administrative.</p>
+<p>L’inverse est vrai aussi, et il fallait le rendre explicite : poser un chiffre, c’est
+adresser la parole à la machine. Les endossements notés lui sont transmis, avec le nom de
+qui les a posés. Un simple « lu » ne sort pas. Ce qui part est ce que vous avez choisi de
+dire, et rien d’autre.</p>
+<p>Enfin, rien n’est agrégé. Vous 1, votre collègue 3, la machine 2 : ça reste trois avis
+distincts, affichés côte à côte, avec leurs auteurs. Une moyenne à 2 dirait que personne n’a
+peur, alors que quelqu’un a peur.</p>
+<h2 id="ce-quon-ne-sait-pas-encore">Ce qu’on ne sait pas encore</h2>
+<p>Il faut être clair sur ce que la littérature ne dit pas. Personne n’a mesuré ce que donne un
+niveau de risque déclaré par un relecteur humain quand il sert d’entrée à une revue
+automatique — c’est un dispositif trop récent. Personne n’a mesuré non plus la rétention
+après une relecture chez des développeurs expérimentés ; les travaux sur l’apprentissage par
+production portent sur des débutants. Le transfert reste une hypothèse. Ce qui justifie le
+geste aujourd’hui, c’est la qualité de la revue qu’il produit. La mémoire est le bénéfice
+qu’on espère, pas celui qu’on annonce.</p>
+<p>Trois choses se trancheront sur de vraies relectures, pas sur un tableur. D’abord : est-ce
+que garder l’ancienne touche « lu » condamne la note ? Les doigts retournent à l’habitude, et
+il est possible que personne ne juge jamais rien. On regardera la proportion d’endossements
+notés ; sous un dixième, la question se rouvre. Ensuite : est-ce que les niveaux 2 et 3 se
+distinguent à l’usage ? Si personne ne sait dire pourquoi l’un plutôt que l’autre, on repliera
+l’échelle à trois crans. Enfin, si plus de quatre cinquièmes des notes sont des 2, ce n’est
+pas l’échelle qui est en cause, c’est la question qu’elle pose.</p>
+<p>Un dernier détail, pour donner une idée du niveau où ces choses se jouent vraiment. La
+première version ne fonctionnait pas sur mon clavier : sur un AZERTY, la touche 1 produit un
+<code>&amp;</code>, et le code écoutait les caractères. Il a fallu écouter les touches physiques. Sept
+constats sont sortis de la relecture de ce lot, et celui-là — le seul qui rendait la
+fonctionnalité inutilisable sur tous les claviers français — n’était dans aucun de
+mes plans.</p>
+<p>Le pari, entier : l’IA écrit le code, l’humain garde le jugement. Et un jugement ne se garde
+qu’en s’exerçant assez souvent pour découvrir quand il se trompe.</p>
+</article></main><footer class="pied"><div class="dedans"><span>Atlas — suivi et validation de code.</span><a href="/atlas-site/manuel/prise-en-main">Manuel</a></div></footer><script>
+    document.getElementById('theme-bt')?.addEventListener('click', () => {
+      const r = document.documentElement;
+      // clair → sombre → système, et le tour recommence. « Système » RETIRE la clé : c'est ce qui
+      // rend le choix distinct d'une absence de choix.
+      const suite = { clair: 'sombre', sombre: '', '': 'clair' };
+      const v = suite[r.dataset.theme || ''];
+      if (v) { r.dataset.theme = v; try { localStorage.setItem('atlas-site-theme', v); } catch {} }
+      else { delete r.dataset.theme; try { localStorage.removeItem('atlas-site-theme'); } catch {} }
+    });
+  </script></body></html>

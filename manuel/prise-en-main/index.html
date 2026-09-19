@@ -1,0 +1,384 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Prise en main · Atlas</title><meta name="description" content="Installer Atlas, lancer le daemon, déclarer ton premier projet et ta première feature — de l'écran d'accueil jusqu'à ta première carte."><link rel="canonical" href="https://gregoirelacoste.github.io/atlas-site/manuel/prise-en-main"><meta property="og:title" content="Prise en main · Atlas"><meta property="og:description" content="Installer Atlas, lancer le daemon, déclarer ton premier projet et ta première feature — de l'écran d'accueil jusqu'à ta première carte."><meta property="og:type" content="website"><meta property="og:url" content="https://gregoirelacoste.github.io/atlas-site/manuel/prise-en-main"><meta name="twitter:card" content="summary"><link rel="icon" href="/atlas-site/favicon.svg" type="image/svg+xml"><script>
+    (() => { try { const t = localStorage.getItem('atlas-site-theme');
+      if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t; } catch {} })();
+  </script><link rel="stylesheet" href="/atlas-site/_astro/Base.D32RNicN.css"></head><body><header class="tete"><a class="marque" href="/atlas-site">🗺️ Atlas</a><nav><a href="/atlas-site/installer">Installer</a><a href="/atlas-site/manuel/prise-en-main" aria-current="page">Manuel</a><a href="/atlas-site/articles">Écrits</a><button class="theme-bt" id="theme-bt" type="button" aria-label="Changer de thème">◐</button></nav></header><main class="doc"><nav class="cote" aria-label="Le manuel"><h2>Le manuel</h2><ol><li><a href="/atlas-site/manuel/prise-en-main" aria-current="page">Prise en main</a></li><li><a href="/atlas-site/manuel/l-arbre">L&#39;Arbre</a></li><li><a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a></li><li><a href="/atlas-site/manuel/le-code">Le Code</a></li><li><a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a></li><li><a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et inventaire</a></li><li><a href="/atlas-site/manuel/le-panneau-git">Le panneau Git</a></li><li><a href="/atlas-site/manuel/le-tableau">Le Tableau</a></li><li><a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a></li><li><a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a></li><li><a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a></li><li><a href="/atlas-site/manuel/brancher-l-ia">Brancher l&#39;IA</a></li><li><a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l&#39;IA lit et écrit</a></li><li><a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a></li><li><a href="/atlas-site/manuel/la-ligne-de-commande">La ligne de commande</a></li><li><a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a></li><li><a href="/atlas-site/manuel/le-clavier">Le clavier</a></li></ol></nav><article class="corps"><h1>Prise en main</h1><p class="chapo">Installer Atlas, lancer le daemon, déclarer ton premier projet et ta première feature — de l&#39;écran d&#39;accueil jusqu&#39;à ta première carte.</p><blockquote>
+<p>Installer Atlas, lancer le daemon, déclarer ton premier projet et ta première feature — de l’écran
+d’accueil jusqu’à ta première carte.</p>
+</blockquote>
+<p>Atlas reconstruit, pour une <strong>feature</strong> à la fois (un ticket : <code>PROJ-412</code>, <code>FOO-42</code>…), la <strong>carte</strong>
+de son code : quelle entrée, quelles méthodes appelées, à travers combien de services — pour que tu
+<strong>valides</strong> plutôt que tu ne relises fichier par fichier. Cette page t’amène du paquet installé à
+cette première carte ; le reste de la documentation part de là (voir <a href="/atlas-site/manuel">le README de cette
+doc</a>).</p>
+<h2 id="installer-le-paquet">Installer le paquet</h2>
+<p>Atlas est un outil de bureau <strong>local</strong> : rien à déployer, un seul daemon qui écoute sur
+<code>127.0.0.1</code>, mono-utilisateur, mono-machine. Il sert à la fois l’API et la page web sur un unique
+port. Il se distribue comme un paquet npm global, <code>@gregoirelacoste/atlas</code> — privé, hébergé sur
+GitHub Packages via le dépôt de distribution <code>gregoirelacoste/atlas-dist</code> (il ne contient aucun
+code, il ne fait que porter le droit d’installer).</p>
+<p>Deux façons de l’obtenir :</p>
+<ul>
+<li>
+<p><strong>On te donne un <code>.tgz</code></strong> (le fichier que produit <code>npm run pack</code>, pour quelqu’un qui n’a pas encore
+accès au registre) :</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">npm</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> i</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> -g</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> /chemin/absolu/vers/atlas-x.y.z.tgz</span></span></code></pre>
+<blockquote>
+<p>⚠️ Le chemin doit être <strong>absolu</strong> (ou commencer par <code>./</code>). Un chemin relatif comme
+<code>dist-pkg/atlas-0.1.10.tgz</code> est lu par <code>npm</code> comme un dépôt <strong>GitHub</strong> du même nom, et échoue sur
+« Repository not found ».</p>
+</blockquote>
+</li>
+<li>
+<p><strong>Tu as accès au registre</strong> — il faut le déclarer une fois, avec un jeton (PAT classique, portée
+<code>read:packages</code>) :</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">npm</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> config</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> set</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> @gregoirelacoste:registry</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> https://npm.pkg.github.com</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">npm</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> config</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> set</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> //npm.pkg.github.com/:_authToken</span><span style="color:#D73A49;--shiki-dark:#F97583"> &lt;</span><span style="color:#032F62;--shiki-dark:#9ECBFF">ton</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> PA</span><span style="color:#24292E;--shiki-dark:#E1E4E8">T</span><span style="color:#D73A49;--shiki-dark:#F97583">&gt;</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">npm</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> i</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> -g</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> @gregoirelacoste/atlas@latest</span></span></code></pre>
+</li>
+</ul>
+<p>Les deux posent une commande <code>atlas</code> dans ton PATH. Une fois qu’elle existe, tu n’auras plus jamais à
+retaper ces commandes toi-même : c’est ce que fait <code>atlas update</code> (plus bas).</p>
+<h2 id="vérifier-ce-qui-tourne">Vérifier ce qui tourne</h2>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> version</span><span style="color:#6A737D;--shiki-dark:#6A737D">   # la version de l'instance qui tourne (ou, sans daemon, celle installée sur le disque)</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> status</span><span style="color:#6A737D;--shiki-dark:#6A737D">    # pareil, plus l'état du daemon et son pid</span></span></code></pre>
+<p><code>atlas version</code> imprime un JSON brut — au minimum <code>version</code>, et selon l’origine du paquet <code>commit</code>,
+<code>date</code>, <code>branch</code>. <code>atlas status</code> ressemble à ceci :</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>● en marche — http://127.0.0.1:3030 (pid 48213)</span></span>
+<span class="line"><span>  version : {"version":"0.1.44","commit":"a1b2c3d","date":"2026-09-01T10:00:00Z","branch":"package"}</span></span></code></pre>
+<p>— ou <code>○ arrêté</code> si rien ne tourne. C’est la première chose à taper si tu ne sais plus quelle version
+tu as sous les yeux : le commit dit exactement ce qui tourne, pas une branche.</p>
+<h2 id="rester-à-jour">Rester à jour</h2>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> update</span></span></code></pre>
+<p>Une seule commande, pour tout le monde : elle installe la dernière version <strong>publiée</strong>
+(<code>@gregoirelacoste/atlas@latest</code>), redémarre le daemon, et rafraîchit le plugin IA s’il est déjà
+installé. Si elle échoue, c’est presque toujours le registre ou le jeton : elle te redonne alors les
+deux lignes <code>npm config set</code> ci-dessus.</p>
+<p>Atlas ne se met jamais à jour tout seul. Quand une version plus récente existe, Config › Atlas te le
+dit (trois états : à jour, une version existe, ou « je n’ai pas pu regarder » avec sa raison) ; c’est
+toujours toi qui tapes <code>atlas update</code>.</p>
+<blockquote>
+<p>Si tu es dans un clone du dépôt Atlas lui-même, <code>atlas update</code> te prévient avant d’agir : il
+installerait la dernière version publiée, pas ton code en cours. <code>atlas promote</code> fait ce second
+geste — il n’apparaît dans <code>atlas help</code> que là où il peut servir, c’est-à-dire près d’un clone.</p>
+</blockquote>
+<h2 id="le-daemon">Le daemon</h2>
+<table>
+<thead>
+<tr>
+<th>commande</th>
+<th>effet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>atlas</code></td>
+<td>démarre le daemon si besoin, active le projet du dossier courant, ouvre le navigateur</td>
+</tr>
+<tr>
+<td><code>atlas start</code></td>
+<td>démarre le daemon (port <code>3030</code> par défaut)</td>
+</tr>
+<tr>
+<td><code>atlas stop</code></td>
+<td>l’arrête</td>
+</tr>
+<tr>
+<td><code>atlas restart</code></td>
+<td><code>stop</code> puis <code>start</code></td>
+</tr>
+<tr>
+<td><code>atlas status</code></td>
+<td>l’état et la version de l’instance qui tourne</td>
+</tr>
+<tr>
+<td><code>atlas logs</code></td>
+<td>suit les logs du daemon (les 20 dernières lignes, puis en direct)</td>
+</tr>
+</tbody>
+</table>
+<p>Le daemon sert l’API <strong>et</strong> la page web sur le <strong>même port</strong> — pas deux serveurs séparés. Le port se
+change avec <code>ATLAS_PORT</code> (ou <code>PORT</code>) ; pid et log vivent sous <code>~/.local/state/atlas/</code> (ou
+<code>$XDG_STATE_HOME/atlas</code>), un fichier par port — deux instances sur deux ports coexistent sans se
+marcher dessus.</p>
+<p>Une seule instance sert cependant <strong>un seul projet actif à la fois</strong> : <code>atlas</code> tapé depuis un autre
+chapeau bascule dessus à chaud, sans redémarrer — c’est <code>start</code>/<code>stop</code>/<code>restart</code>/<code>status</code> qui pilotent
+le daemon lui-même, indépendamment du dossier où tu te trouves.</p>
+<h2 id="le-workspace--le-dossier-qui-héberge-tes-repos">Le workspace : le dossier qui héberge tes repos</h2>
+<p>Atlas n’analyse jamais un seul repo : il analyse un <strong>chapeau</strong>, le dossier qui héberge côte à côte
+tous les repos d’un même projet. Sa configuration vit dans un sous-dossier <code>.atlas-workspace/</code>,
+<strong>trouvé par remontée</strong> depuis le dossier où tu lances <code>atlas</code> — exactement comme git trouve son
+<code>.git/</code>. Tu peux donc lancer <code>atlas</code> depuis n’importe quel sous-dossier du chapeau, pas seulement à
+sa racine.</p>
+<p>Les <strong>repos membres</strong> sont auto-découverts : tout sous-dossier direct du chapeau qui contient un
+<code>.git</code> en est un, sans rien à déclarer un par un. Le détail — exclure un repo, forcer un motif de branche, une
+ligne de production par repo — est dans <a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a>.</p>
+<blockquote>
+<p>⚠️ <code>atlas init</code> (et <code>atlas</code> tout court) doivent se lancer <strong>dans le dossier qui contient tes
+repos</strong>, jamais dans un repo lui-même. Un repo n’a pas de sous-dossier <code>.git</code> en plus du sien : y
+lancer Atlas produit un chapeau à zéro membre, et une carte vide.</p>
+</blockquote>
+<h2 id="atlas-init--déclarer-un-projet"><code>atlas init</code> : déclarer un projet</h2>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> init</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [DIR] [--stack a,b]</span></span></code></pre>
+<p>Sans argument, <code>DIR</code> est le dossier courant. La première fois (aucun <code>.atlas-workspace/</code> là),
+<code>atlas init</code> crée <code>project.json</code> (les règles du projet), un dossier <code>features/</code> vide, un <code>.gitignore</code>
+et un <code>ESPACES.md</code> — pour que versionner ce dossier soit sûr, et pour rappeler qui écrit quoi dedans.
+Si <code>.atlas-workspace/</code> existe déjà, <code>atlas init</code> le dit et n’écrase <strong>rien</strong>. Un aperçu de ce qu’il
+annonce, sur un chapeau à deux repos :</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>✓ stacks DÉTECTÉES dans 2 repo(s) : nest, react, typescript  (dépendances déclarées)</span></span>
+<span class="line"><span>✓ repos FRONT détectés : projet-front  (dépendance @angular/core, react…)</span></span>
+<span class="line"><span>✓ features par TICKET : 7 branche(s) sur 12 portent un jeton (PROJ-123…) — `featureId: "ticket"`</span></span>
+<span class="line"><span>✓ ligne de base : `develop` — détectée dans 2 repo(s) (`base` dans project.json, éditable dans Config › Projet)</span></span>
+<span class="line"><span>✓ /home/toi/mon-chapeau/.atlas-workspace créé (project.json + features/ + .gitignore + ESPACES.md)</span></span>
+<span class="line"><span>  · stacks actives : nest, react, typescript (prouvées par les dépendances — re-dérivées à chaque chargement, rien n'est copié)</span></span>
+<span class="line"><span>→ édite /home/toi/mon-chapeau/.atlas-workspace/project.json (stack, couches, repos membres) puis :  cd /home/toi/mon-chapeau &amp;&amp; atlas</span></span></code></pre>
+<p><strong>Les stacks</strong> — ce qu’Atlas sait d’un framework — n’ont pas besoin de <code>--stack</code> pour s’activer : à
+chaque chargement, Atlas lit les dépendances déclarées dans les <code>package.json</code> de tes repos membres
+et allume tout seul ce qu’elles <strong>prouvent</strong>. Quinze sont livrées : <code>angular</code>, <code>axios</code>, <code>express</code>,
+<code>fastify</code>, <code>graphql</code>, <code>hono</code>, <code>jest</code>, <code>koa</code>, <code>nest</code>, <code>next</code>, <code>nuxt</code>, <code>react</code>, <code>svelte</code>, <code>typescript</code>,
+<code>vue</code>. La dernière couvre aussi le <strong>JavaScript pur</strong>. Le détail est dans
+<a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a>. <code>--stack a,b</code> sert à forcer une
+décision explicite (ajouter une stack que rien ne prouve, ou en refuser une qui l’est) ; une stack
+inconnue fait échouer la commande, qui liste alors celles qui existent.</p>
+<p><code>atlas init</code> <strong>détecte</strong> aussi trois choses et les <strong>écrit comme des décisions</strong>, modifiables
+ensuite : les repos qui rendent une interface, <strong>ce qui fait une feature ici</strong> (un jeton de ticket
+dans le nom des branches, ou bien chaque branche), et la <strong>ligne de base</strong> — la branche à laquelle
+une feature est comparée. En cas de désaccord entre repos, rien n’est écrit et il le dit.</p>
+<p><code>atlas init</code> <strong>n’installe pas</strong> le plugin IA (<code>atlas plugin install</code>, à part — voir
+<a href="/atlas-site/manuel/brancher-l-ia">Brancher l’IA</a>) : toucher ta configuration globale de session de code est un
+geste de confiance qui se prend à part. Il ne fait pas non plus <code>git init</code>, et il ne copie aucun
+fichier de stack dans ton workspace — elles vivent dans l’outil et suivent ses mises à jour.</p>
+<p>Partager cette config avec l’équipe se fait en versionnant <code>.atlas-workspace/</code> (le <code>.gitignore</code> posé
+protège déjà ce qui doit rester personnel — ta lecture des fils, tes validations) ; un collègue la
+reçoit avec <code>git clone &lt;url&gt; .atlas-workspace</code> au lieu de relancer <code>atlas init</code>.</p>
+<h2 id="le-registre-des-projets">Le registre des projets</h2>
+<p>Atlas garde la liste des projets que tu as ouverts dans <code>~/.config/atlas/config.json</code> (ou
+<code>$XDG_CONFIG_HOME/atlas/config.json</code>) — l’équivalent des « projets récents » d’un IDE, rangé <strong>hors</strong>
+de tout workspace. Tu le gères depuis <strong>⚙️ Config › Projet</strong>, chapitre « Projets connus » : activer
+un projet (bascule à chaud, sans redémarrer), en ajouter un par son chemin, en retirer un (ça ne
+touche rien sur le disque). Au
+démarrage du daemon, le dernier projet actif du registre l’emporte sur la découverte automatique du
+dossier courant, tant qu’il pointe encore vers un vrai workspace.</p>
+<h2 id="laccueil--lécran-sans-feature">L’accueil : l’écran sans feature</h2>
+<p><code>atlas</code> ouvre le navigateur sans feature. Ce que tu vois alors n’est pas une carte vide, c’est une
+<strong>page d’accueil</strong> — et c’est aussi ce que tu retrouves en quittant une feature (le bouton
+<strong>⊘ tous les repos</strong> du panneau Git). De haut en bas :</p>
+<ul>
+<li>la marque, puis la promesse : « <strong>Relire et endosser le code d’une feature, flux par flux.</strong> » —
+un <strong>flux</strong> est un chemin d’appel complet, de l’entrée jusqu’au bout ; <strong>endosser</strong>, c’est dire
+« j’ai relu cette ligne et je la prends à mon compte ». Sous elle : « La carte d’un ticket à
+travers ses repos : ce qui a changé, qui l’appelle, et un rond par symbole à endosser. »</li>
+<li>la <strong>touche maîtresse</strong> en une phrase — « Espace ouvre la boîte des raccourcis : une lettre choisit
+une colonne, la suivante agit. Échap ferme. » — suivie des sept colonnes de l’écran avec leur
+lettre : disposition, volet gauche, Arbre, Code, recherche, Git, pages ;</li>
+<li><strong>cinq gestes</strong>, cliquables, chacun avec sa touche ;</li>
+<li>les <strong>dernières features</strong> ;</li>
+<li>un pied : « Espace pour commencer ».</li>
+</ul>
+<p>Les cinq gestes, dans l’ordre où la page les pose :</p>
+<table>
+<thead>
+<tr>
+<th>Touche</th>
+<th>Le geste, tel qu’il est écrit</th>
+<th>Sans feature</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Espace p t</code></td>
+<td>« Choisir une feature — le Tableau »</td>
+<td>actif</td>
+</tr>
+<tr>
+<td><code>Espace s g</code></td>
+<td>« Chercher dans le contenu des fichiers »</td>
+<td>atténué — « sans feature »</td>
+</tr>
+<tr>
+<td><code>Espace s f</code></td>
+<td>« Ouvrir un fichier par son nom »</td>
+<td>atténué — « sans feature »</td>
+</tr>
+<tr>
+<td><code>Espace g m</code></td>
+<td>« Les repos du chapeau — le panneau Git »</td>
+<td>actif</td>
+</tr>
+<tr>
+<td><code>Espace p c</code></td>
+<td>« Config — projet, repos, IA »</td>
+<td>actif</td>
+</tr>
+</tbody>
+</table>
+<p>Un geste qui ne peut rien faire ici n’est ni caché ni gris muet : il est <strong>atténué avec sa raison en
+clair</strong>, et son clic ne fait rien. Les deux qui le sont cherchent dans les fichiers de la feature
+ouverte — sans feature, il n’y a rien où chercher. Cliquer un geste actif joue exactement le même
+accord que la touche : la page ne fait rien que le clavier ne fasse.</p>
+<p>Sous les gestes, <strong>Dernières features</strong> liste jusqu’à six features, la dernière poussée d’abord (le
+même ordre que le Tableau ; celles que rien ne date passent après). Chaque ligne porte son id, son
+titre et la colonne où elle tombe ; un tiret quand elle n’est dans aucune colonne. Cette liste ne
+paie ni l’historique git ni l’hébergeur : la colonne affichée y vaut donc « En cours » pour une
+feature que le Tableau rangerait plus loin — c’est lui qui tranche. Elle a ses trois états : en cours
+de chargement, l’erreur en clair (« pas pu lister : … »), ou « aucune feature déclarée — ▦ Tableau
+pour en déclarer une ». <strong>▦ toutes les features</strong> ouvre le Tableau.</p>
+<p>Deux choses restent à l’écran sur l’accueil. Le <strong>header</strong>, qui affiche <code>📍 aucune feature</code>, les deux
+boutons de page et la version. Et le <strong>panneau Git</strong>, en bas : c’est le seul panneau qui parle encore
+de quelque chose, puisque sans feature il liste <strong>tous</strong> les repos du chapeau.</p>
+<blockquote>
+<p>⚠️ Une page ouverte à ta dernière visite garde la main : si tu as quitté Atlas sur le Tableau ou
+sur Config, tu les retrouves au démarrage, et c’est <code>Échap</code> qui les referme sur l’accueil.</p>
+</blockquote>
+<h2 id="choisir-ou-déclarer-ta-première-feature">Choisir ou déclarer ta première feature</h2>
+<p>Depuis l’accueil, <strong>▦ Tableau</strong> (<code>Espace p t</code>) montre toutes les features du projet, rangées en
+colonnes par ce qu’il reste à faire ; un clic sur l’une d’elles charge sa carte. Le détail des
+colonnes est dans <a href="/atlas-site/manuel/le-tableau">Le Tableau</a>.</p>
+<p>Si ta feature n’existe nulle part encore, la colonne <strong>Déclarée</strong> porte un bouton <strong>＋</strong> : c’est le
+seul endroit du produit où une feature peut naître sans qu’une branche existe déjà. Il te demande un
+identifiant, un <strong>titre</strong> (optionnel), puis <strong>Déclarer</strong>. Deux saisies sont acceptées : un id de
+ticket (<code>PROJ-412</code>), ou un <strong>nom de branche collé</strong> — <code>feat/login-bug</code> déclare <code>login-bug</code>, jamais
+<code>feat-login-bug</code>. À l’ouverture du formulaire, Atlas cherche déjà sur <code>origin</code> les branches qui
+portent un identifiant, pour te les proposer en autocomplétion ; s’il n’a pas pu les lire, il le dit
+et propose de réessayer plutôt que de déclarer à l’aveugle.</p>
+<p>Si l’id que tu tapes correspond à une branche déjà trouvée sur <code>origin</code>, ses repos sont pré-déclarés
+— la feature se lit alors directement <strong>sur refs</strong>, sans rien avoir à sortir localement. Si l’id
+n’existe encore nulle part, Atlas pose une spec vierge (<code>ticket.md</code>) à côté : tu es en train de créer
+le ticket, pas de reprendre du code. Et si l’id existe déjà, « Déclarer » ne renvoie pas une erreur :
+Atlas rouvre simplement la feature qui existe.</p>
+<h2 id="ta-première-carte">Ta première carte</h2>
+<p><strong>Ce qu’il faut pour qu’une carte s’affiche</strong> : au moins un repo du chapeau doit porter une branche
+que ton projet reconnaît comme celle de cette feature — un nom qui contient l’id exact du ticket
+(<code>feat/PROJ-412-paging</code> convient, <code>PROJ-41</code> ne matche jamais <code>PROJ-412</code>), ou, si le projet compte ses
+features par branche, la branche elle-même. Cette branche est alors comparée à la <strong>ligne de base</strong> :
+celle déclarée pour la feature, sinon celle du projet, sinon la variable d’environnement <code>BASE</code>,
+sinon <code>develop</code> (<a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a>).</p>
+<p>Tant qu’aucune branche ne porte l’id nulle part, la feature reste sur « Déclarée » : ce n’est pas un
+retard, c’est l’état normal d’un ticket qu’on vient d’ouvrir — et si tu ouvres quand même sa carte,
+l’Arbre le dit plutôt que de rester silencieux : « Aucun fichier touché : le diff avec <la ligne de
+base> est vide — la branche n’a pas encore de commit. Rien à lire, et ce n’est pas un défaut de
+détection. »</p>
+<h2 id="le-tour-de-lécran">Le tour de l’écran</h2>
+<p>Une fois une feature ouverte, l’écran se partage en quatre zones fixes, plus deux pages qui les
+remplacent entièrement — et, sans feature, l’accueil décrit plus haut.</p>
+<p><strong>Le volet gauche</strong>, en trois familles d’onglets :</p>
+<table>
+<thead>
+<tr>
+<th>Onglet</th>
+<th>Sous-onglets</th>
+<th>Ce qu’il montre</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>● Relecture</td>
+<td>—</td>
+<td>ce qu’il te reste à relire, en lignes — voir <a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a></td>
+</tr>
+<tr>
+<td>🗂 Fichiers</td>
+<td>Fichiers · Inventaire</td>
+<td>l’explorateur du chapeau avec le diff marqué en place, et son jumeau chiffré par famille — voir <a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et Inventaire</a></td>
+</tr>
+<tr>
+<td>🧭 Parcours</td>
+<td>Ticket · Parcours · Journal</td>
+<td>la spec et ce qu’on a compris, les étapes cliquables du flux, et tous les fils par date — voir <a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a></td>
+</tr>
+</tbody>
+</table>
+<p><strong>L’Arbre</strong>, au centre : tout le diff de la feature, rangé par chemin d’exécution plutôt que par
+fichier — voir <a href="/atlas-site/manuel/l-arbre">L’Arbre</a>.</p>
+<p><strong>Le Code</strong>, à droite : la source live du nœud sélectionné, avec ses liens et ses fils de
+conversation — voir <a href="/atlas-site/manuel/le-code">Le Code</a>.</p>
+<p><strong>Le panneau Git</strong>, en bas de l’écran (<code>Espace g m</code> pour le montrer, et le masquer) : l’état local de
+tes checkouts, les branches et la lignée du ticket, la revue des merge ou pull requests — voir
+<a href="/atlas-site/manuel/le-panneau-git">Le panneau Git</a>.</p>
+<p><strong>Le header</strong> affiche l’id de la feature ouverte (<code>📍 PROJ-412</code>) suivi de sa branche entière, une
+puce qui reprend l’état du Tableau pour cette feature (même lecture, jamais un second calcul), un
+drapeau qui ne s’allume que si <code>.atlas-workspace/</code> a été mis en dépôt git partagé et qu’un collègue y
+a poussé du neuf que tu n’as pas encore récupéré, et la version de l’instance (<code>vX.Y.Z · &lt;commit&gt;</code>). Une fine barre d’activité tout en haut nomme ce qui charge sans jamais bloquer l’écran —
+la feature précédente reste utilisable pendant qu’une autre se charge.</p>
+<p>Deux boutons du header ouvrent des <strong>pages</strong> qui remplacent la carte entière (Arbre, Code, volet
+gauche et panneau Git masqués le temps qu’elles sont ouvertes) :</p>
+<ul>
+<li><strong>▦ Tableau</strong> — toutes les features du projet d’un coup d’œil. Détail : <a href="/atlas-site/manuel/le-tableau">Le Tableau</a>.</li>
+<li><strong>⚙️ Config</strong> — trois vues : Feature (les repos et branches de la feature ouverte), Projet (les
+projets connus et les réglages du projet actif, dont la ligne de base et ce qui fait une feature),
+Atlas (le thème, la version, brancher ton IA). Détail :
+<a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a> et <a href="/atlas-site/manuel/brancher-l-ia">Brancher l’IA</a>.</li>
+</ul>
+<h3 id="une-touche-maîtresse-pilote-tout-lécran">Une touche maîtresse pilote tout l’écran</h3>
+<p>Atlas se pilote entier depuis une seule touche : <code>Espace</code> ouvre une boîte en bas à droite, qui liste
+les colonnes de l’écran. Une lettre choisit la colonne, une lettre suivante déclenche l’effet ; et la
+boîte elle-même est la liste des raccourcis, rien à mémoriser à l’avance — c’est cette grammaire que
+l’accueil écrit en clair pour qui ouvre Atlas la première fois. La table complète, colonne par
+colonne, est dans <a href="/atlas-site/manuel/le-clavier">Le clavier</a>.</p>
+<h2 id="raccourcis">Raccourcis</h2>
+<table>
+<thead>
+<tr>
+<th>Touche</th>
+<th>Effet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Espace</code></td>
+<td>ouvre la boîte des raccourcis, en bas à droite de l’écran</td>
+</tr>
+<tr>
+<td><code>Espace p t</code></td>
+<td>ouvre le Tableau, et le referme — un seul geste dans les deux sens</td>
+</tr>
+<tr>
+<td><code>Espace p c</code></td>
+<td>ouvre Config, et la referme</td>
+</tr>
+<tr>
+<td><code>Espace g m</code></td>
+<td>montre le panneau Git, et le masque — il reste actif sans feature</td>
+</tr>
+<tr>
+<td><code>Échap</code></td>
+<td>referme la page ouverte (Tableau ou Config) et revient à la carte, ou à l’accueil</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</h2>
+<ul>
+<li>Il ne se met jamais à jour tout seul : <code>atlas update</code> est toujours une commande que tu tapes, jamais
+un automatisme derrière ton dos.</li>
+<li>Il n’installe jamais le plugin IA à ta place : <code>atlas init</code> le dit explicitement, c’est
+<code>atlas plugin install</code> qui le fait, à part.</li>
+<li>Il ne fait pas <code>git init</code>, ne fusionne jamais une branche (<code>pull --ff-only</code> uniquement, le refus de
+git rendu tel quel) et ne supprime jamais une branche ni un worktree — il montre la commande, il ne
+la lance pas.</li>
+<li>Il ne copie aucun fichier de stack dans ton workspace : les stacks vivent dans l’outil.</li>
+<li>Il ne devine jamais un id de feature : sans branche qui le porte nulle part, la carte reste vide et
+le dit, plutôt que d’afficher autre chose à la place.</li>
+<li>Sans feature, il ne fait pas semblant : les gestes qui n’ont rien à lire sont atténués avec leur
+raison, jamais grisés en silence.</li>
+</ul>
+<h2 id="limites-connues">Limites connues</h2>
+<ul>
+<li><code>atlas update</code> et <code>atlas promote</code> ne sont éprouvés que sous Linux : la façon dont ils retrouvent le
+binaire fraîchement installé suppose une disposition de fichiers qui ne tient pas encore sous
+Windows.</li>
+<li>Le paquet est privé : sans le registre et un jeton configurés, <code>atlas update</code> échoue et Config ›
+Atlas ne peut pas dire s’il existe une version plus récente — il le dit honnêtement (« je n’ai pas
+pu regarder »), il n’affirme jamais « à jour » par défaut.</li>
+<li>L’accueil montre la colonne de chaque feature sans lire l’archivage ni l’hébergeur : elle peut être
+en retard sur celle du Tableau, qui, lui, les lit.</li>
+</ul>
+<nav class="suite" aria-label="Page suivante et précédente"><a class="droite" href="/atlas-site/manuel/l-arbre"><small>suivant →</small>L&#39;Arbre</a></nav></article><nav class="cote toc" aria-label="Sur cette page"><h2>Sur cette page</h2><ul><li><a href="#installer-le-paquet">Installer le paquet</a></li><li><a href="#vérifier-ce-qui-tourne">Vérifier ce qui tourne</a></li><li><a href="#rester-à-jour">Rester à jour</a></li><li><a href="#le-daemon">Le daemon</a></li><li><a href="#le-workspace--le-dossier-qui-héberge-tes-repos">Le workspace : le dossier qui héberge tes repos</a></li><li><a href="#atlas-init--déclarer-un-projet">atlas init : déclarer un projet</a></li><li><a href="#le-registre-des-projets">Le registre des projets</a></li><li><a href="#laccueil--lécran-sans-feature">L’accueil : l’écran sans feature</a></li><li><a href="#choisir-ou-déclarer-ta-première-feature">Choisir ou déclarer ta première feature</a></li><li><a href="#ta-première-carte">Ta première carte</a></li><li><a href="#le-tour-de-lécran">Le tour de l’écran</a></li><li><a class="h3" href="#une-touche-maîtresse-pilote-tout-lécran">Une touche maîtresse pilote tout l’écran</a></li><li><a href="#raccourcis">Raccourcis</a></li><li><a href="#ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</a></li><li><a href="#limites-connues">Limites connues</a></li></ul></nav></main><footer class="pied"><div class="dedans"><span>Atlas — suivi et validation de code.</span><a href="/atlas-site/manuel/prise-en-main">Manuel</a></div></footer><script>
+    document.getElementById('theme-bt')?.addEventListener('click', () => {
+      const r = document.documentElement;
+      // clair → sombre → système, et le tour recommence. « Système » RETIRE la clé : c'est ce qui
+      // rend le choix distinct d'une absence de choix.
+      const suite = { clair: 'sombre', sombre: '', '': 'clair' };
+      const v = suite[r.dataset.theme || ''];
+      if (v) { r.dataset.theme = v; try { localStorage.setItem('atlas-site-theme', v); } catch {} }
+      else { delete r.dataset.theme; try { localStorage.removeItem('atlas-site-theme'); } catch {} }
+    });
+  </script></body></html>

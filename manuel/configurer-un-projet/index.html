@@ -1,0 +1,461 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Configurer un projet · Atlas</title><meta name="description" content="Tout ce qu'Atlas sait de ton projet tient dans un dossier, .atlas-workspace/. Cette page dit où il est, qui possède quoi dedans, quels repos et quelles branches il regarde, et ce qui s'édite depuis l'écran."><link rel="canonical" href="https://gregoirelacoste.github.io/atlas-site/manuel/configurer-un-projet"><meta property="og:title" content="Configurer un projet · Atlas"><meta property="og:description" content="Tout ce qu'Atlas sait de ton projet tient dans un dossier, .atlas-workspace/. Cette page dit où il est, qui possède quoi dedans, quels repos et quelles branches il regarde, et ce qui s'édite depuis l'écran."><meta property="og:type" content="website"><meta property="og:url" content="https://gregoirelacoste.github.io/atlas-site/manuel/configurer-un-projet"><meta name="twitter:card" content="summary"><link rel="icon" href="/atlas-site/favicon.svg" type="image/svg+xml"><script>
+    (() => { try { const t = localStorage.getItem('atlas-site-theme');
+      if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t; } catch {} })();
+  </script><link rel="stylesheet" href="/atlas-site/_astro/Base.D32RNicN.css"></head><body><header class="tete"><a class="marque" href="/atlas-site">🗺️ Atlas</a><nav><a href="/atlas-site/installer">Installer</a><a href="/atlas-site/manuel/prise-en-main" aria-current="page">Manuel</a><a href="/atlas-site/articles">Écrits</a><button class="theme-bt" id="theme-bt" type="button" aria-label="Changer de thème">◐</button></nav></header><main class="doc"><nav class="cote" aria-label="Le manuel"><h2>Le manuel</h2><ol><li><a href="/atlas-site/manuel/prise-en-main">Prise en main</a></li><li><a href="/atlas-site/manuel/l-arbre">L&#39;Arbre</a></li><li><a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a></li><li><a href="/atlas-site/manuel/le-code">Le Code</a></li><li><a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a></li><li><a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et inventaire</a></li><li><a href="/atlas-site/manuel/le-panneau-git">Le panneau Git</a></li><li><a href="/atlas-site/manuel/le-tableau">Le Tableau</a></li><li><a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a></li><li><a href="/atlas-site/manuel/configurer-un-projet" aria-current="page">Configurer un projet</a></li><li><a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a></li><li><a href="/atlas-site/manuel/brancher-l-ia">Brancher l&#39;IA</a></li><li><a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l&#39;IA lit et écrit</a></li><li><a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a></li><li><a href="/atlas-site/manuel/la-ligne-de-commande">La ligne de commande</a></li><li><a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a></li><li><a href="/atlas-site/manuel/le-clavier">Le clavier</a></li></ol></nav><article class="corps"><h1>Configurer un projet</h1><p class="chapo">Tout ce qu&#39;Atlas sait de ton projet tient dans un dossier, .atlas-workspace/. Cette page dit où il est, qui possède quoi dedans, quels repos et quelles branches il regarde, et ce qui s&#39;édite depuis l&#39;écran.</p><blockquote>
+<p>Tout ce qu’Atlas sait de ton projet tient dans un dossier, <code>.atlas-workspace/</code>. Cette page dit où il
+est, qui possède quoi dedans, quels repos et quelles branches il regarde, et ce qui s’édite depuis
+l’écran.</p>
+</blockquote>
+<p>Atlas est <strong>générique</strong> : le moteur ne connaît aucun framework. Ce qui rend juste la <strong>carte</strong> d’une
+feature — le chemin que prend un ticket à travers tes repos — vient de ce dossier : quelle <strong>couche</strong> pour quel
+fichier (controller, service, repo…), quel décorateur ouvre un <strong>point d’entrée</strong>, quels fichiers sont
+des <strong>contrats</strong> (une surface publique dont d’autres dépendent), et jusqu’à ce qui fait qu’une branche
+est une feature. L’étalon : <code>atlas init</code> sur un projet neuf doit produire une carte utilisable <strong>sans
+qu’une ligne soit éditée</strong>. Ce qui suit sert quand ce n’est pas le cas.</p>
+<p>Les règles de reconnaissance elles-mêmes — les stacks livrées, les couches, les familles, les
+entrées, et la liste complète des clés de <code>project.json</code> — sont sur la page suivante,
+<a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a>. L’installation et <code>atlas init</code> sont
+dans <a href="/atlas-site/manuel/prise-en-main">Prise en main</a> ; le plugin IA et le serveur MCP dans
+<a href="/atlas-site/manuel/brancher-l-ia">Brancher l’IA</a> ; ce que les familles changent aux chiffres dans
+<a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et Inventaire</a>.</p>
+<h2 id="où-vit-la-configuration">Où vit la configuration</h2>
+<p>Atlas travaille sur un <strong>chapeau</strong> : le dossier parent qui héberge tes N repos. La config vit dans un
+<code>.atlas-workspace/</code> posé à sa racine, et elle est <strong>découverte par remontée</strong> depuis le dossier
+courant — comme git trouve son <code>.git/</code>. Lancer <code>atlas</code> depuis n’importe quel sous-dossier d’un repo
+membre trouve donc le bon workspace. La racine est <strong>dérivée</strong> (le parent du <code>.atlas-workspace/</code>) :
+elle ne se règle pas.</p>
+<p>À côté, le <strong>registre</strong> des projets vit sur ta machine, hors de tout projet
+(<a href="/atlas-site/manuel/prise-en-main">Prise en main</a>). Au démarrage, le dernier projet actif l’emporte sur la
+découverte par le dossier courant, tant qu’il pointe sur un vrai workspace.</p>
+<p>Rien n’est mis en cache : la config est relue <strong>à chaque appel</strong>. Édite <code>project.json</code>, recharge la
+carte, c’est pris en compte.</p>
+<h2 id="ce-qui-se-partage-ce-qui-reste-à-toi">Ce qui se partage, ce qui reste à toi</h2>
+<p>Le workspace contient deux natures, et le critère est le <strong>versionnement</strong> :</p>
+<ul>
+<li>la <strong>conf projet</strong> — vraie pour quiconque ouvre ce projet : elle se commite, et remplace le
+« envoie-moi ton <code>project.json</code> ». Chez le suivant : <code>git clone &lt;url&gt; .atlas-workspace</code> au lieu
+d’<code>atlas init</code> ;</li>
+<li>la <strong>conf locale</strong> — ce qui n’appartient qu’à toi : jamais commitée.</li>
+</ul>
+<p><code>atlas init</code> pose un <code>.gitignore</code> dans <code>.atlas-workspace/</code>, mais ne fait <strong>pas</strong> <code>git init</code> : où et
+comment l’équipe versionne reste sa décision. Quand tu demandes à Atlas de faire un dépôt du workspace
+(page Config › Projet, « 🤝 Workspace partagé »), il <strong>complète</strong> ce <code>.gitignore</code> — jamais il ne le
+réécrit — avec les deux règles qui comptent : <code>features/*/curation/local/</code> (ce que tu as <strong>lu</strong>) et
+<code>features/*/curation.json</code> (l’ancien fichier mono-utilisateur), revérifiées à chaque « ⇧ Partager ». Si
+tu versionnes à la main, vérifie que la première y est : sans elle, <code>git add -A</code> publierait ta lecture
+des fils.</p>
+<h2 id="larborescence">L’arborescence</h2>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>mon-chapeau/</span></span>
+<span class="line"><span>├─ .atlas-workspace/</span></span>
+<span class="line"><span>│  ├─ project.json  stack/&lt;id&gt;.json  precedents.json  ESPACES.md  .gitignore</span></span>
+<span class="line"><span>│  └─ features/PROJ-412/</span></span>
+<span class="line"><span>│     ├─ ticket.md  feature.json  overlay.json  parcours.json  plan.json  comments.json</span></span>
+<span class="line"><span>│     └─ curation/</span></span>
+<span class="line"><span>│        ├─ moi@exemple.com.json        # ce que j'ai relu et validé — partagé</span></span>
+<span class="line"><span>│        └─ local/moi@exemple.com.json  # ce que j'ai lu — jamais partagé</span></span>
+<span class="line"><span>├─ projet-api/                  # repo membre (auto-découvert : il a un .git)</span></span>
+<span class="line"><span>└─ app-front/                   # repo membre</span></span></code></pre>
+<p><strong>Un espace, un fichier, un propriétaire</strong> — c’est ce qui rend le dossier relisible : un diff dit qui a
+parlé.</p>
+<table>
+<thead>
+<tr>
+<th>fichier</th>
+<th>à qui</th>
+<th>quoi</th>
+<th>commité ?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>project.json</code></td>
+<td><strong>toi</strong></td>
+<td>les règles du projet (six réglages s’éditent aussi depuis l’écran)</td>
+<td>oui</td>
+</tr>
+<tr>
+<td><code>stack/&lt;id&gt;.json</code></td>
+<td><strong>toi</strong></td>
+<td>ce que tu ajoutes à une stack livrée</td>
+<td>oui</td>
+</tr>
+<tr>
+<td><code>precedents.json</code></td>
+<td>Atlas</td>
+<td>l’index construit par <code>atlas precedents --build</code></td>
+<td>oui</td>
+</tr>
+<tr>
+<td><code>features/&lt;ID&gt;/ticket.md</code></td>
+<td><strong>toi</strong></td>
+<td>la spec : objectif, critères, « ne fait pas »</td>
+<td>oui</td>
+</tr>
+<tr>
+<td><code>features/&lt;ID&gt;/feature.json</code></td>
+<td>toi <strong>ou</strong> l’IA</td>
+<td>la déclaration : titre, repos membres, branches choisies, une ligne de base d’exception</td>
+<td>oui</td>
+</tr>
+<tr>
+<td><code>overlay.json</code> · <code>parcours.json</code> · <code>plan.json</code></td>
+<td>l’IA</td>
+<td>ce qu’elle a compris, les étapes, le pseudo-code</td>
+<td>oui</td>
+</tr>
+<tr>
+<td><code>comments.json</code></td>
+<td>les <strong>deux</strong></td>
+<td>la conversation — le rôle de chaque message départage</td>
+<td>oui</td>
+</tr>
+<tr>
+<td><code>curation/&lt;qui&gt;.json</code></td>
+<td><strong>toi</strong></td>
+<td>tes <strong>endossements</strong> (ce que tu as relu et validé), tes notes de criticité, tes « pas compris »</td>
+<td>oui — c’est ce que l’équipe voit</td>
+</tr>
+<tr>
+<td><code>curation/local/&lt;qui&gt;.json</code></td>
+<td><strong>toi</strong></td>
+<td>ce que tu as lu dans les fils, la branche que tu lis</td>
+<td><strong>non, jamais</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Le nom de fichier de ta curation est un slug de ton adresse git (<code>git config user.email</code>) : l’identité
+se lit dans git, elle ne se déclare pas dans Atlas. Sans identité configurée, Atlas retombe sur un
+<code>curation.json</code> mono-utilisateur, ignoré par git lui aussi. Et la carte n’est <strong>jamais</strong> stockée : ce
+dossier ne contient que ce qui se <strong>déclare</strong>.</p>
+<h2 id="les-repos-membres">Les repos membres</h2>
+<p>L’appartenance est <strong>auto-découverte</strong> : tout sous-dossier du chapeau qui contient un <code>.git</code> est un
+repo membre. Les dossiers cachés sont ignorés, et la liste est triée pour que l’ordre des bandeaux
+soit stable. Ajouter un repo au chapeau suffit : aucune liste blanche à tenir.</p>
+<p>Deux clés seulement s’en mêlent :</p>
+<ul>
+<li><code>exclude</code> — les repos à <strong>retirer</strong> de la découverte. C’est pour un clone parasite : un repo perso
+posé là, sans rapport avec le projet. Atlas ne supprime rien sur le disque, il cesse de le lire ;</li>
+<li><code>repos[]</code> — des <strong>overrides par repo</strong>, jamais une liste d’appartenance. Une entrée porte le <code>name</code>
+du dossier plus, au choix, <code>branch</code>, <code>routePrefix</code>, <code>productionBase</code>.</li>
+</ul>
+<p><code>branch</code> est un motif de branche attendue avec <code>{id}</code> — par exemple <code>feat/{id}</code>, qui reconnaîtra
+<code>feat/PROJ-412</code> et rien d’autre dans ce repo. Sans motif, c’est la règle générale de la section
+suivante qui s’applique.</p>
+<p><code>routePrefix</code> est le préfixe sous lequel les routes de ce repo sont réellement servies
+(<code>/back-office</code>). Il est <strong>déclaré, jamais déduit</strong> : un ingress ou un proxy peut le réécrire devant
+le service, donc le lire dans le code n’en ferait qu’une hypothèse. Sans lui, l’étiquette d’une entrée
+HTTP reste relative — <code>▶ GET …/orders/history</code> dans la tête du Code, où le <code>…/</code> dit « le montage n’est
+pas lu » — et Atlas pose un <strong>angle mort</strong>, c’est-à-dire un endroit où le moteur dit qu’il ne sait pas
+au lieu de deviner. Déclaré, le <code>…/</code> disparaît : l’URL est exacte.</p>
+<p><code>productionBase</code> est la branche qui porte la <strong>production</strong> de ce repo, en trois états : un nom, <code>null</code>
+(« pas d’étape de déploiement ici » — un <code>master</code> abandonné), l’<strong>absence</strong> (« applique le défaut » :
+<code>master</code> ou <code>main</code> s’ils existent ici et diffèrent de la ligne d’intégration). C’est ce qui range une
+feature en « 🚀 À déployer » ou « ✅ Terminé » dans <a href="/atlas-site/manuel/le-tableau">le Tableau</a>.</p>
+<h2 id="ce-qui-fait-une-feature">Ce qui fait une feature</h2>
+<p>Atlas doit répondre à une question que le code ne porte pas : <strong>ce nom de branche désigne-t-il une
+feature, et laquelle ?</strong> C’est une convention d’équipe — elle se <strong>déclare</strong>, comme le préfixe de
+route. Une clé, <code>featureId</code>, deux valeurs :</p>
+<table>
+<thead>
+<tr>
+<th><code>featureId</code></th>
+<th>ce qui devient une feature</th>
+<th>comment elle est nommée</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>"ticket"</code> — <strong>le défaut quand la clé est absente</strong></td>
+<td>seules les branches dont le nom porte un <strong>jeton</strong> de la forme <code>PROJ-412</code></td>
+<td>par ce jeton, en majuscules</td>
+</tr>
+<tr>
+<td><code>"branch"</code></td>
+<td><strong>toute</strong> branche qui n’est pas une ligne</td>
+<td>par son <strong>dernier segment</strong> ; un jeton de ticket, s’il y en a un, prime</td>
+</tr>
+</tbody>
+</table>
+<p>Le réglage est à l’écran — <strong>⚙️ Config › Projet › ✎ Ce qu’Atlas ne peut pas deviner › « Ce qui fait une
+feature »</strong> —, un déroulant à deux entrées. <code>atlas init</code> <strong>détecte</strong> et écrit la
+décision en clair, même quand c’est le défaut : il lit toutes les branches des repos membres, locales
+et distantes, et pose <code>"ticket"</code> dès qu’au moins une porte un jeton, <code>"branch"</code> si aucune n’en porte.
+Il ne l’écrit qu’en <strong>créant</strong> le workspace : sur un <code>.atlas-workspace/</code> déjà là, il n’écrit rien.
+Un workspace créé avant ce réglage n’a pas la clé : il est donc en <code>ticket</code>, comme avant.</p>
+<p><strong>Mode <code>ticket</code>.</strong> Un jeton, c’est au moins deux majuscules, un tiret, des chiffres, et il est <strong>borné</strong>
+des deux côtés : <code>feat/PROJ-412_api</code> porte <code>PROJ-412</code>, <code>PROJ-4120</code> n’est pas <code>PROJ-412</code>. Le reste n’est
+pas une feature : ces branches n’ont pas de carte dans <a href="/atlas-site/manuel/le-tableau">le Tableau</a>, qui les
+<strong>compte</strong> sous ses colonnes (« ⊘ 2 branches sans ticket ignorées par réglage ») — un clic sur cette
+ligne ouvre ce réglage. Y coller un nom de branche sans jeton est refusé <strong>avec sa sortie</strong> : Atlas
+rappelle qu’ici une feature est un jeton, et renvoie vers le réglage qui fait lire toute branche.</p>
+<p><strong>Mode <code>branch</code>.</strong> Le dernier segment nomme : <code>feat/login-bug</code> et <code>alice/login-bug</code> portent tous deux
+<code>login-bug</code>, le <code>origin/</code> est retiré d’abord. Le nom est mis en forme — minuscules, les accents gardent
+leur lettre (<code>Écran</code> → <code>ecran</code>), le reste devient un tiret. Et il se lit en <strong>segment entier</strong>, plus
+strict qu’un ticket : <code>login-bug</code> est porté par <code>feat/login-bug</code>, <strong>pas</strong> par <code>feat/login-bug-v2</code>.
+Sans cette borne, une feature au nom court lirait la carte de sa voisine.</p>
+<blockquote>
+<p>⚠️ Passer en <code>branch</code> remplit le Tableau : <strong>chaque</strong> branche sortie localement ou présente sur
+<code>origin</code> y devient une carte. Ce n’est pas du bruit à exclure — c’est la dormance à 60 jours qui
+replie les vieilles (<a href="/atlas-site/manuel/le-tableau">le Tableau</a>).</p>
+</blockquote>
+<p><strong>Jamais une feature, dans les deux modes</strong> : les <strong>lignes</strong> — <code>develop</code>, <code>master</code>, <code>main</code>, la ligne de
+base, et chaque ligne de production déclarée par repo. Un id qui <strong>attraperait</strong> l’une d’elles est
+refusé, y compris <code>wip/develop</code>. Le refus reprend la saisie, puis le dit : <em>nomme une ligne
+d’intégration : toutes les branches la portent, elle ne peut pas être une feature.</em></p>
+<p><strong>Déclarer : taper, ou coller.</strong> Le champ du bouton <strong>＋</strong> du <a href="/atlas-site/manuel/le-tableau">Tableau</a> accepte les
+deux. Un <strong>id tapé</strong> passe à sa forme canonique : un ticket en majuscules (<code>proj-412</code> → <code>PROJ-412</code>),
+le reste en slug (<code>Login Bug</code> → <code>login-bug</code>). Un <strong>nom de branche collé</strong> — dès qu’il contient un <code>/</code>
+— est lu par le même juge que la découverte : <code>feat/login-bug</code> déclare <code>login-bug</code>. Jamais
+<code>feat-login-bug</code>, une feature qu’aucune branche ne porterait, juste à côté de la vraie.</p>
+<h2 id="la-ligne-de-base">La ligne de base</h2>
+<p>C’est <strong>d’où part le diff</strong> de chaque feature : la branche d’intégration où ton travail finit par
+rentrer. Son nom est une convention d’équipe — <code>develop</code> chez les uns, <code>master</code> ou <code>main</code> chez les
+autres, et c’est le défaut de GitHub. Une clé, <code>base</code>, dans <code>project.json</code>.</p>
+<p>Quatre niveaux, du plus précis au plus général : <strong>la feature</strong> (<code>feature.json</code>), <strong>le projet</strong>
+(<code>project.json</code>), la variable <code>BASE</code>, puis <code>develop</code> en dernier recours. La feature ne déclare que
+l’<strong>exception</strong> : la base du projet n’y est jamais recopiée, sinon un changement ultérieur du projet
+n’atteindrait plus aucune feature déjà réglée.</p>
+<p><code>atlas init</code> la <strong>détecte</strong> et l’écrit : par repo, la branche que désigne <code>origin/HEAD</code> si ce n’est
+pas une feature, sinon la première présente parmi <code>develop</code>, <code>master</code>, <code>main</code>. Si les repos ne sont
+pas d’accord, <strong>rien n’est écrit</strong> et la commande le dit — en choisir une ferait partir la moitié des
+cartes d’une fourche inventée. Sous le champ, la même détection : ce que git montre repo par repo, le
+verdict (<code>✓ détecté</code>, <code>⚠ bases hétérogènes</code>, ou aucune ligne), et ce qui est <strong>en vigueur</strong>. On écrit
+un nom de branche nu : <code>origin/</code> est refusé.</p>
+<p><strong>Un repo où la base cherchée n’existe pas sort de la carte, et Atlas le dit</strong> — il n’en invente
+jamais une autre. Le panneau Git porte alors une chip <code>&lt;repo&gt; · base &lt;nom&gt; absente</code>, et la carte un
+angle mort <em>base absente</em> (<a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a>). Sans ce refus,
+Atlas prenait la feature elle-même pour sa base : diff vide, et « mergé » prouvé tout seul.</p>
+<h2 id="la-page-config">La page Config</h2>
+<p>Le bouton <strong>⚙️ Config</strong> du header ouvre une page qui remplace la carte — <code>Échap</code> revient. Trois vues,
+et la dernière ouverte est mémorisée sur cette machine.</p>
+<table>
+<thead>
+<tr>
+<th>vue</th>
+<th>ce qu’on y fait</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Feature</strong></td>
+<td>par repo : la branche <strong>feature</strong> (sur quoi on bosse) et la branche de <strong>comparaison</strong>, plus la comparaison globale. Quand plusieurs branches portent le ticket, elles sont groupées en tête du déroulant. Enregistré dans <code>features/&lt;ID&gt;/feature.json</code></td>
+</tr>
+<tr>
+<td><strong>Projet</strong></td>
+<td>les projets connus du registre (activer, ajouter, retirer), l’état du <strong>workspace partagé</strong> et la case « Partager mon travail automatiquement », le résumé de la config du projet actif, et les six réglages éditables</td>
+</tr>
+<tr>
+<td><strong>Atlas</strong></td>
+<td>le <strong>thème</strong>, la <strong>version</strong> en trois états (à jour · une version existe · je n’ai pas pu regarder, avec sa raison), comment brancher ton IA, et l’état de l’hébergeur par hôte (jeton trouvé ou non, et d’où il vient)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="les-chapitres-se-plient">Les chapitres se plient</h3>
+<p>Chaque chapitre de la page se plie, et <strong>tout arrive replié</strong>. Deux exceptions, parce qu’on vient les
+<strong>voir</strong> et pas les régler : « 🤝 Workspace partagé » dans la vue Projet, et « Par repo » dans la vue
+Feature. Ce que tu plies ou déplies est retenu <strong>sur cette machine</strong>, et un titre porte à droite ce
+que son repli cacherait quand c’est un fait : le nombre de couches, de repos exclus — ou, sur
+« Version », un <code>⬆ v… disponible</code> s’il y a du retard. Le drapeau du workspace, dans le header, ouvre
+la vue Projet <strong>en redépliant</strong> son chapitre même si tu l’avais refermé.</p>
+<h3 id="le-thème">Le thème</h3>
+<p><strong>⚙️ Config › Atlas › « Thème »</strong> — trois boutons :</p>
+<table>
+<thead>
+<tr>
+<th>choix</th>
+<th>ce qu’il fait</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Système</strong></td>
+<td>suit la préférence claire/sombre de ton OS. C’est le <strong>défaut</strong>, et c’est un choix comme les autres : on peut y revenir</td>
+</tr>
+<tr>
+<td><strong>Clair</strong></td>
+<td>force le clair, même si l’OS est en sombre</td>
+</tr>
+<tr>
+<td><strong>Sombre</strong></td>
+<td>force le sombre, même si l’OS est en clair</td>
+</tr>
+</tbody>
+</table>
+<p>Sous les boutons, Atlas dit ce que « Système » donne <strong>ici et maintenant</strong> (« en ce moment : Sombre »),
+parce que la préférence de l’OS n’est pas lisible depuis l’écran. Le choix vit dans ce navigateur, sur
+cette machine — il ne part ni dans <code>project.json</code>, ni chez tes collègues — et il est appliqué avant le
+premier rendu : pas de flash de page claire au chargement. Le thème a quitté le <strong>header</strong> : il n’y a
+plus rien à y chercher.</p>
+<h3 id="les-six-réglages-quatlas-ne-peut-pas-deviner">Les six réglages qu’Atlas ne peut pas deviner</h3>
+<p>La vue <strong>Projet</strong> affiche en lecture seule tes couches, tes types de fichiers, tes rangés d’office, tes
+repos front, les repos membres et les exclus. Le chapitre « Repos front » se lit encore, mais l’écran
+dit lui-même qu’il ne fait plus rien : <em>« Sans effet […] : un fichier est front par ce qu’il porte
+[…], plus par le nom de son repo. »</em> Un réglage qui ne fait rien se <strong>dit</strong> plutôt que de disparaître
+en silence — et le jour où quelque chose sera vraiment une propriété de repo, la clé est là pour la
+porter (<a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a>).</p>
+<p>Sous ce résumé, une section <strong>« ✎ Ce qu’Atlas ne peut pas deviner »</strong> : <strong>six réglages s’écrivent
+depuis l’écran</strong>, et six raisons différentes de ne pas les déduire.</p>
+<table>
+<thead>
+<tr>
+<th>réglage</th>
+<th>pourquoi il faut un humain</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>les <strong>familles</strong> maison</td>
+<td>le moteur sait compter un suffixe, pas le nommer. Les motifs non classés qui ont la forme d’un rôle sont proposés : un clic les déclare</td>
+</tr>
+<tr>
+<td><strong>ce qui fait une feature</strong></td>
+<td>la convention que l’équipe écrit dans ses branches ne se lit nulle part dans le code</td>
+</tr>
+<tr>
+<td>la <strong>ligne de base</strong></td>
+<td>le nom de la ligne d’intégration est une convention d’équipe, pas un fait du code. Vide = rien de déclaré : Atlas cherche la ligne repo par repo</td>
+</tr>
+<tr>
+<td>les <strong>repos exclus</strong></td>
+<td>un clone parasite ne se distingue pas d’un membre par le code</td>
+</tr>
+<tr>
+<td>le <strong>préfixe de route</strong> par repo</td>
+<td>un ingress peut le réécrire. Vide = route relative</td>
+</tr>
+<tr>
+<td>la <strong>ligne de production</strong> par repo</td>
+<td><code>master</code> existe partout ; qu’il soit vivant ne se lit ni dans son nom ni dans sa topologie. Vide = auto, <code>—</code> (ou <code>aucune</code>) = pas d’étape de déploiement ici</td>
+</tr>
+</tbody>
+</table>
+<p>Les six sont des chapitres pliables, et le bouton <strong>Enregistrer</strong> est ancré au pied de la section : il
+les commande tous les six, quel que soit celui que tu as ouvert. L’écriture est une <strong>liste blanche
+stricte</strong> — Atlas relit le fichier du disque, remplace ces clés-là, réécrit : tout ce que tu as édité à
+la main à côté est préservé. Le reste — couches, types de fichiers, stacks — s’édite dans
+<code>project.json</code>, clé par clé (<a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a>). Le
+message dit alors <code>✓ enregistré dans project.json</code>, et la carte est rechargée : c’est elle qui prouve
+que le réglage a pris.</p>
+<h2 id="les-variables-denvironnement">Les variables d’environnement</h2>
+<p>Elles disent à Atlas <strong>où regarder</strong> — quel workspace, quel port, quelle ligne de base, quel jeton.
+Une seule ne <strong>produit</strong> rien : <code>ATLAS_M2M_DEBUG</code>, qui n’ajoute qu’une trace.</p>
+<table>
+<thead>
+<tr>
+<th>variable</th>
+<th>ce qu’elle fait</th>
+<th>défaut</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ATLAS_WORKSPACE</code></td>
+<td>chemin explicite vers un workspace, lu <strong>au démarrage du daemon</strong> — et seulement si le registre n’a pas déjà un projet actif valide</td>
+<td>la remontée depuis le dossier courant</td>
+</tr>
+<tr>
+<td><code>ATLAS_PORT</code> ou <code>PORT</code></td>
+<td>le port du daemon (le pidfile et le log sont indexés par port)</td>
+<td><code>3030</code></td>
+</tr>
+<tr>
+<td><code>BASE</code></td>
+<td>la ligne de base, quand ni la feature ni le projet ne la déclarent</td>
+<td><code>develop</code></td>
+</tr>
+<tr>
+<td><code>XDG_CONFIG_HOME</code></td>
+<td>où vit le registre des projets</td>
+<td><code>~/.config</code></td>
+</tr>
+<tr>
+<td><code>XDG_STATE_HOME</code></td>
+<td>où vivent le pidfile et les logs</td>
+<td><code>~/.local/state</code></td>
+</tr>
+<tr>
+<td><code>ATLAS_GITLAB_TOKEN</code> (ou <code>GITLAB_TOKEN</code>, <code>GLAB_TOKEN</code>) · <code>ATLAS_GITLAB_HOST</code></td>
+<td>un jeton GitLab explicite, et l’hôte qui le <strong>scope</strong></td>
+<td>le jeton lu dans la config de <code>glab</code></td>
+</tr>
+<tr>
+<td><code>ATLAS_GITHUB_TOKEN</code> (ou <code>GH_TOKEN</code>, <code>GITHUB_TOKEN</code>) · <code>ATLAS_GITHUB_HOST</code></td>
+<td>les mêmes, côté GitHub</td>
+<td>la config de <code>gh</code></td>
+</tr>
+<tr>
+<td><code>ATLAS_CLAUDE_BIN</code></td>
+<td>le binaire lancé par <code>atlas claude</code></td>
+<td><code>claude</code></td>
+</tr>
+<tr>
+<td><code>ATLAS_M2M_DEBUG</code></td>
+<td>trace l’appariement des appels réseau sur la sortie d’erreur — <strong>une trace, rien d’autre</strong></td>
+<td>éteint</td>
+</tr>
+</tbody>
+</table>
+<p>Les quatre variables d’hébergeur ont leur page : <a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a>.</p>
+<blockquote>
+<p>⚠️ <code>ATLAS_WORKSPACE</code> ne sert <strong>pas</strong> à changer de projet : le <strong>dernier projet actif du registre
+l’emporte</strong> sur elle. Pour changer de projet, la page Config › Projet, ou <code>atlas</code> lancé depuis le
+nouveau chapeau.</p>
+</blockquote>
+<h2 id="raccourcis">Raccourcis</h2>
+<table>
+<thead>
+<tr>
+<th>touche</th>
+<th>effet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Échap</code></td>
+<td>ferme la page Config et revient à la carte</td>
+</tr>
+<tr>
+<td><code>Espace p c</code></td>
+<td>ouvre Config, et la referme — un seul geste dans les deux sens, comme le bouton <strong>⚙️ Config</strong></td>
+</tr>
+<tr>
+<td><code>Espace p t</code></td>
+<td>traverse Config vers le Tableau, en la refermant au passage</td>
+</tr>
+</tbody>
+</table>
+<p>Aucun raccourci ne part d’un champ ou d’un déroulant : <code>Espace</code> y est avalé par le champ, et Config
+en est pleine. La table entière est dans <a href="/atlas-site/manuel/le-clavier">Le clavier</a>.</p>
+<h2 id="ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</h2>
+<ul>
+<li>Il ne <strong>devine</strong> ni un préfixe de route, ni une ligne de production, ni une famille maison : ces
+trois-là se déclarent, et une déclaration absente se dit à l’écran plutôt que de se combler. Ce qui
+fait une feature et la <strong>ligne de base</strong> sont, eux, <strong>détectés une fois</strong> par <code>atlas init</code> — puis
+écrits comme des décisions, modifiables.</li>
+<li>Il ne <strong>supprime rien</strong> sur le disque : exclure un repo le retire de la carte, pas du chapeau.</li>
+<li>Il n’<strong>écrit jamais</strong> ta curation ni ta spec, et l’IA non plus : elle n’a aucun outil pour atteindre
+<code>curation/</code>, <code>project.json</code> ou le code source des repos (<a href="/atlas-site/manuel/brancher-l-ia">Brancher l’IA</a>).</li>
+<li>Il ne <strong>fait pas de dépôt</strong> du workspace sans qu’on le lui demande : <code>atlas init</code> pose le
+<code>.gitignore</code>, jamais le <code>git init</code>. Une fois le dépôt ouvert, deux gestes partent seuls — un
+<code>pull --ff-only</code> quand tu as du retard, et un commit + push si tu as coché « Partager mon travail
+automatiquement », au plus une fois par heure.</li>
+</ul>
+<h2 id="limites-connues">Limites connues</h2>
+<ul>
+<li><strong>L’identité est lue à la racine du chapeau</strong>, qui n’est pas un dépôt : git remonte donc à ta config
+globale. Un <code>user.email</code> posé par repo n’est pas vu.</li>
+<li><strong>GitLab et GitHub valent la même chose</strong> — la Revue, la publication, le droit d’écrire, la colonne
+« en review ». Ce qui reste inégal, et ce qui n’a jamais été éprouvé, est dit dans
+<a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a>.</li>
+</ul>
+<nav class="suite" aria-label="Page suivante et précédente"><a href="/atlas-site/manuel/ticket-fils-et-journal"><small>← précédent</small>Ticket, fils et Journal</a><a class="droite" href="/atlas-site/manuel/les-stacks-et-project-json"><small>suivant →</small>Les stacks et project.json</a></nav></article><nav class="cote toc" aria-label="Sur cette page"><h2>Sur cette page</h2><ul><li><a href="#où-vit-la-configuration">Où vit la configuration</a></li><li><a href="#ce-qui-se-partage-ce-qui-reste-à-toi">Ce qui se partage, ce qui reste à toi</a></li><li><a href="#larborescence">L’arborescence</a></li><li><a href="#les-repos-membres">Les repos membres</a></li><li><a href="#ce-qui-fait-une-feature">Ce qui fait une feature</a></li><li><a href="#la-ligne-de-base">La ligne de base</a></li><li><a href="#la-page-config">La page Config</a></li><li><a class="h3" href="#les-chapitres-se-plient">Les chapitres se plient</a></li><li><a class="h3" href="#le-thème">Le thème</a></li><li><a class="h3" href="#les-six-réglages-quatlas-ne-peut-pas-deviner">Les six réglages qu’Atlas ne peut pas deviner</a></li><li><a href="#les-variables-denvironnement">Les variables d’environnement</a></li><li><a href="#raccourcis">Raccourcis</a></li><li><a href="#ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</a></li><li><a href="#limites-connues">Limites connues</a></li></ul></nav></main><footer class="pied"><div class="dedans"><span>Atlas — suivi et validation de code.</span><a href="/atlas-site/manuel/prise-en-main">Manuel</a></div></footer><script>
+    document.getElementById('theme-bt')?.addEventListener('click', () => {
+      const r = document.documentElement;
+      // clair → sombre → système, et le tour recommence. « Système » RETIRE la clé : c'est ce qui
+      // rend le choix distinct d'une absence de choix.
+      const suite = { clair: 'sombre', sombre: '', '': 'clair' };
+      const v = suite[r.dataset.theme || ''];
+      if (v) { r.dataset.theme = v; try { localStorage.setItem('atlas-site-theme', v); } catch {} }
+      else { delete r.dataset.theme; try { localStorage.removeItem('atlas-site-theme'); } catch {} }
+    });
+  </script></body></html>

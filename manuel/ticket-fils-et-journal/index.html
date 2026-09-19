@@ -1,0 +1,439 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Ticket, fils et Journal · Atlas</title><meta name="description" content="Tout ce qui se dit autour d'une feature : l'attendu, les critères, ce qu'on a compris, et les conversations posées sur le code — jusqu'à leur publication sur la review de l'hébergeur."><link rel="canonical" href="https://gregoirelacoste.github.io/atlas-site/manuel/ticket-fils-et-journal"><meta property="og:title" content="Ticket, fils et Journal · Atlas"><meta property="og:description" content="Tout ce qui se dit autour d'une feature : l'attendu, les critères, ce qu'on a compris, et les conversations posées sur le code — jusqu'à leur publication sur la review de l'hébergeur."><meta property="og:type" content="website"><meta property="og:url" content="https://gregoirelacoste.github.io/atlas-site/manuel/ticket-fils-et-journal"><meta name="twitter:card" content="summary"><link rel="icon" href="/atlas-site/favicon.svg" type="image/svg+xml"><script>
+    (() => { try { const t = localStorage.getItem('atlas-site-theme');
+      if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t; } catch {} })();
+  </script><link rel="stylesheet" href="/atlas-site/_astro/Base.D32RNicN.css"></head><body><header class="tete"><a class="marque" href="/atlas-site">🗺️ Atlas</a><nav><a href="/atlas-site/installer">Installer</a><a href="/atlas-site/manuel/prise-en-main" aria-current="page">Manuel</a><a href="/atlas-site/articles">Écrits</a><button class="theme-bt" id="theme-bt" type="button" aria-label="Changer de thème">◐</button></nav></header><main class="doc"><nav class="cote" aria-label="Le manuel"><h2>Le manuel</h2><ol><li><a href="/atlas-site/manuel/prise-en-main">Prise en main</a></li><li><a href="/atlas-site/manuel/l-arbre">L&#39;Arbre</a></li><li><a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a></li><li><a href="/atlas-site/manuel/le-code">Le Code</a></li><li><a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a></li><li><a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et inventaire</a></li><li><a href="/atlas-site/manuel/le-panneau-git">Le panneau Git</a></li><li><a href="/atlas-site/manuel/le-tableau">Le Tableau</a></li><li><a href="/atlas-site/manuel/ticket-fils-et-journal" aria-current="page">Ticket, fils et Journal</a></li><li><a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a></li><li><a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a></li><li><a href="/atlas-site/manuel/brancher-l-ia">Brancher l&#39;IA</a></li><li><a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l&#39;IA lit et écrit</a></li><li><a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a></li><li><a href="/atlas-site/manuel/la-ligne-de-commande">La ligne de commande</a></li><li><a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a></li><li><a href="/atlas-site/manuel/le-clavier">Le clavier</a></li></ol></nav><article class="corps"><h1>Ticket, fils et Journal</h1><p class="chapo">Tout ce qui se dit autour d&#39;une feature : l&#39;attendu, les critères, ce qu&#39;on a compris, et les conversations posées sur le code — jusqu&#39;à leur publication sur la review de l&#39;hébergeur.</p><blockquote>
+<p>Tout ce qui se <strong>dit</strong> autour d’une feature : l’attendu, les critères, ce qu’on a compris, et les
+conversations posées sur le code — jusqu’à leur publication sur la review de l’hébergeur.</p>
+</blockquote>
+<p>Dans Atlas, une <strong>feature</strong> est un ticket et le code qui le porte : un identifiant (<code>PROJ-412</code>),
+des repos, des branches. Le code se lit dans <a href="/atlas-site/manuel/l-arbre">l’Arbre</a> et le <a href="/atlas-site/manuel/le-code">panneau
+Code</a> ; cette page couvre l’autre moitié — la spec, les critères, et les <strong>fils</strong>,
+des conversations datées, chacune ancrée quelque part, où toi et ton IA écrivez.</p>
+<h2 id="longlet-ticket">L’onglet Ticket</h2>
+<p>C’est le premier onglet du volet gauche, <code>🎫 Ticket</code>. Il est ouvert par défaut à la toute première
+ouverture d’Atlas ; ensuite, c’est le dernier onglet que tu as choisi qui revient (mémorisé sur cette
+machine, pas dans le projet).</p>
+<p>Il montre, de haut en bas :</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>ce que tu vois</th>
+<th>d’où ça vient</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>le numéro</td>
+<td><code>🎫 PROJ-412</code>, cliquable s’il y a une URL</td>
+<td>le frontmatter de la spec (<code>jira:</code>)</td>
+</tr>
+<tr>
+<td>les qualificatifs</td>
+<td>type, statut, priorité — seulement s’ils sont renseignés</td>
+<td>le frontmatter</td>
+</tr>
+<tr>
+<td>le titre</td>
+<td>une ligne</td>
+<td><code>title:</code></td>
+</tr>
+<tr>
+<td>l’epic</td>
+<td><code>↳ Epic PROJ-380 · &lt;titre&gt;</code></td>
+<td><code>epic:</code> ; le lien n’existe que si la clé de l’epic se déduit de l’URL du ticket</td>
+</tr>
+<tr>
+<td>l’état</td>
+<td>la chip du header, <strong>clonée</strong> (<code>↗ En review</code>, <code>🚀 À déployer</code>, <code>✅ Terminé</code>…)</td>
+<td>le même juge que <a href="/atlas-site/manuel/le-tableau">le Tableau</a></td>
+</tr>
+<tr>
+<td>l’objectif</td>
+<td>le brief, en langage produit</td>
+<td>la section <code>## Objectif</code></td>
+</tr>
+<tr>
+<td>les critères</td>
+<td><code>✓ Critères d'acceptation (N)</code>, dépliés</td>
+<td>la section des critères, ⊕ l’évaluation de l’IA</td>
+</tr>
+<tr>
+<td>ce qu’on a compris</td>
+<td>le fil de feature</td>
+<td><code>comments.json</code></td>
+</tr>
+</tbody>
+</table>
+<p>L’état arrive <strong>quand il arrive</strong> : c’est le seul morceau de cet écran qui dépende du réseau. Un
+échec ne dit rien du tout — pas de chip. Une chip absente signifie « je n’ai pas pu regarder » <strong>ou</strong>
+« rien à dériver », jamais un état inventé.</p>
+<p>Sans spec, l’onglet affiche le numéro, le titre déclaré s’il en existe un, et
+<em>« Pas de spec — écris <code>ticket.md</code> dans <code>.atlas-workspace/features/PROJ-412/</code>, ou demande à ton IA
+de l’importer. »</em></p>
+<h2 id="la-spec--ticketmd">La spec : <code>ticket.md</code></h2>
+<p>La spec est <strong>à toi</strong>. Elle vit dans le projet analysé, à
+<code>.atlas-workspace/features/&lt;ID&gt;/ticket.md</code>, et c’est la source de vérité d’Atlas pour l’attendu.</p>
+<h3 id="le-format">Le format</h3>
+<p>Un frontmatter plat entre deux <code>---</code>, puis des sections <code>## Titre</code>. Rien d’imbriqué.</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">---</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">id: PROJ-412</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">title: Relancer les factures impayées</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">jira: https://…/browse/PROJ-412</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">epic: PROJ-380 — Paiements</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">type: Story</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">status: En cours</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">priority: Major</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">---</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">## Objectif</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">Le besoin, en langage produit.</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">## Critères d'acceptation</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">1.</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> une relance part à J+7</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">2.</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [</span><span style="color:#032F62;--shiki-light-text-decoration:underline;--shiki-dark:#DBEDFF;--shiki-dark-text-decoration:underline">x</span><span style="color:#24292E;--shiki-dark:#E1E4E8">] l'utilisateur peut l'annuler</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">## Ne fait pas</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">-</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> les relances par SMS</span></span></code></pre>
+<p>Les clés lues sont <code>id</code>, <code>title</code>, <code>jira</code>, <code>epic</code>, <code>type</code>, <code>status</code>, <code>priority</code> ; la casse ne compte
+pas, et toute autre clé est ignorée sans bruit. L’epic accepte <code>CLÉ — titre</code> (séparateur <code>—</code>, <code>–</code>,
+<code>·</code>, <code>:</code> ou <code>-</code>) ou la clé seule. Le lien du numéro n’est rendu que s’il commence par <code>http://</code> ou
+<code>https://</code>.</p>
+<p>Pour les sections, la comparaison se fait en minuscules sans accents : le brief vient d’une section
+nommée exactement <strong><code>Objectif</code></strong>, les critères de <strong>toute</strong> section dont le titre commence par <code>crit</code>,
+les exclusions de toute section commençant par <code>Ne fait pas</code>. Un item de liste est une ligne
+commençant par <code>-</code>, <code>*</code>, <code>1.</code> ou <code>1)</code>, <strong>suivi d’un espace</strong>, indentée de 3 espaces au plus.</p>
+<blockquote>
+<p>⚠️ Les titres se cherchent au mot près : <code>## Objectifs</code> au pluriel ne donne aucun brief, et
+l’onglet reste muet sur ce point. Les commentaires HTML sont retirés avant le parse : une spec qui
+n’a que ses <code>&lt;!-- indications --&gt;</code> est lue comme <strong>absente</strong>, pas comme vide.</p>
+</blockquote>
+<h3 id="qui-y-touche">Qui y touche</h3>
+<p>Toi. Atlas peut <strong>créer</strong> le fichier — un template à trois sections, quand tu déclares une feature
+qu’aucune branche ne porte encore — mais la création est exclusive : un <code>ticket.md</code> existant n’est
+jamais écrasé, jamais complété, jamais « amélioré ».</p>
+<p>L’IA non plus n’y touche pas : elle n’a aucun outil pour écrire la spec (<a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l’IA lit et
+écrit</a>). <strong>Une seule exception</strong>, une seule fois : sur une spec absente
+ou intacte, le skill d’ouverture de feature peut importer le ticket depuis Jira. Si Jira est
+injoignable, rien n’est écrit : pas de spec fantôme.</p>
+<h2 id="les-critères-dacceptation">Les critères d’acceptation</h2>
+<p>Les <strong>critères</strong> sont dans ta spec ; l’<strong>évaluation</strong> de leur couverture est écrite par l’IA à la
+relecture du diff, dans son propre fichier. Atlas les recolle à chaque affichage, jamais sur le disque.</p>
+<table>
+<thead>
+<tr>
+<th>symbole</th>
+<th>ce que ça dit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>☐</code></td>
+<td>pas encore évalué — l’attendu brut, tel que tu l’as écrit</td>
+</tr>
+<tr>
+<td><code>☑</code></td>
+<td>couvert</td>
+</tr>
+<tr>
+<td><code>◪</code></td>
+<td>partiellement couvert</td>
+</tr>
+<tr>
+<td><code>✗</code></td>
+<td>non couvert</td>
+</tr>
+</tbody>
+</table>
+<p>Un critère évalué porte souvent sa <strong>preuve</strong> : les symboles du code qui le couvrent. Il devient
+alors cliquable — <em>« clic = isoler la preuve dans l’arbre »</em>.</p>
+<p>Deux règles à connaître :</p>
+<ul>
+<li><strong>Ta coche prime.</strong> Un <code>- [x]</code> dans le MD vaut « couvert », quoi qu’ait conclu l’IA — et la
+preuve qu’elle avait trouvée est conservée.</li>
+<li><strong>Reformuler un critère lui fait perdre son évaluation.</strong> Le recollement se fait sur le texte
+<strong>exact</strong> : change une virgule, et le critère repasse <code>☐</code>.</li>
+</ul>
+<p>Si ta spec ne contient aucun critère (template intact), ceux de la dernière évaluation restent
+affichés.</p>
+<h2 id="-ce-quon-a-compris---le-fil-de-feature">« Ce qu’on a compris » : le fil de feature</h2>
+<p>Sous la spec vit une section <code>Ce qu'on a compris</code>. C’est un <strong>fil</strong>, comme les autres, à une
+différence près : il est ancré sur la <strong>feature</strong>, pas sur du code. Il porte la conclusion de
+l’enquête — la cause racine, la décision prise, ce qui reste ouvert.</p>
+<p>Il y en a <strong>un seul par feature</strong>, et on y <strong>ajoute</strong> : hypothèse, puis confirmée, puis fixée. On ne
+réécrit jamais un message. D’où la lecture à deux niveaux :</p>
+<ul>
+<li>une ligne <strong><code>état</code></strong> en haut : la première ligne du <strong>dernier</strong> message, avec son auteur (<code>IA</code> ou
+<code>toi</code>) et sa date ;</li>
+<li>le fil entier en dessous, dont la tête est le <strong>premier</strong> message.</li>
+</ul>
+<p>S’il n’existe pas encore, la section le dit : <em>« Rien consigné — l’IA l’ouvre par <code>comment</code>
+(<code>ticket: true</code>), ou écris-le toi »</em>, avec un bouton <code>✎ écrire</code>. Il ouvre une zone de saisie
+(<em>« Ce qu’on a compris — la cause, la décision… »</em>) et un bouton <code>Consigner</code>.</p>
+<p>Trois choses sont <strong>refusées</strong>, et chacune le dit :</p>
+<table>
+<thead>
+<tr>
+<th>geste</th>
+<th>ce qui se passe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ouvrir un second fil de feature</td>
+<td>refus, avec l’id du premier : <em>« la feature a déjà son fil (t1a2b3c4d) — réponds dedans »</em></td>
+</tr>
+<tr>
+<td>le publier chez l’hébergeur</td>
+<td>pas de bouton <code>↗ Publier…</code>, et le serveur refuse : <em>« un fil de feature ne se publie pas : il n’a pas d’ancre chez l’hébergeur — il se lit dans l’onglet Ticket »</em></td>
+</tr>
+<tr>
+<td>lui donner une position (fichier, ligne)</td>
+<td>refus à l’écriture : il ne parle d’aucun code</td>
+</tr>
+</tbody>
+</table>
+<p>Il n’est jamais signalé « perdu » : il n’atterrit sur aucun nœud <strong>par construction</strong>. Ses messages
+ne portent pas de commit de référence.</p>
+<p>Répondre, résoudre, ranger, supprimer s’y font comme partout ailleurs. Le <strong>ranger</strong> fait redevenir
+la section « Rien consigné », et un nouveau fil peut être ouvert : ranger libère l’ancre.</p>
+<h2 id="les-fils-ancrés-sur-du-code">Les fils ancrés sur du code</h2>
+<p>Un fil s’ouvre en cliquant un numéro de ligne dans le <a href="/atlas-site/manuel/le-code">Code</a> : une zone de saisie
+<em>« Commenter la ligne 42… »</em>, <code>Commenter</code>, <code>Annuler</code>.</p>
+<p>Le fil retient alors quatre choses en plus du symbole : le fichier, le côté (la version de la feature
+ou celle de la base), le numéro de ligne, et le <strong>témoin</strong> — le contenu exact de la ligne. C’est le
+témoin qui fait le travail : quand le code bouge, le fil suit sa ligne ; quand le témoin disparaît,
+le fil se marque <code>⚠ à revoir</code>.</p>
+<p>Il existe une seconde nature d’ancre : le <strong>symbole entier</strong>, sans ligne — ce que pose l’IA quand
+elle parle d’une méthode qui n’a pas encore de code ; il se rend en encart au-dessus du code
+(étiquette <code>◌ sur le symbole</code> — voir <a href="/atlas-site/manuel/le-code">Le Code</a>). Les deux natures ne se mélangent
+jamais : un fil sur une ligne et un fil sur le symbole sont deux conversations.</p>
+<p><strong>Un fil révèle son symbole, même hors du diff.</strong> Si tu commentes un code que la feature ne touche
+pas, la carte le fait apparaître : un groupe par repo, <code>💬 N commentés hors diff</code> — ou <code>💬 N commentés — repo hors feature</code> quand le repo n’a aucune branche de la feature. Ces nœuds sont du
+contexte : ils ne portent pas de rond d’état (voir <a href="/atlas-site/manuel/relire-et-endosser">Relire et
+endosser</a>). La révélation exige une <strong>preuve</strong> : la référence est résolue
+dans le vrai code. Si le symbole est introuvable, rien n’est fabriqué — le fil devient un <strong>angle
+mort</strong>, un endroit où le moteur a renoncé et le dit. Au-delà de 30 fils à révéler sur une même carte,
+les suivants restent des orphelins déclarés.</p>
+<p>Enfin, un fil posé pendant la phase d’hypothèse, quand le fichier n’existait pas encore, <strong>suit son
+symbole</strong> le jour où le code est écrit : il porte alors <code>⌁ hypothèse</code>.</p>
+<h2 id="répondre-résoudre-ranger">Répondre, résoudre, ranger</h2>
+<p>Chaque fil porte les mêmes boutons ; ce qui les sépare est <strong>ce qu’ils jugent</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>geste</th>
+<th>ce qu’il juge</th>
+<th>qui peut</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Répondre</code></td>
+<td>rien — il ajoute un message</td>
+<td>toi et l’IA</td>
+</tr>
+<tr>
+<td><code>Résoudre</code> / <code>Rouvrir</code></td>
+<td>le <strong>contenu</strong> : la question a une réponse</td>
+<td><strong>toi seul</strong></td>
+</tr>
+<tr>
+<td><code>🗄 Ranger</code> / <code>↩ Remettre</code></td>
+<td>la <strong>pertinence</strong> : ça ne s’applique plus</td>
+<td>toi, et l’IA sous conditions</td>
+</tr>
+<tr>
+<td><code>Supprimer</code></td>
+<td>l’existence — ça efface</td>
+<td><strong>toi seul</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Résoudre est un verdict sur le fond. L’IA n’a aucun outil pour ça, et elle refuse même de répondre
+dans un fil résolu. Un fil résolu s’ouvre <strong>replié</strong> sur sa première ligne — sauf s’il a bougé depuis
+la dernière fois que tu l’as ouvert, auquel cas il s’ouvre entier.</p>
+<p>Ranger est autre chose : une hypothèse que le code a contournée n’a jamais eu de réponse, la
+« résoudre » mentirait. Le rangement est <strong>daté, signé, réversible</strong>, et il porte un motif — Atlas te
+le demande (<em>« Pourquoi ce fil ne s’applique plus ? (facultatif) »</em>) ; annuler la boîte annule le
+rangement, la laisser vide range sans motif. Le fil sort alors de tout ce où un commentaire protège
+un nœud — le badge <code>💬</code> de l’Arbre, la révélation du symbole, ce qui est rendu à l’IA — et il
+<strong>libère son ancre</strong>. Rien n’est effacé.</p>
+<p>Pour l’IA, deux verrous : elle ne peut ranger qu’un fil <strong>entièrement d’elle</strong> (<em>« l’humain y a parlé
+: le ranger n’appartient pas à l’IA (c’est là que vivent ses corrections) »</em>) et le motif est
+<strong>obligatoire</strong> (<em>« motif requis : ranger sans dire pourquoi, c’est effacer »</em>). Elle ne peut
+remettre en jeu que ce qu’elle a elle-même rangé.</p>
+<p>Ranger ne touche ni le code ni la review : un fil publié reste publié, un fil rangé reste
+publiable.</p>
+<h2 id="la-forme-des-messages-de-lia">La forme des messages de l’IA</h2>
+<p>Tes messages n’ont aucun gabarit — tu écris ce que tu veux, aussi long que tu veux. Ceux de l’IA
+passent par un juge unique, parce que c’est <strong>leur première ligne</strong>, et elle seule, que le Journal
+affiche : première ligne ≤ 90 caractères, message entier ≤ 350 (viser ~250), 4 lignes non vides au
+plus — des bornes tenues par l’outil, pas par une consigne (<a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l’IA lit et
+écrit</a>).</p>
+<p>Le refus ne dit jamais « coupe en deux » : il nomme les deux sorties, s’ancrer sur l’<strong>autre</strong>
+symbole ou <strong>répondre</strong> dans ce fil. Le Journal affiche jusqu’à 120 caractères de première ligne.</p>
+<h2 id="publier-un-fil-chez-lhébergeur">Publier un fil chez l’hébergeur</h2>
+<p>C’est la seule chose qu’Atlas <strong>écrit</strong> en dehors de chez toi — chez l’<strong>hébergeur</strong>, là où vit la
+review. <strong>GitLab et GitHub valent la même chose ici</strong> ; seul le mot change (<code>!312</code> chez l’un, <code>#312</code>
+chez l’autre). Le bouton <code>↗ Publier…</code> n’apparaît que sur un fil local qui a quelque chose à envoyer.</p>
+<p>Ouvrir la boîte n’écrit rien. Elle part interroger l’hébergeur au moment du clic, et affiche quatre
+faits :</p>
+<ol>
+<li><strong>où ça part</strong> : <code>↗ #312 — &lt;titre&gt; (&lt;repo&gt;)</code>. Le repo vient de l’<strong>ancre du fil</strong>, jamais d’un
+choix. Sans review : <em>« aucune review ouverte pour <code>&lt;repo&gt;</code> — ouvre-la chez l’hébergeur, puis
+reviens »</em> ;</li>
+<li><strong>ce que le jeton a le droit de faire</strong>, sondé et non supposé, en trois états : il peut écrire, il
+est en lecture seule, ou c’est indécidable — <em>« droits indécidables — on tentera »</em>, un état à part
+entière. Les droits affichés sont ceux que l’hébergeur a <strong>rendus</strong>, jamais un nom de droit écrit
+d’avance. ⚠️ Un jeton GitHub <em>fine-grained</em> ou d’App tombe toujours dans le troisième état : ses
+droits ne sont pas des scopes, GitHub ne les dit pas ici, et Atlas refuse d’en conclure un non ;
+la ligne nomme aussi <strong>l’hôte</strong> du jeton, parce qu’une feature peut être à cheval sur deux
+hébergeurs ;</li>
+<li><strong>ce qui part</strong> : <em>« partiront : N messages — le fil entier »</em>, plus, s’il y en a, <em>« ⚠ dont N
+rédigés par l’IA — publiés sous ton nom, sans mention »</em> ;</li>
+<li><strong>ce qui est déjà parti</strong> : <em>« déjà publiés : N — ils ne repartiront pas »</em>.</li>
+</ol>
+<blockquote>
+<p>⚠️ Le fil part <strong>entier</strong>, messages de l’IA compris, sous ton nom et sans aucune marque. Et il n’y a
+pas de retour : Atlas ne sait pas supprimer une note publiée. La boîte le répète juste avant le
+bouton.</p>
+</blockquote>
+<p>L’idempotence est <strong>par message</strong> : chaque message publié est marqué, et ne repart jamais. Elle tient
+même quand la publication échoue à mi-chemin — ce qui est déjà public est enregistré avant la
+réponse.</p>
+<p>Deux formes. <strong>Ancrée</strong> : la note est posée sur sa ligne, retrouvée au dernier commit de la review
+par son témoin, et le corps part nu. <strong>Générale</strong> : quand il n’y a pas de ligne à désigner. C’est le
+cas d’office d’un fil sur le symbole, et le repli proposé quand l’hébergeur refuse la position — le
+seul cas qu’Atlas repropose, parce que rien n’a été créé. Le corps cite alors le contexte avant le
+texte : le fichier, la ligne <em>« à l’époque »</em>, et le témoin en citation.</p>
+<p>Ce qui n’est <strong>jamais</strong> publiable : le fil de feature (aucune ancre chez l’hébergeur), un fil vide
+(<em>« ce fil est vide »</em>), et un fil dont tout est déjà parti (<em>« tout ce fil est déjà publié »</em>).</p>
+<h2 id="le-journal">Le Journal</h2>
+<p>Le Journal range <strong>tous</strong> les fils par date : les tiens, ceux de l’IA, et ceux des reviews. Il vit
+dans la famille <code>🧭 Parcours</code> du volet gauche, en second onglet. L’ouvrir est ce qui déclenche la
+lecture des reviews : tes fils locaux s’affichent tout de suite, les autres arrivent derrière.</p>
+<p><strong>Le fil est l’unité.</strong> Une ligne = un fil, à la date de son <strong>dernier</strong> message, le plus récent en
+tête ; la tête montre le <strong>premier</strong> message, et un dépli <code>N réponses</code> donne la suite. Chaque ligne
+porte son origine — <code>brouillon</code>, <code>↗ publié</code>, ou l’abréviation de l’hébergeur (<code>MR</code>, <code>PR</code>, ou <code>↗</code>
+quand il n’a pas pu être lu) —, plus <code>⌁ hypothèse</code> et <code>🗄 rangé</code> quand c’est le cas. Le fil de feature
+s’y appelle <code>🎫 le ticket</code>, sans repo.</p>
+<p><strong>Les non-lus.</strong> Le repère est la date du dernier message que tu avais sous les yeux quand tu as
+ouvert le fil, gardé dans ton casier personnel (<code>curation/local/&lt;toi&gt;.json</code>). D’où trois faits : ce
+que <strong>tu</strong> écris ne t’est jamais compté ; un fil jamais ouvert est non lu <strong>en entier</strong> ; un fil qu’on
+relance redevient non lu tout seul. La barre du haut compte <strong>deux</strong> nombres : <code>5 non lus dans 2 fils</code>.</p>
+<p><strong>Le clic atterrit sur le fil</strong>, pas seulement sur son nœud : le nœud est sélectionné dans l’Arbre,
+et le fil lui-même est amené au centre du panneau Code, replis déroulés au passage. Un fil de
+feature, lui, atterrit sur l’onglet Ticket. Et <strong>une ligne qui n’atterrit pas le dit</strong> : elle
+affiche <code>⚠ n'atterrit pas — …</code> avec la cause.</p>
+<table>
+<thead>
+<tr>
+<th>ce que dit la ligne</th>
+<th>pourquoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>aucun symbole</code></td>
+<td>l’hébergeur a posé le fil à une position qu’Atlas n’a pas reliée à un symbole — il se lit chez l’hébergeur, par le <code>↗</code> de la ligne</td>
+</tr>
+<tr>
+<td><code>hypothèse non atterrie</code></td>
+<td>le symbole prévu n’a pas encore de code, ou son nom est porté par plusieurs symboles du repo</td>
+</tr>
+<tr>
+<td><code>&lt;repo&gt; hors carte</code></td>
+<td>ce repo n’apparaît pas dans la feature</td>
+</tr>
+<tr>
+<td><code>hors du diff</code></td>
+<td>ce fichier n’est pas touché par la feature</td>
+</tr>
+<tr>
+<td><code>pas de nœud</code></td>
+<td>le fichier est dans le diff, mais ce symbole n’y a aucun nœud</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Local et review ne se fondent jamais.</strong> Un fil publié n’apparaît qu’une fois, dans la version de
+l’hébergeur — la seule qui porte les réponses de tes collègues. Sa suite restée chez toi est comptée
+à part (<code>+2 privés</code>) et chaque message concerné porte l’étiquette <code>privé</code>.</p>
+<p>Les fils rangés sont <strong>hors vue</strong> par défaut ; un switch <code>🗄 N rangés</code> les rappelle (il ne survit pas
+au rechargement). Le bouton <code>↻</code> relit les reviews — aucune mise en cache.</p>
+<h2 id="raccourcis">Raccourcis</h2>
+<p>Chaque sous-onglet de la famille <code>🧭 Parcours</code> a son propre accord, qui <strong>ouvre précisément cette
+vue</strong> — jamais « la dernière consultée » — et <strong>referme le volet</strong> si tu es déjà dessus :</p>
+<table>
+<thead>
+<tr>
+<th>Accord</th>
+<th>Effet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Espace v t</code></td>
+<td>ouvre l’onglet <code>🎫 Ticket</code></td>
+</tr>
+<tr>
+<td><code>Espace v p</code></td>
+<td>ouvre l’onglet <code>Parcours</code></td>
+</tr>
+<tr>
+<td><code>Espace v j</code></td>
+<td>ouvre le <strong>Journal</strong></td>
+</tr>
+</tbody>
+</table>
+<p><code>Espace</code> ouvre la boîte des raccourcis, <code>v</code> choisit la colonne « volet gauche », et la troisième lettre
+choisit la vue. Le mécanisme entier, et ce que donnent ces lettres sur un clavier AZERTY, est dans
+<a href="/atlas-site/manuel/le-clavier">Le clavier</a>.</p>
+<h2 id="ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</h2>
+<ul>
+<li><strong>Il n’écrit pas ta spec.</strong> Il pose un template quand tu déclares une feature sans branche,
+jamais par-dessus un fichier existant. L’IA n’a aucun outil pour ça, hors l’import initial.</li>
+<li><strong>Il n’interroge jamais Jira.</strong> Le serveur ne fait aucun appel vers Jira — l’import est un geste
+de l’IA, une fois, dans ta session.</li>
+<li><strong>Il ne crée pas de review</strong>, ne la ferme pas, ne la merge pas.</li>
+<li><strong>Il ne supprime ni ne modifie une note publiée.</strong> Ranger un fil, le résoudre ou le supprimer
+chez toi ne change rien chez l’hébergeur.</li>
+<li><strong>Il ne publie rien de lui-même</strong> : jamais au fil d’un rendu, jamais à l’ouverture de la Revue,
+jamais sur minuterie. Et il ne peut pas vérifier qui a validé une publication demandée par ton IA
+— ce garde-fou vit dans ton client.</li>
+<li><strong>Il ne résout ni ne supprime un fil à ta place</strong>, et il n’en laisse pas le pouvoir à l’IA.</li>
+<li><strong>Il ne déduit pas « lu »</strong>. Rien ne marque un fil lu sans un geste de ta part ; il n’y a pas de
+repère implicite « tout ce qui existe aujourd’hui est lu ».</li>
+<li><strong>« Résolu » n’est pas un endossement</strong> — ni ici, ni chez l’hébergeur : valider le code est un
+autre axe, décrit dans <a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a>.</li>
+</ul>
+<h2 id="limites-connues">Limites connues</h2>
+<ul>
+<li>La section <strong><code>## Ne fait pas</code></strong> est lue par Atlas, mais l’onglet Ticket ne l’affiche pas. Elle reste
+utile à qui lit le fichier, et à ton IA.</li>
+<li>Dans le panneau Relecture, la ligne <strong>« N critères non couverts »</strong> est cliquable mais n’ouvre rien ;
+reviens par l’onglet <code>🎫 Ticket</code> (<a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a>).</li>
+<li><strong>La publication n’a jamais été éprouvée en vrai, sur aucun des deux hébergeurs</strong> : elle écrirait
+chez de vraies personnes, et Atlas ne sait pas retirer une note. Ce qui est éprouvé, c’est la
+décision — quels messages partent, quelle position, quel droit. Le jeton qu’elle demande :
+<a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a>.</li>
+<li>Un échec de lecture par repo est visible dans la Revue, mais <strong>pas</strong> dans le Journal : si un repo
+est illisible, sa conversation y manque sans un mot. Le Journal n’annonce que l’échec global
+(<a href="/atlas-site/manuel/le-panneau-git">le panneau Git</a>).</li>
+<li>Un fil publié dont tu changes le texte localement ne se met pas à jour chez l’hébergeur : seuls les
+<strong>nouveaux</strong> messages partent.</li>
+</ul>
+<nav class="suite" aria-label="Page suivante et précédente"><a href="/atlas-site/manuel/le-tableau"><small>← précédent</small>Le Tableau</a><a class="droite" href="/atlas-site/manuel/configurer-un-projet"><small>suivant →</small>Configurer un projet</a></nav></article><nav class="cote toc" aria-label="Sur cette page"><h2>Sur cette page</h2><ul><li><a href="#longlet-ticket">L’onglet Ticket</a></li><li><a href="#la-spec--ticketmd">La spec : ticket.md</a></li><li><a class="h3" href="#le-format">Le format</a></li><li><a class="h3" href="#qui-y-touche">Qui y touche</a></li><li><a href="#les-critères-dacceptation">Les critères d’acceptation</a></li><li><a href="#-ce-quon-a-compris---le-fil-de-feature">« Ce qu’on a compris » : le fil de feature</a></li><li><a href="#les-fils-ancrés-sur-du-code">Les fils ancrés sur du code</a></li><li><a href="#répondre-résoudre-ranger">Répondre, résoudre, ranger</a></li><li><a href="#la-forme-des-messages-de-lia">La forme des messages de l’IA</a></li><li><a href="#publier-un-fil-chez-lhébergeur">Publier un fil chez l’hébergeur</a></li><li><a href="#le-journal">Le Journal</a></li><li><a href="#raccourcis">Raccourcis</a></li><li><a href="#ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</a></li><li><a href="#limites-connues">Limites connues</a></li></ul></nav></main><footer class="pied"><div class="dedans"><span>Atlas — suivi et validation de code.</span><a href="/atlas-site/manuel/prise-en-main">Manuel</a></div></footer><script>
+    document.getElementById('theme-bt')?.addEventListener('click', () => {
+      const r = document.documentElement;
+      // clair → sombre → système, et le tour recommence. « Système » RETIRE la clé : c'est ce qui
+      // rend le choix distinct d'une absence de choix.
+      const suite = { clair: 'sombre', sombre: '', '': 'clair' };
+      const v = suite[r.dataset.theme || ''];
+      if (v) { r.dataset.theme = v; try { localStorage.setItem('atlas-site-theme', v); } catch {} }
+      else { delete r.dataset.theme; try { localStorage.removeItem('atlas-site-theme'); } catch {} }
+    });
+  </script></body></html>

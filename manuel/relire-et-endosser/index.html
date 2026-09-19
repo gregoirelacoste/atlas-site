@@ -1,0 +1,418 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Relire et endosser · Atlas</title><meta name="description" content="Le geste qu'on répète cent fois par jour : dire, symbole par symbole, « j'ai relu ça » — et, quand ça compte, à quel point ça casse si c'est faux."><link rel="canonical" href="https://gregoirelacoste.github.io/atlas-site/manuel/relire-et-endosser"><meta property="og:title" content="Relire et endosser · Atlas"><meta property="og:description" content="Le geste qu'on répète cent fois par jour : dire, symbole par symbole, « j'ai relu ça » — et, quand ça compte, à quel point ça casse si c'est faux."><meta property="og:type" content="website"><meta property="og:url" content="https://gregoirelacoste.github.io/atlas-site/manuel/relire-et-endosser"><meta name="twitter:card" content="summary"><link rel="icon" href="/atlas-site/favicon.svg" type="image/svg+xml"><script>
+    (() => { try { const t = localStorage.getItem('atlas-site-theme');
+      if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t; } catch {} })();
+  </script><link rel="stylesheet" href="/atlas-site/_astro/Base.D32RNicN.css"></head><body><header class="tete"><a class="marque" href="/atlas-site">🗺️ Atlas</a><nav><a href="/atlas-site/installer">Installer</a><a href="/atlas-site/manuel/prise-en-main" aria-current="page">Manuel</a><a href="/atlas-site/articles">Écrits</a><button class="theme-bt" id="theme-bt" type="button" aria-label="Changer de thème">◐</button></nav></header><main class="doc"><nav class="cote" aria-label="Le manuel"><h2>Le manuel</h2><ol><li><a href="/atlas-site/manuel/prise-en-main">Prise en main</a></li><li><a href="/atlas-site/manuel/l-arbre">L&#39;Arbre</a></li><li><a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a></li><li><a href="/atlas-site/manuel/le-code">Le Code</a></li><li><a href="/atlas-site/manuel/relire-et-endosser" aria-current="page">Relire et endosser</a></li><li><a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et inventaire</a></li><li><a href="/atlas-site/manuel/le-panneau-git">Le panneau Git</a></li><li><a href="/atlas-site/manuel/le-tableau">Le Tableau</a></li><li><a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a></li><li><a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a></li><li><a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a></li><li><a href="/atlas-site/manuel/brancher-l-ia">Brancher l&#39;IA</a></li><li><a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l&#39;IA lit et écrit</a></li><li><a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a></li><li><a href="/atlas-site/manuel/la-ligne-de-commande">La ligne de commande</a></li><li><a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a></li><li><a href="/atlas-site/manuel/le-clavier">Le clavier</a></li></ol></nav><article class="corps"><h1>Relire et endosser</h1><p class="chapo">Le geste qu&#39;on répète cent fois par jour : dire, symbole par symbole, « j&#39;ai relu ça » — et, quand ça compte, à quel point ça casse si c&#39;est faux.</p><blockquote>
+<p>Le geste qu’on répète cent fois par jour : dire, symbole par symbole, « j’ai relu ça » — et, quand
+ça compte, à quel point ça casse si c’est faux.</p>
+</blockquote>
+<p>Atlas ne te demande pas d’approuver une feature — une fonctionnalité, suivie une à la fois — d’un
+seul bloc. Il te fait avancer <strong>par symbole</strong> : une méthode, un type, un fichier de contrat. Dans
+l’Arbre — le panneau central, qui reconstruit le chemin du code d’une feature — chaque ligne qui
+porte du code à relire montre un <strong>rond</strong> à droite.</p>
+<p>Ce que tu poses là s’appelle un <strong>endossement</strong> : ta signature sur ce symbole, à cet instant, contre
+ce code. Elle est à toi, elle se retire, et elle se périme toute seule le jour où le code bouge
+dessous.</p>
+<h2 id="le-rond-de-droite--deux-axes-jamais-mélangés">Le rond de droite : deux axes, jamais mélangés</h2>
+<p>La <strong>couleur</strong> dit git. Le <strong>remplissage</strong> dit toi. Les deux sont indépendants : <em>commité n’est pas
+validé</em>.</p>
+<table>
+<thead>
+<tr>
+<th>Rond</th>
+<th>côté git</th>
+<th>côté toi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>vert plein</td>
+<td>commité</td>
+<td>endossé</td>
+</tr>
+<tr>
+<td>vert creux</td>
+<td>commité</td>
+<td>pas encore relu — c’est ce qui reste à faire</td>
+</tr>
+<tr>
+<td>gris plein</td>
+<td>codé, pas encore commité (working tree)</td>
+<td>relu</td>
+</tr>
+<tr>
+<td>gris creux</td>
+<td>codé, pas encore commité</td>
+<td>pas encore relu</td>
+</tr>
+<tr>
+<td>creux cerclé d’ambre</td>
+<td>commité ou codé</td>
+<td>endossé <strong>puis</strong> le code a changé — « à revoir »</td>
+</tr>
+<tr>
+<td>pas de rond du tout</td>
+<td>—</td>
+<td>rien à endosser ici : contexte, code prévu, test, « de côté »</td>
+</tr>
+</tbody>
+</table>
+<p>Une ligne de <strong>regroupement</strong> (elle n’a pas de code propre : « 🗂 3 de côté », « 6 fichiers touchés
+hors flux ») porte un rond <strong>dérivé</strong> de ses enfants — « rond du groupe, dérivé des enfants : plein
+quand tout est validé dedans », dit son infobulle. Et un groupe qui ne contient rien à endosser n’a
+<strong>pas</strong> de rond : « rien à valider dedans » n’est pas « j’ai tout validé dedans ».</p>
+<p>Le rond n’est pas cliquable. Tout se fait au clavier, sur la ligne sélectionnée — clic ou <code>↑</code> <code>↓</code>
+pour sélectionner, le détail de la navigation est dans <a href="/atlas-site/manuel/l-arbre">l’Arbre</a>.</p>
+<h2 id="endosser--0">Endosser : <code>0</code></h2>
+<p><code>0</code> bascule l’endossement du symbole sélectionné. Le rond se remplit, le nom s’atténue, et le
+<strong>poids</strong> de la ligne — le nombre de lignes ajoutées qui tombent dans ce symbole — disparaît.</p>
+<p>Ce geste était <code>Espace</code> : <code>Espace</code> ouvre désormais la <strong>boîte des raccourcis</strong> (voir
+<a href="/atlas-site/manuel/le-clavier">Le clavier</a>), et les gestes de cette page — <code>0</code>, <code>1</code>-<code>4</code>, <code>?</code>, les flèches —
+partent <strong>directement</strong>, sans préfixe.</p>
+<p>Ce que ça écrit, c’est une entrée <strong>par symbole</strong> — l’identité <code>repo::fichier::symbole</code>, jamais la
+position dans l’Arbre. Conséquence : un symbole qui apparaît dans trois <strong>flux</strong> (un flux, c’est
+un chemin complet, d’un point d’entrée jusqu’au bout) se remplit <strong>trois fois d’un coup</strong>, renvois
+« voir ↑ » compris (une ligne « voir ↑ » désigne une occurrence déjà affichée plus haut ; elle
+n’est jamais recomptée). Tu ne relis jamais deux fois la même chose parce que la <strong>carte</strong> — la vue
+d’une feature — la montre deux fois.</p>
+<p>Atlas ajoute deux faits que tu n’as pas à saisir :</p>
+<ul>
+<li><strong>quand</strong> — la date du geste ;</li>
+<li><strong>contre quoi</strong> — le sommet de la branche de ce repo au moment où tu appuies. Il est <strong>absent</strong>
+quand le fichier est modifié dans ton working tree : Atlas préfère
+« pas de point de comparaison » à un repère faux.</li>
+</ul>
+<p><code>0</code> à nouveau dés-endosse. Sur un « à revoir », il <strong>re-valide</strong> au lieu de dé-valider. Il ne porte
+jamais de note : l’infobulle du rond dit alors « relu, non jugé — 1 à 4 pour noter la criticité ».</p>
+<h2 id="noter-la-criticité--1-à-4">Noter la criticité : <code>1</code> à <code>4</code></h2>
+<p>Les touches <code>1</code> <code>2</code> <code>3</code> <code>4</code> endossent <strong>en jugeant</strong>, et la question est une seule : <em><strong>si c’est
+faux, qu’est-ce que ça casse ?</strong></em></p>
+<p>Un niveau se définit par ce qu’il <strong>déclenche</strong> chez l’IA quand elle relit la feature — pas par ce
+qu’il décrit. C’est ce qui fait que ton 3 est le 3 de ta collègue.</p>
+<table>
+<thead>
+<tr>
+<th>Note</th>
+<th>ce qu’elle déclenche</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>1</code></td>
+<td>rien à craindre — l’IA relit à plat, et conteste si elle n’est pas d’accord</td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td>ordinaire — l’IA relit à plat</td>
+</tr>
+<tr>
+<td><code>3</code></td>
+<td>à creuser — l’IA cherche les modes d’échec de ce nœud, et la garde en face de chacun</td>
+</tr>
+<tr>
+<td><code>4</code></td>
+<td>critique — l’IA remonte le fil jusqu’à l’entrée, et répond toujours</td>
+</tr>
+</tbody>
+</table>
+<p>Un chiffre n’achète <strong>jamais moins</strong> d’attention que <code>0</code> : un <code>1</code> veut dire « conteste-moi »,
+jamais « saute-moi ».</p>
+<p><strong>Quatre crans, et pas cinq</strong> : l’échelle est paire, aucun cran du milieu où poser un doute — le
+doute a sa propre touche (<code>?</code>, juste en dessous).</p>
+<p>Le rendu : <code>1</code> et <code>2</code> ne dessinent <strong>rien</strong>, et la note se lit dans l’infobulle du rond (« relu ·
+criticité 2, jugée par toi — … »). <code>3</code> pose un anneau <strong>fin</strong> autour du rond, <code>4</code> un anneau
+<strong>épais</strong>, en encre neutre — jamais d’ambre, qui reste au « à revoir ». Un groupe dont l’un de
+<strong>tes</strong> enfants est noté 3 ou 4 porte l’anneau sur son rond dérivé.</p>
+<p>Les gestes :</p>
+<ul>
+<li>même chiffre à nouveau → dés-endosse, comme <code>0</code> ;</li>
+<li>autre chiffre → change la note ;</li>
+<li><code>0</code> sur un nœud noté → retire tout (la note n’existe pas sans l’endossement) ;</li>
+<li>sur un « à revoir », un chiffre re-valide <strong>avec la note nouvelle</strong>, et l’infobulle rappelle
+l’ancienne : « tu avais mis 3 — rejuge : 1 à 4 ».</li>
+</ul>
+<p><code>0</code> et les chiffres sont lus à la <strong>position physique</strong> de la touche : sur un AZERTY, <code>1</code> sans Shift
+produit <code>&amp;</code>, et le geste marche quand même. Le pavé numérique aussi. Les lettres de la boîte se
+lisent au <strong>caractère</strong>.</p>
+<p><strong>Poser un chiffre, c’est parler à l’IA ; poser <code>0</code>, non.</strong> Seuls les endossements <strong>notés</strong>
+sortent vers elle, nommés par personne — voir <a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l’IA lit et
+écrit</a>.</p>
+<h2 id="---je-nai-pas-compris-ce-que-ça-fait-"><code>?</code> — « je n’ai pas compris ce que ça fait »</h2>
+<p>La touche <code>?</code> pose l’aveu inverse de l’endossement. Elle bascule, comme <code>0</code>, et se lit au
+<strong>caractère</strong> : tape <code>?</code> comme d’habitude, quelle que soit ta disposition.</p>
+<p>Les deux <strong>s’excluent par construction</strong> : poser <code>?</code> retire l’endossement et sa note, endosser (ou
+noter) retire le <code>?</code>. Pour retirer un <code>?</code> sans endosser : <code>?</code> à nouveau.</p>
+<p>Rendu : un petit rond cerclé portant <code>?</code>, <strong>juste devant</strong> le rond d’état. Le tien à pleine encre,
+ceux des collègues atténués, jamais retirés. L’infobulle nomme chacun et rappelle le geste : « <code>?</code>
+retire — ou <code>0</code> / <code>1</code>-<code>4</code> une fois compris ».</p>
+<p>Le <code>?</code> est <strong>partagé et nommé</strong>, comme la note : deux <code>?</code> de deux personnes sur le même nœud, ce
+n’est pas un score, c’est un nœud à réécrire.</p>
+<p>Vers l’IA, un <code>?</code> est une demande d’explication : elle répond dans un <strong>fil</strong> — une conversation
+ancrée sur un symbole — en langage produit, et elle ne retire <strong>jamais</strong> ton <code>?</code> : c’est à toi de dire
+« compris », en endossant. Les fils sont décrits dans
+<a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a>.</p>
+<blockquote>
+<p>⚠️ Ne confonds pas ce <code>?</code> avec celui qui s’affiche <strong>dans le nom</strong> d’un nœud, collé à la phrase
+écrite par l’IA : celui-là veut dire « l’IA n’a pas pu vérifier ». Deux voix, deux places — le
+tien est un rond, à côté du rond d’état.</p>
+</blockquote>
+<h2 id="-à-revoir---ce-qui-périme-un-endossement-et-ce-qui-ne-le-périme-jamais">« À revoir » : ce qui périme un endossement, et ce qui ne le périme jamais</h2>
+<p>Quand tu endosses, Atlas mémorise l’<strong>empreinte du contenu</strong> relu :</p>
+<ul>
+<li>une méthode → le texte de son corps, de sa première à sa dernière ligne ;</li>
+<li>un fichier ou un contrat (un type, un DTO, une entité — une surface publique dont d’autres
+dépendent) → le fichier entier ;</li>
+<li>un composant front → son fichier de code <strong>plus</strong> ses templates.</li>
+</ul>
+<p>À chaque ouverture de la carte, Atlas recalcule l’empreinte courante et la compare. Différente → le
+rond devient <strong>creux cerclé d’ambre</strong>, la ligne repasse à pleine encre, et le symbole retourne dans
+ce qu’il reste à relire. L’infobulle dit « validé, mais le code a changé depuis ta review — à
+revoir ».</p>
+<p>C’est du <strong>contenu</strong>, pas du diff : si quelqu’un modifie puis annule, l’empreinte redevient la même
+et l’alerte tombe d’elle-même.</p>
+<p>Ce qui ne périme <strong>jamais</strong> :</p>
+<ul>
+<li>un endossement posé avant qu’Atlas ne suive les empreintes : il n’en porte aucune ;</li>
+<li>un nœud qui n’a pas d’empreinte courante (contexte, code seulement prévu, fichier supprimé) — il
+manque un des deux termes de la comparaison, donc « je ne sais pas » ne se dit pas « périmé ».</li>
+</ul>
+<p>Quand ton endossement portait un sommet de branche, le panneau Code sait t’afficher <strong>exactement ce
+qui a changé depuis</strong> — voir <a href="/atlas-site/manuel/le-code">Le Code</a>.</p>
+<h2 id="lire-dabord--un-fil-de-lia-non-ouvert-retient-ton-geste">Lire d’abord : un fil de l’IA non ouvert retient ton geste</h2>
+<p>Si le symbole sélectionné porte un <strong>fil de l’IA que tu n’as jamais ouvert</strong>, <code>0</code> et <code>1</code>-<code>4</code>
+n’endossent pas : Atlas déplie le panneau Code, t’amène sur le fil, et le marque comme ouvert. Le
+geste <strong>suivant</strong> endosse.</p>
+<p>Atlas date le fil comme <strong>ouvert</strong>, jamais comme « lu » : une remarque ignorée devient une décision,
+pas un silence.</p>
+<p>Ne retiennent rien : un fil <strong>rangé</strong>, un fil <strong>résolu</strong>, et un fil dont le dernier message est de
+toi. Le <code>?</code> n’est jamais retenu.</p>
+<h2 id="ce-qui-ne-sendosse-pas-et-pourquoi">Ce qui ne s’endosse pas, et pourquoi</h2>
+<p><code>0</code>, <code>1</code>-<code>4</code> et <code>?</code> sont <strong>inertes</strong> sur :</p>
+<ul>
+<li>le <strong>« de côté »</strong> — ce que la configuration du projet ou l’IA a rangé hors du chemin : du
+vu-et-écarté, pas du non-lu. Le rond disparaît sur la ligne rangée elle-même, <strong>pas</strong> sur ses
+descendants ;</li>
+<li>les lignes de <strong>tests</strong> — <code>🧪 N tests</code>, suivi du nom du fichier de test : un test se lit, il ne se
+relit pas ;</li>
+<li>le <strong>décor de test</strong> — un fichier que seules des specs référencent : il se lit avec elles ;</li>
+<li>le <strong>contexte</strong> (du code intact, montré parce qu’il porte le flux), le code seulement <strong>prévu</strong>
+(en pointillé), et les renvois <strong>« voir ↑ »</strong>, comptés à leur première occurrence.</li>
+</ul>
+<p>Le détail de ces catégories est dans <a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et Inventaire</a>.</p>
+<h2 id="qui-dautre-a-relu">Qui d’autre a relu</h2>
+<p>Entre le badge de conversation 💬 et ton rond, une pastille <strong>👤</strong> (avec le nombre de personnes s’il
+y en a plus d’une) dit que <strong>quelqu’un d’autre est passé</strong>. Son infobulle liste chacun : le nom, sa
+note s’il en a posé une, quand, et « avant un changement du code » quand son endossement s’est périmé
+— atténué, jamais retiré. Rien n’est <strong>jamais agrégé</strong>.</p>
+<p>Ce qui circule, et ce qui ne circule pas :</p>
+<table>
+<thead>
+<tr>
+<th>Ce que c’est</th>
+<th>Où ça vit</th>
+<th>Qui le voit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>tes endossements, tes notes, tes <code>?</code></td>
+<td><code>curation/&lt;toi&gt;.json</code>, dans le dossier de la feature — un fichier par personne</td>
+<td>tout le monde, si le workspace est partagé</td>
+</tr>
+<tr>
+<td>ce que tu as <strong>lu</strong> dans les fils</td>
+<td><code>curation/local/</code>, ignoré par git</td>
+<td>toi seul, sur cette machine</td>
+</tr>
+<tr>
+<td>le rang de branche que tu lis</td>
+<td><code>curation/local/</code>, le même</td>
+<td>toi seul</td>
+</tr>
+</tbody>
+</table>
+<p>Ton identité est lue dans <code>git config user.email</code> — la même adresse qui signe tes commits ; sans
+identité configurée, Atlas retombe sur un fichier unique sans auteur : plus de couche collègues, et
+tes notes sortent vers l’IA sous le nom <code>moi</code>. Le partage de ces fichiers passe par le workspace
+partagé, décrit dans <a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a>.</p>
+<h2 id="le-panneau-relecture">Le panneau Relecture</h2>
+<p><code>Espace v r</code> — la touche maîtresse, puis <code>v</code> (volet gauche) et <code>r</code> —, ou l’onglet <strong>● Relecture</strong> ;
+rejoué, il referme le volet. Il répond à une seule question — <em>ai-je
+fini, et sinon par quoi je continue ?</em> Il <strong>compte</strong>, il ne redessine pas l’Arbre ; aucun appel
+réseau, rien d’enregistré ni de partagé.</p>
+<p><strong>Le chiffre</strong>, une fois, avec son unité : « 327 <strong>lignes à relire</strong> », jamais un nombre de
+symboles. Aux bornes, la
+manchette change de phrase plutôt que d’afficher zéro : « Rien à relire », « Tout est relu », ou
+« 12 symboles à relire, au poids inconnu » quand il ne reste que du code dont Atlas n’a pas pu
+mesurer le poids.</p>
+<p><strong>Le terrain</strong>, juste en dessous : « sur 37 fichiers · 3 repos ».</p>
+<p><strong>La jauge</strong>, graduée en <strong>séances de 400 lignes</strong> — le repère au-delà duquel le taux de détection
+s’effondre. Une graduation par séance, et une phrase : « une séance suffit », « ≈ 2 séances », ou
+« ≈ 5 séances de 400 lignes — à découper ». Elle compte des <strong>lignes</strong>, jamais des clics.</p>
+<p><strong>La ventilation par classe</strong>, contre la jauge : « ◇ 84 l. dans 3 contrats » et « 243 l. en
+implémentation », avec le nombre de <strong>frontières non comparées</strong> s’il y en a (une signature touchée
+dont Atlas ne sait pas dire ce qui a changé). Quand il ne reste plus de contrat à relire, la ligne
+s’écrit « ◇ contrats : relu ✓ » — et elle clique encore, vers l’index des contrats en tête de
+l’Arbre.</p>
+<p><strong>Par repo</strong> : une pastille par dépôt, à la couleur qu’il porte dans l’Arbre, avec « 5/9 ✓ » et ce
+qu’il y reste. Elle sert aussi de légende de couleurs et de loupe (clic : ce repo en pleine encre,
+les autres atténués ; <code>Échap</code> revient).</p>
+<p><strong>Depuis quand ça attend</strong> : « ⏱ en attente depuis 68 jours » — la date du dernier commit touchant le
+plus ancien fichier encore non endossé. Quand le code qui reste n’est pas commité, il le dit au lieu
+d’inventer : « ⏱ rien de daté — ce qui reste n’est pas encore commité ».</p>
+<p><strong>Les quatre restes</strong>, chacun un chiffre et un clic, <strong>qui disparaissent à zéro</strong> :</p>
+<table>
+<thead>
+<tr>
+<th>Ligne</th>
+<th>ce qu’elle fait</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>○ N à endosser</code></td>
+<td>allume la <strong>loupe</strong> de l’Arbre sur ce qui reste : tout ce qui n’est ni un résultat ni un chemin vers un résultat disparaît, <code>Échap</code> revient</td>
+</tr>
+<tr>
+<td><code>◍ N à revoir — le code a changé</code></td>
+<td>la même loupe, sur les seuls « à revoir »</td>
+</tr>
+<tr>
+<td><code>💬 N non lus dans 2 fils</code></td>
+<td>ouvre le Journal</td>
+</tr>
+<tr>
+<td><code>☐ N critères non couverts</code></td>
+<td>renvoie aux critères d’acceptation (voir les <em>Limites connues</em>)</td>
+</tr>
+</tbody>
+</table>
+<p>Une cinquième ligne remplace la quatrième quand la feature n’a <strong>aucun</strong> critère d’acceptation
+connu : « ☐ — aucun critère connu pour cette feature ». Elle ne clique pas.</p>
+<p>Quand les quatre sont à zéro : « Plus rien à relire sur cette feature. » — ou, sans critères connus,
+« Plus rien à relire — sous réserve : aucun critère connu pour cette feature. »</p>
+<p>Deux choses vivent <strong>à côté</strong> de la jauge et n’entrent jamais dedans : les symboles au poids
+inconnu (« + 3 symboles au poids inconnu — non comptés ci-dessus »), et les <strong>angles morts</strong>
+(« ⚠ 7 angles morts — ce qu’Atlas n’a pas pu prouver »), décrits un par un dans
+<a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a>.</p>
+<h2 id="quand-un-endossement-perd-son-code">Quand un endossement perd son code</h2>
+<p>Tu as endossé un symbole, et il n’a plus aucun nœud dans la carte. Atlas ne l’efface pas en silence :
+il le dit, sous l’angle mort <strong>« endossé sans nœud »</strong>, avec la cause <strong>constatée</strong> :</p>
+<table>
+<thead>
+<tr>
+<th>Ce qu’il constate</th>
+<th>Ce que ça veut dire</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>aucun nœud de ce repo</td>
+<td>pas de branche pour cette feature dans ce dépôt (jamais créée, ou supprimée depuis), ou un diff vide</td>
+</tr>
+<tr>
+<td>aucun nœud de ce fichier</td>
+<td>le fichier a quitté le diff — changement annulé, ou déjà rentré dans la base</td>
+</tr>
+<tr>
+<td>fichier présent, symbole absent</td>
+<td>hunk annulé, symbole renommé, ou supprimé</td>
+</tr>
+</tbody>
+</table>
+<p>Le compte se lit dans l’onglet Inventaire, section « Ce que je n’ai pas pu prouver » ; le détail, un
+par endossement, dans le brief texte :</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> brief</span><span style="color:#D73A49;--shiki-dark:#F97583"> &lt;</span><span style="color:#032F62;--shiki-dark:#9ECBFF">id-de-la-featur</span><span style="color:#24292E;--shiki-dark:#E1E4E8">e</span><span style="color:#D73A49;--shiki-dark:#F97583">&gt;</span><span style="color:#6A737D;--shiki-dark:#6A737D">   # le brief en clair, angles morts compris</span></span></code></pre>
+<p>Et quand la carte est vide de toute référence — une feature dont plus rien ne se résout — Atlas se
+tait plutôt que de tout déclarer perdu.</p>
+<blockquote>
+<p>⚠️ La cause la plus courante n’est pas une disparition de code : ce sont <strong>deux dossiers nommés
+autrement</strong>. Une signature commence par le nom du dossier du dépôt ; si ton collègue a cloné le
+même repo sous <code>api</code> là où tu l’as sous <code>projet-api</code>, tout ce qui est partagé atterrit à côté,
+sans erreur. Atlas le signale comme « repo absent ici » et te laisse trancher — il ne renomme rien.</p>
+</blockquote>
+<h2 id="raccourcis">Raccourcis</h2>
+<table>
+<thead>
+<tr>
+<th>Touche</th>
+<th>Effet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0</code></td>
+<td>endosser / dés-endosser le symbole sélectionné — « relu, non jugé ». Sur un « à revoir » : re-valide</td>
+</tr>
+<tr>
+<td><code>1</code> <code>2</code> <code>3</code> <code>4</code></td>
+<td>endosser <strong>en notant</strong> la criticité. Même chiffre = dés-endosse, autre chiffre = change la note</td>
+</tr>
+<tr>
+<td><code>?</code></td>
+<td>« je n’ai pas compris ce que ça fait » — bascule, et retire l’endossement</td>
+</tr>
+<tr>
+<td><code>↑</code> <code>↓</code></td>
+<td>ligne précédente / suivante ; <code>→</code> <code>←</code> déplient et replient</td>
+</tr>
+<tr>
+<td><code>Espace v r</code></td>
+<td>ouvrir le panneau Relecture — ou refermer le volet si tu y es déjà</td>
+</tr>
+<tr>
+<td><code>Échap</code></td>
+<td>sortir de la loupe ouverte par une ligne de reste</td>
+</tr>
+</tbody>
+</table>
+<p>Tous partent <strong>sans préfixe</strong>, sauf <code>Espace v r</code>, et la boîte les rappelle en pied de sa première
+liste. Aucun ne part d’un champ de saisie, derrière un dialogue, ni pendant qu’une page occupe
+l’écran — <a href="/atlas-site/manuel/le-clavier">Le clavier</a> détaille où le clavier s’arrête et pourquoi.</p>
+<h2 id="ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</h2>
+<ul>
+<li><strong>Il n’endosse jamais à ta place.</strong> Aucun geste automatique ne remplit un rond : ni un merge, ni un
+passage de l’IA, ni le fait que quelqu’un d’autre ait relu.</li>
+<li><strong>L’IA n’écrit jamais tes endossements.</strong> Elle n’a aucun outil pour ça — ni pour endosser, ni pour
+noter, ni pour retirer un <code>?</code>. Ce qui n’a pas d’outil est inatteignable, et c’est la garantie.</li>
+<li><strong>Il n’agrège jamais deux endossements.</strong> Pas de « 2/3 validé », pas de note moyenne, pas de
+pourcentage d’équipe. Des personnes nommées, ou rien.</li>
+<li><strong>Il ne compte pas tes gestes.</strong> Le panneau Relecture mesure le travail restant, pas ta
+productivité : pas de série, pas d’historique, pas de « X cette semaine ».</li>
+<li><strong>Il n’envoie rien chez ton hébergeur de dépôt.</strong> Endosser n’approuve aucune merge request et ne
+résout aucun fil public. La seule chose qu’Atlas y publie est un fil que tu lui demandes
+explicitement de publier, confirmation à l’appui.</li>
+<li><strong>Il ne publie jamais ce que tu as lu.</strong> Les dates d’ouverture des fils ne quittent pas ta machine,
+et ce n’est pas une option : elles vivent dans un dossier que git ignore.</li>
+</ul>
+<h2 id="limites-connues">Limites connues</h2>
+<ul>
+<li><strong>Le <code>?</code> ne se compte nulle part.</strong> Il ne figure pas dans le panneau Relecture, pas dans les
+restes et pas dans les comptes de l’Inventaire : un nœud incompris n’apparaît que sur sa ligne et
+dans ce qui part vers l’IA.</li>
+<li><strong>Un endossement ancien ne se périme pas.</strong> Ceux qui ont été posés avant le suivi des empreintes
+n’en portent aucune : ils resteront pleins quoi qu’il arrive au code.</li>
+<li><strong>Pas de point de comparaison sur du non commité.</strong> Si tu endosses un fichier modifié dans ton
+working tree, Atlas n’enregistre aucun sommet de branche : le « à revoir » fonctionnera, mais le
+panneau Code ne pourra pas te montrer <em>ce qui a changé depuis ton endossement</em>.</li>
+<li><strong>L’empreinte d’un contrat est celle du fichier entier.</strong> Sur une surface pure (DTO, entité,
+<code>.sql</code>), toucher n’importe quelle ligne du fichier fait repasser tous ses endossements en « à
+revoir ».</li>
+<li><strong>L’attente en jours est au grain du fichier.</strong> Git date les commits, pas les symboles : deux
+méthodes du même fichier partagent sa date, et l’écart ne peut que <strong>sous-annoncer</strong> l’attente.</li>
+<li><strong>La ligne « critères non couverts » ne mène nulle part.</strong> Le clic vide le volet gauche au lieu
+d’ouvrir l’onglet Ticket : reclique un onglet pour le retrouver (le choix n’est pas mémorisé, un
+rechargement repart sur Ticket). Les critères, eux, s’y lisent normalement.</li>
+<li><strong>Une identité par machine, pas par dépôt.</strong> Atlas lit <code>user.email</code> depuis la racine du
+workspace, donc la configuration globale de git. Un <code>user.email</code> posé repo par repo n’est pas vu.</li>
+</ul>
+<nav class="suite" aria-label="Page suivante et précédente"><a href="/atlas-site/manuel/le-code"><small>← précédent</small>Le Code</a><a class="droite" href="/atlas-site/manuel/fichiers-et-inventaire"><small>suivant →</small>Fichiers et inventaire</a></nav></article><nav class="cote toc" aria-label="Sur cette page"><h2>Sur cette page</h2><ul><li><a href="#le-rond-de-droite--deux-axes-jamais-mélangés">Le rond de droite : deux axes, jamais mélangés</a></li><li><a href="#endosser--0">Endosser : 0</a></li><li><a href="#noter-la-criticité--1-à-4">Noter la criticité : 1 à 4</a></li><li><a href="#---je-nai-pas-compris-ce-que-ça-fait-">? — « je n’ai pas compris ce que ça fait »</a></li><li><a href="#-à-revoir---ce-qui-périme-un-endossement-et-ce-qui-ne-le-périme-jamais">« À revoir » : ce qui périme un endossement, et ce qui ne le périme jamais</a></li><li><a href="#lire-dabord--un-fil-de-lia-non-ouvert-retient-ton-geste">Lire d’abord : un fil de l’IA non ouvert retient ton geste</a></li><li><a href="#ce-qui-ne-sendosse-pas-et-pourquoi">Ce qui ne s’endosse pas, et pourquoi</a></li><li><a href="#qui-dautre-a-relu">Qui d’autre a relu</a></li><li><a href="#le-panneau-relecture">Le panneau Relecture</a></li><li><a href="#quand-un-endossement-perd-son-code">Quand un endossement perd son code</a></li><li><a href="#raccourcis">Raccourcis</a></li><li><a href="#ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</a></li><li><a href="#limites-connues">Limites connues</a></li></ul></nav></main><footer class="pied"><div class="dedans"><span>Atlas — suivi et validation de code.</span><a href="/atlas-site/manuel/prise-en-main">Manuel</a></div></footer><script>
+    document.getElementById('theme-bt')?.addEventListener('click', () => {
+      const r = document.documentElement;
+      // clair → sombre → système, et le tour recommence. « Système » RETIRE la clé : c'est ce qui
+      // rend le choix distinct d'une absence de choix.
+      const suite = { clair: 'sombre', sombre: '', '': 'clair' };
+      const v = suite[r.dataset.theme || ''];
+      if (v) { r.dataset.theme = v; try { localStorage.setItem('atlas-site-theme', v); } catch {} }
+      else { delete r.dataset.theme; try { localStorage.removeItem('atlas-site-theme'); } catch {} }
+    });
+  </script></body></html>

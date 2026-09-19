@@ -1,0 +1,385 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Le Code · Atlas</title><meta name="description" content="Le panneau de droite : le code réel du nœud que tu regardes dans l'Arbre — relu à chaque clic, jamais une copie — avec ses liens, ses fils de conversation et ce que tu en as déjà relu."><link rel="canonical" href="https://gregoirelacoste.github.io/atlas-site/manuel/le-code"><meta property="og:title" content="Le Code · Atlas"><meta property="og:description" content="Le panneau de droite : le code réel du nœud que tu regardes dans l'Arbre — relu à chaque clic, jamais une copie — avec ses liens, ses fils de conversation et ce que tu en as déjà relu."><meta property="og:type" content="website"><meta property="og:url" content="https://gregoirelacoste.github.io/atlas-site/manuel/le-code"><meta name="twitter:card" content="summary"><link rel="icon" href="/atlas-site/favicon.svg" type="image/svg+xml"><script>
+    (() => { try { const t = localStorage.getItem('atlas-site-theme');
+      if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t; } catch {} })();
+  </script><link rel="stylesheet" href="/atlas-site/_astro/Base.D32RNicN.css"></head><body><header class="tete"><a class="marque" href="/atlas-site">🗺️ Atlas</a><nav><a href="/atlas-site/installer">Installer</a><a href="/atlas-site/manuel/prise-en-main" aria-current="page">Manuel</a><a href="/atlas-site/articles">Écrits</a><button class="theme-bt" id="theme-bt" type="button" aria-label="Changer de thème">◐</button></nav></header><main class="doc"><nav class="cote" aria-label="Le manuel"><h2>Le manuel</h2><ol><li><a href="/atlas-site/manuel/prise-en-main">Prise en main</a></li><li><a href="/atlas-site/manuel/l-arbre">L&#39;Arbre</a></li><li><a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a></li><li><a href="/atlas-site/manuel/le-code" aria-current="page">Le Code</a></li><li><a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a></li><li><a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et inventaire</a></li><li><a href="/atlas-site/manuel/le-panneau-git">Le panneau Git</a></li><li><a href="/atlas-site/manuel/le-tableau">Le Tableau</a></li><li><a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a></li><li><a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a></li><li><a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a></li><li><a href="/atlas-site/manuel/brancher-l-ia">Brancher l&#39;IA</a></li><li><a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l&#39;IA lit et écrit</a></li><li><a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a></li><li><a href="/atlas-site/manuel/la-ligne-de-commande">La ligne de commande</a></li><li><a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a></li><li><a href="/atlas-site/manuel/le-clavier">Le clavier</a></li></ol></nav><article class="corps"><h1>Le Code</h1><p class="chapo">Le panneau de droite : le code réel du nœud que tu regardes dans l&#39;Arbre — relu à chaque clic, jamais une copie — avec ses liens, ses fils de conversation et ce que tu en as déjà relu.</p><blockquote>
+<p>Le panneau de droite : le code réel du nœud que tu regardes dans l’Arbre — relu à chaque clic,
+jamais une copie — avec ses liens, ses fils de conversation et ce que tu en as déjà relu.</p>
+</blockquote>
+<h2 id="len-tête-tient-en-deux-lignes">L’en-tête tient en deux lignes</h2>
+<p>L’Arbre (au centre, détaillé dans <a href="/atlas-site/manuel/l-arbre">L’Arbre</a>) découpe le diff d’une feature en <strong>nœuds</strong> :
+une méthode, un fichier, un <strong>contrat</strong> (une entité, un DTO, une constante — une surface dont d’autres
+dépendent). Sélectionne un nœud, et le Code affiche sa source réelle, lue dans git au moment où tu
+cliques. Au-dessus, deux lignes, pas une de plus.</p>
+<p><strong>La première dit ce que tu lis.</strong> De gauche à droite : un bouton <code>←</code> de retour, la pastille de sa
+<strong>couche</strong> (controller, service, accès aux données, appel inter-service, utilitaire, contrat), le nom
+du symbole à la couleur de cette couche, puis — en gris — sa classe, et enfin sa <strong>signature</strong>. Sur un
+fichier entier, la signature laisse place à <code>fichier</code> ; sur un contrat, à <code>◇ contrat · utilisé par</code> et
+le nom de ce qui s’en sert. Poussés à droite : l’<strong>état git</strong> — <code>commité</code>, <code>codé · pas commité</code>,
+<code>prévu · à faire</code>, <code>contexte · non modifié</code> — et, sur un symbole seulement, le bouton <code>↑ usages</code>. À
+l’étroit, c’est la classe qui cède d’abord, puis la signature : le nom et le geste ne se coupent
+jamais.</p>
+<p><strong>La seconde dit d’où ça vient.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Élément</th>
+<th>Ce qu’il montre</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>📄 dépôt/…/fichier.ts:184</code></td>
+<td>le dépôt, le fichier, la ligne où commence le symbole</td>
+</tr>
+<tr>
+<td><code>· 3f2a91c</code></td>
+<td>le dernier commit qui a touché ce symbole</td>
+</tr>
+<tr>
+<td><code>● live git · +12 −3</code></td>
+<td>la feature a touché ce bout de fichier, et de combien</td>
+</tr>
+<tr>
+<td><code>○ non modifié par cette feature</code></td>
+<td>le nœud n’est là que pour le contexte</td>
+</tr>
+<tr>
+<td><code>⇄ comparé à master</code></td>
+<td>le diff affiché ne part pas de la base déclarée du projet (section suivante)</td>
+</tr>
+<tr>
+<td><code>criticité · toi 3 · alice 4</code></td>
+<td>les notes posées en endossant, nommées</td>
+</tr>
+<tr>
+<td><code>? pas compris · toi · carol</code></td>
+<td>qui a dit ne pas comprendre ce code</td>
+</tr>
+</tbody>
+</table>
+<p>Le chemin est <strong>coupé au milieu</strong> : le dépôt et le nom du fichier désignent, le rangement entre les
+deux est ce que personne ne lit. Le <code>…/</code> dit qu’on a coupé ; le chemin entier, le résumé du commit et
+le détail des notes vivent dans les info-bulles. Les deux dernières entrées n’apparaissent que si
+quelqu’un a noté ce nœud ou buté dessus — voir <a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a>.</p>
+<p>En dessous, l’IA pose ce qu’elle a compris du symbole : <code>Ce que ça fait :</code> et, au-dessus et en grisé
+quand elle a relevé les deux temps, <code>Ce que ça faisait :</code> ; une intention métier sans description du
+code s’affiche en <code>Pourquoi :</code>. Rien d’écrit, rien d’affiché — aucune ligne ne se rend avec un tiret
+pour dire son vide.</p>
+<h3 id="les-types-de-la-signature">Les types de la signature</h3>
+<p>La signature affichée en tête porte les mêmes encres que dans l’Arbre
+(<a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a>) : <strong>bleu</strong> sur un type que ce nœud prend,
+<strong>orange</strong> sur celui qu’il rend. Tant que les enveloppes du langage ne sont pas déclarées pour ce
+projet, la signature reste en encre neutre — Atlas ne devine pas ce qui est une donnée et ce qui est
+un emballage.</p>
+<p>Sur un nœud-contrat, le titre nomme <strong>le contrat</strong> quand le fichier n’en déclare qu’un seul, et le
+nom du fichier vient ensuite. Quand le fichier en déclare plusieurs, le titre reste celui du fichier :
+en élire un affirmerait que le fichier <em>est</em> celui-là.</p>
+<h3 id="létiquette-dun-endpoint">L’étiquette d’un endpoint</h3>
+<p>Dans l’Arbre, la ligne d’un point d’entrée HTTP ne porte que le <strong>verbe</strong> — <code>▶ PATCH</code> — et celle d’un
+appel réseau vers un autre service, <code>⇄ GET</code> : c’est ce qu’un décorateur prouve. L’étiquette
+<strong>entière</strong> vit ici, en pastille, en tête de la seconde ligne : <code>▶ POST …/orders/create · v2</code>, ou
+<code>⇄ PATCH /*/objects/customers/*</code>. Elle n’est pas cliquable — elle ne promet aucune destination.</p>
+<p>Ce qu’elle apporte en plus du verbe, c’est l’<strong>aveu</strong>, et il se survole : un <code>…/</code> en tête dit que le
+préfixe global de montage n’est pas lu, un chemin complet qu’il est déclaré, un <code>*</code> un segment
+dynamique qu’Atlas n’a pas résolu.</p>
+<p>Ce qui est écrit sans marque est prouvé. Le <code>…/</code> n’est pas un défaut d’affichage, c’est un manque de
+<strong>déclaration</strong> : la clé <code>routePrefix</code> se remplit à la main, et elle seule le fait disparaître — voir
+<a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a>. La version (<code>· v2</code>) est posée <strong>à côté</strong> du
+chemin, jamais dedans.</p>
+<h2 id="ouvrir-un-fichier-et-à-quoi-le-code-le-compare">Ouvrir un fichier, et à quoi le Code le compare</h2>
+<p>Un fichier n’arrive pas toujours par une ligne de l’Arbre. Deux recherches l’ouvrent ici : <code>Espace s f</code>
+le cherche <strong>par son nom</strong>, <code>Espace s g</code> cherche une <strong>chaîne dans le contenu</strong> des dépôts et ouvre le
+fichier <strong>à la ligne trouvée</strong> — les deux sont décrites dans
+<a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et Inventaire</a>.</p>
+<p>La première porte en plus un choix qu’aucune autre n’offre : <strong>la base de comparaison</strong>, l’autre bout
+du diff que le Code va montrer. Par défaut <code>courante</code> — la ligne de base déclarée du projet, celle
+contre laquelle toute la carte est calculée (voir
+<a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a>). Les autres propositions sont les lignes
+d’intégration qu’Atlas connaît — <code>develop</code>, <code>master</code>, <code>main</code> — moins celle qui est déjà déclarée.</p>
+<p>Choisis-en une, ouvre un fichier, et le Code montre le diff de la branche courante contre <strong>cette</strong>
+base-là. Sa tête le dit, à la suite du chemin et du compte de lignes : une chip
+« ⇄ comparé à master ». Elle n’est pas décorative — un diff pris d’un autre point ne doit jamais se
+lire comme le diff de la feature. Son info-bulle, « base de comparaison imposée : », donne le commit
+exact sur lequel la comparaison a été faite : c’est lui qu’on copie, le nom est là pour se lire.</p>
+<p>Ce que ce choix ne change pas :</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>le fichier lu</td>
+<td>il se lit là où il a été listé : le travail en cours pour un dépôt de la feature, sa base pour les autres</td>
+</tr>
+<tr>
+<td>les fils</td>
+<td>ce sont ceux de la feature — ils restent, et la marge en ouvre toujours un</td>
+</tr>
+<tr>
+<td>le projet</td>
+<td>la base déclarée ne bouge pas, et le choix ne se retient pas d’une fois sur l’autre</td>
+</tr>
+<tr>
+<td>les autres portes</td>
+<td>un nœud de l’Arbre, un lien, un résultat d’usages ou de la recherche de contenu comparent toujours à la base déclarée, sans chip</td>
+</tr>
+<tr>
+<td>un dépôt hors feature</td>
+<td>il n’a pas de branche courante : il s’ouvre sans comparaison, comme un dépôt où la base choisie n’existe pas</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ce-quil-affiche-et-pourquoi-ce-nest-pas-tout-le-fichier">Ce qu’il affiche, et pourquoi ce n’est pas tout le fichier</h2>
+<p>Le fichier entier existe derrière l’écran, mais le Code n’en montre pas tout : ce qui appartient au
+nœud consulté — sa signature, ses lignes changées, ses appels vers la suite du <strong>flux</strong> (le chemin que
+la feature suit d’un nœud à l’autre) — reste visible, avec quelques lignes inchangées autour pour te
+repérer. Le reste se replie sous une bannière qui dit ce qu’elle cache : « ⋯ N lignes inchangées » ou
+« ⋯ N lignes hors de ce symbole, dont N modifiées ». Sur un nœud-fichier (un composant, un contrat, un
+template), c’est l’inverse : pas de voisin, tout le fichier est à lui.</p>
+<p>Quand un autre symbole du même fichier a du code juste à côté, le pli qui le cache le nomme — suivi de
+<code>()</code> pour une méthode ou de <code>{ }</code> pour un en-tête de classe — avec où en est ta relecture de ce voisin
+(<code>✓ relu</code>, <code>⚠ à revoir</code>, <code>à relire</code>, ou <code>— dans son nœud</code>).</p>
+<p>Dans la marge, un chevron replie chaque ligne qui ouvre un bloc, comme dans un IDE. Ces replis-là sont
+les tiens : ils survivent à la bascule entre unifié et côte à côte, et repartent à zéro dès que tu
+ouvres un autre code.</p>
+<blockquote>
+<p>⚠️ Une ligne CHANGÉE qui n’appartient pas au nœud consulté n’apparaît jamais dans son écran : un
+correctif sur trois méthodes se lit en ouvrant les trois nœuds.</p>
+</blockquote>
+<h2 id="rendu-unifié-et-côte-à-côte">Rendu unifié et côte à côte</h2>
+<p>Par défaut, le Code empile les lignes façon GitLab : suppressions et ajouts l’un sous l’autre, une
+ligne réellement modifiée en place ressort en bleu — elle est appariée à son ancienne version par son
+CONTENU, pas par sa position, donc un <code>try {</code> inséré en tête ne décale plus tout le bloc en
+rouge/vert. Les mots qui changent dans une paire sont soulignés.</p>
+<p><code>Espace d s</code> — la touche maîtresse <code>Espace</code>, puis <code>d</code> (disposition) et <code>s</code> — bascule en côte à côte,
+façon IntelliJ : la base à gauche, le résultat à droite, sur la même rangée quand les deux lignes se
+ressemblent assez pour compter comme une modification en place. Rejoué, il revient à l’unifié sans
+recharger le code. Entrer en côte à côte replie le volet gauche et l’Arbre — deux colonnes sur un
+tiers d’écran ne se lisent pas — et en sortir les rouvre.</p>
+<p>Son voisin <code>Espace d a</code> fait l’inverse : il donne l’écran au <strong>plein Arbre</strong>, et rejoué le rend <strong>tel
+qu’il était</strong>. Il n’y a pas de « plein Code » à part — le côte à côte prend déjà l’écran.</p>
+<h2 id="les-liens-dans-le-code">Les liens dans le code</h2>
+<p>Certains mots du code sont des liens : fond coloré, clic direct, aux couleurs de couche de
+<a href="/atlas-site/manuel/l-arbre">l’Arbre</a>. Deux familles :</p>
+<ul>
+<li>les <strong>appels sortants de ce nœud précis</strong>, reconnus par le récepteur écrit dans le code : si Atlas a
+résolu <code>customerService.update(</code>, c’est cette occurrence-là qui devient un lien, pas les trois
+autres <code>.update(</code> de la méthode ;</li>
+<li>les <strong>types, DTO, enums et constantes</strong> déclarés par un contrat que ce nœud importe — en orange.</li>
+</ul>
+<p>Un clic sur un lien-méthode <strong>sélectionne ce nœud dans l’Arbre</strong> : l’Arbre se déplie jusqu’à lui, ses
+appelants directs se soulignent en pointillé, et le Code affiche sa source. Un lien-contrat ou une
+constante <strong>ouvre directement sa source</strong> — un type n’a pas forcément de ligne à lui dans l’Arbre.</p>
+<p><strong>Tout le reste du code est inerte.</strong> Un identifiant qu’Atlas n’a pas relié par un appel ou un import
+prouvé garde sa coloration de syntaxe, mais il n’a ni fond, ni saut au clic — même quand son nom
+existe ailleurs dans la feature. Il n’y a pas de clic « par nom » : deux <code>.update(</code> sur deux objets
+différents portent le même mot et n’appellent pas la même chose.</p>
+<h2 id="aller-à-la-définition-les-usages">Aller à la définition, les usages</h2>
+<p>Un clic — simple, ou Ctrl/⌘+clic — sur un lien saute à sa définition. Maintenir Ctrl (⌘ sur Mac)
+allume les liens à l’écran : utile dans une ligne dense. Un survol fait apparaître une pastille qui
+rappelle les gestes possibles : « ⌃ clic → définition · ⌥ clic / Espace c u → usages » sur un lien,
+« ⌥ clic / Espace c u → usages » seul sur un appel qu’Atlas n’a pas su résoudre. <code>Backspace</code> revient
+à ce que tu regardais juste avant.</p>
+<p><strong>Les usages</strong> répondent à « où ce nom apparaît-il, ailleurs ? » — pour n’importe quel symbole
+affiché, connu d’Atlas ou non. Trois portes : <code>Espace c u</code>, qui vise le symbole survolé (sans survol,
+celui de l’en-tête) ; le bouton <code>↑ usages</code> ; <code>Alt+clic</code> sur un mot du code. Un tiroir s’ouvre sous
+l’Arbre — qui reste visible, ses nœuds appelants surlignés — avec <code>📌 définition</code>, puis
+<code>↑ utilisé par</code> (par dépôt et par méthode appelante), puis <code>ailleurs (tests, template, config)</code>.</p>
+<p>C’est une <strong>recherche de texte</strong>, pas une navigation prouvée, et l’écran le dit : le titre du tiroir
+compte « N occurrences par nom », et son info-bulle précise « une recherche textuelle du nom (git
+grep, mot entier), pas une relation prouvée : à toi de juger chaque occurrence ». Il dit aussi ce
+qu’il a coupé : « N masquées par le filtre d’import », « N premières sur M » à 200 résultats,
+« aucune occurrence de « X » par nom » — ce qui n’est pas « personne ne s’en sert ».</p>
+<p>Tu en sors par <code>Échap</code>, par le bouton <code>✕ Échap</code> du tiroir, ou en cliquant dans le vide de l’Arbre —
+et tu retrouves le nœud d’où tu venais.</p>
+<h2 id="le-curseur-de-larbre-suit-le-code-ouvert">Le curseur de l’Arbre suit le code ouvert</h2>
+<p>Ouvrir une source sans passer par une ligne de l’Arbre — un lien du Code, l’index des contrats, le
+volet Fichiers, une des deux recherches, un résultat d’usages — <strong>déplace la sélection</strong> sur le nœud
+qui porte ce fichier. Tu lis un type dans un contrat, tu l’<strong>endosses</strong> (tu déclares l’avoir validé)
+sur place : <code>0</code>, <code>1</code>-<code>4</code> et <code>?</code> visent ce que tu as sous les yeux (les gestes sont dans
+<a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a>). Le fichier se marque en même temps dans le volet
+Fichiers : ses dossiers se déplient, sa ligne passe en gras.</p>
+<p>Deux cas seulement font atterrir le curseur : l’identité exacte du symbole ouvert, ou, à défaut, le
+nœud <strong>au grain fichier</strong> du même fichier — c’est lui qui reçoit ton endossement quand tu lis un type
+dans un contrat. Jamais un nœud qui « ressemble ». Et quand <strong>aucun</strong> nœud ne porte le fichier ouvert
+— un fichier hors flux, un fichier lu depuis <a href="/atlas-site/manuel/le-panneau-git">le panneau Git</a> — le curseur se
+<strong>retire</strong> : plus aucune ligne n’est allumée, et le geste d’endossement ne part pas.</p>
+<h2 id="navigation-par-diff">Navigation par diff</h2>
+<p><code>Alt+→</code> et <code>Alt+←</code> sautent d’un bloc de changement au suivant ou au précédent dans le code affiché —
+un bloc replié ne compte pas comme une étape. Arrivé au dernier bloc du nœud courant, <code>Alt+→</code> continue
+vers le nœud suivant qui porte du code touché par la feature, en bouclant depuis le début de l’Arbre
+s’il le faut ; <code>Alt+←</code> fait le symétrique. À l’ouverture d’un nœud, le Code scrolle sur sa région.</p>
+<h2 id="la-colonne-de-relecture">La colonne de relecture</h2>
+<p>Dans la marge de gauche, un mince trait de couleur longe certaines lignes : il dit <strong>à qui appartient
+cette ligne</strong>, et où en est ta relecture de ce symbole précis (les états sont dans
+<a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a>). Le nœud consulté porte un trait épais, à pleine
+encre ; les autres symboles du même fichier en portent un plus fin. <strong>Rien</strong> ne s’affiche quand Atlas
+ne sait pas à qui attribuer la ligne : sous-flaguer plutôt que peindre une appartenance inventée.</p>
+<h2 id="--depuis-ton-endossement-">« ⟲ depuis ton endossement »</h2>
+<p>Sur un nœud marqué à revoir (le code a changé depuis que tu l’as validé — voir
+<a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a>), un bloc apparaît au-dessus du diff : ce qui a changé
+depuis TA relecture, plutôt que depuis le début de la feature. Le diff de la feature reste dessous,
+intact, comme contexte.</p>
+<table>
+<thead>
+<tr>
+<th>Ce qu’Atlas trouve</th>
+<th>Ce que tu vois</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>un commit rattaché, et du changement depuis</td>
+<td>le diff exact entre ce commit et maintenant, replié à la portée du symbole</td>
+</tr>
+<tr>
+<td>un commit rattaché, rien de changé dans ce fichier</td>
+<td>il le dit : ce qui a rendu le nœud « à revoir » a bougé ailleurs (un template, un voisin)</td>
+</tr>
+<tr>
+<td>aucun commit rattaché (endossement ancien, ou posé sur du code pas commité)</td>
+<td>« pas de point de comparaison » — relis le diff de la feature, en dessous</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ouvrir-un-fichier-de-test">Ouvrir un fichier de test</h2>
+<p>Un nœud de tests s’ouvre différemment : tout le fichier se replie sauf les titres des groupes et des
+cas — un test se lit, il ne se relit pas ligne à ligne — et un chevron rouvre le corps d’un cas. Les
+titres des cas qui atteignent le nœud que tu regardais restent à pleine encre, les autres s’atténuent,
+un test désactivé est barré. Le détail est dans
+<a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et Inventaire</a>.</p>
+<h2 id="les-fils-ancrés-dans-le-code">Les fils ancrés dans le Code</h2>
+<p>Un fil est une conversation ancrée sur une ligne précise ou sur un symbole entier — son cycle de vie,
+sa résolution et son passage par le Journal sont dans
+<a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a>. Ici : un fil ancré à une ligne s’affiche
+juste dessous, dans les deux rendus ; un fil symbolique apparaît en encart en tête du code
+(« un fil sur ce symbole », ou son compte), chacun portant la mention « ◌ sur le symbole ». Pour en
+ouvrir un nouveau, clique le numéro d’une ligne dans la marge, écris, et <code>Commenter</code> le pose.</p>
+<p>Chaque fil porte une rangée d’actions :</p>
+<table>
+<thead>
+<tr>
+<th>Bouton</th>
+<th>Effet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Répondre</code></td>
+<td>ouvre une zone de texte, <code>Envoyer</code> ajoute ton message</td>
+</tr>
+<tr>
+<td><code>Résoudre</code> / <code>Rouvrir</code></td>
+<td>ta décision — la question a une réponse, ou plus maintenant</td>
+</tr>
+<tr>
+<td><code>🗄 Ranger</code> / <code>↩ Remettre</code></td>
+<td>ce fil ne s’applique plus (réversible, sans effet sur la MR)</td>
+</tr>
+<tr>
+<td><code>Supprimer</code></td>
+<td>efface le fil — rien d’autre ne le fait</td>
+</tr>
+<tr>
+<td><code>↗ Publier…</code></td>
+<td>seulement sur un fil encore local</td>
+</tr>
+</tbody>
+</table>
+<p>Un fil qui vient uniquement de la merge request s’affiche pour lecture, avec un lien <code>↗</code> vers la
+conversation chez l’hébergeur, mais sans cette rangée. Un fil peut aussi se marquer « ⚠ à revoir » :
+la ligne à laquelle il était épinglé ne se retrouve plus dans le code affiché — un signal qui concerne
+le fil, pas ta relecture.</p>
+<p><code>↗ Publier…</code> n’envoie rien tout de suite : le clic ouvre un encart qui interroge la merge request en
+direct — sur laquelle ça part, ce que ton jeton a le droit d’y faire, combien de messages partiront et
+combien l’IA en a rédigés — et le bouton final ne s’active que si quelque chose peut partir.</p>
+<h2 id="raccourcis">Raccourcis</h2>
+<p>Tout ce qui pilote l’écran passe par la <strong>touche maîtresse</strong> <code>Espace</code> : elle ouvre une boîte, une
+lettre y choisit une colonne, la suivante agit — la référence complète est
+<a href="/atlas-site/manuel/le-clavier">Le clavier</a>. La souris et la navigation restent directes.</p>
+<table>
+<thead>
+<tr>
+<th>Touche</th>
+<th>Effet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>clic, ou Ctrl/⌘+clic</td>
+<td>aller à la définition d’un lien (un identifiant sans lien est inerte)</td>
+</tr>
+<tr>
+<td>Alt+clic (sur un mot du code)</td>
+<td>usages de ce mot</td>
+</tr>
+<tr>
+<td><code>Espace c u</code></td>
+<td>usages du symbole survolé (ou affiché, sans survol)</td>
+</tr>
+<tr>
+<td><code>Espace s f</code> · <code>Espace s g</code></td>
+<td>ouvrir un fichier par son nom (base au choix) · chercher dans le contenu</td>
+</tr>
+<tr>
+<td><code>Espace d s</code></td>
+<td>côte à côte ⇄ unifié (et prend l’écran)</td>
+</tr>
+<tr>
+<td><code>Espace d a</code></td>
+<td>plein Arbre — le volet gauche et le Code se replient</td>
+</tr>
+<tr>
+<td><code>Espace c m</code> · <code>Espace a m</code></td>
+<td>masquer / montrer le Code (bouton ⟩) · l’Arbre (bouton ⟨)</td>
+</tr>
+<tr>
+<td>Alt+→ / Alt+←</td>
+<td>diff suivante / précédente, puis nœud touché suivant / précédent</td>
+</tr>
+<tr>
+<td>Backspace</td>
+<td>retour à ce que tu regardais avant</td>
+</tr>
+<tr>
+<td>Échap</td>
+<td>ferme le tiroir des usages (et rend le nœud d’où tu venais)</td>
+</tr>
+</tbody>
+</table>
+<p>Dans la boîte, une lettre dont le geste est <strong>déjà à l’écran</strong> porte un <code>●</code> ; une lettre qui ne peut
+rien faire ici est atténuée et <strong>dit pourquoi</strong> — <code>aucun symbole ouvert</code>, par exemple.</p>
+<h2 id="ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</h2>
+<ul>
+<li>Il ne modifie jamais le code source des dépôts : la seule écriture qu’il permet est un fil de
+conversation.</li>
+<li>Il n’exécute aucun test : la vue d’un fichier de test lit des titres, elle ne lance rien.</li>
+<li>Il ne retire pas une note déjà envoyée sur une merge request — publier est un aller simple.</li>
+<li>Il ne pose <strong>aucun</strong> lien sur un identifiant qu’il n’a pas prouvé : pas de fond, pas de saut, pas
+d’info-bulle. S’il n’est pas sûr, il ne t’envoie nulle part.</li>
+<li>Il ne devine pas le préfixe de montage d’une route : non déclaré, l’étiquette garde son <code>…/</code>.</li>
+<li>Il ne touche pas à ta configuration parce que tu as comparé un fichier à <code>master</code> : le choix de base
+meurt avec la modale, la ligne de base déclarée du projet reste la sienne.</li>
+</ul>
+<h2 id="limites-connues">Limites connues</h2>
+<p>Les usages se cherchent <strong>par nom</strong>, dans tous les dépôts du projet : un appel réseau identifié
+seulement par son URL n’y apparaît pas — ce genre de lien se lit dans l’Arbre.</p>
+<p>Sur un gros bloc réécrit d’un seul tenant, l’appariement par contenu peut associer des lignes qui se
+ressemblent sans être la même ligne réécrite — le côte à côte reste alors le plus fiable pour
+trancher à l’œil.</p>
+<p>Le choix de la base de comparaison n’existe que dans la modale des noms : le volet Fichiers, lui,
+ouvre toujours contre la base déclarée.</p>
+<nav class="suite" aria-label="Page suivante et précédente"><a href="/atlas-site/manuel/ce-qui-depend-de-quoi"><small>← précédent</small>Ce qui dépend de quoi</a><a class="droite" href="/atlas-site/manuel/relire-et-endosser"><small>suivant →</small>Relire et endosser</a></nav></article><nav class="cote toc" aria-label="Sur cette page"><h2>Sur cette page</h2><ul><li><a href="#len-tête-tient-en-deux-lignes">L’en-tête tient en deux lignes</a></li><li><a class="h3" href="#les-types-de-la-signature">Les types de la signature</a></li><li><a class="h3" href="#létiquette-dun-endpoint">L’étiquette d’un endpoint</a></li><li><a href="#ouvrir-un-fichier-et-à-quoi-le-code-le-compare">Ouvrir un fichier, et à quoi le Code le compare</a></li><li><a href="#ce-quil-affiche-et-pourquoi-ce-nest-pas-tout-le-fichier">Ce qu’il affiche, et pourquoi ce n’est pas tout le fichier</a></li><li><a href="#rendu-unifié-et-côte-à-côte">Rendu unifié et côte à côte</a></li><li><a href="#les-liens-dans-le-code">Les liens dans le code</a></li><li><a href="#aller-à-la-définition-les-usages">Aller à la définition, les usages</a></li><li><a href="#le-curseur-de-larbre-suit-le-code-ouvert">Le curseur de l’Arbre suit le code ouvert</a></li><li><a href="#navigation-par-diff">Navigation par diff</a></li><li><a href="#la-colonne-de-relecture">La colonne de relecture</a></li><li><a href="#--depuis-ton-endossement-">« ⟲ depuis ton endossement »</a></li><li><a href="#ouvrir-un-fichier-de-test">Ouvrir un fichier de test</a></li><li><a href="#les-fils-ancrés-dans-le-code">Les fils ancrés dans le Code</a></li><li><a href="#raccourcis">Raccourcis</a></li><li><a href="#ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</a></li><li><a href="#limites-connues">Limites connues</a></li></ul></nav></main><footer class="pied"><div class="dedans"><span>Atlas — suivi et validation de code.</span><a href="/atlas-site/manuel/prise-en-main">Manuel</a></div></footer><script>
+    document.getElementById('theme-bt')?.addEventListener('click', () => {
+      const r = document.documentElement;
+      // clair → sombre → système, et le tour recommence. « Système » RETIRE la clé : c'est ce qui
+      // rend le choix distinct d'une absence de choix.
+      const suite = { clair: 'sombre', sombre: '', '': 'clair' };
+      const v = suite[r.dataset.theme || ''];
+      if (v) { r.dataset.theme = v; try { localStorage.setItem('atlas-site-theme', v); } catch {} }
+      else { delete r.dataset.theme; try { localStorage.removeItem('atlas-site-theme'); } catch {} }
+    });
+  </script></body></html>

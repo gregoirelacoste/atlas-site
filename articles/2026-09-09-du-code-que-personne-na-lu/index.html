@@ -1,0 +1,129 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Du code que personne n&#39;a lu · Atlas</title><meta name="description" content="Linus Torvalds dit qu'il ne lit plus de code. Il a raison, et il peut se le permettre. Ce qui m'intéresse, c'est ce qui se passe quand on fait pareil sans avoir ce qu'il a."><link rel="canonical" href="https://gregoirelacoste.github.io/atlas-site/articles/2026-09-09-du-code-que-personne-na-lu"><meta property="og:title" content="Du code que personne n'a lu · Atlas"><meta property="og:description" content="Linus Torvalds dit qu'il ne lit plus de code. Il a raison, et il peut se le permettre. Ce qui m'intéresse, c'est ce qui se passe quand on fait pareil sans avoir ce qu'il a."><meta property="og:type" content="website"><meta property="og:url" content="https://gregoirelacoste.github.io/atlas-site/articles/2026-09-09-du-code-que-personne-na-lu"><meta name="twitter:card" content="summary"><link rel="icon" href="/atlas-site/favicon.svg" type="image/svg+xml"><script>
+    (() => { try { const t = localStorage.getItem('atlas-site-theme');
+      if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t; } catch {} })();
+  </script><link rel="stylesheet" href="/atlas-site/_astro/Base.D32RNicN.css"></head><body><header class="tete"><a class="marque" href="/atlas-site">🗺️ Atlas</a><nav><a href="/atlas-site/installer">Installer</a><a href="/atlas-site/manuel/prise-en-main">Manuel</a><a href="/atlas-site/articles" aria-current="page">Écrits</a><button class="theme-bt" id="theme-bt" type="button" aria-label="Changer de thème">◐</button></nav></header><main class><article class="corps" style="margin: 0 auto; padding-left: 1.25rem; padding-right: 1.25rem;"><div style="color: var(--encre-2); font-size: .85rem;">9 septembre 2026</div><h1 id="du-code-que-personne-na-lu">Du code que personne n’a lu</h1>
+<p>En 2026, à l’Open Source Summit de Mumbai, Linus Torvalds a dit ceci devant Dirk Hohndel :</p>
+<blockquote>
+<p>« Let’s be entirely honest. I hardly read code at all anymore. I’m not a programmer, I’m a
+development lead. »</p>
+</blockquote>
+<p>Ce n’est pas un aveu de fatigue, c’est une description de poste. Il fusionne autour de deux
+cents contributions par fenêtre de deux semaines. Il lit les descriptions, il comprend
+l’intention, il connaît les gens qui signent. Ses outils tiennent en deux mots, git et
+l’e-mail, et il a une formule pour ça : <em>I work with people, not tools.</em></p>
+<p>Il a raison, et il peut se le permettre. Sa confiance a une adresse. Quand il fusionne sans
+relire, il ne fait pas un pari sur du texte, il fait un pari sur quelqu’un dont il connaît le
+jugement depuis quinze ans, et qui sait qu’il devra répondre si ça casse. La lecture du code
+a été remplacée par autre chose qui tient : la lecture des gens.</p>
+<p>Ce qui m’occupe depuis un an, c’est la position de tous ceux qui font la même chose sans
+avoir ce qu’il a. Nous fusionnons du code dont l’auteur n’est personne.</p>
+<h2 id="le-vide">Le vide</h2>
+<p>Peter Naur a écrit en 1985 un texte court qui n’a pas pris une ride, <em>Programming as Theory
+Building</em>. Sa thèse : ce qu’un développeur produit n’est pas le code, c’est une théorie —
+une compréhension vivante de pourquoi le système est fait comme ça, quelles décisions ont été
+prises, ce qu’on a écarté et pourquoi. Le code n’est qu’une projection appauvrie de cette
+théorie. La documentation aussi. Ce qui reste dans les fichiers, c’est le résultat, jamais
+le raisonnement qui y mène.</p>
+<p>Naur en tire une conséquence brutale : quand les auteurs partent, la théorie meurt. Le code
+survit, mais le programme, au sens du système compris avec son contexte, non. Reprendre le
+code de quelqu’un d’autre, ce n’est pas lire un texte, c’est reconstituer une théorie qui
+n’est écrite nulle part.</p>
+<p>Avec une IA, le problème change de forme. La théorie a bien existé — le modèle a fait des
+choix, écarté des options, préféré une structure à une autre — mais elle n’a été gardée par
+personne. Elle s’est évaporée à la fin de la génération. On hérite du résultat sans qu’aucune
+tête ne contienne le raisonnement, et sans personne à qui demander. Des auteurs parlent de
+« vide théorique ». Le mot est peut-être excessif ; l’expérience, elle, est exacte : on relit
+un diff en se demandant pourquoi c’est écrit comme ça, et il n’y a aucun endroit où la
+réponse existe encore.</p>
+<h2 id="ce-que-ça-fait-concrètement">Ce que ça fait, concrètement</h2>
+<p>La revue de code n’a jamais été qu’un contrôle qualité. C’est le mécanisme par lequel on
+apprend le système qu’on construit. On comprend une architecture en la relisant, on découvre
+les conventions maison en butant dessus, on se fait une carte du territoire en corrigeant les
+autres. Historiquement, ce canal d’apprentissage était gratuit : il venait avec le travail.</p>
+<p>Quand la machine écrit, le canal ne disparaît pas, il se retourne. La relecture continue de
+coûter — plus qu’avant, même, parce que le volume augmente — mais elle rapporte beaucoup
+moins. On relit sans avoir pensé, donc sans rien accrocher. C’est la fatigue particulière de
+2026, celle qu’on n’ose pas trop dire parce qu’on est censé avoir gagné du temps : on finit
+les journées vidé, avec la sensation désagréable de n’avoir rien appris et de ne pas très
+bien savoir ce qui est parti en production.</p>
+<p>À cette fatigue s’ajoute un mécanisme documenté ailleurs depuis longtemps. Parasuraman et
+Manzey ont décrit, chez des opérateurs face à un automate qui a l’air fiable, ce qu’on appelle
+la complaisance : on baisse la garde, et on sur-accepte. Que ça se transpose au code d’un
+modèle, personne ne l’a mesuré ; mais quand on vient de passer la journée à approuver des
+diffs plausibles, l’idée est difficile à écarter. On obtient une dette d’un genre nouveau.
+Pas une dette technique : tout est propre. Une dette de compréhension, qui ne se voit dans
+aucun tableau de bord parce qu’elle n’a pas de symptôme tant que rien ne casse.</p>
+<h2 id="le-moment-où-jai-regardé-mes-propres-chiffres">Le moment où j’ai regardé mes propres chiffres</h2>
+<p>J’ai passé, il y a quelques mois, onze mois de production au crible : commits, lignes,
+délais de traitement des tickets. Toutes les mesures allaient dans le bon sens. Le débit
+était bon — de l’ordre de deux mille trois cents lignes par jour, ce qui n’a plus rien à voir
+avec ce que je produisais avant.</p>
+<p>Ce que je cherchais dans ces chiffres, je ne l’ai trouvé nulle part. Aucune de ces mesures ne
+voit le seul risque qui m’inquiétait vraiment : <strong>du code juste, propre et testé, qu’aucun
+humain n’a vraiment lu.</strong> Les commits n’en disent rien. Les lignes non plus. Les délais Jira
+encore moins — ils s’améliorent quand la compréhension se dégrade, puisque plus personne ne
+ralentit pour comprendre.</p>
+<p>Toute la chaîne d’outillage moderne mesure de la sortie machine. Il n’existe, à ma
+connaissance, aucun instrument dont la matière soit de l’attention humaine.</p>
+<h2 id="pourquoi--possession--plutôt-que--compréhension-">Pourquoi « possession » plutôt que « compréhension »</h2>
+<p>J’ai longtemps parlé de compréhension, et le mot est trop faible. On comprend un diff pendant
+qu’on le lit, et on l’a oublié le lendemain. Comprendre est un état passager, qui ne laisse
+rien.</p>
+<p>Il existe une littérature sur ce qui fait qu’on se sent propriétaire de quelque chose qu’on
+n’a pas acheté — un projet, un bout de système. Elle décrit trois chemins : avoir décidé
+quelque chose dessus, le connaître intimement, y avoir investi de soi. Trois chemins, et
+valider un diff n’en emprunte aucun. On n’a rien décidé, on n’a pas eu le temps de connaître
+intimement, et on n’a rien investi qu’une demi-heure d’attention. D’où cette impression, à la
+fin d’une journée de revue, d’avoir travaillé sur du code qui ne nous appartient pas — et de
+ne pas pouvoir répondre si quelqu’un demande pourquoi c’est fait comme ça.</p>
+<p>Reprendre possession, ce n’est donc pas relire plus attentivement. C’est retrouver au moins
+un des trois chemins. C’est là que je cherche depuis un an, et c’est de là que sortent les
+choses concrètes que j’ai fini par construire : demander au relecteur ce que ce code casse
+s’il est faux, plutôt qu’une case à cocher ; lui donner une façon de dire qu’il n’a pas
+compris, qui soit visible par les autres ; garder trace de qui a endossé quoi, et de quand
+ça a bougé depuis.</p>
+<p>Aucune de ces choses ne rend le code à quelqu’un. Elles créent un endroit où une décision
+humaine est prise et conservée, ce qui n’existait nulle part dans la chaîne.</p>
+<h2 id="les-tests-qui-étaient-notre-dernière-trace-dintention">Les tests, qui étaient notre dernière trace d’intention</h2>
+<p>Il y a un endroit, dans un projet, où l’intention est écrite en français : le nom des cas de
+test. Pas le corps, la phrase — <em>rejette une facture sans destinataire</em>. C’est la seule
+partie du dépôt où quelqu’un a dit ce que le système est censé faire, dans une langue que
+tout le monde parle.</p>
+<p>Quand la machine écrit aussi les tests, cette dernière trace devient à son tour du texte que
+personne n’a lu. Le piège est vicieux, parce qu’une suite de tests verte donne exactement le
+sentiment de sécurité qui dispense de la lire. C’est pour ça que j’ai fini par traiter les
+tests autrement que le reste du code : un test se lit, il ne se relit pas — sa phrase suffit,
+et elle doit être rattachée à l’endroit du système qu’elle prétend décrire. S’il n’y a rien
+au bout, il faut le dire plutôt que de compter le test comme une garantie.</p>
+<h2 id="ce-que-je-ne-sais-pas">Ce que je ne sais pas</h2>
+<p>Je ne sais pas si ce que je décris est un problème de transition ou un problème de fond.</p>
+<p>L’argument d’en face est solide, et Torvalds l’incarne : on n’a jamais eu besoin que chacun
+comprenne tout, on a construit des systèmes énormes sur de la confiance déléguée, et le
+noyau Linux tourne très bien alors que son mainteneur ne lit presque plus de code. Peut-être
+que ce que j’appelle perte de maîtrise est simplement le métier qui change, et que la
+génération suivante trouvera absurde qu’on ait voulu tenir dans sa tête ce qu’une machine
+produit en trois secondes.</p>
+<p>Il y a quand même une différence que je n’arrive pas à écarter. La confiance de Torvalds
+repose sur des personnes qui répondent de leur code, qui peuvent expliquer, à qui l’on peut
+demander pourquoi. Cette adresse existe. La confiance qu’on accorde à un modèle ne repose
+sur rien de comparable : il ne répondra pas de ce qu’il a écrit, il ne s’en souviendra même
+pas, et il produira une explication plausible à la demande, y compris quand elle est fausse.
+Déléguer sa lecture à quelqu’un, c’est une organisation. La déléguer à une machine qui n’a
+pas de mémoire de ses propres décisions, c’est autre chose, et je ne crois pas qu’on ait
+encore le mot juste pour le dire.</p>
+<p>Je n’ai pas non plus de réponse sur le point le plus gênant, celui qui décide de tout le
+reste : est-ce qu’un développeur, sous la pression d’une livraison, acceptera un geste
+supplémentaire au nom de sa propre compréhension à long terme ? L’expérience dit non. Tout
+ce qui est optionnel est sauté. C’est la contrainte qui a orienté tout ce que j’ai construit
+depuis, et c’est le sujet des textes qui suivent.</p>
+</article></main><footer class="pied"><div class="dedans"><span>Atlas — suivi et validation de code.</span><a href="/atlas-site/manuel/prise-en-main">Manuel</a></div></footer><script>
+    document.getElementById('theme-bt')?.addEventListener('click', () => {
+      const r = document.documentElement;
+      // clair → sombre → système, et le tour recommence. « Système » RETIRE la clé : c'est ce qui
+      // rend le choix distinct d'une absence de choix.
+      const suite = { clair: 'sombre', sombre: '', '': 'clair' };
+      const v = suite[r.dataset.theme || ''];
+      if (v) { r.dataset.theme = v; try { localStorage.setItem('atlas-site-theme', v); } catch {} }
+      else { delete r.dataset.theme; try { localStorage.removeItem('atlas-site-theme'); } catch {} }
+    });
+  </script></body></html>

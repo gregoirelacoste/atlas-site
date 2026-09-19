@@ -1,0 +1,275 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>GitLab et GitHub · Atlas</title><meta name="description" content="Brancher Atlas sur l'hébergeur de tes dépôts — le service où ils sont poussés, et où vivent tes reviews. Où Atlas trouve l'hôte, quel jeton il lui faut, comment vérifier que ça a pris, et ce qui n'est pas pareil des deux côtés."><link rel="canonical" href="https://gregoirelacoste.github.io/atlas-site/manuel/gitlab-et-github"><meta property="og:title" content="GitLab et GitHub · Atlas"><meta property="og:description" content="Brancher Atlas sur l'hébergeur de tes dépôts — le service où ils sont poussés, et où vivent tes reviews. Où Atlas trouve l'hôte, quel jeton il lui faut, comment vérifier que ça a pris, et ce qui n'est pas pareil des deux côtés."><meta property="og:type" content="website"><meta property="og:url" content="https://gregoirelacoste.github.io/atlas-site/manuel/gitlab-et-github"><meta name="twitter:card" content="summary"><link rel="icon" href="/atlas-site/favicon.svg" type="image/svg+xml"><script>
+    (() => { try { const t = localStorage.getItem('atlas-site-theme');
+      if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t; } catch {} })();
+  </script><link rel="stylesheet" href="/atlas-site/_astro/Base.D32RNicN.css"></head><body><header class="tete"><a class="marque" href="/atlas-site">🗺️ Atlas</a><nav><a href="/atlas-site/installer">Installer</a><a href="/atlas-site/manuel/prise-en-main" aria-current="page">Manuel</a><a href="/atlas-site/articles">Écrits</a><button class="theme-bt" id="theme-bt" type="button" aria-label="Changer de thème">◐</button></nav></header><main class="doc"><nav class="cote" aria-label="Le manuel"><h2>Le manuel</h2><ol><li><a href="/atlas-site/manuel/prise-en-main">Prise en main</a></li><li><a href="/atlas-site/manuel/l-arbre">L&#39;Arbre</a></li><li><a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a></li><li><a href="/atlas-site/manuel/le-code">Le Code</a></li><li><a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a></li><li><a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et inventaire</a></li><li><a href="/atlas-site/manuel/le-panneau-git">Le panneau Git</a></li><li><a href="/atlas-site/manuel/le-tableau">Le Tableau</a></li><li><a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a></li><li><a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a></li><li><a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a></li><li><a href="/atlas-site/manuel/brancher-l-ia">Brancher l&#39;IA</a></li><li><a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l&#39;IA lit et écrit</a></li><li><a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a></li><li><a href="/atlas-site/manuel/la-ligne-de-commande">La ligne de commande</a></li><li><a href="/atlas-site/manuel/gitlab-et-github" aria-current="page">GitLab et GitHub</a></li><li><a href="/atlas-site/manuel/le-clavier">Le clavier</a></li></ol></nav><article class="corps"><h1>GitLab et GitHub</h1><p class="chapo">Brancher Atlas sur l&#39;hébergeur de tes dépôts — le service où ils sont poussés, et où vivent tes reviews. Où Atlas trouve l&#39;hôte, quel jeton il lui faut, comment vérifier que ça a pris, et ce qui n&#39;est pas pareil des deux côtés.</p><blockquote>
+<p>Brancher Atlas sur l’hébergeur de tes dépôts — le service où ils sont poussés, et où vivent tes
+reviews. Où Atlas trouve l’hôte, quel jeton il lui faut, comment vérifier que ça a pris, et ce qui
+n’est pas pareil des deux côtés.</p>
+</blockquote>
+<p>Atlas lit ton code sur le disque, avec git : pour dessiner une carte, il n’a besoin de personne.
+L’hébergeur sert à autre chose — la conversation d’une review, l’état « en review » d’une feature, la
+publication d’un fil. Sans jeton, tout le reste d’Atlas marche ; ces choses-là, non, et l’écran le
+dit au lieu de rester vide.</p>
+<h2 id="ce-quatlas-fait-avec-lhébergeur">Ce qu’Atlas fait avec l’hébergeur</h2>
+<table>
+<thead>
+<tr>
+<th>ce qu’il fait</th>
+<th>où ça se voit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>lit la conversation d’une review et la rend dans l’ordre où elle s’est déroulée</td>
+<td>la vue <code>💬 Revue</code> du <a href="/atlas-site/manuel/le-panneau-git">panneau Git</a></td>
+</tr>
+<tr>
+<td>dit quelles features ont une review ouverte, qui doit encore relire, qui a approuvé, quels labels</td>
+<td>les colonnes et les chips du <a href="/atlas-site/manuel/le-tableau">Tableau</a></td>
+</tr>
+<tr>
+<td>publie un fil que tu as écrit dans Atlas — un clic confirmé, jamais tout seul</td>
+<td><a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a></td>
+</tr>
+<tr>
+<td>dit <strong>qui tu es</strong> chez l’hébergeur, pour distinguer tes messages de ceux des autres</td>
+<td>la Revue, qui sans ça ne saurait plus dire « à toi de trancher »</td>
+</tr>
+<tr>
+<td>sonde ce que ton jeton a le <strong>droit</strong> d’écrire, avant de publier</td>
+<td>la boîte de confirmation de la publication</td>
+</tr>
+</tbody>
+</table>
+<p>Tout le reste — l’Arbre, la relecture, le <code>● Local</code>, les branches, l’archivage — vient de git en
+local et ne dépend d’aucun jeton. Et l’état d’intégration (<code>✓ mergé</code>) vient <strong>toujours</strong> de git,
+jamais du statut affiché par l’hébergeur : les deux doivent pouvoir se contredire à l’écran.</p>
+<h2 id="où-atlas-trouve-lhôte--le-remote-origin">Où Atlas trouve l’hôte : le remote <code>origin</code></h2>
+<p><strong>Il n’y a rien à déclarer.</strong> Pour chaque repo membre du chapeau — le dossier qui héberge tes dépôts
+(<a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a>) — Atlas lit l’URL du remote <code>origin</code> et en tire
+deux choses : l’<strong>hôte</strong> et le <strong>chemin du projet</strong>. Les deux formes marchent, <code>git@hôte:groupe/projet.git</code>
+comme <code>https://hôte/groupe/projet.git</code>. Un repo sans <code>origin</code> n’a pas d’hébergeur, et Atlas le
+compte à part — c’est normal pour un dossier local.</p>
+<p>Un chapeau peut mélanger les deux hébergeurs et plusieurs hôtes : le jeton est cherché <strong>par hôte</strong>,
+et il ne part que vers l’hôte pour lequel il a été trouvé. Ce n’est pas un détail d’implémentation :
+les repos membres sont auto-découverts, donc un clone parasite pointant ailleurs suffirait à envoyer
+un jeton chez un tiers.</p>
+<p><strong>L’hébergeur se déduit de ce qui a authentifié cet hôte, jamais de son nom de domaine.</strong> Une
+instance nommée <code>gitlab.mon-entreprise.fr</code> ou <code>github.mon-entreprise.com</code> ne prouve rien : ce sont
+des noms qu’on choisit. La seule exception est <code>github.com</code>, qui n’en est pas une. Sans jeton, Atlas
+ne sait donc pas à qui il parlerait — et il n’écrit alors aucun nom d’hébergeur, plutôt qu’un pari.</p>
+<h2 id="le-jeton-gitlab">Le jeton GitLab</h2>
+<p>Deux chemins, dans cet ordre.</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">glab</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> auth</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> login</span><span style="color:#6A737D;--shiki-dark:#6A737D">          # le plus simple : Atlas LIT la configuration de glab</span></span></code></pre>
+<p>Atlas n’exécute <strong>jamais</strong> <code>glab</code> : il lit son fichier, <code>~/.config/glab-cli/config.yml</code> (ou le chemin
+que désigne <code>XDG_CONFIG_HOME</code> ; et si <code>glab</code> est installé en snap, la copie de sa révision la plus
+récente). C’est <code>glab auth login</code> qui y écrit le jeton.</p>
+<p>Sinon, l’environnement :</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">export</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> ATLAS_GITLAB_TOKEN</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">…                        </span><span style="color:#6A737D;--shiki-dark:#6A737D"># ou GITLAB_TOKEN, ou GLAB_TOKEN</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">export</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> ATLAS_GITLAB_HOST</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">gitlab.mon-entreprise.fr  </span><span style="color:#6A737D;--shiki-dark:#6A737D"># une instance auto-hébergée</span></span></code></pre>
+<p>L’environnement <strong>prime</strong> sur la configuration de <code>glab</code> — c’est une déclaration explicite. Mais il
+est scopé : sans <code>ATLAS_GITLAB_HOST</code>, un jeton d’environnement ne part que vers un hôte que <code>glab</code>
+connaît déjà.</p>
+<p>Côté droits : <code>read_api</code> suffit pour tout ce qui <strong>lit</strong> (la Revue, la colonne « en review »).
+Publier un fil demande <code>api</code>.</p>
+<h2 id="le-jeton-github">Le jeton GitHub</h2>
+<blockquote>
+<p>⚠️ <strong><code>gh auth login</code> ne suffit pas toujours, et c’est le piège qui coûte une heure.</strong> <code>gh</code> range
+son jeton dans le <strong>trousseau du système</strong> dès qu’il en trouve un : son fichier
+<code>~/.config/gh/hosts.yml</code> ne contient alors que ton nom d’utilisateur, sans aucun jeton. Atlas
+n’exécute aucun binaire — il lit ce fichier, et n’y voit rien. Un <code>gh auth login</code> réussi ne change
+alors strictement rien. Atlas lit bien ce fichier quand le jeton y est écrit en clair (intégration
+continue, machine sans trousseau), mais ce n’est pas le cas courant.</p>
+</blockquote>
+<p>Le chemin sûr est donc l’environnement, et c’est celui que les messages d’Atlas nomment en premier :</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">export</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> ATLAS_GITHUB_TOKEN</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">…                            </span><span style="color:#6A737D;--shiki-dark:#6A737D"># ou GH_TOKEN, ou GITHUB_TOKEN</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">export</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> ATLAS_GITHUB_HOST</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">github.mon-entreprise.com     </span><span style="color:#6A737D;--shiki-dark:#6A737D"># GitHub Enterprise</span></span></code></pre>
+<p>Un <strong>jeton personnel classique</strong> portant le droit <code>repo</code> est ce qu’Atlas sait juger : il dit oui. Un
+jeton <strong>fine-grained</strong>, ou un jeton d’App, ne dit pas ses droits sous cette forme — GitHub rend alors
+une liste de droits <strong>vide</strong>, ce qui n’est pas la preuve d’un jeton en lecture seule. Atlas répond
+donc <em>je n’ai pas pu regarder</em>, en disant ce qu’il a vu, et laisse tenter.</p>
+<p>Le jeton d’environnement ne part que vers <code>github.com</code> ou vers l’hôte déclaré par
+<code>ATLAS_GITHUB_HOST</code>. Un GitHub Enterprise doit donc se déclarer, <strong>même si <code>gh</code> le connaît déjà</strong> :
+sinon le jeton que pose par défaut tout runner d’intégration continue partirait chez lui.</p>
+<h2 id="vérifier--️-config--atlas--hébergeur">Vérifier : ⚙️ Config › Atlas › Hébergeur</h2>
+<p>Ce chapitre est un <strong>diagnostic</strong>, pas un réglage : il n’y a rien à y régler. Il affiche une ligne
+par <strong>hôte</strong> — pas par repo, vingt repos sur le même GitLab donneraient vingt lignes identiques.</p>
+<table>
+<thead>
+<tr>
+<th>ce qui s’affiche</th>
+<th>ce que ça dit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>✓ jeton trouvé</code>, puis <code>GitLab</code> ou <code>GitHub</code>, puis <code>via la config de glab</code> / <code>via la config de gh</code> / <code>via l'environnement</code>, puis <code>N repos</code></td>
+<td>l’hôte est joignable, et d’<strong>où</strong> vient le jeton</td>
+</tr>
+<tr>
+<td><code>✗ aucun jeton</code> suivi de sa raison</td>
+<td>la même phrase, mot pour mot, que celle qu’affichera la Revue : deux formulations pour un même fait enverraient sur deux chemins, dont un faux</td>
+</tr>
+</tbody>
+</table>
+<p>Sous la liste : le chemin du fichier de configuration lu pour <code>glab</code> et pour <code>gh</code> — ou, à défaut,
+<em>« aucune config <code>gh</code> trouvée — <code>gh auth login</code> une fois, et Atlas la lira »</em> —, le nombre de repos
+sans remote <code>origin</code>, et le rappel du trousseau.</p>
+<blockquote>
+<p>⚠️ <strong>« jeton trouvé » ne veut pas dire « jeton valide ».</strong> Cet écran ne fait aucun appel réseau, et
+le jeton n’en sort jamais — ni sa valeur, ni un préfixe. Un jeton expiré, révoqué ou posé pour un
+autre service s’affiche donc « trouvé » ici ; c’est la Revue qui dira l’échec, avec le code de
+l’hébergeur (<code>401 Unauthorized</code>), et jamais « aucun fil ».</p>
+</blockquote>
+<p>Tu n’as pas à redémarrer le daemon après avoir posé un jeton : tant qu’Atlas n’en a trouvé aucun, il
+recherche à chaque appel — on ne peut pas dire à quelqu’un quoi faire, puis ignorer qu’il l’a fait.
+Un jeton déjà trouvé, en revanche, reste en mémoire jusqu’au redémarrage.</p>
+<h2 id="le-droit-décrire-en-trois-états">Le droit d’écrire, en trois états</h2>
+<p>Publier un fil est la seule chose qu’Atlas écrive en dehors de chez toi. Le droit de le faire est
+<strong>sondé</strong> chez l’hébergeur au moment du clic, jamais supposé — et il a trois réponses.</p>
+<table>
+<thead>
+<tr>
+<th>verdict</th>
+<th>côté GitLab</th>
+<th>côté GitHub</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>oui</strong></td>
+<td>le scope <code>api</code></td>
+<td>le droit <code>repo</code></td>
+</tr>
+<tr>
+<td><strong>non</strong></td>
+<td>jeton révoqué, plus actif, ou en lecture seule (<code>read_api</code> seul)</td>
+<td>des droits lus, et aucun n’autorise l’écriture</td>
+</tr>
+<tr>
+<td><strong>je n’ai pas pu regarder</strong></td>
+<td>l’instance ne dit pas les droits du jeton (jeton OAuth, jeton de job, instance ancienne) ; ou <code>write_repository</code> sans <code>api</code></td>
+<td>liste de droits <strong>vide</strong> (fine-grained, App) ou absente ; ou <code>public_repo</code> seul, qui n’autorise que les dépôts publics</td>
+</tr>
+</tbody>
+</table>
+<p>Le troisième état <strong>laisse tenter</strong> : c’est l’API qui tranchera, et son refus sera montré tel quel.
+Conclure « non » sur une ignorance fermerait le bouton Publier à tous les jetons fine-grained — un
+refus fabriqué, exactement ce que les trois états existent pour interdire. Le détail de ce que montre
+la boîte de confirmation est dans <a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a>.</p>
+<h2 id="ce-qui-nest-pas-pareil-des-deux-côtés">Ce qui n’est pas pareil des deux côtés</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>GitLab</th>
+<th>GitHub</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>le mot, et la référence courte</td>
+<td>merge request, <code>!12</code></td>
+<td>pull request, <code>#12</code></td>
+</tr>
+<tr>
+<td>les versions du diff</td>
+<td>l’hébergeur les numérote : v1, v2, v3</td>
+<td>il n’en a pas — <strong>chaque commit est rendu comme une poussée</strong>, et l’infobulle le dit</td>
+</tr>
+<tr>
+<td>« qui doit relire »</td>
+<td>les reviewers restent désignés après leur review</td>
+<td>les relectures <strong>demandées</strong> : on en sort dès qu’on a soumis la sienne</td>
+</tr>
+<tr>
+<td>répondre à un commentaire général</td>
+<td>une vraie réponse, dans le fil</td>
+<td>GitHub n’a pas de fil sur ces commentaires : le message part en commentaire séparé, et Atlas le dit au lieu de laisser croire à une conversation</td>
+</tr>
+</tbody>
+</table>
+<p>Le mot vient de l’<strong>hébergeur du repo</strong>, jamais du nom de son domaine. Quand une feature est à cheval
+sur les deux — ou quand l’hébergeur d’un repo n’a pas pu être lu — l’écran emploie le mot neutre,
+<strong>review</strong>. Ce que le Tableau fait des reviewers, des labels et des approbations est décrit dans
+<a href="/atlas-site/manuel/le-tableau">Le Tableau</a>.</p>
+<h2 id="essayer-sur-un-dépôt-github">Essayer sur un dépôt GitHub</h2>
+<p>Si tes projets vivent sur GitLab, tu peux monter un chapeau d’essai en cinq minutes autour de
+n’importe quel dépôt déjà cloné depuis GitHub — y compris le clone du dépôt d’Atlas, si tu en as un.</p>
+<p>Le chapeau est le dossier <strong>parent</strong> : il contient les repos, il n’en est pas un. <code>atlas init</code> lancé
+<em>dans</em> le dépôt d’Atlas lui-même est d’ailleurs refusé, avec sa raison — il y nicherait un
+<code>.atlas-workspace/</code> parasite.</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">mkdir</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> -p</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> ~/dev/atlas-ws</span><span style="color:#6A737D;--shiki-dark:#6A737D">                              # le chapeau</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">git</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> clone</span><span style="color:#D73A49;--shiki-dark:#F97583"> &lt;</span><span style="color:#032F62;--shiki-dark:#9ECBFF">url-du-dépô</span><span style="color:#24292E;--shiki-dark:#E1E4E8">t</span><span style="color:#D73A49;--shiki-dark:#F97583">&gt;</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> ~/dev/atlas-ws/mon-repo</span><span style="color:#6A737D;--shiki-dark:#6A737D">     # le repo membre, dedans</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79B8FF">cd</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> ~/dev/atlas-ws/mon-repo</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> &amp;&amp; </span><span style="color:#6F42C1;--shiki-dark:#B392F0">git</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> fetch</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> origin</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> master</span><span style="color:#6A737D;--shiki-dark:#6A737D">  # la ligne de base doit être là</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79B8FF">cd</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> ~/dev/atlas-ws</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> &amp;&amp; </span><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> init</span></span></code></pre>
+<p>La sortie, sur un chapeau à un seul repo (mesuré le 17-09-2026) :</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>✓ stacks DÉTECTÉES dans 1 repo(s) : fastify, typescript  (dépendances déclarées)</span></span>
+<span class="line"><span>✓ features par BRANCHE : aucun jeton de ticket dans 4 branche(s) — chaque branche est une feature,</span></span>
+<span class="line"><span>  nommée par son dernier segment (`featureId: "branch"`, éditable dans Config › Projet)</span></span>
+<span class="line"><span>✓ ligne de base : `master` — détectée dans 1 repo(s) (`base` dans project.json, éditable dans Config › Projet)</span></span>
+<span class="line"><span>✓ ~/dev/atlas-ws/.atlas-workspace créé (project.json + features/ + .gitignore + ESPACES.md)</span></span></code></pre>
+<p>Trois choses se sont décidées là, et ce sont celles qui font échouer un premier essai quand elles
+manquent :</p>
+<ul>
+<li><strong>la ligne de base</strong> est <code>master</code>, pas <code>develop</code> — c’est le défaut de GitHub, et sans cette
+détection le diff partirait de nulle part. Le détail du réglage est dans
+<a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a> ;</li>
+<li><strong>chaque branche est une feature</strong>, nommée par son dernier segment (<code>feat/login-bug</code> →
+<code>login-bug</code>), puisque aucune branche ne porte de jeton de ticket ;</li>
+<li>les <strong>stacks</strong> sont prouvées par les dépendances déclarées, y compris celles des sous-paquets d’un
+dépôt à espaces de travail — le <code>package.json</code> de la racine ne les porte pas toujours.</li>
+</ul>
+<p>Il reste à poser le jeton, puis à ouvrir la carte :</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">export</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> ATLAS_GITHUB_TOKEN</span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8">…</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79B8FF">cd</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> ~/dev/atlas-ws</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> &amp;&amp; </span><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span></span></code></pre>
+<p>Vérifie dans ⚙️ Config › Atlas que l’hôte apparaît en <code>✓ jeton trouvé · GitHub</code>, puis choisis la
+feature dans le <a href="/atlas-site/manuel/le-tableau">Tableau</a> et ouvre le panneau Git sur <code>💬 Revue</code> : c’est là que la
+conversation de la pull request de cette branche s’affiche.</p>
+<h2 id="ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</h2>
+<ul>
+<li><strong>Il n’exécute ni <code>glab</code> ni <code>gh</code>.</strong> Il lit leur fichier de configuration, et rien d’autre. C’est
+pour ça qu’un jeton rangé dans le trousseau du système lui est invisible.</li>
+<li><strong>Il ne crée pas de review, n’approuve pas, ne résout pas un fil, ne pose ni label ni reviewer.</strong>
+Tout ce qui écrit chez l’hébergeur se fait chez l’hébergeur ; le lien est en tête de chaque bloc de
+la Revue. La seule exception est la publication d’un fil, derrière un clic confirmé.</li>
+<li><strong>Il ne supprime jamais une note publiée</strong> — il ne sait pas le faire, et c’est volontaire.</li>
+<li><strong>Il ne montre jamais ton jeton</strong>, ni sa valeur ni un préfixe : l’écran ne dit que <em>trouvé ou non</em>,
+et <em>d’où</em>.</li>
+<li><strong>Il n’envoie un jeton d’environnement qu’à un hôte reconnu</strong> : <code>github.com</code>, un hôte déclaré par
+<code>ATLAS_GITHUB_HOST</code> ou <code>ATLAS_GITLAB_HOST</code>, ou un hôte déjà configuré dans <code>glab</code>. Jamais ailleurs,
+quel que soit le remote trouvé dans le chapeau.</li>
+<li><strong>Il n’interroge pas l’hébergeur pour dessiner une carte.</strong> La lecture d’une conversation coûte
+plusieurs appels réseau par repo : elle n’a lieu qu’à l’ouverture de la Revue.</li>
+</ul>
+<h2 id="limites-connues">Limites connues</h2>
+<ul>
+<li><strong>La publication n’a jamais été essayée contre un vrai serveur</strong>, d’aucun des deux côtés : elle
+écrirait en public, chez de vraies personnes, et rien ne permettrait de revenir en arrière. Elle
+est éprouvée sur des réponses écrites à la main, refus compris.</li>
+<li><strong>La conversation d’une pull request n’a jamais reçu de réponse d’un vrai serveur.</strong> Elle passe par
+un chemin distinct de celui de GitLab — le seul qui porte l’état « résolu » d’un fil. En cas
+d’échec, le bloc du repo porte le message de l’hébergeur ; il ne se lit jamais « aucun fil ».</li>
+<li><strong>Une pull request venue d’un fork n’est pas trouvée.</strong> Atlas cherche la review par la branche du
+dépôt lui-même ; une branche venue d’ailleurs a un autre propriétaire, et le deviner serait un
+pari. L’écran dit alors « pas de pull request pour cette branche » — exact du point de vue de ce
+dépôt, incomplet du tien.</li>
+<li><strong>GitHub Enterprise n’a jamais été joint.</strong> Son API vit à une autre adresse que celle de
+<code>github.com</code> ; le chemin est écrit, il n’a jamais reçu de réponse.</li>
+<li><strong>La lecture est plafonnée, et le plafond se dit.</strong> Au-delà d’une centaine de fils ou de commits
+sur une même review, la Revue affiche <em>« plafond de lecture atteint »</em> à côté des fils qu’elle a
+bien lus — jamais à la place.</li>
+<li><strong>Un jeton trouvé n’est pas vérifié à l’écran de config.</strong> Le premier appel réseau est celui de la
+Revue ou du Tableau : c’est là que l’échec apparaît.</li>
+</ul>
+<nav class="suite" aria-label="Page suivante et précédente"><a href="/atlas-site/manuel/la-ligne-de-commande"><small>← précédent</small>La ligne de commande</a><a class="droite" href="/atlas-site/manuel/le-clavier"><small>suivant →</small>Le clavier</a></nav></article><nav class="cote toc" aria-label="Sur cette page"><h2>Sur cette page</h2><ul><li><a href="#ce-quatlas-fait-avec-lhébergeur">Ce qu’Atlas fait avec l’hébergeur</a></li><li><a href="#où-atlas-trouve-lhôte--le-remote-origin">Où Atlas trouve l’hôte : le remote origin</a></li><li><a href="#le-jeton-gitlab">Le jeton GitLab</a></li><li><a href="#le-jeton-github">Le jeton GitHub</a></li><li><a href="#vérifier--️-config--atlas--hébergeur">Vérifier : ⚙️ Config › Atlas › Hébergeur</a></li><li><a href="#le-droit-décrire-en-trois-états">Le droit d’écrire, en trois états</a></li><li><a href="#ce-qui-nest-pas-pareil-des-deux-côtés">Ce qui n’est pas pareil des deux côtés</a></li><li><a href="#essayer-sur-un-dépôt-github">Essayer sur un dépôt GitHub</a></li><li><a href="#ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</a></li><li><a href="#limites-connues">Limites connues</a></li></ul></nav></main><footer class="pied"><div class="dedans"><span>Atlas — suivi et validation de code.</span><a href="/atlas-site/manuel/prise-en-main">Manuel</a></div></footer><script>
+    document.getElementById('theme-bt')?.addEventListener('click', () => {
+      const r = document.documentElement;
+      // clair → sombre → système, et le tour recommence. « Système » RETIRE la clé : c'est ce qui
+      // rend le choix distinct d'une absence de choix.
+      const suite = { clair: 'sombre', sombre: '', '': 'clair' };
+      const v = suite[r.dataset.theme || ''];
+      if (v) { r.dataset.theme = v; try { localStorage.setItem('atlas-site-theme', v); } catch {} }
+      else { delete r.dataset.theme; try { localStorage.removeItem('atlas-site-theme'); } catch {} }
+    });
+  </script></body></html>
