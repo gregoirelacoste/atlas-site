@@ -1,0 +1,518 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Les stacks et project.json · Atlas</title><meta name="description" content="D'où vient ce qu'Atlas reconnaît dans ton code — les couches, les points d'entrée, les contrats, les appels réseau, les tests : ce que l'outil embarque, et ce que ton project.json ajoute, refuse ou corrige."><link rel="canonical" href="https://gregoirelacoste.github.io/atlas-site/manuel/les-stacks-et-project-json"><meta property="og:title" content="Les stacks et project.json · Atlas"><meta property="og:description" content="D'où vient ce qu'Atlas reconnaît dans ton code — les couches, les points d'entrée, les contrats, les appels réseau, les tests : ce que l'outil embarque, et ce que ton project.json ajoute, refuse ou corrige."><meta property="og:type" content="website"><meta property="og:url" content="https://gregoirelacoste.github.io/atlas-site/manuel/les-stacks-et-project-json"><meta name="twitter:card" content="summary"><link rel="icon" href="/atlas-site/favicon.svg" type="image/svg+xml"><script>
+    (() => { try { const t = localStorage.getItem('atlas-site-theme');
+      if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t; } catch {} })();
+  </script><link rel="stylesheet" href="/atlas-site/_astro/Base.D32RNicN.css"></head><body><header class="tete"><a class="marque" href="/atlas-site">🗺️ Atlas</a><nav><a href="/atlas-site/installer">Installer</a><a href="/atlas-site/manuel/prise-en-main" aria-current="page">Manuel</a><a href="/atlas-site/articles">Écrits</a><button class="theme-bt" id="theme-bt" type="button" aria-label="Changer de thème">◐</button></nav></header><main class="doc"><nav class="cote" aria-label="Le manuel"><h2>Le manuel</h2><ol><li><a href="/atlas-site/manuel/prise-en-main">Prise en main</a></li><li><a href="/atlas-site/manuel/l-arbre">L&#39;Arbre</a></li><li><a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a></li><li><a href="/atlas-site/manuel/le-code">Le Code</a></li><li><a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a></li><li><a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et inventaire</a></li><li><a href="/atlas-site/manuel/le-panneau-git">Le panneau Git</a></li><li><a href="/atlas-site/manuel/le-tableau">Le Tableau</a></li><li><a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a></li><li><a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a></li><li><a href="/atlas-site/manuel/les-stacks-et-project-json" aria-current="page">Les stacks et project.json</a></li><li><a href="/atlas-site/manuel/brancher-l-ia">Brancher l&#39;IA</a></li><li><a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l&#39;IA lit et écrit</a></li><li><a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a></li><li><a href="/atlas-site/manuel/la-ligne-de-commande">La ligne de commande</a></li><li><a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a></li><li><a href="/atlas-site/manuel/le-clavier">Le clavier</a></li></ol></nav><article class="corps"><h1>Les stacks et project.json</h1><p class="chapo">D&#39;où vient ce qu&#39;Atlas reconnaît dans ton code — les couches, les points d&#39;entrée, les contrats, les appels réseau, les tests : ce que l&#39;outil embarque, et ce que ton project.json ajoute, refuse ou corrige.</p><blockquote>
+<p>D’où vient ce qu’Atlas reconnaît dans ton code — les couches, les points d’entrée, les contrats, les
+appels réseau, les tests : ce que l’outil embarque, et ce que ton <code>project.json</code> ajoute, refuse ou
+corrige.</p>
+</blockquote>
+<p>Atlas est <strong>générique</strong> : le moteur ne connaît aucun framework. Ce qu’il sait d’un framework vient
+d’une <strong>stack</strong> ; ce qu’il sait de ton projet vient d’un fichier, <code>.atlas-workspace/project.json</code>. Où
+vit ce dossier, ce qui s’y partage et ce qui s’édite depuis l’écran sont dans
+<a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a> ; cette page-ci dit <strong>quelle clé change quoi</strong>, et
+quel motif gagne quand deux se disputent le même fichier.</p>
+<p>Trois mots du produit reviennent : une <strong>couche</strong> (controller, service, repo…) est ce que dit la
+couleur de la pastille d’un symbole dans <a href="/atlas-site/manuel/l-arbre">l’Arbre</a> ; un <strong>flux</strong> est un chemin
+d’exécution complet, d’un point d’entrée jusqu’au bout de ce qu’il appelle ; un <strong>angle mort</strong> est un
+endroit où le moteur dit qu’il ne sait pas, au lieu de deviner.</p>
+<h2 id="les-quinze-stacks-livrées">Les quinze stacks livrées</h2>
+<p>Une <strong>stack</strong> est ce qu’Atlas sait d’un <em>framework</em> : quels suffixes font un controller, quelles
+formes ouvrent une entrée, quels appels sont des appels réseau. C’est de l’outil, pas du projet : les
+stacks sont <strong>embarquées dans Atlas</strong> et suivent ses mises à jour. Chacune se prouve seule, par une
+dépendance déclarée dans un <code>package.json</code> de ton chapeau.</p>
+<table>
+<thead>
+<tr>
+<th>stack</th>
+<th>ce qui la prouve</th>
+<th>ce qu’elle apporte</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>typescript</code></td>
+<td><code>typescript</code>, <strong>ou la seule présence d’un <code>package.json</code></strong></td>
+<td>le langage : familles (test, type, const, helper, config, mock…), enveloppes (<code>Promise</code>, <code>Partial</code>, <code>Date</code>…), <code>fetch</code> comme appel réseau, <code>setInterval</code> comme entrée <code>⏱ CRON</code></td>
+</tr>
+<tr>
+<td><code>nest</code></td>
+<td><code>@nestjs/core</code></td>
+<td>entrées par décorateur (<code>Post</code>, <code>Get</code>, <code>Cron</code>, <code>OnEvent</code>, hooks de cycle de vie), couches controller/repo, préfixe et version de route, appels <code>HttpService.*</code>, modules rangés d’office</td>
+</tr>
+<tr>
+<td><code>angular</code></td>
+<td><code>@angular/core</code></td>
+<td>composants, directives, pipes, <code>inject(X)</code> qui type un champ, appels <code>HttpClient.*</code>, templates <code>.component.html</code></td>
+</tr>
+<tr>
+<td><code>graphql</code></td>
+<td><code>graphql</code></td>
+<td><code>.graphql</code> traité comme contrat, <code>schema.graphql</code> rangé d’office</td>
+</tr>
+<tr>
+<td><code>jest</code></td>
+<td><code>jest</code>, <code>vitest</code>, <code>jasmine-core</code> ou <code>mocha</code></td>
+<td>les noms des cas de test — les quatre partagent la même API, d’où une seule stack</td>
+</tr>
+<tr>
+<td><code>react</code></td>
+<td><code>react</code></td>
+<td>événements JSX (<code>onClick</code>), familles composant/hook/page/contexte, enveloppes React</td>
+</tr>
+<tr>
+<td><code>next</code></td>
+<td><code>next</code></td>
+<td>entrées par <strong>export</strong> (<code>export async function PATCH</code> dans un <code>route.ts</code>) et route tirée du <strong>chemin</strong> du fichier, événements JSX</td>
+</tr>
+<tr>
+<td><code>vue</code></td>
+<td><code>vue</code></td>
+<td>le porteur <code>.vue</code> : son script est lu comme du code, son balisage donne les entrées <code>⚡</code></td>
+</tr>
+<tr>
+<td><code>nuxt</code></td>
+<td><code>nuxt</code></td>
+<td>entrées par <strong>wrapper</strong> (<code>defineEventHandler</code>), route tirée du chemin sous <code>server/api</code>, <code>$fetch</code> comme appel réseau, porteur <code>.vue</code></td>
+</tr>
+<tr>
+<td><code>svelte</code></td>
+<td><code>svelte</code></td>
+<td>le porteur <code>.svelte</code>, la couche controller sur <code>+server.ts</code>, les stores en couche repo</td>
+</tr>
+<tr>
+<td><code>express</code></td>
+<td><code>express</code></td>
+<td>entrées par <strong>appel</strong> (<code>app.get('/x', fn)</code>), couches routes/controllers/repositories, middlewares transverses</td>
+</tr>
+<tr>
+<td><code>fastify</code></td>
+<td><code>fastify</code></td>
+<td>idem, sur un récepteur typé <code>FastifyInstance</code>, hooks transverses</td>
+</tr>
+<tr>
+<td><code>hono</code></td>
+<td><code>hono</code></td>
+<td>idem, sur un récepteur <code>Hono</code></td>
+</tr>
+<tr>
+<td><code>koa</code></td>
+<td><code>koa</code>, <code>@koa/router</code></td>
+<td>idem, sur un récepteur <code>Router</code></td>
+</tr>
+<tr>
+<td><code>axios</code></td>
+<td><code>axios</code></td>
+<td>les appels d’un <strong>module importé</strong> (<code>axios.patch(url)</code>) comptent comme appels réseau</td>
+</tr>
+</tbody>
+</table>
+<p>Une bibliothèque HTTP est une stack comme une autre : <code>axios</code> se prouve seul, sur un projet front
+comme sur un back. Et la stack <code>typescript</code> couvre aussi le <strong>JavaScript pur</strong> — un projet sans
+TypeScript a son manifeste, donc ses familles, ses enveloppes et ses appels <code>fetch</code>.</p>
+<h2 id="trois-listes-décident-lesquelles-sont-actives">Trois listes décident lesquelles sont actives</h2>
+<table>
+<thead>
+<tr>
+<th>liste</th>
+<th>qui l’écrit</th>
+<th>ce que c’est</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>(aucune clé)</em></td>
+<td>Atlas</td>
+<td>ce que les <strong>dépendances PROUVENT</strong> : les <code>dependencies</code> ⊕ <code>devDependencies</code> de tous les <code>package.json</code> membres, comparées aux signatures du tableau ci-dessus</td>
+</tr>
+<tr>
+<td><code>recognizers</code></td>
+<td>toi</td>
+<td>ce que le projet <strong>AJOUTE</strong> en plus</td>
+</tr>
+<tr>
+<td><code>excludeRecognizers</code></td>
+<td>toi</td>
+<td>ce que le projet <strong>REFUSE</strong>, même prouvé (un framework installé pour l’outillage)</td>
+</tr>
+<tr>
+<td><code>recognizersActive</code></td>
+<td>Atlas</td>
+<td>la liste <strong>dérivée</strong> : prouvées ⊕ ajoutées − refusées. Ne l’écris pas : elle est recalculée à chaque chargement</td>
+</tr>
+</tbody>
+</table>
+<p>Un refus l’emporte sur un ajout. Et parce que la première ligne se redérive à chaque chargement, une
+stack arrivée dans une version récente d’Atlas s’active toute seule sur un workspace existant.
+<code>atlas init --stack nest,angular</code> est une <strong>décision</strong> : il écrit <code>recognizers</code> avec ce que tu demandes
+et <code>excludeRecognizers</code> avec ce qu’il a détecté en plus. Sans <code>--stack</code>, il n’écrit ni l’une ni l’autre
+(<a href="/atlas-site/manuel/la-ligne-de-commande">la ligne de commande</a>).</p>
+<p><strong>Une copie maison s’ajoute, elle ne remplace pas.</strong> Un <code>.atlas-workspace/stack/&lt;id&gt;.json</code> est
+<strong>fusionné par-dessus</strong> la stack livrée du même id — Atlas le dit dans son log (<code>atlas logs</code>) — et il
+n’est lu <strong>que si cet id est actif</strong> : pour un id inconnu de l’outil, aucune dépendance ne peut le
+prouver, donc sans entrée dans <code>recognizers</code> le fichier n’est jamais lu. La bonne place d’une
+personnalisation reste de toute façon <code>project.json</code>, qui fusionne aussi.</p>
+<h2 id="les-quatre-formes-dun-point-dentrée">Les quatre formes d’un point d’entrée</h2>
+<p>Une entrée est le départ d’un flux. Rien n’en est une sans règle déclarée — il n’y a aucun défaut.
+Quatre formes, et une cinquième pour la route :</p>
+<table>
+<thead>
+<tr>
+<th>forme</th>
+<th>ce qui la déclare</th>
+<th>exemple</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>décorateur</strong> ou <strong>nom de méthode</strong></td>
+<td><code>{decorator}</code> ou <code>{method}</code> + <code>kind</code></td>
+<td><code>@Post()</code>, <code>onModuleInit</code></td>
+</tr>
+<tr>
+<td><strong>appel</strong></td>
+<td><code>{call: {method, recvFrom, routeArg, handlerArg}}</code></td>
+<td><code>app.get('/x', fn)</code></td>
+</tr>
+<tr>
+<td><strong>export</strong></td>
+<td><code>{export: {name, file}}</code></td>
+<td><code>export async function PATCH</code> dans <code>route.ts</code></td>
+</tr>
+<tr>
+<td><strong>wrapper</strong></td>
+<td><code>{wrapper}</code> — un appel sans récepteur</td>
+<td><code>export default defineEventHandler(fn)</code></td>
+</tr>
+<tr>
+<td><em>(la route)</em></td>
+<td><code>{routeFromPath: {root, strip, param, verbInName, prefix}}</code></td>
+<td><code>app/api/todos/[id]/route.ts</code> → <code>/api/todos/:id</code></td>
+</tr>
+</tbody>
+</table>
+<p>Deux précisions qui décident de ce que tu vois :</p>
+<ul>
+<li><strong>Le récepteur d’une entrée par appel doit être typé.</strong> Soit par sa fabrique (<code>const app = express()</code>), soit par un paramètre annoté (<code>app: FastifyInstance</code>) — <code>recvFrom</code> liste les noms
+admis. Sans type, <strong>pas d’entrée</strong> : une racine de flux ne se gagne pas sur un nom de méthode. Atlas
+le dit alors par l’angle mort <code>entry-untyped</code> (<a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit
+pas</a>). Un <code>recvFrom: []</code> — liste vide — dit « aucun récepteur » : la
+fonction est globale, comme <code>setInterval</code>.</li>
+<li><strong>Une route venue du chemin est complète.</strong> Elle ne porte jamais l’aveu <code>…/</code> et ne demande aucun
+<code>routePrefix</code> : il n’y a rien à déclarer devant. <code>handlerArg</code> vaut le dernier argument par défaut,
+ce qui écarte un middleware écrit sur place ; et si l’argument désigné est un <strong>nom</strong> de fonction,
+le déclencheur va à la fonction nommée, cherchée dans le fichier puis dans ses imports — y compris
+hors du diff.</li>
+</ul>
+<h2 id="les-clés-de-projectjson">Les clés de <code>project.json</code></h2>
+<h3 id="identité-et-périmètre">Identité et périmètre</h3>
+<table>
+<thead>
+<tr>
+<th>clé</th>
+<th>ce qu’elle change</th>
+<th>défaut</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>le nom affiché dans le registre et l’en-tête de la config</td>
+<td>le nom du dossier</td>
+</tr>
+<tr>
+<td><code>stack</code></td>
+<td>une étiquette libre, affichée sous le nom (<code>nest · angular</code>)</td>
+<td>ce que <code>atlas init</code> a détecté</td>
+</tr>
+<tr>
+<td><code>featureId</code></td>
+<td>ce qui fait une feature : <code>"ticket"</code> ou <code>"branch"</code> (voir <a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a>)</td>
+<td><code>"ticket"</code></td>
+</tr>
+<tr>
+<td><code>frontRepos</code></td>
+<td>une expression régulière testée sur le nom d’un repo. <strong>Sans effet sur la carte</strong> : voir ci-dessous</td>
+<td><code>front|web|app|pwa|-ui|admin</code>, ou les repos dont une dépendance prouve un front</td>
+</tr>
+<tr>
+<td><code>exclude</code></td>
+<td>les repos retirés de la découverte (<a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a>)</td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td><code>repos[]</code></td>
+<td>les overrides par repo (<code>branch</code>, <code>routePrefix</code>, <code>productionBase</code> — <a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a>)</td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td><code>recognizers</code> · <code>excludeRecognizers</code></td>
+<td>les stacks ajoutées / refusées</td>
+<td>absentes</td>
+</tr>
+</tbody>
+</table>
+<p><code>repoPrefix</code> et <code>recognizersActive</code> apparaissent dans la config servie à l’écran : ce sont des faits
+<strong>dérivés</strong> (le préfixe commun des noms de repos, la liste active). Les écrire à la main ne fait rien.</p>
+<h3 id="-front--est-une-propriété-du-fichier-plus-du-repo">« Front » est une propriété du FICHIER, plus du repo</h3>
+<p><code>frontRepos</code> reste lu, servi et affiché dans Config › Projet, où l’écran le dit lui-même : <em>« Sans
+effet […] : un fichier est front par ce qu’il porte […], plus par le nom de son repo. »</em> Le lecteur
+juge désormais fichier par fichier, sur trois preuves :</p>
+<ol>
+<li>le fichier est un <strong>porteur</strong> — il embarque son script (<code>.vue</code>, <code>.svelte</code>) ;</li>
+<li>il a un <strong>template frère</strong> — <code>user.component.ts</code> à côté de <code>user.component.html</code> ;</li>
+<li>il porte une <strong>entrée <code>⚡</code></strong> — un événement lu dans du JSX ou dans le balisage d’un porteur.</li>
+</ol>
+<p>Sinon il se lit comme du back : entrées, arêtes, racines normales. C’est ce qui rend un <strong>mono-repo</strong>
+lisible : dans un projet Next ou Nuxt où le front et l’API vivent dans le même dépôt, les endpoints ne
+partent plus sous des nœuds de composant.</p>
+<h3 id="palette-le-goût">Palette (le goût)</h3>
+<table>
+<thead>
+<tr>
+<th>clé</th>
+<th>ce qu’elle change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>layers[]</code></td>
+<td>les couches : <code>key</code> (<code>ctrl</code>, <code>svc</code>, <code>repo</code>, <code>m2m</code>, <code>help</code>, <code>contract</code>), <code>label</code>, <code>color</code>, <code>icon</code>, <code>default: true</code> pour celle qui s’applique quand rien ne matche. C’est la couleur de la pastille dans <a href="/atlas-site/manuel/l-arbre">l’Arbre</a></td>
+</tr>
+<tr>
+<td><code>fileTypes[]</code></td>
+<td>l’icône et les couleurs d’un fichier par suffixe (<code>match</code>), avec un <code>default: true</code> pour le reste</td>
+</tr>
+</tbody>
+</table>
+<h3 id="reconnaissance-projet--stacks">Reconnaissance (projet ⊕ stacks)</h3>
+<p>Toutes ces clés ont la même double nature : ce que ton <code>project.json</code> écrit <strong>et</strong> ce que les stacks
+actives apportent — les deux listes concaténées et dédupliquées, la tienne d’abord.</p>
+<table>
+<thead>
+<tr>
+<th>clé (projet)</th>
+<th>son équivalent en stack</th>
+<th>ce qu’elle change à l’écran</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>layers[].match</code></td>
+<td><code>layers[]</code> (<code>{match, layer}</code>)</td>
+<td>range un symbole dans une couche → la <strong>couleur</strong> de sa pastille</td>
+</tr>
+<tr>
+<td><code>entries[]</code></td>
+<td><code>entries[]</code></td>
+<td>les quatre formes ci-dessus, avec leur <code>kind</code> (<code>http</code>, <code>cron</code>, <code>hook</code>, <code>ui</code>, <code>m2m</code>) : ce qui fait d’une méthode un <strong>point d’entrée</strong>, donc le départ d’un flux, avec son déclencheur (<code>▶ HTTP</code>, <code>⏱ CRON</code>)</td>
+</tr>
+<tr>
+<td><code>families[]</code></td>
+<td><code>families[]</code></td>
+<td><code>{key, match}</code> : le nom compté dans l’Inventaire. <strong>Inerte pour l’Arbre</strong> — une famille ne porte aucune couche, donc en ajouter une ne change aucune couleur</td>
+</tr>
+<tr>
+<td><code>contractFiles[]</code></td>
+<td><code>contractFiles[]</code></td>
+<td>les fichiers <strong>non lus comme du code</strong> traités comme surface publique par leur suffixe (<code>.graphql</code>) → une ligne <code>◇ contrat</code> dans l’Arbre. Le code, lui, est jugé par son <strong>contenu</strong></td>
+</tr>
+<tr>
+<td><code>crossCutting[]</code></td>
+<td><code>crossCuttingFiles[]</code></td>
+<td>l’infra transverse (guards, interceptors, pipes, filtres, middlewares, hooks) : elle sort du niveau 0 et s’ancre sous l’entrée qu’elle protège ; famille <code>transverse</code></td>
+</tr>
+<tr>
+<td><code>m2mCalls[]</code></td>
+<td><code>m2mCalls[]</code></td>
+<td>l’appel réseau se reconnaît au <strong>type du récepteur</strong>, en <code>&lt;TypeInjecté&gt;.&lt;verbe&gt;</code> (<code>HttpService.post</code>, ou <code>*.post</code> pour tout récepteur) : c’est le motif de l’injection de dépendances</td>
+</tr>
+<tr>
+<td><code>m2mModules[]</code></td>
+<td><code>m2mModules[]</code></td>
+<td>l’appel réseau se reconnaît au <strong>module importé</strong> : <code>[{ "module": "axios", "methods": ["get","post"] }]</code>. Un sous-chemin du même paquet compte ; un paquet dont le nom commence pareil, non</td>
+</tr>
+<tr>
+<td><code>m2mFunctions[]</code></td>
+<td><code>m2mFunctions[]</code></td>
+<td>l’appel réseau est une <strong>fonction libre</strong> : <code>["fetch"]</code>, <code>["$fetch"]</code>. Le verbe vient de l’option <code>method</code> du second argument ; sans option c’est un <code>GET</code>, qui est le défaut de la plateforme</td>
+</tr>
+<tr>
+<td><code>uiEvents</code></td>
+<td><code>uiEvents</code></td>
+<td>ce qui, parmi les attributs d’une balise, est un <strong>événement</strong> : <code>{attrPrefix: "on"}</code> (<code>onClick</code> → <code>click</code>) ou <code>{attrs: [...]}</code>. Non déclaré, aucune entrée <code>⚡</code> n’est tirée d’un attribut</td>
+</tr>
+<tr>
+<td><code>carriers[]</code></td>
+<td><code>carrier</code></td>
+<td>les <strong>porteurs</strong> : <code>{id, match}</code> — les fichiers qui embarquent leur script (<code>.vue</code>, <code>.svelte</code>)</td>
+</tr>
+<tr>
+<td><code>fieldInjectors[]</code></td>
+<td>idem</td>
+<td>les fonctions d’injection dont l’argument <strong>nomme le type</strong> d’un champ (<code>inject</code>, pour <code>private x = inject(Service)</code>) : sans elles, ces champs n’ont pas de type, donc aucun appel qui part d’eux n’est résolu. <code>= new X()</code> est du langage, il n’a rien à déclarer</td>
+</tr>
+<tr>
+<td><code>routePrefixDecorators[]</code></td>
+<td>idem</td>
+<td>les décorateurs de <strong>classe</strong> dont le 1er argument porte un préfixe de route (<code>Controller</code>) — c’est ce qui reconstruit l’URL d’un endpoint</td>
+</tr>
+<tr>
+<td><code>routeVersionDecorators[]</code></td>
+<td>idem</td>
+<td>les décorateurs portant la <strong>version</strong> d’un endpoint (<code>Version</code>) : elle s’affiche en qualificatif (<code>· v5</code>), jamais comme un segment d’URL</td>
+</tr>
+<tr>
+<td><code>behaviorDecorators[]</code></td>
+<td>idem</td>
+<td>les décorateurs de classe qui disent « ceci est du <strong>comportement</strong> » (<code>Component</code>, <code>Controller</code>, <code>Injectable</code>, <code>Module</code>, <code>Resolver</code>…) : une classe qui en porte un n’est jamais comptée comme une classe-donnée. Rien de déclaré → angle mort <code>behavior-decorators-undeclared</code></td>
+</tr>
+<tr>
+<td><code>selectorDecorators[]</code></td>
+<td>idem</td>
+<td>les décorateurs de classe portant un <code>selector</code> rendu (<code>Component</code>, <code>Directive</code>) : sans eux, aucun composant front n’est relié à sa balise (angle mort <code>component-selectors-undeclared</code>)</td>
+</tr>
+<tr>
+<td><code>componentSuffixes[]</code></td>
+<td>idem</td>
+<td>les suffixes retirés du <strong>libellé</strong> d’un composant (<code>user.component.ts</code> → <code>user</code>). Cosmétique : non déclaré, le libellé garde le nom de fichier entier</td>
+</tr>
+<tr>
+<td><code>tests</code></td>
+<td><code>tests</code></td>
+<td>les noms du framework de test, par forme : <code>case</code>, <code>group</code>, <code>caseSkipped</code>, <code>groupSkipped</code>, plus <code>globals</code> (<code>jest</code>, <code>expect</code>, <code>vi</code> — un appel dont ils sont le récepteur n’éprouve rien) et <code>testInfra</code> (<code>jest.config</code>, <code>setup-jest</code>…). C’est ce qui fait apparaître les tests sous la méthode que leur corps appelle. Rien de déclaré → angle mort <code>test-convention-missing</code></td>
+</tr>
+<tr>
+<td><code>builtinTypes[]</code></td>
+<td>idem</td>
+<td>les <strong>enveloppes</strong> — les noms qui entourent une donnée sans en être une (<code>Promise</code>, <code>Array</code>, <code>Partial</code> côté langage ; <code>Observable</code>, <code>Ref</code>, <code>NextResponse</code> côté frameworks). C’est ce qui permet de lire les types d’une signature : sans eux, <code>Promise&lt;OrderDto&gt;</code> nommerait deux données au lieu d’une. Rien de déclaré nulle part → Atlas se tait (aucune chip « prend / rend », aucune encre sur la signature dans le Code) et pose l’angle mort <code>builtin-types-missing</code></td>
+</tr>
+<tr>
+<td><code>plugins[]</code></td>
+<td><code>templateParser</code></td>
+<td>un plugin de framework : <code>{id, match}</code> — voir plus bas</td>
+</tr>
+<tr>
+<td><code>defaultSetAside[]</code></td>
+<td><code>defaultSetAside[]</code></td>
+<td>les fichiers <strong>rangés d’office</strong> : ils sortent de ce qu’il te reste à relire, sous « 🗂 N de côté » par repo. « De côté » répond à <em>dois-je le valider ?</em>, pas à <em>qu’est-ce que c’est ?</em> — un module rangé d’office reste un module dans l’Inventaire</td>
+</tr>
+</tbody>
+</table>
+<h2 id="quel-motif-gagne">Quel motif gagne</h2>
+<table>
+<thead>
+<tr>
+<th>liste</th>
+<th>forme du motif</th>
+<th>qui gagne</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>layers[].match</code></td>
+<td>sous-chaîne de <em>chemin + nom de la classe</em>, insensible à la casse</td>
+<td>la <strong>première couche déclarée</strong> dont un motif matche ; sinon la couche <code>default</code>. Sans aucune couche configurée, un repli reconnaît <code>.controller.ts</code> / <code>…Controller</code> et <code>/repositories/</code> / <code>.repo.ts</code>, le reste tombe en <code>svc</code></td>
+</tr>
+<tr>
+<td><code>families[].match</code></td>
+<td>suffixe (<code>.module.ts</code>) ou segment de chemin (<code>/migrations/</code>)</td>
+<td>le <strong>suffixe</strong> d’abord, le plus <strong>long</strong> ensuite. <code>-routing.module.ts</code> bat <code>.module.ts</code> ; <code>foo.service.spec.ts</code> est un test, pas un service. L’ordre de déclaration n’arbitre rien</td>
+</tr>
+<tr>
+<td><code>entries[]</code></td>
+<td>décorateur, méthode, appel, export ou wrapper</td>
+<td>le <strong>premier motif qui répond</strong> — une règle maison l’emporte donc sur celle du framework</td>
+</tr>
+<tr>
+<td><code>contractFiles</code> · <code>crossCutting</code></td>
+<td>suffixe</td>
+<td>le premier qui matche</td>
+</tr>
+<tr>
+<td><code>fileTypes[].match</code></td>
+<td>suffixe</td>
+<td>le premier type dont un motif matche ; l’entrée <code>default</code> sert de repli</td>
+</tr>
+<tr>
+<td><code>plugins[].match</code> · <code>carriers[].match</code></td>
+<td>suffixe</td>
+<td><strong>tout</strong> plugin dont un motif couvre le fichier le parse — d’où la fusion par <code>id</code>, qui garantit qu’un parseur n’y figure qu’une fois</td>
+</tr>
+<tr>
+<td><code>defaultSetAside</code></td>
+<td><code>*.module.ts</code> = suffixe ; sinon un chemin exact, une fin de chemin, ou un nom de fichier exact. ⚠️ Une étoile ailleurs qu’en tête (<code>vite.config.*</code>) ne matche <strong>rien</strong></td>
+<td>le premier qui matche</td>
+</tr>
+<tr>
+<td><code>testInfra</code></td>
+<td>nom de fichier sans extension : égal, ou suivi d’un point (<code>jest.config</code> couvre <code>jest.config.ts</code>)</td>
+<td>le premier qui matche</td>
+</tr>
+</tbody>
+</table>
+<p>Un motif vide dans une famille est ignoré (il matcherait tout). Les listes fusionnées sont
+dédupliquées : une stack déclarée deux fois rend exactement ce qu’elle rend une fois.</p>
+<h2 id="les-plugins-de-framework">Les plugins de framework</h2>
+<p>Le cœur est générique ; un plugin apporte la connaissance d’une <strong>syntaxe</strong> que le langage ne sait pas
+lire. Trois existent : <strong><code>angular-template</code></strong> (les bindings d’événement d’un <code>.component.html</code>),
+<strong><code>vue-sfc</code></strong> et <strong><code>svelte-sfc</code></strong>. Les deux derniers tiennent deux rôles à la fois : sortir le script
+du fichier — aux lignes d’origine, pour que poids, empreintes et ancres restent justes — et lire son
+balisage. Ce sont les entrées <code>⚡</code> que tu vois sous un composant dans l’Arbre.</p>
+<p>Le plugin sait <strong>parser</strong>, la config dit <strong>sur quels fichiers</strong>. Deux chemins d’activation : la stack
+(<code>angular</code> déclare <code>templateParser</code>, <code>vue</code> et <code>svelte</code> déclarent en plus <code>carrier</code>) ; et ton
+<code>project.json</code>, qui peut écrire <code>plugins: [{ "id": "angular-template", "match": [".component.html"] }]</code>
+ou <code>carriers: [...]</code> pour viser d’autres fichiers. Les deux se fondent <strong>par <code>id</code></strong> et leurs motifs
+s’unissent : un parseur n’est jamais inscrit deux fois, donc jamais exécuté deux fois sur le même
+fichier. Un <code>id</code> inconnu d’Atlas est ignoré ; un plugin qui ne sait pas extraire de script n’est jamais
+retenu comme porteur. L’extraction des balises d’éléments custom (celles qui contiennent un tiret) est,
+elle, <strong>générique</strong>.</p>
+<h2 id="avant-dajouter-une-règle">Avant d’ajouter une règle</h2>
+<p>Deux questions, dans cet ordre :</p>
+<ol>
+<li><strong>pourquoi le moteur ne le sait-il pas tout seul ?</strong> La <em>structure</em> bat toujours une liste de noms :
+la couche inter-service se déduit du type injecté, pas d’un motif de nom de fichier — qui colorerait
+aussi les DTO du même dossier. Si le moteur peut le prouver, la règle est une dette ;</li>
+<li><strong>par quel chemin quelqu’un l’activera-t-il ?</strong> Une règle vraie de ton <em>framework</em> va dans une
+stack ; une règle vraie de ton <em>projet</em> va dans <code>project.json</code>.</li>
+</ol>
+<p>Le mode d’emploi de ce fichier, c’est l’écran : le seau <strong><code>non-classé</code></strong> de l’Inventaire dit ce
+qu’aucune règle ne reconnaît, et les angles morts nomment la déclaration qui manque
+(<code>route-prefix-unresolved</code>, <code>behavior-decorators-undeclared</code>, <code>component-selectors-undeclared</code>,
+<code>test-convention-missing</code>, <code>builtin-types-missing</code>, <code>entry-decorator-unresolved</code>, <code>entry-untyped</code>).</p>
+<h2 id="ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</h2>
+<ul>
+<li>Il ne <strong>copie plus</strong> les stacks dans ton workspace, et n’écrase jamais un <code>stack/&lt;id&gt;.json</code> posé.</li>
+<li>Il ne <strong>valide pas</strong> <code>project.json</code> contre un schéma : une clé mal orthographiée est ignorée sans un
+mot. Les tableaux ci-dessus sont la seule liste des noms qui font quelque chose.</li>
+<li>Il n’<strong>exécute rien pour un <code>id</code> qu’il ne connaît pas</strong> : un <code>plugins[].id</code> inconnu est ignoré, et un
+<code>stack/&lt;id&gt;.json</code> dont l’id n’est pas actif n’est jamais lu.</li>
+<li>Il ne <strong>colore rien à partir d’une famille</strong> : une famille se compte dans l’Inventaire, elle ne porte
+aucune couche.</li>
+<li>Il ne <strong>déduit pas une entrée d’un nom</strong> : sans récepteur typé, pas de racine — un angle mort à la
+place.</li>
+</ul>
+<h2 id="limites-connues">Limites connues</h2>
+<ul>
+<li><strong>Un <code>project.json</code> illisible ne dit rien à l’ouverture.</strong> Un JSON cassé fait retomber Atlas sur une
+config minimale — aucune couche, aucun rangé d’office, aucune palette — et la carte s’affiche quand
+même : les pastilles perdent leur couleur, presque tout tombe sur la couche par défaut. Le seul
+endroit qui le signale est la page Config, à l’enregistrement : <em>« project.json illisible »</em>.</li>
+<li><strong>Un seul langage lu.</strong> Atlas lit <code>.ts</code>, <code>.tsx</code>, <code>.mts</code>, <code>.cts</code>, <code>.js</code>, <code>.jsx</code>, <code>.mjs</code>, <code>.cjs</code>, plus
+le script embarqué dans un <code>.vue</code> ou un <code>.svelte</code>. Un fichier de déclaration <code>.d.ts</code> n’est pas lu
+comme du code. Un projet écrit dans un autre langage apparaît dans le diff, fichier par fichier,
+sans arêtes ni entrées.</li>
+<li><strong>La couche <code>m2m</code> reste à toi.</strong> Aucune stack ne la définit : elle dépend du nom de tes clients
+internes. Sans une règle <code>layers[].match</code> dans ton <code>project.json</code>, la couleur inter-service n’est
+jamais attribuée.</li>
+</ul>
+<nav class="suite" aria-label="Page suivante et précédente"><a href="/atlas-site/manuel/configurer-un-projet"><small>← précédent</small>Configurer un projet</a><a class="droite" href="/atlas-site/manuel/brancher-l-ia"><small>suivant →</small>Brancher l&#39;IA</a></nav></article><nav class="cote toc" aria-label="Sur cette page"><h2>Sur cette page</h2><ul><li><a href="#les-quinze-stacks-livrées">Les quinze stacks livrées</a></li><li><a href="#trois-listes-décident-lesquelles-sont-actives">Trois listes décident lesquelles sont actives</a></li><li><a href="#les-quatre-formes-dun-point-dentrée">Les quatre formes d’un point d’entrée</a></li><li><a href="#les-clés-de-projectjson">Les clés de project.json</a></li><li><a class="h3" href="#identité-et-périmètre">Identité et périmètre</a></li><li><a class="h3" href="#-front--est-une-propriété-du-fichier-plus-du-repo">« Front » est une propriété du FICHIER, plus du repo</a></li><li><a class="h3" href="#palette-le-goût">Palette (le goût)</a></li><li><a class="h3" href="#reconnaissance-projet--stacks">Reconnaissance (projet ⊕ stacks)</a></li><li><a href="#quel-motif-gagne">Quel motif gagne</a></li><li><a href="#les-plugins-de-framework">Les plugins de framework</a></li><li><a href="#avant-dajouter-une-règle">Avant d’ajouter une règle</a></li><li><a href="#ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</a></li><li><a href="#limites-connues">Limites connues</a></li></ul></nav></main><footer class="pied"><div class="dedans"><span>Atlas — suivi et validation de code.</span><a href="/atlas-site/manuel/prise-en-main">Manuel</a></div></footer><script>
+    document.getElementById('theme-bt')?.addEventListener('click', () => {
+      const r = document.documentElement;
+      // clair → sombre → système, et le tour recommence. « Système » RETIRE la clé : c'est ce qui
+      // rend le choix distinct d'une absence de choix.
+      const suite = { clair: 'sombre', sombre: '', '': 'clair' };
+      const v = suite[r.dataset.theme || ''];
+      if (v) { r.dataset.theme = v; try { localStorage.setItem('atlas-site-theme', v); } catch {} }
+      else { delete r.dataset.theme; try { localStorage.removeItem('atlas-site-theme'); } catch {} }
+    });
+  </script></body></html>

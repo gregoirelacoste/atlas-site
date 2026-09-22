@@ -1,0 +1,384 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Ce que l&#39;IA lit et écrit · Atlas</title><meta name="description" content="Les douze outils du serveur MCP, un par un : ce qu'Atlas rend à ta session de code, ce qu'elle a le droit d'écrire dans la carte, et les quatre espaces qu'aucun outil n'atteint."><link rel="canonical" href="https://gregoirelacoste.github.io/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit"><meta property="og:title" content="Ce que l'IA lit et écrit · Atlas"><meta property="og:description" content="Les douze outils du serveur MCP, un par un : ce qu'Atlas rend à ta session de code, ce qu'elle a le droit d'écrire dans la carte, et les quatre espaces qu'aucun outil n'atteint."><meta property="og:type" content="website"><meta property="og:url" content="https://gregoirelacoste.github.io/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit"><meta name="twitter:card" content="summary"><link rel="icon" href="/atlas-site/favicon.svg" type="image/svg+xml"><script>
+    (() => { try { const t = localStorage.getItem('atlas-site-theme');
+      if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t; } catch {} })();
+  </script><link rel="stylesheet" href="/atlas-site/_astro/Base.D32RNicN.css"></head><body><header class="tete"><a class="marque" href="/atlas-site">🗺️ Atlas</a><nav><a href="/atlas-site/installer">Installer</a><a href="/atlas-site/manuel/prise-en-main" aria-current="page">Manuel</a><a href="/atlas-site/articles">Écrits</a><button class="theme-bt" id="theme-bt" type="button" aria-label="Changer de thème">◐</button></nav></header><main class="doc"><nav class="cote" aria-label="Le manuel"><h2>Le manuel</h2><ol><li><a href="/atlas-site/manuel/prise-en-main">Prise en main</a></li><li><a href="/atlas-site/manuel/l-arbre">L&#39;Arbre</a></li><li><a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a></li><li><a href="/atlas-site/manuel/le-code">Le Code</a></li><li><a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a></li><li><a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et inventaire</a></li><li><a href="/atlas-site/manuel/le-panneau-git">Le panneau Git</a></li><li><a href="/atlas-site/manuel/le-tableau">Le Tableau</a></li><li><a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a></li><li><a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a></li><li><a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a></li><li><a href="/atlas-site/manuel/brancher-l-ia">Brancher l&#39;IA</a></li><li><a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit" aria-current="page">Ce que l&#39;IA lit et écrit</a></li><li><a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a></li><li><a href="/atlas-site/manuel/la-ligne-de-commande">La ligne de commande</a></li><li><a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a></li><li><a href="/atlas-site/manuel/le-clavier">Le clavier</a></li></ol></nav><article class="corps"><h1>Ce que l&#39;IA lit et écrit</h1><p class="chapo">Les douze outils du serveur MCP, un par un : ce qu&#39;Atlas rend à ta session de code, ce qu&#39;elle a le droit d&#39;écrire dans la carte, et les quatre espaces qu&#39;aucun outil n&#39;atteint.</p><blockquote>
+<p>Les douze outils du serveur MCP, un par un : ce qu’Atlas rend à ta session de code, ce qu’elle a le
+droit d’écrire dans la carte, et les quatre espaces qu’aucun outil n’atteint.</p>
+</blockquote>
+<p>Brancher le plugin et le serveur MCP est décrit dans <a href="/atlas-site/manuel/brancher-l-ia">Brancher l’IA</a> — cette
+page-ci suppose que c’est fait. Le vocabulaire y est celui du produit : une <strong>feature</strong> est un ticket
+et le code qui le porte ; un <strong>nœud</strong> est une ligne de la carte (un symbole, un fichier) ; un <strong>fil</strong>
+est une conversation <strong>ancrée</strong> sur la ligne ou le symbole dont elle parle ; <strong>endosser</strong> un nœud,
+c’est le relire et le valider (<a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a>).</p>
+<h2 id="ce-que-lia-peut-lire">Ce que l’IA peut lire</h2>
+<p>Cinq outils, et une clé commune : un <strong>ref</strong>, l’identité exacte d’un symbole, écrite
+<code>repo::file::symbol</code>.</p>
+<table>
+<thead>
+<tr>
+<th>outil</th>
+<th>arguments</th>
+<th>ce qu’il rend</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>features</code></td>
+<td><code>merged</code> (facultatif)</td>
+<td>les features qu’Atlas connaît ici : id, repos, branches ; avec <code>merged</code>, l’archivage</td>
+</tr>
+<tr>
+<td><code>brief</code></td>
+<td><code>feature</code>, <code>base</code></td>
+<td>la feature en une page — le même contenu qu’<code>atlas brief</code></td>
+</tr>
+<tr>
+<td><code>digest</code></td>
+<td><code>feature</code>, <code>base</code></td>
+<td>la carte <strong>aplatie</strong> : un nœud par ligne, les repos résolus, les compteurs</td>
+</tr>
+<tr>
+<td><code>sources</code></td>
+<td><code>feature</code>, <code>refs</code>, <code>mode</code>, <code>base</code></td>
+<td>le code de N symboles en un appel, en diff (60 refs au plus)</td>
+</tr>
+<tr>
+<td><code>refs</code></td>
+<td><code>feature</code>, <code>base</code></td>
+<td>les refs git qui font foi par repo : branche, base, commit d’origine du diff, feature mergée ou non</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Ce que porte chaque nœud du <code>digest</code></strong>, au-delà de son nom et de sa couche :</p>
+<ul>
+<li><code>fils: N</code> — N conversations parlent déjà de ce symbole ; le contenu vient de <code>sources</code> ;</li>
+<li><code>annotated</code>, <code>announced</code> (une intention annoncée en codant, jamais confrontée au diff), <code>stale</code>
+(le fichier a bougé depuis), <code>aside</code> (mis de côté), <code>dead</code> (non atteint) ;</li>
+<li><code>crit: [{ who, crit }]</code> — la <strong>note de criticité</strong> posée par chaque relecteur en endossant, de 1 à
+4, <strong>nommée par personne</strong>, jamais fondue ; <code>aRepondre: true</code> = un 4 sans aucun fil ;</li>
+<li><code>unsureBy: [{ who, at }]</code> — qui a posé <code>?</code> sur ce nœud, nommé, jamais compté ; <code>aExpliquer: true</code>
+quand aucun message de l’IA n’est plus récent que ce <code>?</code> ;</li>
+<li><code>tests</code> — les tests qui atteignent ce nœud, en <strong>trois états</strong> : les phrases des cas · <code>[]</code> = la
+convention de test est active et rien n’atteint ce nœud, un fait · <strong>absent</strong> = aucune stack de
+test, on n’a pas pu regarder ;</li>
+<li><code>compris</code>, à la racine — <strong>le fil de feature</strong> entier, un par feature, auquel on ajoute au lieu de
+le réécrire (<a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a>) ;</li>
+<li><code>counts</code> — les mêmes chiffres agrégés <strong>par identité</strong>, jamais par occurrence.</li>
+</ul>
+<p><strong><code>sources</code></strong> rend le code en mode <code>hunks</code> (par défaut : la signature et les fenêtres autour des
+changements) ou <code>full</code>, et <strong>avec lui</strong> les fils ancrés sur ces symboles, la note <code>crit</code> et les
+<code>unsureBy</code> de chaque ref. Chaque fil dit s’il a vieilli : <code>stale: true</code> (le fichier a bougé depuis),
+<code>false</code>, <code>null</code> (indécidable), <code>hypothese: true</code> (posé avant que ce code existe).</p>
+<p>Ce qui <strong>ne sort jamais</strong> : un endossement <strong>sans</strong> note, et ce que tu as lu — les fils ouverts, le
+rang cliqué sur une branche. Poser un chiffre, c’est parler à l’IA ; relire, non.</p>
+<h2 id="ce-que-lia-peut-écrire">Ce que l’IA peut écrire</h2>
+<p>Sept portes. Cinq écrivent dans le dossier de la feature (<code>.atlas-workspace/features/&lt;ID&gt;/</code>), une
+dans l’index des précédents, la dernière sort d’Atlas.</p>
+<table>
+<thead>
+<tr>
+<th>outil</th>
+<th>ce qu’il écrit</th>
+<th>où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>declare</code></td>
+<td>ouvre la feature : id, <code>title</code>, <code>repos</code> membres (omis : ceux qui portent le ticket)</td>
+<td><code>feature.json</code></td>
+</tr>
+<tr>
+<td><code>annotate</code></td>
+<td>la <strong>parole</strong> : <code>intent</code>, <code>goal</code>, <code>unsure</code> en codant, <code>did</code>/<code>does</code> à la relecture — et, à part, la <strong>structure</strong> : <code>drop</code>, <code>layer</code>, <code>group</code></td>
+<td><code>overlay.json</code></td>
+</tr>
+<tr>
+<td><code>comment</code></td>
+<td>ouvre un fil (à la ligne : <code>file</code> + <code>side</code> + <code>line</code> + <code>witness</code> ; sur le symbole : <code>ref</code> ; sur la feature : <code>ticket: true</code>), répond (<code>thread</code>), range le sien (<code>archive</code> + <code>why</code>), cite des <code>precedents</code></td>
+<td><code>comments.json</code></td>
+</tr>
+<tr>
+<td><code>parcours</code></td>
+<td>les <code>steps</code> et son évaluation des <code>criteres</code> (<code>yes</code>/<code>no</code>/<code>partial</code> + les refs qui le prouvent)</td>
+<td><code>parcours.json</code></td>
+</tr>
+<tr>
+<td><code>plan</code></td>
+<td>les nœuds <code>planned</code> — le pseudo-code, qui s’éteint quand le vrai symbole arrive</td>
+<td><code>plan.json</code></td>
+</tr>
+<tr>
+<td><code>sonde</code></td>
+<td>ce qu’un précédent servi a donné : <code>ecarte</code> (il n’a servi à rien) ou <code>manque</code> (il en aurait fallu un ici)</td>
+<td><code>precedents.json</code></td>
+</tr>
+<tr>
+<td><code>publish</code></td>
+<td>publie <strong>un</strong> fil (<code>thread</code>) sur la review de son repo — GitLab comme GitHub ; <code>mode: general</code> si l’hébergeur refuse l’ancre</td>
+<td>chez l’hébergeur</td>
+</tr>
+</tbody>
+</table>
+<p>Quatre choses que les outils tiennent à la place des consignes :</p>
+<ul>
+<li><strong>la forme des messages</strong> : première ligne seule et ≤ 90 caractères (c’est elle que le Journal
+affiche), message entier ≤ 350 caractères et ≤ 4 lignes, <code>did</code> et <code>does</code> ≤ 300 chacun. Au-delà,
+l’écriture est refusée et le refus nomme ce qu’il y a à retirer ;</li>
+<li><strong>l’anti-doublon</strong> : un second fil sur la même ancre est refusé, un fil que tu as résolu ne se
+rouvre pas, et la feature n’a qu’un seul fil de feature ;</li>
+<li><strong>l’ancre à la ligne se vérifie à l’écriture</strong> : le témoin — le contenu exact de la ligne visée —
+doit se retrouver dans ce qu’<strong>Atlas</strong> lit, pas dans ce que ton IA a sous les yeux. Sinon le fil
+est refusé, et le refus dit ce qu’Atlas lit et les deux sorties : pousser, ou ancrer par <code>ref</code> ;</li>
+<li><strong>la date</strong> : Atlas date ce que l’IA écrit contre le commit courant — de là vient sa péremption.</li>
+</ul>
+<p>Ranger n’est pas supprimer : le fil reste lisible et se remet d’un geste. Un fil où tu as répondu est
+refusé à l’archivage : c’est là que vivent tes corrections.</p>
+<h2 id="la-frontière">La frontière</h2>
+<p>Quatre choses n’ont <strong>aucun outil</strong>, et c’est la garantie : <strong>ton endossement et ta note de
+criticité</strong> (<a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a>) · <strong>ta spec</strong>, <code>ticket.md</code>, dès qu’elle
+est remplie — <code>declare</code> peut y poser un gabarit <strong>vide</strong>, jamais par-dessus un fichier existant ·
+<strong>résoudre un fil</strong>, et <strong>le supprimer</strong> · <strong>le code des repos analysés</strong>.</p>
+<p>Elle tient par <strong>deux</strong> choses : l’<strong>absence d’outil</strong> côté MCP, et l’interdiction de l’écriture de
+fichier (<code>Write</code>, <code>Edit</code>) dans les skills qui n’ont plus rien à écrire à la main. Deux la gardent :
+celui qui ouvre une feature (l’import unique de la spec) et celui qui <strong>code</strong> dans ta session, à qui
+le droit de publier et de déclarer est retiré nommément (<a href="/atlas-site/manuel/brancher-l-ia">Brancher l’IA</a>). Ce
+n’est pas un bac à sable : <code>Bash</code> reste accordé, pour git et les recherches cross-repo.</p>
+<p><strong><code>publish</code> est d’une autre nature</strong> : public, sous ton nom, sans mention de l’outil. Ne le mets dans
+les <code>allowed-tools</code> d’aucun de tes skills — la demande d’autorisation de ton client est le garde-fou
+qui reste, et il vit hors d’Atlas. Le fil de feature, lui, n’a pas d’ancre chez l’hébergeur : il ne
+se publie pas, et l’outil le dit.</p>
+<h2 id="ce-qui-déclenche-quoi">Ce qui déclenche quoi</h2>
+<p>Chaque cran de la <strong>note de criticité</strong> se définit par ce qu’il déclenche chez les skills, et un
+chiffre n’achète jamais <strong>moins</strong> d’attention qu’un <code>0</code> nu — le tableau des quatre crans est dans
+<a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a>.</p>
+<p><strong>Un 4 sans aucun fil</strong> est un reste-à-faire : la review en ouvre un, même pour dire « rien trouvé,
+voici ce que j’ai vérifié ». <strong>Un 4 que rien ne teste</strong> remonte en tête des findings ; un nœud sans
+test n’est relevé ailleurs que s’il est sur une frontière. Un <strong><code>?</code></strong> appelle une explication dans un
+fil sur le nœud, en langage produit — et l’IA ne retire jamais un <code>?</code> : c’est toi qui dis
+« compris », en endossant.</p>
+<h2 id="le-brief--la-feature-en-une-page">Le brief : la feature en une page</h2>
+<p><code>atlas brief PROJ-412</code> (avec <code>--base &lt;branche&gt;</code> si besoin) imprime le même contenu que l’outil
+<code>brief</code> — à coller dans une review, un message, ou l’entrée d’un autre agent. Il rend, dans l’ordre :
+ce que ça fait (la spec et ses critères), ce qu’on a compris, de quoi c’est fait, par où ça passe, ce
+que ça peut casser, ce qu’Atlas n’a pas pu prouver, ce que l’IA n’a pas pu vérifier, ce qui a été
+annoncé sans être relu, l’endossement.</p>
+<h2 id="les-précédents--ce-quune-review-passée-a-coûté">Les précédents : ce qu’une review passée a coûté</h2>
+<p>Un finding se répète d’une feature à l’autre. Un <strong>précédent</strong> est un fil passé, ancré à un nœud
+d’une <strong>autre</strong> feature, avec ce qui s’est passé ensuite.</p>
+<p>Deux bouches l’ouvrent, à des conditions différentes. Un fil ouvert par <strong>l’IA</strong> entre toujours :
+c’est elle qui a parlé, et ce qu’elle a dit est le fait. Un fil ouvert par <strong>un humain</strong> — la règle
+posée en review, celle qui n’est écrite ni dans le code ni dans le ticket — n’entre que s’il a eu une
+<strong>suite</strong> : une réponse humaine, une réplique de l’IA, un code qui a bougé dans la fenêtre de sa
+feature, ou un endossement posé après ; une question jamais reprise n’apprend rien.
+<code>atlas precedents PROJ-412</code> marque chaque précédent servi « ouvert par l’humain » ou « ouvert par
+l’IA ». Le fil de feature, lui, n’est jamais un précédent : il ne juge aucun nœud.</p>
+<h3 id="construire-lindex">Construire l’index</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> precedents</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> --build</span><span style="color:#6A737D;--shiki-dark:#6A737D">                     # construit ou rafraîchit l'index, et dit ses chiffres</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> precedents</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> --build</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> --full</span><span style="color:#6A737D;--shiki-dark:#6A737D">              # le reconstruit sans réutiliser l'index d'avant</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> precedents</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> --build</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> --out</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> /tmp/x.json</span><span style="color:#6A737D;--shiki-dark:#6A737D">   # un index CANDIDAT ailleurs, le workspace intact</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> precedents</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> PROJ-412</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [--json]           </span><span style="color:#6A737D;--shiki-dark:#6A737D"># les précédents de cette feature, nœud par nœud</span></span></code></pre>
+<p><strong>C’est une passe explicite, jamais un calcul de la carte</strong> : <code>--build</code> rejoue la carte de chaque
+feature qui porte un fil ancré à un nœud, à sa fourche et à son sommet — des dizaines de cartes, des
+minutes. Le résultat s’écrit dans <code>.atlas-workspace/precedents.json</code>, <strong>partagé</strong>, et il est
+<strong>incrémental</strong> : une feature dont les sommets de branche <strong>et</strong> le fichier de conversations n’ont
+pas bougé garde ses entrées telles quelles. <code>--full</code> ignore l’index d’avant.</p>
+<p><code>--out</code> écrit un index <strong>candidat</strong> ailleurs : même build, seule la destination change — de quoi
+mesurer une autre clé sans toucher à l’index de l’équipe. Un candidat ne porte ni ce qui
+a été servi ni les sondes ; déposé à la place de l’index du projet, Atlas <strong>refuse de le servir</strong>.</p>
+<h3 id="ce-qui-est-servi-et-par-quelle-clé">Ce qui est servi, et par quelle clé</h3>
+<p>Sur chaque nœud, Atlas rend <strong>au plus un</strong> précédent. Le filtre est d’abord structurel : même <strong>type
+de nœud</strong> — repo, couche, famille, classe, déclencheur, sortie, <strong>contrats</strong> consommés (les types
+qu’il partage avec d’autres) ; soit tout, soit
+au moins deux de ces traits qui s’accordent, jamais la couche seule. Parmi ceux qui passent, la
+<strong>proximité</strong> départage : un <strong>contrat commun</strong> pèse le plus lourd, et le <strong>même fichier</strong> pèse
+autant qu’un contrat commun — puis le déclencheur et la sortie, puis la couche, la famille, la
+classe. À proximité égale, le plus récent. Chaque ligne servie affiche sa proximité et dit « même
+fichier » le cas échéant ; le tri est borné à un précédent par nœud, jamais deux fois le même fil,
+trois au plus par type de nœud.</p>
+<table>
+<thead>
+<tr>
+<th>ce qui revient</th>
+<th>ce que ça veut dire</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>l’attaque</td>
+<td>la première ligne du fil passé, sa clé <code>&lt;feature&gt;::&lt;fil&gt;</code>, et qui l’a ouvert</td>
+</tr>
+<tr>
+<td>les deux voix</td>
+<td>la première réponse d’un <strong>humain</strong> (ou « sans réponse humaine ») ; et, sur un fil ouvert par un humain, la <strong>réplique de l’IA</strong></td>
+</tr>
+<tr>
+<td>le code</td>
+<td>changé · inchangé · pas pu regarder, <strong>dans la fenêtre close</strong> de sa feature</td>
+</tr>
+<tr>
+<td>l’endossement d’après</td>
+<td>quelqu’un a endossé ce nœud après le fil, avec sa note</td>
+</tr>
+<tr>
+<td>les tests</td>
+<td>combien atteignaient le nœud avant, combien après</td>
+</tr>
+<tr>
+<td>l’ancre aujourd’hui</td>
+<td>intacte · rebougée depuis · n’atterrit plus · non vérifiée</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Ce n’est pas un jugement</strong> : « merci, corrigé » n’est pas une contestation, et un code qui bouge
+n’est pas une preuve. Un finding qui cite un précédent passe la clé exacte rendue par la commande
+(<code>precedents: ["PROJ-380::t22c9dcec"]</code>) ; une clé absente de l’index est <strong>refusée à l’écriture</strong>. Et
+<strong>ce qui est servi se note</strong> : Atlas consigne par feature quel précédent est parti vers quel nœud,
+quand, et combien de fois — c’est ce registre qui rend la sonde possible.</p>
+<h3 id="la-sonde--ce-quun-précédent-a-donné">La sonde : ce qu’un précédent a donné</h3>
+<p><code>sonde</code> est la seule écriture qui ne parle pas de ton code mais de l’index. Deux formes, exactement
+une par appel : <code>ecarte</code> (« tu l’as lu et il n’a servi à rien »), avec la clé du précédent et une
+raison parmi <code>hors-sujet</code> (« il parle d’autre chose »), <code>deja-su</code> (« tu l’avais déjà vu ailleurs »)
+et <code>perime</code> (« le code lui a donné tort ») ; ou <code>manque</code> (« il en aurait fallu un ici »), avec 2 à 5
+mots — ceux du problème, pas ceux du code — qu’on aurait cherchés. Mélanger les deux formes est
+refusé, et sans index la sonde l’est aussi.</p>
+<p>Les gardes sont strictes : une sonde contrôle Atlas, et ne vaut rien si elle raconte un service qui
+n’a pas eu lieu. <strong>On ne sonde que ce qu’on a reçu, au nœud où on l’a reçu</strong> : un <code>ecarte</code> sur un
+précédent servi ailleurs dans la même feature est refusé en le nommant, un précédent jamais servi ici
+aussi ; seul un service trop ancien pour qu’Atlas sache à quel nœud il est parti passe — on ne refuse
+pas sur une ignorance. Le nœud doit être un <code>repo::file::symbol</code> complet, et pour un <code>manque</code> il doit
+exister dans la carte <strong>et</strong> pouvoir recevoir un précédent : ni un renvoi « voir ↑ », ni une ligne de
+tests, ni un nœud seulement prévu ; carte illisible, refus qui le dit.</p>
+<p>Elle s’ajoute à <code>precedents.json</code>, sur un rail à part, en append-only, et <strong>n’est jamais resservie
+comme savoir</strong> : elle est la liste de travail du build suivant, et les premières paires du contrôle
+humain.</p>
+<h3 id="la-chronologie--une-ligne-par-index">La chronologie : une ligne par index</h3>
+<p>Chaque <code>atlas precedents --build</code> <strong>ajoute une ligne</strong> à l’index : rien ne s’édite, rien ne se
+réécrit, rien ne se supprime. Ce n’est pas un score — ni note globale, ni flèche verte, ni niveau. On
+lit une <strong>progression, ligne après ligne</strong>, et elle peut baisser : c’est ce qui la rend croyable.
+Chaque nombre porte son dénominateur, et ce qui n’est pas mesuré le <strong>dit</strong> au lieu d’afficher zéro.</p>
+<table>
+<thead>
+<tr>
+<th>ce que la ligne porte</th>
+<th>ce que ça dit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>durée, dont la mesure</td>
+<td>ce que le build a coûté, et si la mesure se met à coûter cher</td>
+</tr>
+<tr>
+<td>précédents</td>
+<td>combien d’ouverts par l’IA, combien par l’humain — le total est la somme</td>
+</tr>
+<tr>
+<td>features</td>
+<td>rejouées pour cause de règle · gardées telles quelles · non rejouées</td>
+</tr>
+<tr>
+<td>cibles</td>
+<td>les précédents porteurs de savoir humain <strong>et</strong> d’une suite ; à côté, ce que ce build a écarté faute de suite</td>
+</tr>
+<tr>
+<td>population</td>
+<td>combien de <strong>questions</strong> posées à l’index, et ce qu’il a fallu lire : features, casiers de curation, parcours — les sidecars illisibles dits</td>
+</tr>
+<tr>
+<td>rappel, par relation</td>
+<td>par le <strong>fichier</strong>, par le <strong>contrat</strong>, par la <strong>route</strong> (« pas pu regarder » : elle n’est pas dans l’index) — avec ses paires et ses questions</td>
+</tr>
+<tr>
+<td>fuites, largeur, servis, tokens</td>
+<td>la cible sortie depuis un nœud sans rapport ; les candidats laissés par question ; la médiane des précédents par feature servie ; les tokens — « pas pu regarder »</td>
+</tr>
+<tr>
+<td>effet</td>
+<td>les findings servis sont-ils suivis d’un changement plus souvent que les autres ? — « pas encore d’historique » ou « pas pu regarder », jamais zéro</td>
+</tr>
+<tr>
+<td>contrôle humain</td>
+<td>l’accord du dernier contrôle, ou « pas encore fait »</td>
+</tr>
+<tr>
+<td>manqués nommés</td>
+<td>chaque question qui avait une bonne cible et à qui le tri a servi autre chose, avec sa raison</td>
+</tr>
+<tr>
+<td>cibles perdues</td>
+<td>ce qu’on retrouvait au build d’avant et plus maintenant — et, <strong>à part</strong>, ce qui est <strong>sorti de l’index</strong></td>
+</tr>
+<tr>
+<td>coupe temporelle</td>
+<td>le rappel des cibles ouvertes <strong>après</strong> le dernier changement de clé, face à celles d’<strong>avant</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Les <strong>manqués</strong> sont la liste de travail du build suivant : « cette question, ces cibles, ce qui a
+été servi à la place », avec une raison que la structure sait lire — « deux souvenirs aussi proches l’un que l’autre : rien ne les départage,
+Atlas a pris le plus récent », « un souvenir du même fichier est passé devant »… La ligne en nomme
+cinq, dit son plafond, et compte les raisons sur tous les manqués. La
+<strong>coupe temporelle</strong> garde contre l’auto-notation : une clé se conçoit sur ce qui existait avant sa
+date et se juge sur ce qui est arrivé après ; au-delà de dix points d’écart, la ligne le dit. Enfin,
+deux builds ne se comparent qu’à <strong>terrain égal</strong> : si la population ou le nombre de cibles a bougé,
+la ligne dit « la population a changé » au lieu de parler de pertes.</p>
+<p><strong>Ce qu’on en fait</strong> : après un build, on lit la <strong>lecture</strong> qu’il imprime — chaque mesure avec sa
+direction par rapport à la ligne d’avant — puis, au quotidien, la même dans <strong>Config › Projet</strong>,
+chapitre « Chronologie » (<a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a>). On regarde les
+manqués, et de temps en temps on joue un contrôle humain.</p>
+<h3 id="le-contrôle-humain-de--voisin-">Le contrôle humain de « voisin »</h3>
+<p>Toute la mesure repose sur une <strong>définition</strong> — deux nœuds sont voisins s’ils sont dans le même
+fichier, ou s’ils partagent un contrat — que personne n’a validée. Sans contrôle, on optimise une
+convention.</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> precedents</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> --controle</span><span style="color:#6A737D;--shiki-dark:#6A737D">   # 30 paires : tu dis si la cible aurait dû être servie</span></span></code></pre>
+<p>Le tirage passe <strong>les sondes d’abord</strong>, moitié au plus, puis va au sort. Atlas montre la question, le
+type du nœud, l’attaque du fil et ce qu’on y a répondu — jamais son propre avis, qui ferait de la
+question une confirmation. Tu réponds <code>o</code>, <code>n</code> ou <code>?</code>, et le résultat s’écrit dans
+<code>.atlas-workspace/controles/&lt;date&gt;.json</code>, un contrôle par jour
+(<a href="/atlas-site/manuel/la-ligne-de-commande">La ligne de commande</a> pour le reste).</p>
+<p>Le build suivant lit ce fichier et pose l’<strong>accord</strong> sur sa ligne : « pas encore fait », un accord
+chiffré, ou « pas pu regarder ». Les deux populations restent séparées — un désaccord sur une paire
+venue d’une sonde est attendu, puisqu’un skill l’avait déjà écartée. Seul le tirage <strong>au sort</strong> juge
+la définition, et sous 70 % d’accord la ligne écrit <code>⚠ la définition de « voisin » est contestée</code>.
+Rien ne change tout seul : la définition se change à la main.</p>
+<blockquote>
+<p>⚠️ <strong>Sans <code>atlas precedents --build</code>, il n’y a pas d’index — et « pas d’index » n’est pas « aucun
+précédent ».</strong> La commande elle-même ne tranche pas : « aucun — aucun fil passé sur un nœud de ce
+type ; ou l’index est à rafraîchir ».</p>
+</blockquote>
+<h2 id="ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</h2>
+<ul>
+<li><strong>Aucun outil n’écrit dans le code des repos analysés</strong>, ne crée de branche ni ne commite.</li>
+<li><strong>Il ne laisse pas l’IA toucher à ta validation ni à ta spec remplie</strong> : ces espaces n’ont pas
+d’outil, et aucun réglage ne les ouvre.</li>
+<li><strong>Il ne publie rien tout seul</strong> : aucun skill n’a le droit de publier.</li>
+<li><strong>Il ne juge pas un précédent à ta place</strong> : l’index se construit sur commande et ne rend que des
+faits ; une sonde ne change jamais ce qu’il servira demain.</li>
+<li><strong>Il ne dit pas à l’IA ce que tu as lu</strong> : un endossement sans note, les fils ouverts, le rang
+cliqué sur une branche ne sortent pas.</li>
+</ul>
+<h2 id="limites-connues">Limites connues</h2>
+<ul>
+<li><strong>Une note publiée ne se retire pas</strong> : <code>publish</code> passe par le même chemin que le bouton
+<code>↗ Publier…</code> de l’écran, et il n’existe aucune suppression.</li>
+<li><strong>L’index des précédents est une photo</strong> : invalidé quand les fils ou les branches bougent, il ne
+se reconstruit que sur <code>atlas precedents --build</code>.</li>
+<li><strong>Deux écritures simultanées sur l’index se recouvrent</strong>, et la dernière gagne : évite de lancer un
+build pendant qu’une session travaille sur une feature.</li>
+<li><strong>Le rappel par la route n’est pas mesuré</strong> — la relation n’est pas dans l’index, et la ligne le
+dit. Même chose pour les tokens servis et pour l’effet.</li>
+<li><strong>Ce que l’IA écrit peut finir public</strong> : ses consignes lui demandent d’écrire chaque fil comme
+s’il devait être lu par tes collègues.</li>
+</ul>
+<nav class="suite" aria-label="Page suivante et précédente"><a href="/atlas-site/manuel/brancher-l-ia"><small>← précédent</small>Brancher l&#39;IA</a><a class="droite" href="/atlas-site/manuel/quand-atlas-ne-voit-pas"><small>suivant →</small>Quand Atlas ne voit pas</a></nav></article><nav class="cote toc" aria-label="Sur cette page"><h2>Sur cette page</h2><ul><li><a href="#ce-que-lia-peut-lire">Ce que l’IA peut lire</a></li><li><a href="#ce-que-lia-peut-écrire">Ce que l’IA peut écrire</a></li><li><a href="#la-frontière">La frontière</a></li><li><a href="#ce-qui-déclenche-quoi">Ce qui déclenche quoi</a></li><li><a href="#le-brief--la-feature-en-une-page">Le brief : la feature en une page</a></li><li><a href="#les-précédents--ce-quune-review-passée-a-coûté">Les précédents : ce qu’une review passée a coûté</a></li><li><a class="h3" href="#construire-lindex">Construire l’index</a></li><li><a class="h3" href="#ce-qui-est-servi-et-par-quelle-clé">Ce qui est servi, et par quelle clé</a></li><li><a class="h3" href="#la-sonde--ce-quun-précédent-a-donné">La sonde : ce qu’un précédent a donné</a></li><li><a class="h3" href="#la-chronologie--une-ligne-par-index">La chronologie : une ligne par index</a></li><li><a class="h3" href="#le-contrôle-humain-de--voisin-">Le contrôle humain de « voisin »</a></li><li><a href="#ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</a></li><li><a href="#limites-connues">Limites connues</a></li></ul></nav></main><footer class="pied"><div class="dedans"><span>Atlas — suivi et validation de code.</span><a href="/atlas-site/manuel/prise-en-main">Manuel</a></div></footer><script>
+    document.getElementById('theme-bt')?.addEventListener('click', () => {
+      const r = document.documentElement;
+      // clair → sombre → système, et le tour recommence. « Système » RETIRE la clé : c'est ce qui
+      // rend le choix distinct d'une absence de choix.
+      const suite = { clair: 'sombre', sombre: '', '': 'clair' };
+      const v = suite[r.dataset.theme || ''];
+      if (v) { r.dataset.theme = v; try { localStorage.setItem('atlas-site-theme', v); } catch {} }
+      else { delete r.dataset.theme; try { localStorage.removeItem('atlas-site-theme'); } catch {} }
+    });
+  </script></body></html>
