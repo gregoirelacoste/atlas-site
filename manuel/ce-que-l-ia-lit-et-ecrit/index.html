@@ -1,0 +1,362 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Ce que l&#39;IA lit et écrit · Atlas</title><meta name="description" content="Les douze outils du serveur MCP, un par un : ce qu'Atlas rend à ta session de code, ce qu'elle a le droit d'écrire dans la carte, et les six espaces qu'aucun outil n'atteint."><link rel="canonical" href="https://gregoirelacoste.github.io/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit"><meta property="og:title" content="Ce que l'IA lit et écrit · Atlas"><meta property="og:description" content="Les douze outils du serveur MCP, un par un : ce qu'Atlas rend à ta session de code, ce qu'elle a le droit d'écrire dans la carte, et les six espaces qu'aucun outil n'atteint."><meta property="og:type" content="website"><meta property="og:url" content="https://gregoirelacoste.github.io/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit"><meta name="twitter:card" content="summary"><link rel="icon" href="/atlas-site/favicon.svg" type="image/svg+xml"><script>
+    (() => { try { const t = localStorage.getItem('atlas-site-theme');
+      if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t; } catch {} })();
+  </script><link rel="stylesheet" href="/atlas-site/_astro/Base.D32RNicN.css"></head><body><header class="tete"><a class="marque" href="/atlas-site">🗺️ Atlas</a><nav><a href="/atlas-site/installer">Installer</a><a href="/atlas-site/manuel/prise-en-main" aria-current="page">Manuel</a><a href="/atlas-site/articles">Écrits</a><button class="theme-bt" id="theme-bt" type="button" aria-label="Changer de thème">◐</button></nav></header><main class="doc"><nav class="cote" aria-label="Le manuel"><h2>Le manuel</h2><ol><li><a href="/atlas-site/manuel/prise-en-main">Prise en main</a></li><li><a href="/atlas-site/manuel/l-arbre">L&#39;Arbre</a></li><li><a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a></li><li><a href="/atlas-site/manuel/le-code">Le Code</a></li><li><a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a></li><li><a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et inventaire</a></li><li><a href="/atlas-site/manuel/le-panneau-git">Le panneau Git</a></li><li><a href="/atlas-site/manuel/le-tableau">Le Tableau</a></li><li><a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a></li><li><a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a></li><li><a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a></li><li><a href="/atlas-site/manuel/brancher-l-ia">Brancher l&#39;IA</a></li><li><a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit" aria-current="page">Ce que l&#39;IA lit et écrit</a></li><li><a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a></li><li><a href="/atlas-site/manuel/la-ligne-de-commande">La ligne de commande</a></li><li><a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a></li><li><a href="/atlas-site/manuel/le-clavier">Le clavier</a></li><li><a href="/atlas-site/manuel/les-precedents">Les précédents</a></li><li><a href="/atlas-site/manuel/les-decisions-metier">Les décisions métier</a></li><li><a href="/atlas-site/manuel/le-glossaire">Le glossaire</a></li><li><a href="/atlas-site/manuel/la-recette">La recette</a></li><li><a href="/atlas-site/manuel/deposer-une-recette">Déposer une recette</a></li><li><a href="/atlas-site/manuel/la-vue-d-ensemble">La vue d&#39;ensemble</a></li></ol></nav><article class="corps"><h1>Ce que l&#39;IA lit et écrit</h1><p class="chapo">Les douze outils du serveur MCP, un par un : ce qu&#39;Atlas rend à ta session de code, ce qu&#39;elle a le droit d&#39;écrire dans la carte, et les six espaces qu&#39;aucun outil n&#39;atteint.</p><blockquote>
+<p>Les douze outils du serveur MCP, un par un : ce qu’Atlas rend à ta session de code, ce qu’elle a le
+droit d’écrire dans la carte, et les six espaces qu’aucun outil n’atteint.</p>
+</blockquote>
+<p>Cette page suppose branchés le <a href="/atlas-site/manuel/le-glossaire#plugin">plugin</a> et le <a href="/atlas-site/manuel/le-glossaire#serveur-mcp">serveur MCP</a> (<a href="/atlas-site/manuel/brancher-l-ia">Brancher l’IA</a>). Le vocabulaire y est celui du produit : une <strong><a href="/atlas-site/manuel/le-glossaire#feature">feature</a></strong> est un ticket
+et le code qui le porte ; un <strong><a href="/atlas-site/manuel/le-glossaire#noeud">nœud</a></strong> est une ligne de la <a href="/atlas-site/manuel/le-glossaire#carte">carte</a> (un symbole, un fichier) ; un <strong><a href="/atlas-site/manuel/le-glossaire#fil">fil</a></strong>
+est une conversation <strong>ancrée</strong> sur la ligne ou le symbole dont elle parle ; <strong>endosser</strong> un nœud,
+c’est le relire et le valider (<a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a>).</p>
+<h2 id="ce-que-lia-peut-lire">Ce que l’IA peut lire</h2>
+<p>Six outils, et une clé commune : un <strong>ref</strong>, l’identité exacte d’un symbole, écrite
+<code>repo::file::symbol</code>. Tous sauf <code>features</code> prennent l’id de la feature — le ticket, ou le nom que
+porte la <a href="/atlas-site/manuel/le-glossaire#branche">branche</a> — et, sauf <code>recette</code>, acceptent une <code>base</code> pour forcer la branche de comparaison d’un appel.</p>
+<table>
+<thead>
+<tr>
+<th><a href="/atlas-site/manuel/le-glossaire#outil">outil</a></th>
+<th>arguments</th>
+<th>ce qu’il rend</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>features</code></td>
+<td><code>merged</code> (facultatif)</td>
+<td>les features qu’Atlas connaît ici : id, repos, branches ; avec <code>merged</code>, l’archivage</td>
+</tr>
+<tr>
+<td><code>brief</code></td>
+<td><code>feature</code>, <code>base</code></td>
+<td>la feature en une page — le même contenu qu’<code>atlas brief</code></td>
+</tr>
+<tr>
+<td><code>digest</code></td>
+<td><code>feature</code>, <code>base</code></td>
+<td>la carte <strong>aplatie</strong> : un nœud par ligne, les repos résolus, les compteurs</td>
+</tr>
+<tr>
+<td><code>sources</code></td>
+<td><code>feature</code>, <code>refs</code>, <code>mode</code>, <code>base</code></td>
+<td>le code de N symboles en un appel, en <a href="/atlas-site/manuel/le-glossaire#diff">diff</a> (100 refs au plus — au-delà, refusé)</td>
+</tr>
+<tr>
+<td><code>refs</code></td>
+<td><code>feature</code>, <code>base</code></td>
+<td>les refs git qui font foi par <a href="/atlas-site/manuel/le-glossaire#repo">repo</a> : branche, base, commit d’origine du diff, feature mergée ou non</td>
+</tr>
+<tr>
+<td><code>recette</code></td>
+<td><code>feature</code>, <code>recette</code> (facultatif)</td>
+<td>le <strong>résumé</strong> de la dernière <a href="/atlas-site/manuel/la-recette">recette</a> : ce qui n’est pas couvert, jamais les corps ; les échanges qu’aucun nœud ne porte (hors carte, plafonnés à 30 routes), les frontières hors carte, les désaccords entre lieu et route, les nœuds atteints par des requêtes refusées, les repos captés au réseau (<code>observeReseau</code>) — et « pas pu lire la carte » quand elle ne s’est pas lue — <strong>lecture seule</strong></td>
+</tr>
+</tbody>
+</table>
+<p><code>refs</code> évite les diffs faux : une base locale en retard tronque le diff sans le dire, et une feature
+mergée, ou dont la branche est supprimée, paraît vide à un <code>git diff</code> manuel, alors qu’Atlas sait la
+reconstituer
+(<a href="/atlas-site/manuel/le-panneau-git">Le panneau Git</a>).</p>
+<p><strong>Ce que porte chaque nœud du <code>digest</code></strong>, au-delà de son nom, de sa couche et de son statut :</p>
+<ul>
+<li><code>trig</code> et <code>endpoint</code> — le côté <strong>entrée</strong> : ce qui déclenche le nœud (une route HTTP, une tâche
+planifiée, un appel venu d’un autre service, un événement d’écran…) et, pour une entrée qui a une
+route, cette route ;</li>
+<li><code>sortie</code> et <code>service</code> — le côté <strong><a href="/atlas-site/manuel/le-glossaire#appel-reseau">appel réseau</a></strong> : <code>sortie</code> est l’appel que ce nœud <strong>émet</strong>, son
+verbe et sa route (<code>PATCH …/todos/:id/done</code>), avec <code>sink: 'm2m'</code> ; <code>service</code>, où il <strong>atterrit</strong>.
+<code>service</code> <strong>absent</strong> ne veut pas dire « appel interne » : Atlas n’a pas pu apparier l’appel à une
+seule route des repos de la feature (aucune, plusieurs, ou pas cherché jusqu’au bout) — et un
+<strong><a href="/atlas-site/manuel/le-glossaire#angle-mort">angle mort</a></strong> — une limite que l’outil déclare au lieu de deviner — le dit (<a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a>) ;</li>
+<li><code>fils: N</code> — N conversations parlent déjà de ce symbole ; le contenu vient de <code>sources</code>. Un fil
+<strong>importé</strong> y compte aussi (<a href="#les-fils-import%C3%A9s">plus bas</a>) ;</li>
+<li><code>annotated</code>, <code>announced</code> (une <a href="/atlas-site/manuel/le-glossaire#intention">intention</a> annoncée en codant, jamais confrontée au diff), <code>stale</code>
+(le fichier a bougé depuis), <code>aside</code> (mis <a href="/atlas-site/manuel/le-glossaire#de-cote">de côté</a>), <code>dead</code> (non atteint) ;</li>
+<li><code>crit: [{ who, crit }]</code> — la <strong>note de <a href="/atlas-site/manuel/le-glossaire#note-de-criticite">criticité</a></strong> posée par chaque relecteur en endossant, de 1 à
+4, <strong>nommée par personne</strong>, jamais fondue ; <code>aRepondre: true</code> = un 4 sans aucun fil ;</li>
+<li><code>critPropose: { crit, raisons }</code> — la <strong><a href="/atlas-site/manuel/le-glossaire#criticite-proposee">criticité proposée</a></strong> par la carte (3 ou 4, jamais
+1 ni 2) et ses raisons en mots, <strong>à part</strong> de <code>crit</code> : personne ne l’a jugée. L’IA la lit comme le
+cran d’un relecteur, mais elle ne crée aucun <code>aRepondre</code> ; à la racine, <code>critDomaine</code> dit les signaux
+qui qualifient la feature entière, et <code>counts.proposes</code> compte les nœuds proposés ;</li>
+<li><code>neuf</code> — aucune ligne de ce symbole n’existait à la base (<code>false</code> : modifié ; absent : pas pu regarder,
+un fichier renommé par exemple) — un fait, jamais une priorité ;</li>
+<li><code>vue: { rang, office, angles }</code> — ce que la <a href="/atlas-site/manuel/la-vue-d-ensemble">vue d’ensemble</a> fait du nœud : son rang dans l’ordre de
+révélation (1 = montré d’abord), pourquoi il est montré d’office, ses angles morts. Absent : la vue ne
+le dessine jamais (décor, contexte, de côté) ;</li>
+<li><code>unsureBy: [{ who, at }]</code> — qui a posé <code>?</code> sur ce nœud, nommé, jamais compté ; <code>aExpliquer: true</code>
+quand aucun message de l’IA n’est plus récent que ce <code>?</code> ;</li>
+<li><code>tests</code> — les tests qui atteignent ce nœud, en <strong>trois états</strong> : les phrases des cas · <code>[]</code> = la
+convention de test est active et rien n’atteint ce nœud, un fait · <strong>absent</strong> = aucune <a href="/atlas-site/manuel/le-glossaire#stack">stack</a> de
+test, on n’a pas pu regarder. À côté, <code>testsClass</code> (des cas éprouvent la classe par une méthode
+<a href="/atlas-site/manuel/le-glossaire#hors-du-diff">hors du diff</a>), <code>atteint: { via, n }</code> (aucun test ne l’appelle, mais <code>n</code> tests appellent une entrée
+du même fichier qui y descend) et <code>quatreSansTest</code> (noté 4 par un relecteur, ni appelé ni atteint) ;</li>
+<li><code>compris</code>, à la racine — <strong>le <a href="/atlas-site/manuel/le-glossaire#fil-de-feature">fil de feature</a></strong> entier, un par feature, auquel on ajoute au lieu de
+le réécrire (<a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a>) ;</li>
+<li><code>vocabulaire</code>, à la racine — les <strong>mots du projet</strong> que la carte porte (un nom du code déclaré, en
+mots entiers, dans le nom d’un nœud, sa classe ou un type qu’il déclare), avec leur définition,
+douze au plus ; absent sans vocabulaire déclaré (<a href="/atlas-site/manuel/le-glossaire#vocabulaire-du-projet">vocabulaire du projet</a>) ;</li>
+<li><code>parcours</code> et <code>etapes</code>, à la racine — les étapes lues maintenant (<code>{ n, phrase }</code>), et chaque
+<a href="/atlas-site/manuel/le-glossaire#fil-detape">fil d’étape</a> avec son étape : son numéro d’aujourd’hui, <code>disparue</code> ou <code>pas-pu-regarder</code> ;</li>
+<li><code>counts</code> — les mêmes chiffres, <strong>par identité</strong>, jamais par occurrence.</li>
+</ul>
+<p>Le côté entrée et le côté appel réseau sont <strong>indépendants</strong> : un handler de route qui appelle un
+autre service a son <code>endpoint</code> (par où on entre) <strong>et</strong> sa <code>sortie</code> (l’appel qu’il fait). Pour suivre un <a href="/atlas-site/manuel/le-glossaire#flux">flux</a> d’un service à l’autre, c’est la paire <code>sortie</code> + <code>service</code> qui dit où
+il continue.</p>
+<p><strong><code>sources</code></strong> rend le code en mode <code>hunks</code> (par défaut : la signature et les fenêtres autour des
+changements) ou <code>full</code> (le symbole entier), en diff, et <strong>résolu <a href="/atlas-site/manuel/le-glossaire#sur-refs">sur refs</a> distantes</strong> quand la
+branche n’est pas sortie localement — ce qu’une lecture de fichier ne sait pas faire. Avec le code
+reviennent les fils ancrés sur ces symboles, la note <code>crit</code> et les <code>unsureBy</code> de chaque ref. Chaque
+fil dit s’il a vieilli : <code>stale: true</code> (le fichier a bougé depuis), <code>false</code>, <code>null</code> (indécidable,
+message écrit avant que les empreintes existent), <code>hypothese: true</code> (posé avant que ce code existe,
+donc à lire comme une intention et pas comme un constat).</p>
+<h3 id="les-fils-importés">Les fils importés</h3>
+<p>Un fil <strong>importé</strong> n’a pas été écrit dans une conversation : c’est un constat repris d’ailleurs,
+d’un ticket passé, et posé sur un nœud après coup. Son <a href="/atlas-site/manuel/le-glossaire#ancre">ancre</a> et son commit sont prouvés, mais personne n’y a
+répondu. À l’écran, il porte la marque <strong>« 📥 importé du ticket »</strong>
+(<a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a>). Dans ce que reçoit l’IA, <code>sources</code> le rend
+parmi les autres fils avec <code>origin: 'ticket'</code>.</p>
+<p>Il dit <strong>« il y a quelque chose à lire ici »</strong>, jamais <strong>« on t’a répondu »</strong> :</p>
+<table>
+<thead>
+<tr>
+<th>ce que l’IA reçoit</th>
+<th>un <a href="/atlas-site/manuel/le-glossaire#fil-importe">fil importé</a>…</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>fils: N</code> sur le nœud</td>
+<td><strong>compte</strong> : il parle bien de ce symbole</td>
+</tr>
+<tr>
+<td><code>aExpliquer</code> (un <code>?</code> sans explication plus récente)</td>
+<td><strong>ne compte pas</strong> : un constat recopié, daté d’un commit passé, n’explique pas un <code>?</code> posé depuis</td>
+</tr>
+<tr>
+<td><code>aRepondre</code> (un 4 sans aucun fil)</td>
+<td><strong>ne compte pas</strong> tant que personne n’y a répondu : un 4 dont le seul fil est un import sans réponse reste à répondre</td>
+</tr>
+</tbody>
+</table>
+<p>Seul le <strong>premier message</strong> d’un fil importé est l’import. Si l’IA ou toi répondez ensuite dans ce fil,
+ces messages-là sont des voix ordinaires : une réponse de l’IA ajoutée après l’import explique un <code>?</code>
+comme n’importe quelle autre.</p>
+<h2 id="ce-que-lia-peut-écrire">Ce que l’IA peut écrire</h2>
+<p>Six portes. Cinq écrivent dans le dossier de la feature (<code>.atlas-workspace/features/&lt;ID&gt;/</code>), la
+sixième dans l’index des précédents. <strong>Aucune ne sort du <a href="/atlas-site/manuel/le-glossaire#workspace">workspace</a>.</strong></p>
+<table>
+<thead>
+<tr>
+<th>outil</th>
+<th>ce qu’il écrit</th>
+<th>où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>declare</code></td>
+<td>ouvre la feature : id, <code>title</code>, <code>repos</code> membres (omis : ceux qui portent le ticket)</td>
+<td><code>feature.json</code></td>
+</tr>
+<tr>
+<td><code>annotate</code></td>
+<td>la <strong>parole</strong> : <code>intent</code>, <code>goal</code>, <code>unsure</code> en codant, <code>did</code>/<code>does</code> à la relecture — et, à part, la <strong>structure</strong> : <code>drop</code>, <code>layer</code>, <code>group</code></td>
+<td><code>overlay/&lt;toi&gt;.json</code></td>
+</tr>
+<tr>
+<td><code>comment</code></td>
+<td>ouvre un fil, répond, range le sien, cite des <code>precedents</code> ; pose une <strong><a href="/atlas-site/manuel/le-glossaire#decision-metier">décision métier</a></strong> sur un <a href="/atlas-site/manuel/le-glossaire#contrat">contrat</a> (<code>decision: true</code>) et la marque remplacée (<code>remplacee</code> + <code>remplaceePar</code>)</td>
+<td><code>comments/&lt;toi&gt;.json</code></td>
+</tr>
+<tr>
+<td><code>parcours</code></td>
+<td>les <code>steps</code> — deux n’ont jamais la même phrase de tête — et son évaluation des <code>criteres</code> (<code>yes</code>/<code>no</code>/<code>partial</code> + les refs qui le prouvent)</td>
+<td><code>parcours/&lt;toi&gt;.json</code></td>
+</tr>
+<tr>
+<td><code>plan</code></td>
+<td>les nœuds <code>planned</code> — le pseudo-code, qui s’éteint quand le vrai symbole arrive</td>
+<td><code>plan/&lt;toi&gt;.json</code></td>
+</tr>
+<tr>
+<td><code>sonde</code></td>
+<td>ce qu’un <a href="/atlas-site/manuel/le-glossaire#precedent">précédent</a> servi a donné (<a href="/atlas-site/manuel/les-precedents">Les précédents</a>)</td>
+<td><code>precedents/&lt;toi&gt;.json</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>declare</code></strong> n’invente jamais un id : il vient de toi, ou d’une branche qui porte déjà la feature —
+le ticket comme jeton, ou, sans ticket, le dernier segment du nom de branche. Une feature déjà
+déclarée n’est pas une erreur : l’outil le dit. Elle ne crée <strong>aucune
+branche git</strong> ; sur une feature dont aucun repo n’est encore connu, elle peut poser un <code>ticket.md</code>
+<strong>gabarit, vide</strong> — jamais par-dessus un fichier existant. Et Atlas ne sait pas défaire une
+déclaration : un id de trop laisse un dossier que seul toi retires.</p>
+<p><strong><code>annotate</code></strong> sépare <strong>deux moments</strong>. En codant, l’IA pose
+l’intention (<code>intent</code>, le titre court qui devient le libellé du nœud ; <code>goal</code>, le pourquoi ; <code>unsure</code>,
+ce qu’elle n’a pas pu vérifier). À la relecture du diff, elle constate (<code>did</code> et <code>does</code>). Les deux
+d’une même lecture donneraient un autoportrait, qui s’accorde toujours et n’apprend rien : c’est leur
+<strong>écart</strong> qui a de la valeur. La structure de la carte (<code>drop</code>, <code>layer</code>, <code>group</code>) passe par une clé à
+part.</p>
+<p><strong><code>comment</code></strong> ancre de quatre façons : sur une <strong>ligne</strong> (<code>file</code> + <code>side</code> + <code>line</code> + <code>witness</code>, les
+quatre ensemble), sur le <strong>symbole</strong> entier (<code>ref</code> seul — ce qu’il faut quand il n’y a pas de ligne à
+désigner, ou quand le code n’est pas encore écrit), sur la <strong>feature</strong> (<code>ticket: true</code>, le fil de
+feature), ou sur une <strong>étape</strong> du parcours (<code>etape: { n, phrase }</code>, refusé si la phrase n’est pas celle
+de l’étape <code>n</code> ; une étape qui a son fil reçoit le message dedans). Elle sert quatre gestes : ouvrir, répondre (<code>thread</code>), ranger le sien (<code>archive</code> + <code>why</code>),
+et joindre au passage un <code>suggestion</code> — un bloc de code de remplacement, qui reste une donnée dans le
+message et jamais un edit. En fin de run, un skill y <strong>signe son <a href="/atlas-site/manuel/le-glossaire#moment">moment</a></strong> (<code>ticket: true</code> + <code>moment</code>) :
+Atlas y relève commits et auteur ; ce message coche Relecture.</p>
+<p>Quatre choses que les outils tiennent à la place des consignes :</p>
+<ul>
+<li><strong>la forme des messages</strong> : première ligne seule et ≤ 90 caractères (c’est elle que le <a href="/atlas-site/manuel/le-glossaire#journal">Journal</a>
+affiche), message entier ≤ 350 caractères et ≤ 4 lignes, <code>did</code> et <code>does</code> ≤ 300 chacun. Au-delà,
+l’écriture est refusée et le refus nomme ce qu’il y a à retirer — jamais un découpage ;</li>
+<li><strong>l’anti-doublon</strong> : un second fil sur la même ancre est refusé, un fil que tu as résolu ne se
+rouvre pas, la feature n’a qu’un fil de feature et une étape qu’un fil, un fil où <strong>tu</strong> as répondu ne peut pas
+être rangé — c’est là que vivent tes corrections ;</li>
+<li><strong>l’ancre à la ligne se vérifie à l’écriture</strong> : le <a href="/atlas-site/manuel/le-glossaire#temoin">témoin</a> — le contenu exact de la ligne visée —
+doit se retrouver dans ce qu’<strong>Atlas</strong> lit, pas dans ce que ton IA a sous les yeux. Sinon le fil
+est refusé, et le refus dit ce qu’Atlas lit et les deux sorties : pousser, ou ancrer par <code>ref</code> ;</li>
+<li><strong>la date</strong> : Atlas date ce que l’IA écrit contre le commit courant — de là vient sa péremption.</li>
+</ul>
+<p>Ranger n’est pas supprimer : le fil reste lisible, se remet d’un geste, sans toucher la merge request.</p>
+<h2 id="un-fichier-par-personne">Un fichier par personne</h2>
+<p>Tout ce qu’une session écrit dans une feature vit dans <strong>son</strong> fichier, au nom de ton adresse git :
+tes fils et tes réponses dans <code>comments/&lt;toi&gt;.json</code>, les annotations de ton IA dans
+<code>overlay/&lt;toi&gt;.json</code>, son plan dans <code>plan/&lt;toi&gt;.json</code>, son parcours dans <code>parcours/&lt;toi&gt;.json</code>. L’IA
+écrit au nom de la personne dont elle tourne dans la session. Deux personnes ne touchent jamais le
+même fichier : le <a href="/atlas-site/manuel/le-glossaire#workspace-partage">workspace partagé</a> n’a rien à fusionner.</p>
+<p>À la lecture, Atlas relit tous les fichiers et rend <strong>une seule vue</strong> :</p>
+<ul>
+<li><strong>Les fils</strong> se recousent : quand toi et un collègue répondez dans le même fil, les deux réponses s’y
+suivent dans l’ordre où elles ont été écrites, jamais dans deux fils.</li>
+<li><strong>Le dernier geste l’emporte</strong>, champ par champ : un fil résolu par l’un puis rouvert par l’autre est
+ouvert ; deux intentions posées sur un même nœud gardent la plus récente, et la date et l’auteur se
+voient. Reposer une valeur identique ne la rajeunit pas.</li>
+<li><strong>Le plan</strong> est l’union des sessions : ton plan remplace le tien, jamais celui d’un collègue.</li>
+<li><strong>Le parcours</strong> est celui de la session la plus récente : un récit ne se recoud pas de deux récits.</li>
+</ul>
+<p>Les fichiers communs d’avant (<code>comments.json</code>, <code>overlay.json</code>, <code>plan.json</code>, <code>parcours.json</code>) se lisent
+toujours et ne s’écrivent plus. Sans identité git, rien ne change : Atlas écrit
+encore le fichier commun, comme avant.</p>
+<h2 id="la-frontière">La frontière</h2>
+<p>Six choses n’ont <strong>aucun outil</strong>, et c’est la garantie :</p>
+<table>
+<thead>
+<tr>
+<th>ce qui est à toi</th>
+<th>et personne d’autre</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ton endossement et ta note de criticité</strong></td>
+<td>aucun réglage ne les ouvre (<a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a>)</td>
+</tr>
+<tr>
+<td><strong>ta <a href="/atlas-site/manuel/le-glossaire#spec">spec</a></strong>, <code>ticket.md</code></td>
+<td><code>declare</code> peut y poser un gabarit vide, jamais par-dessus un fichier existant</td>
+</tr>
+<tr>
+<td><strong>résoudre un fil</strong>, et <strong>le supprimer</strong></td>
+<td>l’IA ne sait que ranger les siens, avec un motif</td>
+</tr>
+<tr>
+<td><strong>le code des repos analysés</strong></td>
+<td>aucun outil d’Atlas n’écrit une ligne de code</td>
+</tr>
+<tr>
+<td><strong><a href="/atlas-site/manuel/le-glossaire#publier">publier</a> un fil sur la <a href="/atlas-site/manuel/le-glossaire#merge-request">merge request</a></strong></td>
+<td>le bouton <strong>« ↗ Publier… »</strong> du <a href="/atlas-site/manuel/le-glossaire#panneau-code">panneau Code</a>, et lui seul</td>
+</tr>
+<tr>
+<td><strong>le vocabulaire du projet</strong>, dans <code>project.json</code></td>
+<td>Config › Projet ou ta main ; l’IA <strong>propose</strong> un mot dans le fil de feature</td>
+</tr>
+</tbody>
+</table>
+<p>Deux de ces six s’écrivent quand même, et jamais par un outil : un <strong><a href="/atlas-site/manuel/le-glossaire#skill">skill</a></strong> tourne dans ta session,
+avec tes outils à toi. Celui qui <strong>rédige le ticket</strong> écrit la spec et ses critères — il montre le
+texte entier et n’écrit qu’après ton accord. Ceux qui <strong>codent</strong> (<code>resolve</code>, <code>resolve-review</code>) écrivent dans les repos.
+Les quatre autres n’écrivent aucun fichier (<a href="/atlas-site/manuel/brancher-l-ia">Brancher l’IA</a>). Ce n’est pas un bac
+à sable : <code>Bash</code> reste accordé, pour git et les recherches cross-repo.</p>
+<p><strong>Ce qu’aucun skill ne fait jamais, c’est cocher un <a href="/atlas-site/manuel/le-glossaire#critere">critère</a></strong> : il écrit <code>1.</code>, jamais <code>- [x]</code>. La
+coche est ta validation, et elle prime sur ce qu’Atlas dit de la couverture
+(<a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a>).</p>
+<p><strong>Publier n’est plus un outil</strong> : le geste servait très rarement, et le chemin de la machine était le
+seul qui ne vérifiait rien. Le bouton interroge l’<a href="/atlas-site/manuel/le-glossaire#hebergeur">hébergeur</a> avant
+d’annoncer — la review ouverte, les droits de ton jeton, le mode possible — et montre ce qui part,
+combien de messages, combien rédigés par l’IA, et que c’est sans retour ; un fil importé ne se publie
+jamais (<a href="09-ticket-fils-et-journal.md#les-fils-import%C3%A9s">les fils importés</a>). <strong>Ton IA ne peut donc pas publier, même si tu le lui
+demandes</strong> ; elle te renvoie au bouton.</p>
+<blockquote>
+<p>⚠️ Atlas ne filtre pas les messages de l’IA : un fil qu’elle a écrit part <strong>entier</strong> quand tu
+cliques, sous <strong>ton</strong> nom et sans mention de l’outil. Tu vois ce que tu envoies — Atlas ne retient
+pas ses mots à ta place.</p>
+</blockquote>
+<h2 id="ce-qui-déclenche-quoi">Ce qui déclenche quoi</h2>
+<p>Chaque cran de la <strong>note de criticité</strong> se définit par ce qu’il déclenche chez les skills, et un
+chiffre n’achète jamais <strong>moins</strong> d’attention qu’un <code>0</code> nu — le tableau des quatre crans est dans
+<a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a>.</p>
+<p><strong>Un 4 sans aucun fil</strong> est un reste-à-faire : la review en ouvre un, même pour dire « rien trouvé,
+voici ce que j’ai vérifié ». <strong>Un 4 que rien ne teste</strong> remonte en tête des findings ; un nœud sans
+test n’est relevé ailleurs que s’il est sur une frontière. Un <strong><code>?</code></strong> appelle une explication dans un
+fil sur le nœud, en langage produit — et l’IA ne retire jamais un <code>?</code> : c’est toi qui dis
+« compris », en endossant.</p>
+<h2 id="le-brief--la-feature-en-une-page">Le brief : la feature en une page</h2>
+<p><code>atlas brief PROJ-412</code> (avec <code>--base &lt;branche&gt;</code> si besoin) imprime le même contenu que l’outil
+<code>brief</code> — à coller dans une review, un message, ou l’entrée d’un autre agent. Il rend, dans l’ordre :
+ce que ça fait (la spec et ses critères), ce qu’on a compris, les mots du projet que la carte porte, de quoi c’est fait, par où ça passe, ce
+que ça peut casser, ce qu’Atlas n’a pas pu prouver, ce que l’IA n’a pas pu vérifier, ce qui a été
+annoncé sans être relu, l’endossement.</p>
+<h2 id="les-précédents-en-bref">Les précédents, en bref</h2>
+<p>Un <strong>précédent</strong> est une review passée, sur un nœud du même type dans une autre feature, qu’Atlas
+ressert au nœud où la question se repose. Ça ne passe par <strong>aucun outil</strong> : l’IA les demande en ligne
+de commande (<code>atlas precedents PROJ-412</code>), et n’écrit dans cette mémoire qu’une <strong><a href="/atlas-site/manuel/le-glossaire#sonde">sonde</a></strong> — ce qu’elle a
+fait d’un précédent reçu.</p>
+<p>Un fil importé peut devenir un précédent, et il est <strong>servi par défaut</strong>. Seul le booléen <code>false</code>
+dans la clé <code>precedents.serveImports</code> de <code>project.json</code> le retire — elle a sa case dans Config › Projet
+(<a href="/atlas-site/manuel/configurer-un-projet#la-page-config">Configurer un projet</a>) ; absente ou illisible, elle vaut
+le défaut. Servi, il arrive marqué <code>📥 importé du ticket</code> et les skills le lisent
+comme une <strong>piste, jamais un verdict</strong> : sa fenêtre close — ce qui a suivi le fil dans sa propre
+feature — est vide <strong>par construction</strong>, ni réponse humaine ni endossement d’après, et il ne se
+cite jamais comme un fait vécu. La construction de l’index, la clé, la sonde et la <a href="/atlas-site/manuel/le-glossaire#chronologie">chronologie</a> sont
+dans <a href="18-les-precedents.md#les-pr%C3%A9c%C3%A9dents-import%C3%A9s">Les précédents</a>.</p>
+<h2 id="ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</h2>
+<ul>
+<li><strong>Aucun outil n’écrit dans le code des repos analysés</strong>, ne crée de branche ni ne commite.</li>
+<li><strong>Aucun outil ne touche à ta validation ni à ta spec</strong> : aucun réglage ne les ouvre ; seul un skill
+rédige la spec, après ton accord, et aucun ne coche un critère.</li>
+<li><strong>Aucun outil ne publie</strong>, ni par son nom ni dans ce qu’il promet : publier est un clic à toi, et
+l’absence d’outil est la garantie — il n’y a plus de consigne à tenir.</li>
+<li><strong>Il ne dit pas à l’IA ce que tu n’as pas noté</strong> : un <a href="/atlas-site/manuel/le-glossaire#endossement">endossement</a> sans note, les fils ouverts, le rang
+cliqué sur une branche ne sortent pas — poser un chiffre, c’est parler à l’IA ; relire, non.</li>
+<li><strong>Il ne fait pas passer un import pour une conversation</strong> : un fil importé arrive marqué, ne vaut
+jamais explication d’un <code>?</code>, et, servi comme précédent, il reste marqué.</li>
+<li><strong>Il ne défait rien de ce qu’il a écrit dehors</strong> : une note publiée chez l’hébergeur ne se retire
+par aucune route d’Atlas.</li>
+</ul>
+<h2 id="limites-connues">Limites connues</h2>
+<ul>
+<li><strong>Une note publiée ne se retire pas.</strong> Le bouton te le dit sur le dernier écran, et c’est le seul
+avertissement qu’il y aura.</li>
+<li><strong>La publication n’a jamais été éprouvée en vrai</strong>, sur aucun des deux hébergeurs : l’essayer
+écrirait chez de vraies personnes. Ce qui est éprouvé, c’est la décision — quels messages partent,
+à quelle position, avec quel droit (<a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a>).</li>
+<li><strong>Un plugin d’aujourd’hui peut tourner sur une <a href="/atlas-site/manuel/le-glossaire#instance">instance</a> d’hier.</strong> Tant que tes instances ne sont
+pas à jour, il sert encore d’anciens outils que les skills ne nomment plus : <code>atlas update</code> puis un
+redémarrage de ta session de code remettent les deux d’accord
+(<a href="/atlas-site/manuel/la-ligne-de-commande">La ligne de commande</a>).</li>
+<li><strong>Ce que l’IA écrit peut finir public</strong> : ses consignes lui demandent d’écrire chaque fil comme
+s’il devait être lu par tes collègues.</li>
+</ul>
+<nav class="suite" aria-label="Page suivante et précédente"><a href="/atlas-site/manuel/brancher-l-ia"><small>← précédent</small>Brancher l&#39;IA</a><a class="droite" href="/atlas-site/manuel/quand-atlas-ne-voit-pas"><small>suivant →</small>Quand Atlas ne voit pas</a></nav></article><nav class="cote toc" aria-label="Sur cette page"><h2>Sur cette page</h2><ul><li><a href="#ce-que-lia-peut-lire">Ce que l’IA peut lire</a></li><li><a class="h3" href="#les-fils-importés">Les fils importés</a></li><li><a href="#ce-que-lia-peut-écrire">Ce que l’IA peut écrire</a></li><li><a href="#un-fichier-par-personne">Un fichier par personne</a></li><li><a href="#la-frontière">La frontière</a></li><li><a href="#ce-qui-déclenche-quoi">Ce qui déclenche quoi</a></li><li><a href="#le-brief--la-feature-en-une-page">Le brief : la feature en une page</a></li><li><a href="#les-précédents-en-bref">Les précédents, en bref</a></li><li><a href="#ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</a></li><li><a href="#limites-connues">Limites connues</a></li></ul></nav></main><footer class="pied"><div class="dedans"><span>Atlas — suivi et validation de code.</span><a href="/atlas-site/manuel/prise-en-main">Manuel</a></div></footer><script>
+    document.getElementById('theme-bt')?.addEventListener('click', () => {
+      const r = document.documentElement;
+      // clair → sombre → système, et le tour recommence. « Système » RETIRE la clé : c'est ce qui
+      // rend le choix distinct d'une absence de choix.
+      const suite = { clair: 'sombre', sombre: '', '': 'clair' };
+      const v = suite[r.dataset.theme || ''];
+      if (v) { r.dataset.theme = v; try { localStorage.setItem('atlas-site-theme', v); } catch {} }
+      else { delete r.dataset.theme; try { localStorage.removeItem('atlas-site-theme'); } catch {} }
+    });
+  </script></body></html>

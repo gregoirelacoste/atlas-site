@@ -1,0 +1,203 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Fichiers et inventaire · Atlas</title><meta name="description" content="Trouver un fichier, chercher une chaîne, et vérifier qu'on a tout vu : l'explorateur du chapeau, ses deux modales, et le décompte de ce que la feature a touché."><link rel="canonical" href="https://gregoirelacoste.github.io/atlas-site/manuel/fichiers-et-inventaire"><meta property="og:title" content="Fichiers et inventaire · Atlas"><meta property="og:description" content="Trouver un fichier, chercher une chaîne, et vérifier qu'on a tout vu : l'explorateur du chapeau, ses deux modales, et le décompte de ce que la feature a touché."><meta property="og:type" content="website"><meta property="og:url" content="https://gregoirelacoste.github.io/atlas-site/manuel/fichiers-et-inventaire"><meta name="twitter:card" content="summary"><link rel="icon" href="/atlas-site/favicon.svg" type="image/svg+xml"><script>
+    (() => { try { const t = localStorage.getItem('atlas-site-theme');
+      if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t; } catch {} })();
+  </script><link rel="stylesheet" href="/atlas-site/_astro/Base.D32RNicN.css"></head><body><header class="tete"><a class="marque" href="/atlas-site">🗺️ Atlas</a><nav><a href="/atlas-site/installer">Installer</a><a href="/atlas-site/manuel/prise-en-main" aria-current="page">Manuel</a><a href="/atlas-site/articles">Écrits</a><button class="theme-bt" id="theme-bt" type="button" aria-label="Changer de thème">◐</button></nav></header><main class="doc"><nav class="cote" aria-label="Le manuel"><h2>Le manuel</h2><ol><li><a href="/atlas-site/manuel/prise-en-main">Prise en main</a></li><li><a href="/atlas-site/manuel/l-arbre">L&#39;Arbre</a></li><li><a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a></li><li><a href="/atlas-site/manuel/le-code">Le Code</a></li><li><a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a></li><li><a href="/atlas-site/manuel/fichiers-et-inventaire" aria-current="page">Fichiers et inventaire</a></li><li><a href="/atlas-site/manuel/le-panneau-git">Le panneau Git</a></li><li><a href="/atlas-site/manuel/le-tableau">Le Tableau</a></li><li><a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a></li><li><a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a></li><li><a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a></li><li><a href="/atlas-site/manuel/brancher-l-ia">Brancher l&#39;IA</a></li><li><a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l&#39;IA lit et écrit</a></li><li><a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a></li><li><a href="/atlas-site/manuel/la-ligne-de-commande">La ligne de commande</a></li><li><a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a></li><li><a href="/atlas-site/manuel/le-clavier">Le clavier</a></li><li><a href="/atlas-site/manuel/les-precedents">Les précédents</a></li><li><a href="/atlas-site/manuel/les-decisions-metier">Les décisions métier</a></li><li><a href="/atlas-site/manuel/le-glossaire">Le glossaire</a></li><li><a href="/atlas-site/manuel/la-recette">La recette</a></li><li><a href="/atlas-site/manuel/deposer-une-recette">Déposer une recette</a></li><li><a href="/atlas-site/manuel/la-vue-d-ensemble">La vue d&#39;ensemble</a></li></ol></nav><article class="corps"><h1>Fichiers et inventaire</h1><p class="chapo">Trouver un fichier, chercher une chaîne, et vérifier qu&#39;on a tout vu : l&#39;explorateur du chapeau, ses deux modales, et le décompte de ce que la feature a touché.</p><blockquote>
+<p>Trouver un fichier, chercher une chaîne, et vérifier qu’on a tout vu : l’explorateur du chapeau, ses deux modales, et le décompte de ce que la feature a touché.</p>
+</blockquote>
+<p>L’<a href="/atlas-site/manuel/le-glossaire#arbre">Arbre</a> range par <strong><a href="/atlas-site/manuel/le-glossaire#flux">flux</a></strong> — le chemin que prend une entrée (une route, un cron…) à travers le code. Ce qui suit répond à deux autres questions : « où est ce fichier ? » et « ai-je bien vu <strong>tout</strong> ce qui a changé ? ». Trois surfaces : le <strong><a href="/atlas-site/manuel/le-glossaire#volet-fichiers">volet Fichiers</a></strong> (l’explorateur), deux <strong>modales</strong>, et l’<strong>Inventaire</strong>, jumeau chiffré du <a href="/atlas-site/manuel/le-glossaire#diff">diff</a>.</p>
+<h2 id="le-volet-fichiers--lexplorateur-du-chapeau">Le volet Fichiers : l’explorateur du chapeau</h2>
+<p>Le <strong><a href="/atlas-site/manuel/le-glossaire#chapeau">chapeau</a></strong>, c’est le dossier qui héberge tes repos. Le volet les porte <strong>tous</strong>, pas seulement ceux que la <a href="/atlas-site/manuel/le-glossaire#feature">feature</a> touche, et pas seulement les fichiers du diff : c’est l’explorateur de ton <a href="/atlas-site/manuel/le-glossaire#projet">projet</a>, avec le diff marqué dessus.</p>
+<p>En tête, un champ (<code>fichier… (Espace v f)</code>), le compte (<code>412 fichiers · 4 repos</code>) et <code>↻</code>, qui relit la liste — un fichier créé depuis l’ouverture apparaît alors. Le listing se lit à l’<strong>ouverture du volet</strong>, jamais avec la <a href="/atlas-site/manuel/le-glossaire#carte">carte</a>.</p>
+<p><strong>Champ vide : l’arbre.</strong> Un bloc par <a href="/atlas-site/manuel/le-glossaire#repo-membre">repo membre</a>, avec son arborescence de dossiers. Les repos <strong>de la feature</strong> viennent en premier et s’ouvrent d’office, avec le chemin complet de chacun de leurs fichiers du diff — tu vois le travail sans rien déplier. Les autres restent pliés. Ensuite, ce que <strong>tu</strong> plies ou déplies l’emporte, et se retient sur cette machine, <strong>par projet</strong>. Chaque repo porte un carré à sa couleur de <a href="/atlas-site/manuel/le-glossaire#territoire">territoire</a> (gris hors feature) ; le fichier du nœud sélectionné est en gras. Une lecture impossible se dit en rouge, avec sa raison — jamais par une liste vide.</p>
+<p><strong>On tape : la liste.</strong> Le champ filtre sur tout le chapeau, à plat. Chaque lettre de ta saisie doit se retrouver, dans l’ordre : <code>usrsvc</code> trouve <code>user.service.ts</code>. Le <strong>nom</strong> du fichier compte avant le <strong>chemin</strong>, et un début de segment (après <code>/</code>, <code>.</code>, <code>_</code>, <code>-</code>) avant le milieu d’un mot ; à score égal, le chemin le plus court passe devant. Le compteur devient <code>N / total</code>, le plafond est de 200 résultats et il est <strong>dit</strong> (<code>… premières sur … — affine la saisie</code>). Rien ne correspond : <code>aucun fichier ne contient « … » (par nom, sur 412 fichiers)</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Touche</th>
+<th>Dans la liste filtrée</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>↑</code> <code>↓</code></td>
+<td>Déplacent la sélection — et le <a href="/atlas-site/manuel/le-glossaire#panneau-code">panneau Code</a> <strong>suit</strong>, après un arrêt d’un quart de seconde (une lecture par arrêt, pas une par pas).</td>
+</tr>
+<tr>
+<td><code>Entrée</code></td>
+<td>Ouvre le fichier sélectionné tout de suite.</td>
+</tr>
+<tr>
+<td><code>Échap</code></td>
+<td>Vide le champ (l’arbre revient tel que tu l’avais laissé) ; le champ déjà vide, tu sors du champ.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="le-diff-marqué-en-place">Le diff, marqué en place</h3>
+<p>L’explorateur liste tout, mais il n’oublie pas ce que la feature a fait. Sur les lignes concernées :</p>
+<table>
+<thead>
+<tr>
+<th>Ce que tu vois</th>
+<th>Ce que ça veut dire</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>⊕ neuf</code></td>
+<td>Le fichier n’existait pas à la <a href="/atlas-site/manuel/le-glossaire#ligne-de-base">ligne de base</a> — il ne peut pas avoir régressé, seulement être faux.</td>
+</tr>
+<tr>
+<td><code>⊘ supprimé</code></td>
+<td>Le fichier a été retiré par la feature — son code se lit à la base. Il reste dans la liste : git ne le liste plus, c’est le diff qui le rend.</td>
+</tr>
+<tr>
+<td><code>hors flux</code></td>
+<td>Aucune méthode de ce fichier n’apparaît dans l’Arbre.</td>
+</tr>
+</tbody>
+</table>
+<p><code>⊘ supprimé</code> prime sur <code>hors flux</code>. <code>hors flux</code> n’est pas calculé à la lecture du diff mais sur l’<strong>Arbre final</strong>, après l’<a href="/atlas-site/manuel/le-glossaire#impact-par-ricochet">impact par ricochet</a> et le rangement « <a href="/atlas-site/manuel/le-glossaire#de-cote">de côté</a> ». Ce que ce badge affirme, c’est <em>rien dans l’Arbre que tu regardes ne mène à ce fichier</em> — pas <em>ce fichier ne contient aucun code</em>.</p>
+<p>Le survol donne le chemin complet, le <a href="/atlas-site/manuel/le-glossaire#repo">repo</a> et l’état du fichier (<code>commité</code>, <code>codé · pas commité</code>, <code>prévu</code>, <code>non modifié</code>) ou, hors diff, d’où il a été lu. Cliquer ouvre le fichier dans le panneau <a href="/atlas-site/manuel/le-code">Code</a>.</p>
+<h3 id="où-chaque-repo-est-lu-et-quand-atlas-ne-peut-pas">Où chaque repo est lu, et quand Atlas ne peut pas</h3>
+<p>Sur la ligne d’un repo, à droite : la <strong><a href="/atlas-site/manuel/le-glossaire#branche">branche</a></strong> de la feature si le repo en porte une, sinon <code>lu à …</code> suivi de la ref — un repo <strong>hors feature</strong> se lit à sa <strong>ligne de base</strong> (<code>develop</code>, <code>master</code>… — voir <a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a>), jamais à son working tree, qui pourrait porter un autre travail. Un repo de la feature se lit à son checkout : ce que tu vois est ce que tu as sur le disque, <a href="/atlas-site/manuel/le-glossaire#worktree">worktree</a> compris.</p>
+<p>Troisième état : <code>pas pu regarder</code>, quand aucune ligne de base n’est connue pour ce repo (le survol donne la raison, verbatim). Le repo n’est alors pas vide, il est <strong>muet</strong> — et Atlas ne lui invente pas de ref.</p>
+<p>Les fichiers ignorés par git n’y sont pas. La racine du chapeau et les dossiers sans <code>.git</code> non plus : sans ref, le Code ne sait pas les ouvrir.</p>
+<h3 id="le-curseur">Le curseur</h3>
+<p>Sélectionner un <a href="/atlas-site/manuel/le-glossaire#noeud">nœud</a> au centre — dans l’Arbre, ou en ouvrant une source depuis le Code — met en gras la ligne correspondante ici, déplie les dossiers au-dessus et l’amène à l’écran, sans rien ouvrir d’autre. Si le nœud sélectionné est du contexte hors diff, le curseur s’efface : on ne signale pas une position que cette vue ne peut pas montrer.</p>
+<h2 id="ouvrir-un-fichier-par-son-nom-espace-s-f">Ouvrir un fichier par son nom (<code>Espace s f</code>)</h2>
+<p>Même liste, même filtre, même plafond — mais en <strong>modale</strong>, sans rien déplacer à l’écran. <code>↑</code> <code>↓</code> ou un clic choisissent, <code>Entrée</code> ou un second clic ouvrent. La sélection devient la saisie. Si le volet n’a jamais été ouvert, elle lit la liste à ce moment-là et affiche <code>…</code> en attendant.</p>
+<p>Ce qu’elle a en plus : le choix de la <strong><a href="/atlas-site/manuel/le-glossaire#base-de-comparaison">base de comparaison</a></strong>, c’est-à-dire l’autre bout du diff que le Code affichera.</p>
+<ul>
+<li>Le choix se fait dans un segment, sous le champ : <code>comparer à</code> puis les bases. La première est <code>courante · develop</code> : la ligne de base déclarée du projet, ce que la carte montre partout ailleurs. C’est le défaut, <strong>toujours</strong> — fermer la modale l’oublie : une comparaison est un coup d’œil, pas un réglage de l’écran.</li>
+<li>Les suivantes sont les lignes d’intégration qu’Atlas connaît (<code>develop</code>, <code>master</code>, <code>main</code>), sauf celle qui est déjà déclarée — deux choix pour le même diff, dont l’une promettrait un changement qu’elle ne fait pas.</li>
+<li><code>Tab</code> passe d’une base à l’autre, <code>Shift+Tab</code> en arrière (le pied le rappelle) ; le champ garde le focus.</li>
+</ul>
+<p>Une base <strong>absente de tous</strong> les repos de la feature s’affiche atténuée, avec sa raison au survol (<code>absente des repos de la feature : rien ne s'y comparerait</code>) — et reste <strong>choisissable</strong> : refuser le clic en silence serait un état de plus, celui qu’on ne comprend pas. Absente d’un seul repo, elle reste un choix qui a du sens : les autres se comparent.</p>
+<p>Le pied dit le terrain (<code>4 repos · 2 de la feature</code>), les repos qu’Atlas n’a pas pu lire (<code>projet-api — pas pu regarder : …</code>) et, dès qu’une base est imposée, ce qu’elle couvre : <code>⇄ comparé à master — 4 repos, 1 sans cette base</code>.</p>
+<blockquote>
+<p>⚠️ Le fichier est toujours <strong>lu</strong> à la ref qui fait foi ; seul change ce à quoi on le <strong>compare</strong>. Un repo hors feature n’est jamais comparé (il n’a pas de branche courante), et un repo où la base n’existe pas s’ouvre normalement. Dans le Code, la chip <code>⇄ comparé à master</code> le dit à côté de l’état — détail dans <a href="/atlas-site/manuel/le-code">Le Code</a>.</p>
+</blockquote>
+<h2 id="chercher-dans-le-contenu-des-fichiers-espace-s-g">Chercher dans le contenu des fichiers (<code>Espace s g</code>)</h2>
+<p>L’autre modale cherche une <strong>chaîne</strong> dans le contenu, là où le volet cherche un <strong>nom</strong>. C’est une recherche par <strong>texte littéral</strong> : pas une expression régulière, pas une preuve d’usage — un résultat est une ligne qui contient la chaîne. (Les <a href="/atlas-site/manuel/le-glossaire#usages">usages</a> d’un nom, c’est <code>Espace s d</code>, dans <a href="/atlas-site/manuel/le-code">Le Code</a>.)</p>
+<p>Deux caractères au moins, sinon la modale le dit et ne cherche pas (<code>2 caractères au moins</code>, en gris : c’est l’état normal de la première lettre, pas une erreur). Tant que ta saisie n’a <strong>aucune majuscule</strong>, la casse est ignorée, et l’écran l’annonce (<code>casse ignorée</code>) ; une majuscule et la recherche devient exacte.</p>
+<p>Chaque résultat donne <code>user.service.ts:42</code>, le chemin coupé (<code>projet-api/…/services/</code>), puis la ligne, la chaîne <strong>en gras</strong>. <code>↑</code> <code>↓</code> parcourent, <code>Entrée</code> ouvre le fichier dans le Code <strong>à cette ligne</strong>, et l’écran suit (le curseur de l’Arbre, la marque dans le volet). <code>Échap</code> ferme.</p>
+<p>Le compteur, à droite du champ, dit ce qu’il a trouvé : <code>12 occurrences</code>, <code>aucune occurrence</code>, ou <code>200 premières sur 3 412 — affine</code> quand la liste coupe — les repos de la feature d’abord. Si un repo n’a pas pu être lu, il est compté là (<code>· 1 repo pas pu regarder</code>) et nommé en pied, avec sa raison.</p>
+<p>Le <strong>terrain</strong> s’affiche dès l’ouverture, avant la première frappe. Chaque repo est cherché à la <strong>même ref</strong> que le volet le liste — la ligne trouvée existe donc là où <code>Entrée</code> l’ouvrira.</p>
+<h2 id="laperçu-à-droite-des-modales">L’aperçu, à droite des modales</h2>
+<p>Les trois recherches (<code>Espace s f</code>, <code>s g</code>, <code>s d</code>) ont une forme : titre, champ et compte en tête ; liste à gauche, aperçu à droite ; en pied, les touches puis le périmètre. Derrière le voile, rien ne part.</p>
+<p>Sa tête donne le chemin, le nom du fichier, la ligne visée le cas échéant, et <strong>d’où on lit</strong> : <code>lu à working tree</code>, <code>lu à origin/develop</code>, ou <code>d’où : pas pu regarder</code>. La base choisie s’y ajoute (<code>· ⇄ comparé à master</code>). Le corps montre une fenêtre d’environ soixante lignes, lignes ajoutées et supprimées comme dans le Code, la ligne visée marquée — cadrée au tiers de la hauteur : la ligne trouvée par la recherche, ou à défaut la première ligne changée ; rien à désigner, c’est le haut du fichier.</p>
+<p>Trois états, jamais deux : <code>choisis un fichier</code> quand rien n’est sélectionné, <code>…</code> pendant la lecture, et l’erreur <strong>en clair</strong> si elle échoue (<code>fichier vide</code>, <code>source introuvable</code>, ou le message du serveur). Il lit à l’<strong>arrêt</strong> de la sélection, pas à chaque pas : cinq <code>↓</code> d’affilée coûtent une lecture, pas cinq.</p>
+<p><code>PageDown</code> et <code>PageUp</code> font défiler l’aperçu sans quitter le champ.</p>
+<p>Ce volet montre <strong>exactement ce qu’<code>Entrée</code> ouvrira</strong> : mêmes refs, même base. Il se lit comme le Code, sans replis, ni fils, ni liens.</p>
+<h2 id="le-jumeau-chiffré--linventaire">Le jumeau chiffré : l’Inventaire</h2>
+<p>Si l’explorateur liste, l’Inventaire <strong>compte</strong> — et il ne compte que le <strong>diff</strong>, pas le chapeau. Il ne recalcule jamais rien de son côté : ses chiffres sont ceux du <a href="/atlas-site/manuel/le-glossaire#brief">brief</a> et des autres panneaux. Ce n’est pas un tableau de bord : aucune vélocité, aucune ligne par jour, rien qui ressemble à une note.</p>
+<p>En tête, un chiffre : les symboles du diff. En dessous, des blocs de barres proportionnelles ; chaque ligne est un <strong><a href="/atlas-site/manuel/le-glossaire#seau">seau</a></strong>, un tas nommé avec son effectif.</p>
+<ul>
+<li><strong>Fichiers par <a href="/atlas-site/manuel/le-glossaire#famille">famille</a></strong> — la famille de chaque fichier touché (service, composant, DTO, module, test…), telle que le moteur la reconnaît.</li>
+<li><strong>Symboles par <a href="/atlas-site/manuel/le-glossaire#couche">couche</a></strong> — la palette de l’Arbre (controller, service, repo, inter-service, helper, <a href="/atlas-site/manuel/le-glossaire#contrat">contrat</a> — le contrat étant une surface publique dont d’autres dépendent).</li>
+<li><strong>Symboles par <a href="/atlas-site/manuel/le-glossaire#grain">grain</a></strong> — le grain de chaque nœud : <code>method</code>, <code>accessor</code>, <code>function</code>, <code>type</code>, <code>const</code>, <code>data-class</code>, <code>class</code> (en-tête), <code>template</code>, <code>file</code> (<a href="/atlas-site/manuel/le-glossaire#noeud-fichier">nœud-fichier</a>). Sans grain, un nœud tombe sous <code>pas servi</code> : rien n’est deviné.</li>
+<li><strong>Flux</strong> — les entrées reconnues par <a href="/atlas-site/manuel/le-glossaire#declencheur">déclencheur</a> (HTTP, CRON, inter-service, UI, hook) ; les flux <strong>sans</strong> entrée reconnue sont dits à part (<code>⌁ 3 flux sans entrée reconnue — aucun appelant résolu, ce n'est pas une preuve qu'il n'y en a pas</code>).</li>
+<li><strong>Ce que ça produit</strong> — les sorties à valeur : aujourd’hui un contrat exposé ou un <a href="/atlas-site/manuel/le-glossaire#appel-reseau">appel réseau</a> vers un autre service.</li>
+<li><strong>À l’œil</strong> — les chiffres bruts sans barre : fichiers hors flux, méthodes touchées sans aucun appelant trouvé (<code>non atteint</code>), fichiers rangés <code>de côté</code>, flux qui subissent le changement par ricochet.</li>
+<li><strong>Ce que la carte ne montre pas</strong> — les angles morts : chaque endroit où le moteur s’est arrêté plutôt que de deviner, en un mot court (<code>remontée (cap)</code>, <code>appel ambigu</code>, <code>aucun lien prouvé</code>…). Détail dans <a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a>.</li>
+</ul>
+<h3 id="le-seau--non-classé-">Le seau « Non classé »</h3>
+<p>C’est la seule section actionnable : elle dit ce qui reste à déclarer. Un fichier y tombe quand aucune règle — ni de framework, ni de projet — ne reconnaît son nom ni son emplacement. Ce n’est pas une absence de famille : c’en est une, visible, plutôt qu’une dilution silencieuse dans « service ».</p>
+<p>Avant d’y tomber, Atlas nomme tout seul les suffixes <strong>structurels qui reviennent</strong> : si <code>.analyzer.ts</code> apparaît plusieurs fois sans qu’aucune règle ne le reconnaisse, il en dérive la famille <code>analyzer</code> — sans rien écrire dans ta configuration. Ce qui reste dans le seau est ce qu’aucune règle, ni déclarée ni dérivée, ne reconnaît. L’écran liste alors les motifs les plus fréquents (<code>.module.ts ×14</code>) sous la phrase <code>À déclarer dans .atlas-workspace/stack/*.json (clé « families ») pour les faire sortir de ce seau :</code>. La configuration est décrite dans <a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a>.</p>
+<h3 id="deux-accords-à-connaître">Deux accords à connaître</h3>
+<ul>
+<li><strong>Le total de symboles se décompose exactement en « à endosser + de côté ».</strong> Pas de troisième tas caché : un symbole du diff est soit dans ce qui reste à relire, soit rangé de côté. Les tests et leur décor n’y sont ni l’un ni l’autre — ils ne se comptent pas.</li>
+<li><strong>Le nombre de fichiers de l’Inventaire n’est PAS celui affiché en tête du volet.</strong> Le volet compte tout le chapeau ; l’Inventaire compte les fichiers <strong>touchés</strong>. Les deux sont justes, ils ne répondent pas à la même question.</li>
+</ul>
+<p>Un symbole compte <strong>par identité</strong> (<code>repo::fichier::symbole</code>), jamais par occurrence : l’Arbre affiche parfois le même symbole plusieurs fois (les « <a href="/atlas-site/manuel/le-glossaire#voir">voir ↑</a> »), et les compter à chaque apparition gonflerait le total selon la forme de l’arbre, pas selon le travail réel.</p>
+<h3 id="cliquer-un-seau--la-loupe-dinventaire">Cliquer un seau : la loupe d’inventaire</h3>
+<p>Chaque barre — et les chiffres cliquables du bloc <strong>À l’œil</strong> — retaille l’Arbre sur place : tout ce qui n’appartient pas au seau disparaît, les ancêtres nécessaires restent en échafaudage, atténués. Une bannière s’affiche en tête du volet gauche avec le compte ; quand le seau et l’Arbre ne disent pas le même nombre (un symbole appelé de plusieurs endroits y figure plusieurs fois), <strong>les deux</strong> chiffres sont donnés, avec la raison. Pour sortir : <code>← revenir à tout</code>, ou <code>Échap</code>. Une seule <a href="/atlas-site/manuel/le-glossaire#loupe">loupe</a> à la fois.</p>
+<h2 id="le--de-côté-">Le « de côté »</h2>
+<p>Un fichier ou un symbole peut être <strong>rangé de côté</strong> : vu, mais délibérément écarté de la relecture. Il arrive là par deux voies, jamais par un clic dans l’Arbre — soit il correspond à un motif déclaré dans la configuration (<code>defaultSetAside</code> : les stacks livrées y rangent par exemple les <code>*.json</code>), soit l’IA l’a proposé en annotant la feature (voir <a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l’IA lit et écrit</a>).</p>
+<p>À l’écran, ces lignes ne quittent pas l’Arbre : elles se replient sous un groupe <code>🗂 N de côté</code>, par repo. Elles sont atténuées et <strong>sans <a href="/atlas-site/manuel/le-glossaire#rond">rond</a></strong> de validation — « de côté » veut dire <em>écarté par construction de ce qui reste à relire</em>, donc rien à cocher.</p>
+<blockquote>
+<p>⚠️ Ce qui vit <strong>sous</strong> un nœud de côté ne l’est pas automatiquement. Ses enfants gardent leur rond, y compris repliés sous le groupe : replié, le rond dérivé du groupe est le seul signal qu’il reste du travail dedans.</p>
+</blockquote>
+<h2 id="les-tests--ça-se-lit-ça-ne-se-relit-pas">Les tests : ça se lit, ça ne se relit pas</h2>
+<p>Un test n’entre jamais dans ce qui reste à valider : ni rond, ni poids, et les touches de relecture (<code>0</code>, <code>1</code>-<code>4</code>, <code>?</code>) n’y font rien. Il ne devient jamais non plus une racine ni une étape de flux — sinon la carte se laisserait piloter par ses propres tests.</p>
+<p>Le grain n’est ni le fichier ni la fonction : c’est <strong>la phrase du cas</strong>. Sous le symbole qu’un fichier de test atteint, une ligne <code>🧪 N tests</code> regroupe les cas qui l’éprouvent ; le fichier s’ouvre dans le Code titres seuls. Un test sauté reste affiché, dit comme tel. Chaque cas a un état parmi quatre : il atteint un nœud de la carte · il vise une classe touchée mais une méthode <a href="/atlas-site/manuel/le-glossaire#hors-du-diff">hors du diff</a> · le récepteur n’a pas de type déclaré, donc <code>pas pu regarder</code> · tout est typé mais rien ne correspond. Un test ne franchit jamais une frontière de repo.</p>
+<p>Deux manques, sous « tests à déclarer » (<strong>Ce que la carte ne montre pas</strong>) : sans famille <code>test</code>, la spec reste un fichier ordinaire à relire ; famille <code>test</code> sans <a href="/atlas-site/manuel/le-glossaire#stack">stack</a> de test, le fichier perd rond et poids, sans ligne <code>🧪</code>.</p>
+<p><strong>Le <a href="/atlas-site/manuel/le-glossaire#decor-de-test">décor de test</a></strong> : un fichier de données simulées importé <strong>uniquement</strong> par des tests ou par l’infrastructure de test porte la puce <code>🧪 décor de test</code>, perd son rond et son poids, et reste visible. Ce qui décide, c’est <strong>qui l’importe</strong>, jamais son nom : importé aussi par un service, il redevient un fichier à relire ; importé par personne, il le reste aussi (c’est peut-être du code mort).</p>
+<h2 id="le-poids">Le poids</h2>
+<p>Le poids — combien de <strong>lignes ajoutées</strong> il reste à lire, pas combien de symboles — ne s’écrit sur aucune ligne de l’Arbre. Il se lit à deux endroits : le compte de chaque étage en vue par fichier (<code>3/7 · 128 l.</code>, voir <a href="/atlas-site/manuel/l-arbre">L’Arbre</a>) et le total du panneau <a href="/atlas-site/manuel/relire-et-endosser">Relecture</a>. Quand git ne peut pas répondre (un fichier non suivi, un diff en échec), le poids est <strong>inconnu</strong> — jamais zéro, qui se lirait « rien à relire ».</p>
+<h2 id="raccourcis">Raccourcis</h2>
+<p>Tout passe par la <a href="/atlas-site/manuel/le-glossaire#touche-maitresse">touche maîtresse</a> <code>Espace</code>, qui ouvre la boîte des raccourcis : une lettre choisit une colonne de l’écran, la suivante agit. Le détail est dans <a href="/atlas-site/manuel/le-clavier">Le clavier</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Touche / geste</th>
+<th>Effet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Espace v f</code></td>
+<td>Ouvre le volet sur Fichiers et met le focus dans le champ — ou referme le volet si tu y es déjà.</td>
+</tr>
+<tr>
+<td><code>Espace v i</code></td>
+<td>Ouvre le volet sur Inventaire, ou le referme.</td>
+</tr>
+<tr>
+<td><code>Espace s f</code></td>
+<td>Ouvre un fichier par son nom, en modale, avec le choix de la base de comparaison.</td>
+</tr>
+<tr>
+<td><code>Espace s g</code></td>
+<td>Cherche une chaîne dans le contenu des fichiers, en modale.</td>
+</tr>
+<tr>
+<td><code>↑</code> <code>↓</code> puis <code>Entrée</code></td>
+<td>Choisissent et ouvrent, dans le volet comme dans les modales.</td>
+</tr>
+<tr>
+<td><code>Tab</code> / <code>Shift+Tab</code></td>
+<td>Font tourner la base de comparaison (modale des fichiers).</td>
+</tr>
+<tr>
+<td><code>PageDown</code> / <code>PageUp</code></td>
+<td>Font défiler l’aperçu, sans quitter le champ.</td>
+</tr>
+<tr>
+<td><code>Échap</code></td>
+<td>Vide le champ du volet, ou ferme la modale.</td>
+</tr>
+<tr>
+<td>Clic sur un seau de l’Inventaire</td>
+<td>Retaille l’Arbre sur ce seau ; <code>← revenir à tout</code> ou <code>Échap</code> pour sortir.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</h2>
+<ul>
+<li>Il ne cherche jamais par expression régulière : la recherche de contenu est du texte littéral, et elle le dit.</li>
+<li>Il ne prétend pas qu’un résultat de recherche est un usage : c’est une ligne qui contient la chaîne, rien de plus.</li>
+<li>Il ne lit jamais un repo hors feature à son working tree : il le lit à sa ligne de base, et le dit sur sa ligne.</li>
+<li>Il n’invente pas une ref pour un repo sans ligne de base : il affiche <code>pas pu regarder</code> et la raison, plutôt qu’une liste vide.</li>
+<li>Il ne nomme jamais tout seul un motif « <a href="/atlas-site/manuel/le-glossaire#non-classe">non classé</a> » dans ta configuration : il propose un nom probable, tu tranches.</li>
+<li>Il ne range rien « de côté » depuis un clic : ça se déclare en configuration, ou ça vient de l’IA.</li>
+<li>Il ne relit jamais un test à ta place, et n’en fait ni une racine, ni une étape de flux.</li>
+<li>Il ne devine pas un poids que git ne sait pas calculer : il dit « inconnu », il n’invente pas un chiffre.</li>
+</ul>
+<h2 id="limites-connues">Limites connues</h2>
+<ul>
+<li>Le filtre par nom et la recherche de contenu coupent à 200 résultats. Le plafond est dit, avec le total trouvé, mais il n’y a pas de « page suivante » : il faut affiner la saisie.</li>
+<li>Le poids ne compte que les lignes <strong>ajoutées</strong>. Un refactor qui supprime 200 lignes sans en ajouter pèse zéro à relire — c’est assumé : compter les suppressions demanderait de définir ce que « relire un retrait » veut dire.</li>
+<li>La liste des fichiers ne se rafraîchit pas toute seule : elle est lue une fois par feature, et les deux modales lisent la même. Un fichier créé depuis n’apparaît qu’après <code>↻</code>.</li>
+</ul>
+<nav class="suite" aria-label="Page suivante et précédente"><a href="/atlas-site/manuel/relire-et-endosser"><small>← précédent</small>Relire et endosser</a><a class="droite" href="/atlas-site/manuel/le-panneau-git"><small>suivant →</small>Le panneau Git</a></nav></article><nav class="cote toc" aria-label="Sur cette page"><h2>Sur cette page</h2><ul><li><a href="#le-volet-fichiers--lexplorateur-du-chapeau">Le volet Fichiers : l’explorateur du chapeau</a></li><li><a class="h3" href="#le-diff-marqué-en-place">Le diff, marqué en place</a></li><li><a class="h3" href="#où-chaque-repo-est-lu-et-quand-atlas-ne-peut-pas">Où chaque repo est lu, et quand Atlas ne peut pas</a></li><li><a class="h3" href="#le-curseur">Le curseur</a></li><li><a href="#ouvrir-un-fichier-par-son-nom-espace-s-f">Ouvrir un fichier par son nom (Espace s f)</a></li><li><a href="#chercher-dans-le-contenu-des-fichiers-espace-s-g">Chercher dans le contenu des fichiers (Espace s g)</a></li><li><a href="#laperçu-à-droite-des-modales">L’aperçu, à droite des modales</a></li><li><a href="#le-jumeau-chiffré--linventaire">Le jumeau chiffré : l’Inventaire</a></li><li><a class="h3" href="#le-seau--non-classé-">Le seau « Non classé »</a></li><li><a class="h3" href="#deux-accords-à-connaître">Deux accords à connaître</a></li><li><a class="h3" href="#cliquer-un-seau--la-loupe-dinventaire">Cliquer un seau : la loupe d’inventaire</a></li><li><a href="#le--de-côté-">Le « de côté »</a></li><li><a href="#les-tests--ça-se-lit-ça-ne-se-relit-pas">Les tests : ça se lit, ça ne se relit pas</a></li><li><a href="#le-poids">Le poids</a></li><li><a href="#raccourcis">Raccourcis</a></li><li><a href="#ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</a></li><li><a href="#limites-connues">Limites connues</a></li></ul></nav></main><footer class="pied"><div class="dedans"><span>Atlas — suivi et validation de code.</span><a href="/atlas-site/manuel/prise-en-main">Manuel</a></div></footer><script>
+    document.getElementById('theme-bt')?.addEventListener('click', () => {
+      const r = document.documentElement;
+      // clair → sombre → système, et le tour recommence. « Système » RETIRE la clé : c'est ce qui
+      // rend le choix distinct d'une absence de choix.
+      const suite = { clair: 'sombre', sombre: '', '': 'clair' };
+      const v = suite[r.dataset.theme || ''];
+      if (v) { r.dataset.theme = v; try { localStorage.setItem('atlas-site-theme', v); } catch {} }
+      else { delete r.dataset.theme; try { localStorage.removeItem('atlas-site-theme'); } catch {} }
+    });
+  </script></body></html>

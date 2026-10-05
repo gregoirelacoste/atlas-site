@@ -1,0 +1,477 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Le panneau Git · Atlas</title><meta name="description" content="Le bandeau du bas, seul endroit d'Atlas où l'on parle de git : ce que tu n'as pas commité, où vivent les branches de la feature, et la conversation de sa review."><link rel="canonical" href="https://gregoirelacoste.github.io/atlas-site/manuel/le-panneau-git"><meta property="og:title" content="Le panneau Git · Atlas"><meta property="og:description" content="Le bandeau du bas, seul endroit d'Atlas où l'on parle de git : ce que tu n'as pas commité, où vivent les branches de la feature, et la conversation de sa review."><meta property="og:type" content="website"><meta property="og:url" content="https://gregoirelacoste.github.io/atlas-site/manuel/le-panneau-git"><meta name="twitter:card" content="summary"><link rel="icon" href="/atlas-site/favicon.svg" type="image/svg+xml"><script>
+    (() => { try { const t = localStorage.getItem('atlas-site-theme');
+      if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t; } catch {} })();
+  </script><link rel="stylesheet" href="/atlas-site/_astro/Base.D32RNicN.css"></head><body><header class="tete"><a class="marque" href="/atlas-site">🗺️ Atlas</a><nav><a href="/atlas-site/installer">Installer</a><a href="/atlas-site/manuel/prise-en-main" aria-current="page">Manuel</a><a href="/atlas-site/articles">Écrits</a><button class="theme-bt" id="theme-bt" type="button" aria-label="Changer de thème">◐</button></nav></header><main class="doc"><nav class="cote" aria-label="Le manuel"><h2>Le manuel</h2><ol><li><a href="/atlas-site/manuel/prise-en-main">Prise en main</a></li><li><a href="/atlas-site/manuel/l-arbre">L&#39;Arbre</a></li><li><a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a></li><li><a href="/atlas-site/manuel/le-code">Le Code</a></li><li><a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a></li><li><a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et inventaire</a></li><li><a href="/atlas-site/manuel/le-panneau-git" aria-current="page">Le panneau Git</a></li><li><a href="/atlas-site/manuel/le-tableau">Le Tableau</a></li><li><a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a></li><li><a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a></li><li><a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a></li><li><a href="/atlas-site/manuel/brancher-l-ia">Brancher l&#39;IA</a></li><li><a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l&#39;IA lit et écrit</a></li><li><a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a></li><li><a href="/atlas-site/manuel/la-ligne-de-commande">La ligne de commande</a></li><li><a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a></li><li><a href="/atlas-site/manuel/le-clavier">Le clavier</a></li><li><a href="/atlas-site/manuel/les-precedents">Les précédents</a></li><li><a href="/atlas-site/manuel/les-decisions-metier">Les décisions métier</a></li><li><a href="/atlas-site/manuel/le-glossaire">Le glossaire</a></li><li><a href="/atlas-site/manuel/la-recette">La recette</a></li><li><a href="/atlas-site/manuel/deposer-une-recette">Déposer une recette</a></li><li><a href="/atlas-site/manuel/la-vue-d-ensemble">La vue d&#39;ensemble</a></li></ol></nav><article class="corps"><h1>Le panneau Git</h1><p class="chapo">Le bandeau du bas, seul endroit d&#39;Atlas où l&#39;on parle de git : ce que tu n&#39;as pas commité, où vivent les branches de la feature, et la conversation de sa review.</p><blockquote>
+<p>Le bandeau du bas, seul endroit d’Atlas où l’on parle de git : ce que tu n’as pas commité, où
+vivent les branches de la feature, et la conversation de sa review.</p>
+</blockquote>
+<p>Atlas <strong>lit</strong> git ; ses rares gestes partent toujours d’un clic.
+Deux mots reviennent ici. Une <strong><a href="/atlas-site/manuel/le-glossaire#feature">feature</a></strong>, c’est un ticket : un identifiant (<code>PROJ-412</code>), les branches
+qui le portent, et la <a href="/atlas-site/manuel/le-glossaire#carte">carte</a> qu’Atlas en reconstruit. Le <strong><a href="/atlas-site/manuel/le-glossaire#workspace">workspace</a></strong>, c’est le dossier <a href="/atlas-site/manuel/le-glossaire#chapeau">chapeau</a> qui
+héberge ces repos côte à côte, plus le dossier <code>.atlas-workspace/</code> où Atlas écrit ce que tu déclares.</p>
+<h2 id="ouvrir-fermer-changer-de-mode">Ouvrir, fermer, changer de mode</h2>
+<p>Chaque mode a son accord — <code>Espace g l</code>, <code>Espace g b</code>, <code>Espace g r</code> (la boîte des raccourcis est décrite
+dans <a href="/atlas-site/manuel/le-clavier">Le clavier</a>) — qui <strong>l’affiche directement</strong> et ouvre le panneau s’il était
+replié. La lettre du mode <strong>déjà affiché</strong> masque le panneau.</p>
+<p>Replié, il tient en <strong>une ligne</strong> : <code>Git</code>, <strong>son périmètre</strong> (<code>feature · 3 repos</code>, ou <code>chapeau · 27 repos</code> sans feature), puis <code>mergée sur 1/3</code>, <code>1 à pousser</code>, <code>5 en retard</code> ou <code>à jour</code>, et <code>modifs locales : 3</code> — chaque fait avec une icône, sur les seuls repos de la feature (<code>feature · …</code> avant
+leur lecture). À droite, les touches utiles.</p>
+<p>Ouvert, il prend <strong>40 % de la hauteur</strong> au plus. Dessous, les trois modes en <strong>segment</strong>, puis la
+feature et ses gestes. <code>Tab</code> enchaîne les modes dans l’ordre affiché (le panneau prend le focus à l’ouverture).</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Ce qu’il répond</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><a href="/atlas-site/manuel/le-glossaire#local">Local</a></strong></td>
+<td>qu’est-ce qui n’est pas commité, dans tous mes dossiers de travail ?</td>
+</tr>
+<tr>
+<td><strong>Branches &amp; repos</strong></td>
+<td>où vivent les branches de cette feature, et sont-elles rentrées ?</td>
+</tr>
+<tr>
+<td><strong><a href="/atlas-site/manuel/le-glossaire#revue">Revue</a></strong></td>
+<td>qu’est-ce qui s’est dit sur les reviews de l’<a href="/atlas-site/manuel/le-glossaire#hebergeur">hébergeur</a> ? Le nombre de fils non résolus suit son nom.</td>
+</tr>
+</tbody>
+</table>
+<p><code>Local</code> est le mode par défaut, et <strong>le dernier mode choisi est retenu sur cette machine</strong>. Les
+pages ▦ Tableau et ⚙️ Config masquent le panneau entier ; tant qu’elles sont ouvertes, tout accord Git
+est grisé dans la boîte (<em>« pas sur une page »</em>), et <code>Échap</code> referme la page, jamais le panneau.</p>
+<p><strong>La feature ne se choisit pas ici.</strong> La rangée des modes la <em>nomme</em> (<code>feature PROJ-412</code>, son titre).
+Pour en changer, ou pour retrouver une feature terminée, passe par le <a href="/atlas-site/manuel/le-tableau">Tableau</a>. Le
+seul geste de sélection qui reste ici est <strong><code>⊘ tous les repos</code></strong> : il quitte la feature et bascule le
+panneau sur l’inventaire de tous les repos du workspace (plus bas).</p>
+<p><code>↻ Rafraîchir</code>, à droite de la barre, lance <code>git fetch origin --prune</code> — sur les repos de la feature,
+ou sur tous les membres s’il n’y en a pas. Il <strong>révèle</strong> l’écart avec <code>origin</code>, il ne l’intègre pas,
+et il dit ce qu’il a ramené (<code>fetch : déjà à jour</code>). Un fetch qui échoue nomme les repos en échec,
+avec le message de git.</p>
+<h2 id="local--ce-qui-nest-encore-nulle-part">Local — ce qui n’est encore nulle part</h2>
+<p>C’est la vue « Commit » d’un IDE, à une différence près : elle couvre <strong>tous les checkouts du
+chapeau</strong> — le dossier principal de chaque <a href="/atlas-site/manuel/le-glossaire#repo">repo</a> <em>et</em> chaque <a href="/atlas-site/manuel/le-glossaire#worktree">worktree</a> lié. Elle bat toutes les
+5 secondes tant qu’elle est à l’écran.</p>
+<p>En tête : <code>12 fichiers non commités dans 3 dossiers</code>, le nombre de checkouts réellement lus
+(survole-le : il les liste), l’heure de la dernière lecture (<code>lu à 18:46:11</code>), et un <code>↻</code> qui relit tout de suite.</p>
+<p>Dessous, deux groupes — <strong>Modifiés</strong> et <strong>Non suivis</strong> — puis, dans chacun, le checkout, ses dossiers
+(les chaînes vides sont compactées) et ses fichiers. Chaque ligne de checkout porte son nom de
+<a href="/atlas-site/manuel/le-glossaire#branche">branche</a>, le ticket qu’elle contient (mis en valeur quand c’est la feature ouverte), et <code>worktree</code>
+quand ce n’est pas le dossier principal. Tout se replie au clic, et les replis survivent au battement.
+Une chaîne de dossiers trop longue se coupe au milieu (le chemin entier en infobulle).</p>
+<p>L’état d’un fichier est une lettre, celle de git :</p>
+<table>
+<thead>
+<tr>
+<th>Lettre</th>
+<th>État</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>M</code></td>
+<td>modifié</td>
+</tr>
+<tr>
+<td><code>A</code></td>
+<td>ajouté à l’index</td>
+</tr>
+<tr>
+<td><code>D</code></td>
+<td>supprimé</td>
+</tr>
+<tr>
+<td><code>R</code></td>
+<td>renommé (l’ancien nom s’affiche derrière une flèche)</td>
+</tr>
+<tr>
+<td><code>T</code></td>
+<td>type changé</td>
+</tr>
+<tr>
+<td><code>?</code></td>
+<td>non suivi — jamais commité</td>
+</tr>
+<tr>
+<td><code>C</code></td>
+<td>en conflit</td>
+</tr>
+</tbody>
+</table>
+<p>Un fichier déjà indexé porte en plus <code>index</code>, ou <code>index + arbre</code> quand les deux versions diffèrent.</p>
+<p><strong>Un clic ouvre le fichier dans le <a href="/atlas-site/manuel/le-code">Code</a></strong>, en <a href="/atlas-site/manuel/le-glossaire#diff">diff</a> <code>HEAD</code> → working tree de <em>ce</em>
+checkout. L’en-tête y répète d’où il vient : le dossier, la branche, le ticket, l’état du fichier.
+Seul cas sans diff : un worktree en HEAD détaché, qu’Atlas ne sait pas désigner par une branche — il
+le dit et te renvoie à ton client git.</p>
+<blockquote>
+<p>⚠️ <strong>Un échec de lecture ne rend jamais « propre ».</strong> Une pastille rouge le dit en tête — <em>je n’ai
+pas pu relire le local</em> — et ce qui reste affiché est la <strong>dernière lecture réussie</strong>, datée à droite
+(<code>dernière lecture : il y a 3 min</code>).
+Idem par dossier : un checkout illisible compte dans <code>N dossiers illisibles — je n'ai pas pu regarder</code>, avec la raison en infobulle.</p>
+</blockquote>
+<p>Aucun bouton n’écrit ici. Stage, commit, push, restauration : ton client git.</p>
+<h2 id="branches--repos">Branches &amp; repos</h2>
+<p>Deux colonnes : les repos à gauche, l’historique du repo sélectionné à droite.</p>
+<h3 id="une-ligne-par-branche-qui-porte-le-ticket">Une ligne par branche qui porte le ticket</h3>
+<p>Chaque repo affiche le carré de couleur de <strong>son fil dans l’Arbre</strong>, son nom, la <strong>ligne</strong> contre laquelle il se juge (<code>develop</code>, <code>master</code>, <code>main</code>… ou
+<code>aucune ligne</code> quand le repo n’en a aucune), puis <strong>une rangée par branche portant l’identifiant du
+ticket</strong>. Quand il y en a plusieurs — la feat, puis le fix refait sous le même numéro —, c’est la
+<strong><a href="/atlas-site/manuel/le-glossaire#lignee">lignée</a></strong> : les branches rangées de l’apport le plus ancien au plus récent, numérotées <code>①</code>, <code>②</code>, <code>③</code>.</p>
+<p><strong>Cliquer un <a href="/atlas-site/manuel/le-glossaire#rang">rang</a> le lit partout</strong> : <code>②</code> dans tous les repos qui en ont un. C’est un choix de
+<em>lecture</em>, personnel à ta machine ; rien n’est écrit dans la configuration partagée. La carte,
+l’historique et l’en-tête suivent aussitôt, et la barre porte <code>rang ② forcé · revenir à auto</code> — sauf
+quand ça ne change rien (un ticket à une branche par repo).</p>
+<p>Un repo sans ce rang sort de la carte et le dit (<code>doc · pas de ②</code>) ; si plus aucun repo ne l’a, la
+barre l’annonce plutôt que de laisser une carte vide.</p>
+<p>Quand personne n’a cliqué de rang, la branche lue porte la chip <strong><code>lue d’office</code></strong>, dont l’infobulle
+donne la règle appliquée :</p>
+<table>
+<thead>
+<tr>
+<th>Raison</th>
+<th>Ce qu’elle veut dire</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>la plus avancée de la lignée</td>
+<td>elle contient les autres</td>
+</tr>
+<tr>
+<td>à tips égaux, le dossier qui porte du non-commité</td>
+<td>deux noms sur le même commit : le travail en cours tranche</td>
+</tr>
+<tr>
+<td>à tips égaux, celle qui est sortie dans le dossier principal</td>
+<td>à défaut de non-commité</td>
+</tr>
+<tr>
+<td>un override de Config › Feature, commité</td>
+<td>quelqu’un l’a fixé dans la configuration partagée</td>
+</tr>
+</tbody>
+</table>
+<p>Des <strong><a href="/atlas-site/manuel/le-glossaire#versions-paralleles">versions parallèles</a></strong> (aucune ne contient l’autre) ne se numérotent pas : en italique,
+marquées <code>version</code>, un clic lit celle-là pour ce repo (l’override de <a href="/atlas-site/manuel/configurer-un-projet">Config › Feature</a>).</p>
+<h3 id="les-chips--un-fait-chacune">Les chips : un fait chacune</h3>
+<p>Chaque chip est un mot précédé d’une petite icône. Seule la ligne rentrée est en couleur — le vert
+de la base ; le reste n’est pas une alerte et reste neutre.</p>
+<table>
+<thead>
+<tr>
+<th>Chip</th>
+<th>Le fait</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>repo</code></td>
+<td>sortie dans le dossier principal du repo</td>
+</tr>
+<tr>
+<td><code>worktree</code></td>
+<td>sortie dans un worktree lié</td>
+</tr>
+<tr>
+<td><code>origin seul</code></td>
+<td>sur origin seulement, pas sortie ici</td>
+</tr>
+<tr>
+<td><code>pas sortie</code></td>
+<td>locale, sortie nulle part</td>
+</tr>
+<tr>
+<td><code>develop</code> (ou <code>develop, master</code>), en vert</td>
+<td>rentrée, et un merge le prouve</td>
+</tr>
+<tr>
+<td><code>rien hors de develop</code></td>
+<td>plus rien en propre, mais aucun merge trouvé : fast-forward, ou branche sans commit à elle</td>
+</tr>
+<tr>
+<td><code>7 pas mergés</code></td>
+<td>7 commits pas encore dans la ligne</td>
+</tr>
+<tr>
+<td><code>? pas mergés</code></td>
+<td>je n’ai pas pu compter — ligne illisible</td>
+</tr>
+<tr>
+<td><code>3 à pousser</code></td>
+<td>3 commits qu’origin n’a pas</td>
+</tr>
+<tr>
+<td><code>jamais poussée</code></td>
+<td>origin ne connaît pas cette branche</td>
+</tr>
+<tr>
+<td><code>origin ne l'a plus</code></td>
+<td>origin a supprimé sa copie : réécrite depuis (squash, rebase)</td>
+</tr>
+<tr>
+<td><code>2 modifs</code></td>
+<td>non commité, dans ce dossier</td>
+</tr>
+<tr>
+<td><code>5 en retard</code></td>
+<td>origin a des commits que ce dossier n’a pas</td>
+</tr>
+<tr>
+<td><code>supprimée</code></td>
+<td>branche supprimée après son merge ; la carte est reconstituée depuis le merge</td>
+</tr>
+</tbody>
+</table>
+<p><code>develop</code> et <code>rien hors de develop</code> ne disent pas la même chose : le premier tient le commit de merge — donc la <a href="/atlas-site/manuel/le-glossaire#fourche">fourche</a>
+d’avant, donc la carte se réaffiche —, le second constate seulement qu’il ne reste rien hors de la
+base. Atlas ne conclut pas à un merge qu’il n’a pas vu. Et <code>à pousser</code> ne s’affiche jamais sur une
+branche déjà rentrée.</p>
+<p>Sous <code>rien hors de…</code>, la carte se rouvre quand même si les commits de la feature la <strong>citent</strong> à la suite sur la
+ligne : le ticket n’importe où dans le sujet, ou, pour un id nommé, son numéro en tête (<code>209-…</code> → un
+sujet qui commence par <code>209</code>). Elle repart du commit qui précède le premier d’entre eux. Un commit
+d’une autre feature au milieu, ou la citation qui manque, et rien n’est deviné : la carte reste vide,
+dit pourquoi, et l’angle mort <em>fourche introuvable</em> la compte (<a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a>).</p>
+<p>Quand le dossier principal d’un repo est sur autre chose que la branche du ticket, une note le dit
+sous les rangées : <code>feat/PROJ-98 · 2 modifs · 1 à pousser</code>.</p>
+<h3 id="les-gestes-de-la-barre">Les gestes de la barre</h3>
+<p>Des boutons à bord, à côté de la feature : un geste qui écrit dans git n’est jamais le plus voyant.</p>
+<ul>
+<li><strong><code>Basculer 2 repos sur PROJ-412</code></strong> : un <code>git checkout</code> par repo, sur la branche du ticket. Il
+n’apparaît que là où git l’acceptera — jamais sur une ref <code>origin/…</code>, jamais sur une branche déjà
+sortie dans un worktree. Et il refuse lui-même un dossier sale, en disant que les modifications
+suivraient sur l’autre branche.</li>
+<li><strong><code>Mettre à jour N repos</code></strong> : <code>git pull --ff-only</code> sur les repos déjà sur leur branche, en
+retard et propres. Si git refuse, son message arrive verbatim.</li>
+<li><strong><code>+ adopter</code></strong> : un repo porte une branche du ticket sans être déclaré dans la feature ; le bouton
+l’ajoute. Un repo déclaré dont la branche n’existe pas encore affiche <code>pas de branche</code>.</li>
+</ul>
+<h3 id="lhistorique">L’historique</h3>
+<p>À droite, le log du repo sélectionné, avec son graphe de couloirs. Par défaut il est <strong>focalisé</strong> :
+les branches du ticket et la base, chacune sous ses deux formes (locale et <code>origin/…</code>). L’en-tête
+annonce ce qui est réellement parcouru — pas ce qui a été demandé — et la légende donne une couleur à
+la base et une à chaque rang. Un badge de branche du ticket se clique aussi : il lit ce rang partout.
+<code>toutes les branches</code> élargit le scope, <code>focus feature</code> revient ; à chaque ouverture du panneau,
+on repart en focalisé.</p>
+<p>Une couleur par rôle, la même partout : <strong>la base en vert</strong>, la branche <code>①</code> en <strong>bleu</strong>, les rangs
+suivants à d’autres teintes, le reste en gris ; la ref sortie dans le dossier principal est en gras.
+Au-delà d’un jour, une date s’écrit avec l’heure (<code>30/09 15:45</code>) : elle ordonne les commits d’un même jour.</p>
+<p>À la sélection d’un repo, l’historique défile jusqu’au <strong>dernier commit de la branche lue</strong>. Un
+commit local qu’aucune remote ne connaît porte <code>à pousser</code>. Un commit écrit en <em>conventional commit</em>
+avec un scope (<code>feat(auth): …</code>) porte ce scope en étiquette devant son sujet (<code>auth</code>) — une étiquette,
+jamais un lien : elle ne désigne aucun code. Un clic sur une rangée déplie les
+fichiers du commit. En bas, <code>… historique tronqué (150 commits) — tout l'historique reste dans git</code>
+quand la fenêtre ne suffit pas.</p>
+<p><strong>La fourche</strong> — le commit d’où part le diff que la carte te montre — est marquée <code>fourche</code> (avec son
+icône de branchement) sur sa rangée, à la couleur de son propre couloir. Atlas compare toujours la feature à ce commit-là, quoi
+que la base fasse ensuite. Elle n’est pas toujours visible, et le pied de l’historique le dit :</p>
+<table>
+<thead>
+<tr>
+<th>Ce que tu lis</th>
+<th>Ce que ça veut dire</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>fourche</code> sur une rangée</td>
+<td>elle est dans les commits chargés</td>
+</tr>
+<tr>
+<td><code>la fourche … est plus ancienne que les 150 commits affichés</code></td>
+<td>elle existe, elle est hors fenêtre — <em>le diff en part quand même</em></td>
+</tr>
+<tr>
+<td><code>je n'ai pas pu lire la fourche … (git n'a rendu aucune merge-base)</code></td>
+<td><em>le diff part du sommet de la base</em></td>
+</tr>
+<tr>
+<td>rien</td>
+<td>ce repo n’est pas de la feature : la question ne se pose pas</td>
+</tr>
+</tbody>
+</table>
+<p>Enfin, <code>chercher un sha</code> cherche un commit <strong>dans tous les repos du workspace</strong> (quatre caractères minimum) ;
+rien trouvé se dit, avec la raison possible — un commit jamais récupéré.</p>
+<h2 id="-tous-les-repos--linventaire-des-checkouts">⊘ Tous les repos — l’inventaire des checkouts</h2>
+<p>Clique <code>⊘ tous les repos</code> : la colonne de gauche liste <strong>chaque dossier de travail du chapeau</strong>,
+principal et worktrees, avec son verdict. Ceux qui ont quelque chose à dire passent devant. En tête,
+le compte : <code>12 repos + 2 worktrees · 3 avec du non-commité · 1 à pousser · 2 worktrees obsolètes</code>. La barre du bas dit alors <code>chapeau · 12 repos</code>.</p>
+<p>Aux chips déjà vues s’en ajoutent trois :</p>
+<table>
+<thead>
+<tr>
+<th>Chip</th>
+<th>Le fait</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>à déployer</code></td>
+<td>rentrée dans la ligne d’intégration, pas encore en production</td>
+</tr>
+<tr>
+<td><code>obsolète</code></td>
+<td>worktree propre dont la branche est mergée : plus rien dedans que la base n’ait déjà</td>
+</tr>
+<tr>
+<td><code>toujours dessus</code></td>
+<td>le repo principal est resté sur une branche mergée — rien à retirer, le dossier <em>est</em> le repo</td>
+</tr>
+</tbody>
+</table>
+<p>Sous la liste, les dossiers morts sont <strong>nommés</strong>, avec la commande prête à copier : <code>git -C &lt;repo&gt; worktree remove &lt;chemin&gt;</code>. Atlas ne la lance pas. Un worktree mergé qui porte encore du non-commité
+n’est jamais déclaré obsolète.</p>
+<h2 id="revue--la-conversation-des-reviews">Revue — la conversation des reviews</h2>
+<p><strong>GitLab et GitHub valent la même chose ici.</strong> Atlas lit la conversation chez l’hébergeur et la rend
+<strong>dans l’ordre où elle s’est déroulée</strong>, par repo : un séparateur <em>X a poussé 3 commits</em>, puis les
+fils ouverts pendant que ce push était en tête, en cartes (celles du Code), puis le push suivant. Rien n’est mis en cache : <code>↻</code> relit.</p>
+<p>Un seul mot change, et il vient de l’hébergeur du repo : GitLab dit « <a href="/atlas-site/manuel/le-glossaire#merge-request">merge request</a> » (<code>!12</code>), GitHub
+« pull request » (<code>#12</code>) ; à cheval sur les deux, ou sans hébergeur lu, l’écran dit <strong>review</strong>.</p>
+<p>En tête, une rangée <code>Ouvrir :</code> liste <strong>toutes</strong> les reviews de la feature — numéro, titre, lien
+externe. Chaque bloc de repo reporte le même lien, plus un compte (<code>4 fils · 1 non résolu</code>), plus la
+<strong><a href="/atlas-site/manuel/le-glossaire#chip-d-integration">chip d’intégration</a></strong> : <code>mergé</code> (coche, en vert) ou <code>rien hors de develop</code>, la même que dans le mode Branches,
+avec la même preuve. Elle vient de <strong>git</strong>, jamais du statut affiché par l’hébergeur.</p>
+<blockquote>
+<p>⚠️ <strong>Chez GitHub, chaque commit est rendu comme une poussée.</strong> GitHub ne versionne pas son diff : la
+frise a la même forme des deux côtés, mais elle ne raconte pas la même chose. L’infobulle d’un push
+le dit — ce n’est pas un regroupement d’Atlas.</p>
+</blockquote>
+<p><strong>« Résolu » est le verdict de l’auteur du code chez l’hébergeur — ce n’est pas ta validation.</strong> Un
+<a href="/atlas-site/manuel/le-glossaire#fil">fil</a> résolu le dit en mot (<code>résolu par …</code>) et reste déroulé dans la Revue. Ce que <em>tu</em> as relu et endossé
+est un autre axe, décrit dans <a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a>.</p>
+<p>Ce que la vue refuse de taire : une branche poussée sans review (<code>aucune MR</code>, une fois, la branche à
+côté du nom),
+les notes non plaçables (<code>2 notes [hors du diff](/atlas-site/manuel/le-glossaire#hors-du-diff) — discussion générale de pull request, ou position illisible</code>), une lecture <strong>plafonnée</strong> — dite à part de l’erreur : on a lu quelque chose, et ce n’est
+peut-être pas tout —, un repo illisible (son message d’erreur, jamais « 0 fil »), et l’impossibilité
+de savoir qui tu es chez l’hébergeur.</p>
+<p>Les fils de la Revue se retrouvent aussi sur les nœuds de l’<a href="/atlas-site/manuel/le-glossaire#arbre">Arbre</a>, dans le <a href="/atlas-site/manuel/le-code">Code</a> (marqués <code>MR</code>) et dans le <a href="/atlas-site/manuel/le-glossaire#journal">Journal</a> — leur écriture
+et leur publication : <a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a>.</p>
+<h2 id="le-git-du-workspace-partagé">Le git du workspace partagé</h2>
+<p><code>.atlas-workspace/</code> porte ce que tu <strong>déclares</strong> : endossements, fils, specs. Le partager, c’est le
+versionner, depuis <strong>Config › Projet</strong> (<a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a>),
+qui dit un <strong>état</strong> en une phrase :</p>
+<table>
+<thead>
+<tr>
+<th>État</th>
+<th>Ce qui s’affiche</th>
+<th>Le geste</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pas un dépôt</td>
+<td><code>ce workspace n'est pas partagé — il n'est pas encore un dépôt git</code></td>
+<td><code>Faire un dépôt…</code></td>
+</tr>
+<tr>
+<td>sans distant</td>
+<td><code>versionné, mais sans dépôt distant : personne d'autre ne le voit</code></td>
+<td><code>Brancher un dépôt distant</code></td>
+</tr>
+<tr>
+<td>en retard, ou croisé</td>
+<td><code>des collègues ont écrit — Atlas le tire…</code></td>
+<td>aucun : le tour suivant le fait</td>
+</tr>
+<tr>
+<td>à envoyer</td>
+<td><code>tu as du travail que personne d'autre ne voit encore</code></td>
+<td><code>Partager</code></td>
+</tr>
+<tr>
+<td>bloqué</td>
+<td><code>bloqué par un état fait hors d'Atlas…</code></td>
+<td>la commande affichée</td>
+</tr>
+<tr>
+<td>à jour</td>
+<td><code>à jour ✓</code></td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>Chaque minute, l’instance fait un <strong>tour</strong> : elle commite ce que tu as écrit, récupère ce que
+l’équipe a envoyé et envoie le tien. Chacun écrit <strong>son propre fichier</strong>
+(<a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit#un-fichier-par-personne">un fichier par personne</a>) : rien n’est
+fusionné. Ce qui arrive sur la feature ouverte se relit seul, jamais pendant une saisie. Deux versions
+de <code>ticket.md</code> croisées : la plus récente reste, l’autre est rangée à côté
+(<code>ticket.conflit-&lt;qui&gt;-&lt;date&gt;.md</code>), et l’onglet Ticket le dit.</p>
+<p><code>Tirer</code> fait un tour sans envoi, <code>Partager</code> un tour qui envoie (après confirmation), <code>Relire</code> relit
+le distant ; tes fils <strong>ouverts</strong> et ta branche lue restent dans <code>curation/local/</code>. La case <strong>Partager
+mon travail automatiquement</strong> est cochée par défaut. Le drapeau de l’en-tête ne s’allume que pour un
+geste à faire : <code>⚠ workspace</code> (bloqué) ou <code>⇧ workspace</code> (rien n’est parti depuis un jour).</p>
+<blockquote>
+<p>⚠️ Toute l’équipe doit passer à cette version, sinon les refus de git d’avant reviennent. Un
+workspace logé dans un autre dépôt git refuse toute opération : <em>n’est pas un dépôt git à lui</em>.</p>
+</blockquote>
+<h2 id="raccourcis">Raccourcis</h2>
+<table>
+<thead>
+<tr>
+<th>Accord / touche</th>
+<th>Effet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Espace g l</code> / <code>g b</code> / <code>g r</code></td>
+<td>afficher Local / Branches &amp; repos / Revue (ouvre le panneau si replié) ; la lettre du mode affiché le masque</td>
+</tr>
+<tr>
+<td><code>Échap</code></td>
+<td>fermer le panneau (jamais l’ouvrir) — il appartient à la boîte des raccourcis si elle est ouverte, et à la page si une page l’est</td>
+</tr>
+<tr>
+<td><code>Tab</code></td>
+<td>mode suivant, dans l’ordre affiché : local → branches → revue</td>
+</tr>
+<tr>
+<td><code>←</code> <code>→</code></td>
+<td>passer de la colonne Repos à la colonne Historique (mode Branches)</td>
+</tr>
+<tr>
+<td><code>↑</code> <code>↓</code></td>
+<td>se déplacer dans la colonne active</td>
+</tr>
+<tr>
+<td><code>Entrée</code> / <code>Espace</code> sur une rangée de branche focalisée</td>
+<td>lire ce rang partout</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</h2>
+<ul>
+<li><strong>Il ne fusionne jamais.</strong> Un repo membre se met à jour en <code>pull --ff-only</code> ; un refus de git
+s’affiche mot pour mot, sans merge ni rebase.</li>
+<li><strong>Il ne supprime jamais une branche ni un worktree</strong> : l’inventaire affiche la commande à copier.</li>
+<li><strong>Il n’écrit jamais dans l’index</strong> (<code>git status --no-optional-locks</code>). Aucun bouton ne fait <code>add</code>,
+<code>commit</code>, <code>stash</code> ou <code>push</code> sur un <a href="/atlas-site/manuel/le-glossaire#repo-membre">repo membre</a> ; le seul commit + push vise le
+<strong><a href="/atlas-site/manuel/le-glossaire#workspace-partage">workspace partagé</a></strong>.</li>
+<li><strong>Il ne bascule pas un dossier sale.</strong> <code>Basculer</code> refuse tant qu’il reste du non-commité.</li>
+<li><strong>Il ne crée pas de review, n’approuve pas, ne résout pas un fil</strong> : cela se fait chez l’hébergeur.
+Seule exception, la publication d’un fil local (<a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a>).</li>
+</ul>
+<h2 id="limites-connues">Limites connues</h2>
+<ul>
+<li><strong>Sans jeton, la Revue est vide — et elle le dit</strong> repo par repo, avec la phrase qui nomme le geste.
+Poser le jeton, vérifier qu’il est trouvé, et ce qui n’a jamais été éprouvé chez GitHub (la
+conversation, la publication, les forks, Enterprise) : <a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a>.</li>
+<li><strong>L’historique charge 150 commits.</strong> Au-delà, le graphe est tronqué — et la fourche, si elle est
+plus ancienne, se dit en toutes lettres plutôt que de disparaître.</li>
+<li><strong>Le mode Local ne bat que quand il est à l’écran.</strong> Panneau replié, page Tableau ouverte ou autre
+mode actif, il s’arrête, et relit tout à la réouverture.</li>
+</ul>
+<nav class="suite" aria-label="Page suivante et précédente"><a href="/atlas-site/manuel/fichiers-et-inventaire"><small>← précédent</small>Fichiers et inventaire</a><a class="droite" href="/atlas-site/manuel/le-tableau"><small>suivant →</small>Le Tableau</a></nav></article><nav class="cote toc" aria-label="Sur cette page"><h2>Sur cette page</h2><ul><li><a href="#ouvrir-fermer-changer-de-mode">Ouvrir, fermer, changer de mode</a></li><li><a href="#local--ce-qui-nest-encore-nulle-part">Local — ce qui n’est encore nulle part</a></li><li><a href="#branches--repos">Branches &amp; repos</a></li><li><a class="h3" href="#une-ligne-par-branche-qui-porte-le-ticket">Une ligne par branche qui porte le ticket</a></li><li><a class="h3" href="#les-chips--un-fait-chacune">Les chips : un fait chacune</a></li><li><a class="h3" href="#les-gestes-de-la-barre">Les gestes de la barre</a></li><li><a class="h3" href="#lhistorique">L’historique</a></li><li><a href="#-tous-les-repos--linventaire-des-checkouts">⊘ Tous les repos — l’inventaire des checkouts</a></li><li><a href="#revue--la-conversation-des-reviews">Revue — la conversation des reviews</a></li><li><a href="#le-git-du-workspace-partagé">Le git du workspace partagé</a></li><li><a href="#raccourcis">Raccourcis</a></li><li><a href="#ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</a></li><li><a href="#limites-connues">Limites connues</a></li></ul></nav></main><footer class="pied"><div class="dedans"><span>Atlas — suivi et validation de code.</span><a href="/atlas-site/manuel/prise-en-main">Manuel</a></div></footer><script>
+    document.getElementById('theme-bt')?.addEventListener('click', () => {
+      const r = document.documentElement;
+      // clair → sombre → système, et le tour recommence. « Système » RETIRE la clé : c'est ce qui
+      // rend le choix distinct d'une absence de choix.
+      const suite = { clair: 'sombre', sombre: '', '': 'clair' };
+      const v = suite[r.dataset.theme || ''];
+      if (v) { r.dataset.theme = v; try { localStorage.setItem('atlas-site-theme', v); } catch {} }
+      else { delete r.dataset.theme; try { localStorage.removeItem('atlas-site-theme'); } catch {} }
+    });
+  </script></body></html>

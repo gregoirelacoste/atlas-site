@@ -1,0 +1,275 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Déposer une recette · Atlas</title><meta name="description" content="Ce que le test rend à Atlas, et sous quelle forme : le dépôt, les lieux de code, le rattachement d'une requête par sa route, les frontières hors carte, les secrets filtrés, les écarts d'environnement. Pour qui écrit le test ou le script — un humain, un outil d'intégration, ou l'IA de ta session."><link rel="canonical" href="https://gregoirelacoste.github.io/atlas-site/manuel/deposer-une-recette"><meta property="og:title" content="Déposer une recette · Atlas"><meta property="og:description" content="Ce que le test rend à Atlas, et sous quelle forme : le dépôt, les lieux de code, le rattachement d'une requête par sa route, les frontières hors carte, les secrets filtrés, les écarts d'environnement. Pour qui écrit le test ou le script — un humain, un outil d'intégration, ou l'IA de ta session."><meta property="og:type" content="website"><meta property="og:url" content="https://gregoirelacoste.github.io/atlas-site/manuel/deposer-une-recette"><meta name="twitter:card" content="summary"><link rel="icon" href="/atlas-site/favicon.svg" type="image/svg+xml"><script>
+    (() => { try { const t = localStorage.getItem('atlas-site-theme');
+      if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t; } catch {} })();
+  </script><link rel="stylesheet" href="/atlas-site/_astro/Base.D32RNicN.css"></head><body><header class="tete"><a class="marque" href="/atlas-site">🗺️ Atlas</a><nav><a href="/atlas-site/installer">Installer</a><a href="/atlas-site/manuel/prise-en-main" aria-current="page">Manuel</a><a href="/atlas-site/articles">Écrits</a><button class="theme-bt" id="theme-bt" type="button" aria-label="Changer de thème">◐</button></nav></header><main class="doc"><nav class="cote" aria-label="Le manuel"><h2>Le manuel</h2><ol><li><a href="/atlas-site/manuel/prise-en-main">Prise en main</a></li><li><a href="/atlas-site/manuel/l-arbre">L&#39;Arbre</a></li><li><a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a></li><li><a href="/atlas-site/manuel/le-code">Le Code</a></li><li><a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a></li><li><a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et inventaire</a></li><li><a href="/atlas-site/manuel/le-panneau-git">Le panneau Git</a></li><li><a href="/atlas-site/manuel/le-tableau">Le Tableau</a></li><li><a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a></li><li><a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a></li><li><a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a></li><li><a href="/atlas-site/manuel/brancher-l-ia">Brancher l&#39;IA</a></li><li><a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l&#39;IA lit et écrit</a></li><li><a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a></li><li><a href="/atlas-site/manuel/la-ligne-de-commande">La ligne de commande</a></li><li><a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a></li><li><a href="/atlas-site/manuel/le-clavier">Le clavier</a></li><li><a href="/atlas-site/manuel/les-precedents">Les précédents</a></li><li><a href="/atlas-site/manuel/les-decisions-metier">Les décisions métier</a></li><li><a href="/atlas-site/manuel/le-glossaire">Le glossaire</a></li><li><a href="/atlas-site/manuel/la-recette">La recette</a></li><li><a href="/atlas-site/manuel/deposer-une-recette" aria-current="page">Déposer une recette</a></li><li><a href="/atlas-site/manuel/la-vue-d-ensemble">La vue d&#39;ensemble</a></li></ol></nav><article class="corps"><h1>Déposer une recette</h1><p class="chapo">Ce que le test rend à Atlas, et sous quelle forme : le dépôt, les lieux de code, le rattachement d&#39;une requête par sa route, les frontières hors carte, les secrets filtrés, les écarts d&#39;environnement. Pour qui écrit le test ou le script — un humain, un outil d&#39;intégration, ou l&#39;IA de ta session.</p><blockquote>
+<p>Ce que le test rend à Atlas, et sous quelle forme : le dépôt, les lieux de code, le rattachement d’une
+requête par sa route, les frontières hors carte, les secrets filtrés, les écarts d’environnement. Pour
+qui écrit le test ou le script — un humain, un outil d’intégration, ou l’IA de ta session.</p>
+</blockquote>
+<p>Le vocabulaire, une fois. Une <strong><a href="/atlas-site/manuel/le-glossaire#recette">recette</a></strong> est un passage de test sur une
+<strong><a href="/atlas-site/manuel/le-glossaire#feature">feature</a></strong> — le ticket qu’Atlas suit —, ouverte, déposée puis fermée par
+<code>atlas recette</code> (<a href="/atlas-site/manuel/la-recette">La recette</a> dit la demande, l’ouverture et la relecture). Sa
+<strong><a href="/atlas-site/manuel/le-glossaire#carte">carte</a></strong> est le chemin d’appels qu’Atlas reconstruit, faite de
+<strong><a href="/atlas-site/manuel/le-glossaire#noeud">nœuds</a></strong> — une ligne par symbole, identifié par son
+<a href="/atlas-site/manuel/le-glossaire#repo">repo</a>, son fichier et son nom. Le <strong><a href="/atlas-site/manuel/le-glossaire#chapeau">chapeau</a></strong> est
+le dossier qui héberge tous les repos du projet ; une feature n’en porte souvent qu’une partie.</p>
+<p>Un dépôt ne fait que <strong>rapporter</strong>. Atlas le lit, le vérifie élément par élément, en retire les secrets
+et le range dans la recette ouverte ; ce qu’il refuse, il le dit, ligne par ligne, et le reste passe.
+Rien de ce que tu déposes n’endosse un nœud ni ne modifie le code.</p>
+<h2 id="le-format">Le format</h2>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> recette</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> depose</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> PROJ-412</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> resultat.json</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">mon-script-e2e</span><span style="color:#D73A49;--shiki-dark:#F97583"> |</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> recette</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> depose</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> PROJ-412</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> -</span></span></code></pre>
+<p>Un dépôt est un objet JSON. <strong>Tous les champs sont facultatifs</strong>, et tu déposes autant de fois que tu
+veux pendant la recette : chaque dépôt s’ajoute aux précédents. Déposer sans recette ouverte est refusé.</p>
+<table>
+<thead>
+<tr>
+<th>champ</th>
+<th>forme</th>
+<th>ce qu’il porte</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>contexte</code></td>
+<td><code>{ ou, donnees, par, forme }</code></td>
+<td>l’environnement, en mots : déclaré, filtré, jamais vérifié</td>
+</tr>
+<tr>
+<td><code>observe</code></td>
+<td><code>["projet-api", …]</code></td>
+<td>les repos où le test a <strong>réellement relevé</strong> les passages dans le code</td>
+</tr>
+<tr>
+<td><code>observeReseau</code></td>
+<td><code>["projet-web", …]</code></td>
+<td>les repos dont <strong>tout le trafic réseau</strong> a été capté (un proxy, un journal HTTP complet)</td>
+</tr>
+<tr>
+<td><code>etapes</code></td>
+<td><code>[{ n, titre, verdict, note?, preuve?, contreEpreuve? }]</code></td>
+<td>le verdict d’une étape, par son numéro <strong>et</strong> son titre</td>
+</tr>
+<tr>
+<td><code>passages</code></td>
+<td><code>[{ lieu, etape?, recu?, rendu?, dureeMs? }]</code></td>
+<td>ce qu’un endroit du code a reçu, et rendu</td>
+</tr>
+<tr>
+<td><code>requetes</code></td>
+<td><code>[{ etape?, methode, url, statut?, dureeMs?, enTetes?, envoye?, recu?, de?, lieux? }]</code></td>
+<td>une requête vue par le test ; <code>de</code> = le repo qui l’a émise</td>
+</tr>
+<tr>
+<td><code>captures</code></td>
+<td><code>[{ fichier, etape?, legende?, lieux? }]</code></td>
+<td>une capture d’écran, sur la machine qui teste</td>
+</tr>
+</tbody>
+</table>
+<p>Un exemple complet :</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79B8FF">  "observe"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: [</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"projet-api"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79B8FF">  "etapes"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: [</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    { </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"n"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">1</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"titre"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Le client voit ses crédits"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"verdict"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"ok"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"preuve"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"solde 3 → 2"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"contreEpreuve"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"vue"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    { </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"n"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">3</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"titre"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Paiement refusé"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"verdict"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"pas-lance"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"note"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"paiement de test coupé"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> }</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  ],</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79B8FF">  "passages"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: [</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    { </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"lieu"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"projet-api/src/clients/clients.service.ts:48"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"etape"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">1</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"recu"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: { </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"id"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">7</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> }, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"dureeMs"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">12</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> }</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  ],</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79B8FF">  "requetes"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: [</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    { </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"etape"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">1</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"methode"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"get"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"url"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"/clients/7/credits"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"statut"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">200</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"de"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"projet-web"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79B8FF">      "lieux"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: [</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"projet-api/src/clients/clients.controller.ts:31"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">] }</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  ],</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79B8FF">  "captures"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: [</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    { </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"fichier"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"captures/credits.png"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"etape"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">1</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"legende"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"le solde après rechargement"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> }</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  ]</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+<p>La réponse dit ce qui a été pris, une ligne <code>✗</code> par élément refusé, et les secrets filtrés.</p>
+<h3 id="un-lieu--repocheminligne">Un lieu : <code>repo/chemin:ligne</code></h3>
+<p>C’est <strong>la seule façon</strong> de désigner du code dans une recette. Le chemin commence par le <strong>nom du
+repo</strong>, tel que la feature le connaît ; une colonne après la ligne (<code>:48:5</code>) est tolérée. Atlas en
+déduit le nœud, en deux temps :</p>
+<ol>
+<li>il cherche le symbole qui englobe cette ligne <strong>dans le code testé</strong> — au commit relevé à
+l’ouverture, ou dans la copie de travail si elle était modifiée ;</li>
+<li>si ce symbole est un nœud de la carte, le lieu s’y rattache ; sinon, il se rattache au
+<strong><a href="/atlas-site/manuel/le-glossaire#noeud-fichier">nœud-fichier</a></strong> s’il existe ; sinon, il est refusé.</li>
+</ol>
+<p>Jamais un lieu n’est posé sur un <strong>autre</strong> symbole du même fichier, sous prétexte qu’il est voisin. Les
+refus nomment la cause :</p>
+<table>
+<thead>
+<tr>
+<th>ce que tu as écrit</th>
+<th>pourquoi c’est refusé</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/clients/clients.service.ts:48</code></td>
+<td>le chemin ne commence pas par un repo de la feature — la raison liste ceux qu’elle connaît</td>
+</tr>
+<tr>
+<td><code>autre-repo/src/x.ts:12</code></td>
+<td>ce repo n’est pas dans la feature — <strong>sauf</strong> s’il est membre du chapeau et que le lieu est celui d’une requête : il devient une frontière hors carte (plus bas) ; sur un passage ou une capture, refusé, et la raison dit pourquoi. Un repo inconnu du chapeau est refusé, la raison nomme les deux listes</td>
+</tr>
+<tr>
+<td><code>projet-api/src/x.ts</code></td>
+<td>il manque <code>:ligne</code></td>
+</tr>
+<tr>
+<td><code>projet-api/src/x.ts:0</code></td>
+<td>une ligne commence à 1</td>
+</tr>
+<tr>
+<td>un chemin qui contient <code>..</code> ou commence par <code>/</code> après le repo</td>
+<td>chemin invalide</td>
+</tr>
+<tr>
+<td>une ligne dans un fichier que la carte ne connaît pas</td>
+<td>« … n’est pas un nœud de la carte de cette feature »</td>
+</tr>
+<tr>
+<td>une ligne d’un fichier qui n’est pas du code (un template, un JSON)</td>
+<td>elle vise le nœud-fichier ; refusée s’il n’est pas sur la carte</td>
+</tr>
+<tr>
+<td>un <code>etape</code> inconnu, un <code>statut</code> ou <code>dureeMs</code> qui n’est pas un nombre</td>
+<td>le champ est ignoré et le refus le dit ; l’élément est gardé</td>
+</tr>
+</tbody>
+</table>
+<p>Un lieu refusé n’emporte pas le reste du dépôt, ni la requête. Carte illisible au dépôt : <strong>aucun</strong> lieu rattaché, un refus le dit, les verdicts restent.</p>
+<h3 id="une-requête-se-pose-aussi-par-sa-route">Une requête se pose aussi par sa route</h3>
+<p>Une requête n’a pas besoin de lieu pour atteindre la carte : Atlas connaît la route de chaque entrée
+HTTP (<code>▶</code>) et de chaque appel réseau (<code>⇄</code>) de la carte, et la confronte à la méthode et à l’URL
+rapportées. Ce calcul se fait <strong>à la relecture</strong>, jamais au dépôt : une recette déjà déposée en profite
+sans rien refaire, et un dépôt de requêtes sans lieu ne recalcule pas la carte.</p>
+<ul>
+<li><strong>L’entrée</strong> qui la reçoit : même verbe, et la route est la <strong>fin exacte</strong> du chemin de l’URL (un
+<code>:id</code> de la route accepte n’importe quelle valeur). Une ressemblance de fin de chemin ne suffit pas.</li>
+<li><strong>La version</strong> : une entrée déclarée en <code>v5</code> exige un segment <code>/v5/</code> dans l’URL — <code>/v3/…</code> ne s’y pose
+jamais. Une entrée sans version atteinte par une URL qui en porte une, devant sa route, est posée
+<strong>version non confrontée</strong> ; un <code>v2</code> écrit dans la route elle-même est confronté par elle.</li>
+<li><strong>L’appel</strong> qui l’émet : seulement si la requête dit <strong><code>de</code></strong>, le repo qui l’a émise. La route seule ne
+dit pas qui l’a envoyée — un harnais de test et l’app peuvent appeler la même. Sans <code>de</code>, aucun appel
+n’est posé par la route.</li>
+<li><strong>Deux candidats, aucun</strong> : deux entrées (ou deux appels du même repo) qui conviennent ne posent rien ;
+la requête dit <strong>ambigu entre …</strong> et les nomme.</li>
+<li><strong>Un statut de 400 ou plus</strong> : la requête se lit sur l’entrée, avec son statut, mais l’entrée ne
+compte pas <strong>traversée</strong> — elle a répondu sans faire son travail. Sans autre passage, elle se lit
+<strong>atteinte, N requêtes refusées</strong>, jamais « non traversé » tout court.</li>
+<li><strong>La preuve la plus forte gagne</strong> : une entrée dont la version est confrontée écarte celle qui ne
+déclare pas de version sur la même route ; l’ambiguïté ne se dit qu’entre candidats de même force.</li>
+</ul>
+<p>Chaque rattachement dit son <strong>témoin</strong> : <strong>lieu du test</strong>, <strong>par la route</strong>, ou les deux. Un lieu
+d’entrée (ou d’appel) qui n’est pas celle que la route désigne la <strong>contredit</strong> : il ne pose rien, et
+le désaccord se compte. Un lieu sur un autre nœud (un service) ne contredit jamais rien.</p>
+<p>Une requête qu’aucun nœud ne porte n’est pas jetée : elle reste un <strong>échange hors carte</strong>, groupé par
+méthode et chemin, compté, et <code>show</code> nomme les plus fréquents. À l’écran, le Passage d’une requête dit son témoin,
+et la tête de l’Arbre et l’onglet Recette comptent les échanges hors carte
+(<a href="/atlas-site/manuel/la-recette">La recette</a>, « Dans l’écran »).</p>
+<h3 id="les-frontières-hors-carte">Les frontières hors carte</h3>
+<p>Le lieu d’une requête vers un repo <strong>membre du chapeau</strong> qui ne porte pas le ticket — l’API qu’appelle
+ton app, par exemple — n’est plus refusé : il est gardé tel quel en <strong>frontière hors carte</strong>, sans nœud
+ni rond, <strong>jamais vérifié</strong> (la carte ne lit pas ce repo), nommé avec sa requête et compté.</p>
+<h3 id="les-verdicts-en-trois-états">Les verdicts, en trois états</h3>
+<p>Un verdict vaut <code>ok</code>, <code>ko</code> ou <code>pas-lance</code>. Tout critère testable dans le contexte se teste ; <code>pas-lance</code>
+dit <strong>pourquoi</strong> dans <code>note</code>, ou il est refusé. Une étape passée dit sa <code>preuve</code> et si elle a été <strong>vue en
+échec</strong> (<code>vue</code> · <code>pas-vue</code> · <code>impossible</code>) : l’onglet le montre. Le verdict le plus récent fait foi.</p>
+<p>Sont refusés : un numéro absent de la demande, <strong>un titre qui ne correspond plus</strong> (le ticket a changé
+depuis que le test a été écrit : un numéro seul se décale), un verdict hors des trois valeurs, et <strong>toute
+étape manuelle</strong>, qui ne se clôt par aucun dépôt.</p>
+<h3 id="observe---rien-rapporté--nest-pas--non-traversé-"><code>observe</code> : « rien rapporté » n’est pas « non traversé »</h3>
+<p>Un nœud sans passage ne veut pas dire la même chose selon que quelqu’un regardait ou non. <code>observe</code>
+nomme les repos où ton test a <strong>vraiment</strong> relevé les passages — une sonde, des traces, un journal.
+Pour un nœud de ces repos, l’absence de passage se lit <strong>non traversé</strong> ; ailleurs, <strong>rien rapporté</strong>.
+Ne mets un repo dans <code>observe</code> que si c’est vrai : sinon, chaque nœud que ton test n’a pas instrumenté
+se lirait comme du code que la recette n’a pas atteint. Un repo qui n’est pas dans la feature est
+refusé.</p>
+<h3 id="observereseau--le-réseau-vu-en-entier"><code>observeReseau</code> : le réseau vu en entier</h3>
+<p><code>observeReseau</code> nomme les repos dont ton test a capté <strong>tout</strong> le trafic réseau. Pour ces repos, une
+entrée <code>▶</code> ou un appel <code>⇄</code> de la carte sans aucune requête se lit <strong>non traversé (réseau)</strong>. Les autres
+nœuds du même repo — un service interne — restent <strong>rien rapporté</strong> : le réseau ne dit rien de ce qui
+ne passe pas par lui. Sans ce champ, rien n’est déduit.</p>
+<h3 id="les-captures">Les captures</h3>
+<p><code>fichier</code> : une image sur <strong>la machine qui teste</strong>. Atlas la <strong>copie</strong>
+dans la recette — png · jpg · jpeg · webp · gif, 5 Mo au plus ; sinon refusée, avec son nom.</p>
+<h2 id="les-secrets">Les secrets</h2>
+<p>Tout ce qui entre traverse le filtre avant d’être écrit, refus compris.</p>
+<table>
+<thead>
+<tr>
+<th>ce qu’Atlas filtre</th>
+<th>comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>un champ dont le nom <strong>contient</strong> <code>password</code>, <code>passwd</code>, <code>pwd</code>, <code>secret</code>, <code>token</code>, <code>authorization</code>, <code>cookie</code>, <code>apikey</code>, <code>privatekey</code> ou <code>credential</code></td>
+<td>sa valeur devient <code>‹filtré›</code> — casse, tirets, points et soulignés ignorés : <code>X-API-Key</code> et <code>client_secret</code> sont pris</td>
+</tr>
+<tr>
+<td>un jeton au format JWT, ou <code>Bearer …</code>, où qu’il soit écrit</td>
+<td>remplacé par <code>‹filtré›</code>, même au milieu d’une note</td>
+</tr>
+<tr>
+<td><code>clé=valeur</code> avec un nom sensible, dans une URL, un corps de formulaire ou une note</td>
+<td>la valeur devient <code>‹filtré›</code></td>
+</tr>
+<tr>
+<td>un corps enregistré <strong>en texte</strong> qui contient du JSON</td>
+<td>lu comme du JSON, filtré champ par champ, et gardé lisible</td>
+</tr>
+</tbody>
+</table>
+<p><code>recette.sensibles</code> dans <code>project.json</code> <strong>ajoute</strong> des noms (<code>iban</code>, <code>numeroSecu</code>), jamais à la place.</p>
+<p>Atlas dit ce qu’il a retiré : <code>secrets filtrés : Authorization ×1 · password ×2</code>. Le nom du champ et le
+nombre, <strong>jamais la valeur</strong>, ni dans la réponse, ni dans la recette.</p>
+<blockquote>
+<p>⚠️ Le filtre juge un <strong>nom</strong> : <code>tokenCount</code> sera filtré, un numéro de carte sous <code>valeur</code> non —
+déclare-le dans <code>sensibles</code>.</p>
+</blockquote>
+<h2 id="les-écarts-denvironnement">Les écarts d’environnement</h2>
+<p>Tester oblige souvent à réparer quelque chose qui n’est pas le code de la feature : une variable posée
+à la main, un rôle ajouté à un compte, une migration rejouée. C’est un <strong>écart</strong>, et il se consigne :</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> recette</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> ecart</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> PROJ-412</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "variable PAIEMENT_URL posée à la main"</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> --peut-masquer</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> oui</span></span></code></pre>
+<p><code>--peut-masquer oui</code> : ce changement a pu <strong>faire réussir ce qui aurait échoué</strong> en vrai — ces écarts-là
+sont nommés, précédés de <code>⚠</code>, à chaque relecture. Le texte passe par le filtre des secrets.</p>
+<h2 id="ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</h2>
+<ul>
+<li><strong>Il ne devine pas un lieu</strong> : un chemin sans repo, une ligne hors carte, un symbole voisin — refusés,
+avec leur raison.</li>
+<li><strong>Il ne déduit jamais un émetteur, une version ni une observation</strong> : <code>de</code>, <code>observe</code> et
+<code>observeReseau</code> se déclarent ; ce qui n’est ni déclaré ni prouvé par la carte se dit, jamais deviné.</li>
+<li><strong>Il ne vérifie pas une frontière hors carte</strong> : la carte ne lit pas ce repo, le lieu est gardé tel
+que le test l’a écrit.</li>
+<li><strong>Il ne stocke pas le rattachement par la route</strong> : il le recalcule à chaque relecture, contre la
+carte du moment.</li>
+<li><strong>Il ne recopie jamais un secret retiré</strong>, ni dans la recette, ni dans ses refus, ni dans ce qu’il dit
+avoir filtré.</li>
+</ul>
+<h2 id="limites-connues">Limites connues</h2>
+<ul>
+<li><strong>Un lieu se rattache à la carte d’aujourd’hui</strong> : un symbole renommé ou retiré depuis l’ouverture
+fait refuser le lieu.</li>
+<li><strong>Seules les entrées que la carte étiquette se trouvent par la route</strong> : une entrée que la feature ne
+touche pas porte rarement sa route sur la carte, et une requête qui la vise reste un échange hors carte.</li>
+<li><strong>Les échanges hors carte se groupent par chemin, un identifiant compté comme <code>*</code></strong> : <code>/dossiers/12</code>
+et <code>/dossiers/13</code> font une ligne ×2 — un regroupement pour lire, qui ne rattache rien.</li>
+<li><strong>Une capture est jugée par l’extension de son nom.</strong></li>
+<li><strong>Le filtre juge des noms et deux formes de jeton</strong> : une valeur sensible sous un nom ordinaire passe,
+tant que tu ne déclares pas ce nom dans <code>sensibles</code>.</li>
+</ul>
+<nav class="suite" aria-label="Page suivante et précédente"><a href="/atlas-site/manuel/la-recette"><small>← précédent</small>La recette</a><a class="droite" href="/atlas-site/manuel/la-vue-d-ensemble"><small>suivant →</small>La vue d&#39;ensemble</a></nav></article><nav class="cote toc" aria-label="Sur cette page"><h2>Sur cette page</h2><ul><li><a href="#le-format">Le format</a></li><li><a class="h3" href="#un-lieu--repocheminligne">Un lieu : repo/chemin:ligne</a></li><li><a class="h3" href="#une-requête-se-pose-aussi-par-sa-route">Une requête se pose aussi par sa route</a></li><li><a class="h3" href="#les-frontières-hors-carte">Les frontières hors carte</a></li><li><a class="h3" href="#les-verdicts-en-trois-états">Les verdicts, en trois états</a></li><li><a class="h3" href="#observe---rien-rapporté--nest-pas--non-traversé-">observe : « rien rapporté » n’est pas « non traversé »</a></li><li><a class="h3" href="#observereseau--le-réseau-vu-en-entier">observeReseau : le réseau vu en entier</a></li><li><a class="h3" href="#les-captures">Les captures</a></li><li><a href="#les-secrets">Les secrets</a></li><li><a href="#les-écarts-denvironnement">Les écarts d’environnement</a></li><li><a href="#ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</a></li><li><a href="#limites-connues">Limites connues</a></li></ul></nav></main><footer class="pied"><div class="dedans"><span>Atlas — suivi et validation de code.</span><a href="/atlas-site/manuel/prise-en-main">Manuel</a></div></footer><script>
+    document.getElementById('theme-bt')?.addEventListener('click', () => {
+      const r = document.documentElement;
+      // clair → sombre → système, et le tour recommence. « Système » RETIRE la clé : c'est ce qui
+      // rend le choix distinct d'une absence de choix.
+      const suite = { clair: 'sombre', sombre: '', '': 'clair' };
+      const v = suite[r.dataset.theme || ''];
+      if (v) { r.dataset.theme = v; try { localStorage.setItem('atlas-site-theme', v); } catch {} }
+      else { delete r.dataset.theme; try { localStorage.removeItem('atlas-site-theme'); } catch {} }
+    });
+  </script></body></html>

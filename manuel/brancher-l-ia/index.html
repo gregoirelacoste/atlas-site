@@ -1,0 +1,324 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Brancher l&#39;IA · Atlas</title><meta name="description" content="Atlas ne lance aucune IA : c'est ta session de code qui l'interroge. Cette page dit comment les mettre en présence — installer le plugin, ouvrir la session au bon endroit, lancer un skill, ou brancher le tien sur Atlas."><link rel="canonical" href="https://gregoirelacoste.github.io/atlas-site/manuel/brancher-l-ia"><meta property="og:title" content="Brancher l'IA · Atlas"><meta property="og:description" content="Atlas ne lance aucune IA : c'est ta session de code qui l'interroge. Cette page dit comment les mettre en présence — installer le plugin, ouvrir la session au bon endroit, lancer un skill, ou brancher le tien sur Atlas."><meta property="og:type" content="website"><meta property="og:url" content="https://gregoirelacoste.github.io/atlas-site/manuel/brancher-l-ia"><meta name="twitter:card" content="summary"><link rel="icon" href="/atlas-site/favicon.svg" type="image/svg+xml"><script>
+    (() => { try { const t = localStorage.getItem('atlas-site-theme');
+      if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t; } catch {} })();
+  </script><link rel="stylesheet" href="/atlas-site/_astro/Base.D32RNicN.css"></head><body><header class="tete"><a class="marque" href="/atlas-site">🗺️ Atlas</a><nav><a href="/atlas-site/installer">Installer</a><a href="/atlas-site/manuel/prise-en-main" aria-current="page">Manuel</a><a href="/atlas-site/articles">Écrits</a><button class="theme-bt" id="theme-bt" type="button" aria-label="Changer de thème">◐</button></nav></header><main class="doc"><nav class="cote" aria-label="Le manuel"><h2>Le manuel</h2><ol><li><a href="/atlas-site/manuel/prise-en-main">Prise en main</a></li><li><a href="/atlas-site/manuel/l-arbre">L&#39;Arbre</a></li><li><a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a></li><li><a href="/atlas-site/manuel/le-code">Le Code</a></li><li><a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a></li><li><a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et inventaire</a></li><li><a href="/atlas-site/manuel/le-panneau-git">Le panneau Git</a></li><li><a href="/atlas-site/manuel/le-tableau">Le Tableau</a></li><li><a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a></li><li><a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a></li><li><a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a></li><li><a href="/atlas-site/manuel/brancher-l-ia" aria-current="page">Brancher l&#39;IA</a></li><li><a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l&#39;IA lit et écrit</a></li><li><a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a></li><li><a href="/atlas-site/manuel/la-ligne-de-commande">La ligne de commande</a></li><li><a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a></li><li><a href="/atlas-site/manuel/le-clavier">Le clavier</a></li><li><a href="/atlas-site/manuel/les-precedents">Les précédents</a></li><li><a href="/atlas-site/manuel/les-decisions-metier">Les décisions métier</a></li><li><a href="/atlas-site/manuel/le-glossaire">Le glossaire</a></li><li><a href="/atlas-site/manuel/la-recette">La recette</a></li><li><a href="/atlas-site/manuel/deposer-une-recette">Déposer une recette</a></li><li><a href="/atlas-site/manuel/la-vue-d-ensemble">La vue d&#39;ensemble</a></li></ol></nav><article class="corps"><h1>Brancher l&#39;IA</h1><p class="chapo">Atlas ne lance aucune IA : c&#39;est ta session de code qui l&#39;interroge. Cette page dit comment les mettre en présence — installer le plugin, ouvrir la session au bon endroit, lancer un skill, ou brancher le tien sur Atlas.</p><blockquote>
+<p>Atlas ne lance aucune IA : c’est <strong>ta session de code</strong> qui l’interroge. Cette page dit comment les
+mettre en présence — installer le plugin, ouvrir la session au bon endroit, lancer un skill, ou
+brancher le tien sur Atlas.</p>
+</blockquote>
+<h2 id="le-principe--chacun-apporte-sa-moitié">Le principe : chacun apporte sa moitié</h2>
+<p>Atlas n’embarque ni modèle, ni clé d’API, ni agent. Il expose ce qu’il sait à la session que tu
+lances toi-même, par deux canaux : un <strong><a href="/atlas-site/manuel/le-glossaire#plugin">plugin</a></strong> (sept procédures qu’on déclenche sur demande) et un
+<strong><a href="/atlas-site/manuel/le-glossaire#serveur-mcp">serveur MCP</a></strong> (douze outils que le modèle appelle quand il en a besoin).</p>
+<p>Ta session apporte le contexte et le droit d’écrire du code ; Atlas, ce qu’une IA n’obtient pas
+seule, ou pas correctement :</p>
+<ul>
+<li>le <strong><a href="/atlas-site/manuel/le-glossaire#diff">diff</a> exact</strong> d’une <a href="/atlas-site/manuel/le-glossaire#feature">feature</a>, même sur une <a href="/atlas-site/manuel/le-glossaire#branche">branche</a> non sortie ou déjà mergée ;</li>
+<li>la <strong><a href="/atlas-site/manuel/le-glossaire#carte">carte</a></strong> : l’arbre des appels, prouvé par les types, un <strong><a href="/atlas-site/manuel/le-glossaire#flux">flux</a></strong> par point d’entrée ;</li>
+<li>ce que les relecteurs ont <strong>endossé</strong>, leur <strong>note de <a href="/atlas-site/manuel/le-glossaire#note-de-criticite">criticité</a></strong> (1 à 4), ce qu’ils n’ont <strong><a href="/atlas-site/manuel/le-glossaire#pas-compris">pas compris</a></strong> ;</li>
+<li>les <strong>fils</strong> déjà <strong>ancrés</strong> sur une ligne ou un symbole, souvent les siens, d’une session oubliée ;</li>
+<li>les <strong>précédents</strong> : ce qu’un finding passé, sur un <a href="/atlas-site/manuel/le-glossaire#noeud">nœud</a> du même type, a donné.</li>
+</ul>
+<p>Les outils un par un, ce que chacun rend, ce que l’IA peut écrire et ce qu’elle n’atteint jamais :
+<a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l’IA lit et écrit</a>.</p>
+<h2 id="installer">Installer</h2>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> plugin</span><span style="color:#6A737D;--shiki-dark:#6A737D">           # imprime les gestes d'installation des quatre clients, sans rien exécuter</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> plugin</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> install</span><span style="color:#6A737D;--shiki-dark:#6A737D">   # Claude Code : les exécute</span></span></code></pre>
+<p><code>atlas plugin install</code> enregistre le marketplace <code>atlas</code> puis installe le plugin <code>atlas@atlas</code>. Il
+pose deux choses : les <strong>sept skills</strong> (<code>/atlas:ticket</code>, <code>/atlas:resolve</code>, <code>/atlas:review</code>, <code>/atlas:resolve-review</code>,
+<code>/atlas:as-coded</code>, <code>/atlas:recette</code>, <code>/atlas:answer</code>) et la déclaration du <strong>serveur MCP</strong>, qui se
+lance par la commande <code>atlas mcp</code>.</p>
+<p><strong>La même commande met à jour</strong> (Claude Code <strong>copie</strong> le plugin), comme <code>atlas update</code> (voir
+<a href="/atlas-site/manuel/prise-en-main">Prise en main</a>).</p>
+<p><strong>La portée est ta configuration utilisateur</strong>, pas un <a href="/atlas-site/manuel/le-glossaire#repo">repo</a> : installé une fois, il sert tous tes
+projets — et c’est pourquoi <code>atlas init</code> ne l’installe jamais tout seul.</p>
+<blockquote>
+<p>⚠️ <strong>Redémarre ta session de code après l’installation comme après une mise à jour.</strong> Les plugins
+se chargent au démarrage : une session ouverte ne verra ni les nouveaux skills, ni les outils.</p>
+</blockquote>
+<p><strong>Le prérequis qui coince</strong> : le plugin déclare comment joindre Atlas, il ne le contient pas — la
+commande <code>atlas</code> doit être <strong>dans le <code>PATH</code> de ta session</strong>, sinon aucun <a href="/atlas-site/manuel/le-glossaire#outil">outil</a> d’Atlas n’apparaît.
+L’installation a besoin de la commande <code>claude</code> (ou d’un autre binaire désigné par
+<code>ATLAS_CLAUDE_BIN</code>) ; sans elle, elle échoue en nommant la commande qu’elle n’a pas pu lancer.</p>
+<h2 id="gemini-cli-et-codex">Gemini CLI et Codex</h2>
+<p>Les skills servent <strong>tout client</strong> qui lit des <code>SKILL.md</code> et un serveur MCP, avec <strong>le modèle de ta
+session</strong> : aucun n’en impose un. Le dossier <code>plugin/</code> est aussi une extension Gemini CLI.</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> plugin</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> install</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> gemini</span><span style="color:#6A737D;--shiki-dark:#6A737D">   # gemini extensions link &lt;atlas&gt;/plugin — lu en place, demande ton accord</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> plugin</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> install</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> codex</span><span style="color:#6A737D;--shiki-dark:#6A737D">    # (ou cursor) imprime les gestes, à lancer toi-même (non éprouvé)</span></span></code></pre>
+<p>Hors Claude Code, on demande un <a href="/atlas-site/manuel/le-glossaire#skill">skill</a> par son nom (« atlas:review PROJ-412 »). ⚠️ <strong>Claude Code seul garantit par sa configuration</strong> qu’un skill de lecture n’écrit aucun fichier.
+Ailleurs, le texte du skill le dit et le modèle le tient ; ce qu’aucun outil d’Atlas ne fait (ta <a href="/atlas-site/manuel/le-glossaire#spec">spec</a>, ta validation, ton code, <a href="/atlas-site/manuel/le-glossaire#publier">publier</a>) reste
+impossible partout.</p>
+<h2 id="où-ouvrir-ta-session">Où ouvrir ta session</h2>
+<p>Le serveur MCP cherche le <a href="/atlas-site/manuel/le-glossaire#projet">projet</a> en <strong>remontant depuis le dossier courant</strong> de la session, exactement
+comme git remonte jusqu’au <code>.git/</code> — depuis le <a href="/atlas-site/manuel/le-glossaire#chapeau">chapeau</a>, un repo ou un sous-dossier, il trouve le même
+<code>.atlas-workspace/</code>, et parle à l’<a href="/atlas-site/manuel/le-glossaire#instance">instance</a> de <strong>ce</strong> projet.</p>
+<p>Les refus que tu peux lire, et ce qu’ils veulent dire :</p>
+<table>
+<thead>
+<tr>
+<th>ce que tu lis</th>
+<th>ce qui se passe</th>
+<th>ce que tu fais</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>aucun .atlas-workspace/ au-dessus du dossier de cette session</code></td>
+<td>la session est ouverte hors du projet</td>
+<td>rouvre-la sous le chapeau ou dans un de ses repos</td>
+</tr>
+<tr>
+<td><code>réponse rejetée : elle vient du projet « … »</code> (les deux chemins nommés)</td>
+<td>l’adresse répond pour un autre projet</td>
+<td>relance la session ; <code>atlas status</code> dit qui tourne où</td>
+</tr>
+<tr>
+<td><code>ne dit pas quel projet elle sert</code></td>
+<td>une instance d’une version antérieure tourne</td>
+<td><code>atlas restart --all</code></td>
+</tr>
+<tr>
+<td><code>l'instance d'Atlas de ce projet ne répond pas</code></td>
+<td>elle n’a pas démarré</td>
+<td><code>atlas logs &lt;projet&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<p>Le dossier d’ouverture ne change que ce que ta session a sous la main : au chapeau, tous les repos. Le serveur écrit où il se croit sur sa sortie d’erreur au démarrage :</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>[atlas mcp] prêt — workspace /…/.atlas-workspace · daemon http://127.0.0.1:3030</span></span></code></pre>
+<h2 id="les-sept-skills">Les sept skills</h2>
+<p>Un skill est une <strong>procédure complète</strong>, qui ne part que <strong>sur demande explicite</strong> — la tienne, ou
+celle d’un agent que tu as lancé : un orchestrateur peut enchaîner <code>ticket</code> → <code>resolve</code> → <code>review</code>.
+Aucun ne se déclenche seul : ils écrivent dans la carte — trois dans tes fichiers. Tous emploient les
+mots de ton projet plutôt que les noms du code quand ils t’écrivent. Les outils restent disponibles
+hors des skills.</p>
+<table>
+<thead>
+<tr>
+<th>skill</th>
+<th>quand le lancer</th>
+<th>ce qu’il écrit</th>
+<th>ce qu’il ne touche jamais</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/atlas:ticket</code></td>
+<td>avant de coder</td>
+<td><strong>ta spec et ses critères</strong>, après ton accord — plus la déclaration de la feature, des fils d’hypothèse ancrés, le pseudo-code et le <a href="/atlas-site/manuel/le-glossaire#fil-de-feature">fil de feature</a></td>
+<td>le code, les branches, ton <a href="/atlas-site/manuel/le-glossaire#endossement">endossement</a>, la coche d’un <a href="/atlas-site/manuel/le-glossaire#critere">critère</a>, le <a href="/atlas-site/manuel/le-glossaire#parcours">parcours</a></td>
+</tr>
+<tr>
+<td><code>/atlas:resolve</code></td>
+<td>pour coder la feature</td>
+<td><strong>le code des repos</strong> et <strong>la branche</strong> de la feature (un <a href="/atlas-site/manuel/le-glossaire#worktree">worktree</a> si tu le choisis), plus les intentions, le parcours et les fils de l’épilogue</td>
+<td>ton endossement, la spec, la <a href="/atlas-site/manuel/le-glossaire#merge-request">merge request</a>, la déclaration d’une feature</td>
+</tr>
+<tr>
+<td><code>/atlas:review</code></td>
+<td>après le code, avant de corriger</td>
+<td>des fils de findings ancrés ligne à ligne, la conclusion dans le fil de feature, et ce que les précédents ont donné</td>
+<td>le code, ton endossement, la spec, les autres fichiers</td>
+</tr>
+<tr>
+<td><code>/atlas:resolve-review</code></td>
+<td>après une review</td>
+<td><strong>le code des repos</strong>, et une réponse dans chaque fil de l’IA : corrigé, ou pourquoi pas</td>
+<td>ton endossement, la spec, la résolution d’un <a href="/atlas-site/manuel/le-glossaire#fil">fil</a></td>
+</tr>
+<tr>
+<td><code>/atlas:as-coded</code></td>
+<td>après les corrections, à la relecture</td>
+<td><code>did</code>/<code>does</code> par nœud, le <a href="/atlas-site/manuel/le-glossaire#parcours">parcours</a> et sa lecture des critères, plus les doutes</td>
+<td>le code, ton endossement, la spec</td>
+</tr>
+<tr>
+<td><code>/atlas:recette</code></td>
+<td>pour tester</td>
+<td>la <a href="/atlas-site/manuel/la-recette">recette</a>, par <code>atlas recette</code></td>
+<td>le code, ton endossement</td>
+</tr>
+<tr>
+<td><code>/atlas:answer</code></td>
+<td>quand des fils ou des <code>?</code> attendent</td>
+<td>des réponses dans les fils existants, et des fils neufs là où on lui demande d’expliquer</td>
+<td>le code, la résolution d’un <a href="/atlas-site/manuel/le-glossaire#fil">fil</a></td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>/atlas:as-coded</code></strong> ne réécrit jamais une <a href="/atlas-site/manuel/le-glossaire#intention">intention</a> posée en codant : un écart reste visible, et tu tranches. Son parcours
+raconte le voyage de la donnée en 3 à 8 étapes cliquables ; il évalue les critères, sans les écrire.</p>
+<p>Les six premiers sont des <a href="/atlas-site/manuel/le-glossaire#moment">moments</a> : chacun signe son passage, que Relecture liste
+(<a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a>).</p>
+<p><strong><code>/atlas:answer</code></strong> répond aux fils dont le dernier message est de toi, explique les nœuds
+marqués <code>?</code>, ouvre un fil sur les nœuds notés 4 qui n’en ont aucun, et ne résout jamais rien : un fil
+se clôt à la main.</p>
+<h3 id="atlasticket--ouvrir-la-feature-et-écrire-sa-spec"><code>/atlas:ticket</code> — ouvrir la feature, et écrire sa spec</h3>
+<p>C’est le <strong>premier <a href="/atlas-site/manuel/le-glossaire#moment">moment</a></strong>, avant qu’une ligne soit écrite. Il ouvre la feature — il la déclare si
+Atlas ne la connaît pas encore, et l’id vient de toi ou d’une branche qui existe, jamais d’une
+invention —, puis il lit le <strong>terrain</strong> : l’entrée réelle de la donnée, la chaîne d’appels existante
+jusqu’à ses sorties. Un ticket qui ne nomme rien du code produit des nœuds prévus qui n’atterrissent
+jamais.</p>
+<p>Il pose ensuite ses hypothèses <strong>là où elles tombent</strong> : un fil ancré sur chaque symbole existant qui
+va bouger, un nœud en pointillé pour ce qui reste à écrire. L’ordre est contraignant, et c’est le
+seul endroit où il l’est : l’ancrage fait <strong>exister</strong> les nœuds d’une feature qui n’en avait aucun,
+et les <strong>précédents</strong> ne se demandent qu’après, parce qu’un <a href="/atlas-site/manuel/le-glossaire#noeud-prevu">nœud prévu</a> n’en reçoit jamais. Avant de
+proposer le moindre texte, il écrit une ligne en <strong>trois états</strong> — <em>oui · non · je n’ai pas pu
+regarder</em> — sur la spec, le terrain, les précédents et ce qu’Atlas n’a pas pu prouver.</p>
+<p><strong>C’est le seul skill qui écrit ta spec</strong> — aucun outil d’Atlas n’écrit <code>ticket.md</code> —, dans ta
+session et avec tes outils, à trois conditions :</p>
+<ul>
+<li>il te <strong>montre le texte entier</strong> et pose une question fermée — <em>« je l’écris dans <code>ticket.md</code> ? »</em> —,
+et n’écrit qu’après ton accord ;</li>
+<li>sur une spec <strong>déjà remplie</strong>, il montre d’abord ce qui change : ajouté, retiré, reformulé ;</li>
+<li>en mode non interactif (<code>claude -p</code>, où personne ne peut répondre), la règle se <strong>durcit</strong> : il
+n’écrit que sur une spec <strong>absente ou vierge</strong>, jamais sur une remplie — il rend le texte proposé
+et s’arrête.</li>
+</ul>
+<p>Sur une spec absente ou vierge qui porte un lien vers ton traqueur, il l’<strong>importe une fois</strong> — avec
+l’outil de ta session, Atlas n’en fournit aucun : injoignable, il continue sans et le dit, plutôt
+que d’écrire une spec fantôme. Un geste ne lui appartiendra jamais : <strong>cocher</strong> un
+critère. Il les écrit nus, la coche est ta validation
+(<a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a>).</p>
+<p>Ton refus n’arrête pas le run : le texte reste dans la conversation et le reste se pose quand même —
+les nœuds prévus, le <strong>fil de feature</strong> (la cause pressentie, ce qui a été décidé, ce qui reste
+ouvert), et les <strong>sondes</strong> — ce qu’il a fait de chaque <a href="/atlas-site/manuel/le-glossaire#precedent">précédent</a> servi. Il finit par les commandes
+de branche à lancer <strong>toi-même</strong>, base mise à jour d’abord ; il ne les lance pas. Et comme
+<code>/atlas:resolve</code>, il laisse rédiger ton propre skill de projet : <code>/atlas:ticket PROJ-412 avec /mon-ticket</code>.</p>
+<h3 id="atlasresolve--le-seul-skill-qui-écrit-du-code"><code>/atlas:resolve</code> — le seul skill qui écrit du code</h3>
+<p>Les <strong>outils</strong> d’Atlas n’écrivent jamais dans tes repos ; ce skill, lui, tourne dans ta session et y
+écrit comme toi. Ce qu’il apporte n’est pas de savoir coder : c’est ce qui entoure le code.</p>
+<p><strong>L’établi, avant tout le reste.</strong> Pour chaque repo touché, il te <strong>propose</strong> un <strong>worktree</strong> — un
+second dossier sur le même dépôt, qui laisse ton dossier principal intact — et le recommande quand
+le repo a des modifications non commitées ou porte une autre feature. Il le crée sous
+<code>.worktrees/&lt;feature&gt;/&lt;repo&gt;</code> à la racine du projet (rangé à côté des repos, Atlas le prendrait pour
+un repo de plus), sans dépendances installées ni <code>.env</code> ignoré. Puis il met à jour la <strong>ligne de
+base</strong> en avance rapide seulement et crée dessus la branche de la feature, ou reprend celle qui
+existe. Une mise à jour refusée l’arrête, sans fusion ni rebase.</p>
+<p><strong>Le prologue, avant la première ligne.</strong> Il lit la carte (jamais un <code>grep</code> pour commencer), les refs
+qui font foi — contre quelle base tu codes, et si la feature est déjà mergée —, les <strong>précédents</strong>
+servis par <code>atlas precedents</code>, le <strong>fil de feature</strong> (« ce qu’on a compris » : la cause racine, les
+décisions déjà prises), les tests qui atteignent chaque nœud qu’il va toucher, ta spec, et ce que les
+relecteurs ont déjà dit dessus — les <code>?</code> sans réponse, les notes de criticité. Il finit par les
+<strong>angles morts</strong> : ce qu’Atlas n’a pas pu prouver, dit avant de coder plutôt que supposé.</p>
+<p>Puis il écrit dans le chat une ligne en <strong>trois états</strong> — <em>oui · non · je n’ai pas pu regarder</em> —
+avant d’écrire quoi que ce soit, par exemple :</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>3 précédents · 1 réponse humaine · 0 ? · compris : 1 fil · tests : pas pu regarder · 2 angles morts</span></span></code></pre>
+<p><code>0 précédent</code> est un fait, <code>pas pu regarder</code> en est un autre : les confondre fait croire à un terrain
+propre. Si cette ligne ne peut pas s’écrire, le prologue n’a pas eu lieu et il ne code pas.</p>
+<p><strong>Le milieu, le code.</strong> Tu peux le confier à ton propre skill de projet, en le nommant dans
+l’argument : <code>/atlas:resolve PROJ-412 avec /mon-resolve</code>. Le nom est <strong>lu, jamais deviné</strong> — qu’un
+skill s’appelle <code>…-resolve</code> ne prouve pas qu’il sait coder. Si l’invocation échoue, <code>resolve</code> le dit
+en une ligne et passe à sa méthode générique (une étape à la fois, un commit par étape, du plus
+profond vers l’entrée, les tests d’un nœud lus avant d’y toucher, les conventions prises dans le code
+voisin). Le cas connu : un skill que son client réserve
+au clavier (dans Claude Code, <code>disable-model-invocation</code>) ne se charge pas depuis un autre skill — tu le tapes toi-même, le prologue reste dans la
+conversation.</p>
+<p><strong>L’épilogue ne saute jamais</strong>, même quand la session a été longue : les <strong>intentions</strong> nœud par nœud
+(<code>intent</code>, <code>goal</code>, et <code>unsure</code> pour tout doute qui a survécu), le parcours avec les critères et les
+refs qui les prouvent, un fil sur ce qui a été <strong>décidé</strong> — l’arbitrage qu’un relecteur ne retrouvera
+pas dans le diff —, le fil de feature pour ce qu’on a compris, et les sondes sur les précédents lus.</p>
+<p>Deux choses qu’il ne fait jamais, et ce sont les plus importantes. Il n’écrit <strong>pas</strong> <code>did</code>/<code>does</code> —
+ce que le code faisait et ce qu’il fait se constatent à la relecture, par <code>/atlas:as-coded</code> : les
+écrire ici serait un autoportrait, où l’annonce et le constat s’accordent toujours. Et il ne
+<strong>publie</strong> rien chez ton <a href="/atlas-site/manuel/le-glossaire#hebergeur">hébergeur</a>, ni ne <strong>déclare</strong> une feature : ces deux outils lui sont
+explicitement <strong>retirés</strong>. Il travaille sur une feature qui existe
+déjà ; si elle n’existe pas, il s’arrête et te renvoie à <code>/atlas:ticket</code>.</p>
+<h3 id="atlasreview--et-ce-que-les-précédents-ont-donné"><code>/atlas:review</code> — et ce que les précédents ont donné</h3>
+<p>Il juge : correctness, robustesse, sécurité, cohérence entre services, superflu. Ses <strong>findings</strong> —
+ce qu’il reproche, un par fil — arrivent là où on lit, ancrés à la ligne, jamais en rapport à côté,
+et il ne publie rien. Sa conclusion, elle, va dans le <strong>fil de feature</strong> : l’unique conversation
+posée sur la feature entière, et non sur un symbole
+(<a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a>).</p>
+<p><strong>Il lit les précédents après ses propres checks, jamais avant</strong> : il juge d’abord à l’aveugle, puis
+compare. Un précédent qui s’applique est <strong>cité</strong> dans le finding — c’est la provenance de la règle,
+et elle s’audite. Un précédent qu’il a lu et <strong>écarté</strong>, ou un cas qui lui a <strong>manqué</strong> sur un nœud,
+il le signale par l’outil <code>sonde</code> : ce n’est pas du savoir, c’est la liste de travail de l’index
+suivant. Ce que sont les précédents, comment l’index se construit et ce que la <a href="/atlas-site/manuel/le-glossaire#sonde">sonde</a> écrit sont sur
+<a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l’IA lit et écrit</a>.</p>
+<h3 id="entre-les-skills-un-moment-sans-skill">Entre les skills, un moment sans skill</h3>
+<p>Pendant que vous codez, l’IA appelle les outils au fil de l’eau — <code>intent</code> (le titre métier d’un
+nœud), <code>goal</code> (le pourquoi), <code>unsure</code> (le doute), un fil sur un piège repéré. C’est ce moment-là qui
+rend la relecture utile : <code>intent</code> et <code>does</code> écrits par la même lecture s’accordent toujours et
+n’apprennent rien ; écrits à deux moments, leur écart est précisément ce qu’Atlas montre.</p>
+<h2 id="le-serveur-mcp">Le serveur MCP</h2>
+<p><code>atlas mcp</code> est un serveur <strong>stdio</strong> : il n’écoute aucun port, c’est ton client qui le lance au
+démarrage de la session et lui parle par son entrée standard. Tu ne le tapes jamais à la main.</p>
+<p>Il ne calcule rien : il traduit des questions en appels au daemon, qui reste seul à lire git et le
+code. Il démarre le daemon au lancement <strong>si</strong> la session est sous un projet Atlas — une session
+ouverte ailleurs n’allume rien chez toi. Une erreur d’outil revient en texte lisible dans la réponse,
+pour que le modèle puisse corriger son appel.</p>
+<p><strong>Un outil porte deux noms</strong>, selon la façon dont Atlas est branché :
+<code>mcp__plugin_atlas_atlas__digest</code> quand il vient du plugin, <code>mcp__atlas__digest</code> quand tu as déclaré le serveur MCP toi-même. Si tu
+écris un skill qui pré-accorde des outils, liste <strong>les deux formes</strong> — c’est ce que font les six
+skills d’Atlas, ligne par ligne ; un seul nom ne vaut que pour une moitié des installations, sans que
+rien ne le dise.</p>
+<blockquote>
+<p>⚠️ Dans un skill Claude Code, la liste <code>allowed-tools</code> <strong>pré-accorde</strong>, elle ne retire rien : tout
+outil reste appelable. Ce qui retire, c’est <code>disallowed-tools</code> — c’est par là que <code>/atlas:resolve</code>
+se prive de déclarer une feature.</p>
+</blockquote>
+<h2 id="brancher-ton-propre-skill-sur-atlas">Brancher ton propre skill sur Atlas</h2>
+<p>Ton skill de review maison n’a pas à être remplacé par <code>/atlas:review</code> : tu veux qu’il <strong>écrive dans
+Atlas</strong> — la carte avant le code, un fil par finding — en gardant ses checks. Ce lien est <strong>un geste
+de toi</strong>, pas un mécanisme à configurer. Deux façons, qui se valent :</p>
+<ul>
+<li><strong>un mot dans le prompt</strong> : <code>/mon-review PROJ-412 en postant tes commentaires dans Atlas</code>. Ce que
+tu écris après la commande arrive à ton skill comme argument — c’est ce mot-là, et rien d’autre,
+qui décide qu’il entre dans Atlas ;</li>
+<li><strong>une ligne écrite à la main dans ton skill</strong>, dans sa section de process : commence par la carte,
+puis un fil par finding, ancré à la ligne. Tu l’écris une fois, elle vaut pour tous tes runs.</li>
+</ul>
+<p>Ce que ton IA sait faire à ce moment-là ne vient pas de cette ligne : le serveur MCP l’annonce à
+<strong>chaque session</strong>, dans ses instructions. D’abord <strong>les espaces</strong> : qui écrit quoi et par quel
+outil — les intentions, la structure de la carte, les fils, le parcours, le pseudo-code —, et ce qui
+n’a <strong>aucun</strong> outil, ton endossement, ta spec, la résolution d’un fil, le vocabulaire. Puis, si ton
+projet en déclare, <strong>ses mots</strong> : les douze premiers et leur définition, ceux de SON projet
+(<a href="/atlas-site/manuel/le-glossaire#vocabulaire-du-projet">vocabulaire du projet</a>). Enfin <strong>les moments</strong> : quatre lignes, une par situation où une IA entre
+dans Atlas même en suivant un autre skill — une review (la carte d’abord, un fil par finding, la
+conclusion dans le fil de feature), une réponse à des fils (dans le fil, jamais un fil neuf), un début
+de feature, une relecture du diff.</p>
+<p>Ces annonces ne suffisent pas à faire écrire un skill maison dans Atlas : le lien reste ton geste, et
+Atlas ne sert <strong>aucun</strong> fragment de consignes à coller.</p>
+<h2 id="ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</h2>
+<ul>
+<li><strong>Il ne lance aucune IA, et n’en appelle aucune.</strong> Pas de clé d’API, pas d’agent, pas d’appel
+sortant vers un modèle : c’est ta session qui parle.</li>
+<li><strong>Il ne publie rien tout seul.</strong> Aucun outil ne publie : c’est ton clic, dans le <a href="/atlas-site/manuel/le-glossaire#panneau-code">panneau Code</a>, et
+une note publiée ne se supprime pas.</li>
+<li><strong>Il n’écrit ni ton code ni ta spec à ta place sans que tu le demandes.</strong> <code>/atlas:resolve</code> est le
+seul skill qui touche tes repos, <code>/atlas:ticket</code> le seul qui écrit <code>ticket.md</code> — après ton accord —,
+et aucun des deux ne part si personne ne l’a demandé — toi, ou un agent que tu as lancé.</li>
+<li><strong>Il ne fusionne rien et ne supprime rien</strong> : ni branche, ni worktree.</li>
+<li><strong>Il ne répond pas sur un autre projet que le tien.</strong> Si le daemon sert un autre <a href="/atlas-site/manuel/le-glossaire#workspace">workspace</a> que ta
+session, tous les outils refusent en nommant les deux chemins plutôt que de répondre à côté.</li>
+<li><strong>Il n’installe rien dans ton dos</strong> : <code>atlas init</code> ne pose pas le plugin, et rien ne met à jour ta
+session de code sans que tu la redémarres.</li>
+</ul>
+<h2 id="limites-connues">Limites connues</h2>
+<ul>
+<li><strong>Hors Claude Code, un skill ne retire plus rien.</strong> Gemini CLI et Codex lisent les procédures,
+pas les champs qui retirent des outils : ce que le skill s’interdit n’y tient que par son texte.</li>
+<li><strong>Le plugin est copié, pas lu en place.</strong> Tant que tu n’as pas relancé <code>atlas plugin install</code> (ou
+<code>atlas update</code>) <strong>et</strong> redémarré la session, tu travailles avec la version précédente des skills,
+sans aucun signal.</li>
+<li><strong>La session doit être ouverte sous le projet.</strong> La remontée part du dossier courant ; la variable
+d’environnement que mentionne le refus ne change pas la réponse des outils.</li>
+<li><strong>Une branche sans commit se lit comme mergée</strong> : elle pointe sur la base, et le Tableau peut
+ranger la feature comme rentrée jusqu’au premier commit.</li>
+<li><strong>Confier le code à ton skill de projet peut échouer</strong>, et c’est une limite de ton client, pas
+d’Atlas : un skill qui ne se déclenche qu’à la main ne s’invoque pas depuis un autre.
+<code>/atlas:resolve</code> le dit et bascule sur sa méthode générique — à toi de le taper toi-même si tu
+tiens à ses conventions.</li>
+</ul>
+<nav class="suite" aria-label="Page suivante et précédente"><a href="/atlas-site/manuel/les-stacks-et-project-json"><small>← précédent</small>Les stacks et project.json</a><a class="droite" href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit"><small>suivant →</small>Ce que l&#39;IA lit et écrit</a></nav></article><nav class="cote toc" aria-label="Sur cette page"><h2>Sur cette page</h2><ul><li><a href="#le-principe--chacun-apporte-sa-moitié">Le principe : chacun apporte sa moitié</a></li><li><a href="#installer">Installer</a></li><li><a href="#gemini-cli-et-codex">Gemini CLI et Codex</a></li><li><a href="#où-ouvrir-ta-session">Où ouvrir ta session</a></li><li><a href="#les-sept-skills">Les sept skills</a></li><li><a class="h3" href="#atlasticket--ouvrir-la-feature-et-écrire-sa-spec">/atlas:ticket — ouvrir la feature, et écrire sa spec</a></li><li><a class="h3" href="#atlasresolve--le-seul-skill-qui-écrit-du-code">/atlas:resolve — le seul skill qui écrit du code</a></li><li><a class="h3" href="#atlasreview--et-ce-que-les-précédents-ont-donné">/atlas:review — et ce que les précédents ont donné</a></li><li><a class="h3" href="#entre-les-skills-un-moment-sans-skill">Entre les skills, un moment sans skill</a></li><li><a href="#le-serveur-mcp">Le serveur MCP</a></li><li><a href="#brancher-ton-propre-skill-sur-atlas">Brancher ton propre skill sur Atlas</a></li><li><a href="#ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</a></li><li><a href="#limites-connues">Limites connues</a></li></ul></nav></main><footer class="pied"><div class="dedans"><span>Atlas — suivi et validation de code.</span><a href="/atlas-site/manuel/prise-en-main">Manuel</a></div></footer><script>
+    document.getElementById('theme-bt')?.addEventListener('click', () => {
+      const r = document.documentElement;
+      // clair → sombre → système, et le tour recommence. « Système » RETIRE la clé : c'est ce qui
+      // rend le choix distinct d'une absence de choix.
+      const suite = { clair: 'sombre', sombre: '', '': 'clair' };
+      const v = suite[r.dataset.theme || ''];
+      if (v) { r.dataset.theme = v; try { localStorage.setItem('atlas-site-theme', v); } catch {} }
+      else { delete r.dataset.theme; try { localStorage.removeItem('atlas-site-theme'); } catch {} }
+    });
+  </script></body></html>

@@ -1,0 +1,354 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>La vue d&#39;ensemble · Atlas</title><meta name="description" content="L'écran sur lequel une feature s'ouvre : ce qu'elle fait et où est son risque, en quelques boîtes, révélé par crans. Pour qui découvre une feature avant d'en relire le détail."><link rel="canonical" href="https://gregoirelacoste.github.io/atlas-site/manuel/la-vue-d-ensemble"><meta property="og:title" content="La vue d'ensemble · Atlas"><meta property="og:description" content="L'écran sur lequel une feature s'ouvre : ce qu'elle fait et où est son risque, en quelques boîtes, révélé par crans. Pour qui découvre une feature avant d'en relire le détail."><meta property="og:type" content="website"><meta property="og:url" content="https://gregoirelacoste.github.io/atlas-site/manuel/la-vue-d-ensemble"><meta name="twitter:card" content="summary"><link rel="icon" href="/atlas-site/favicon.svg" type="image/svg+xml"><script>
+    (() => { try { const t = localStorage.getItem('atlas-site-theme');
+      if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t; } catch {} })();
+  </script><link rel="stylesheet" href="/atlas-site/_astro/Base.D32RNicN.css"></head><body><header class="tete"><a class="marque" href="/atlas-site">🗺️ Atlas</a><nav><a href="/atlas-site/installer">Installer</a><a href="/atlas-site/manuel/prise-en-main" aria-current="page">Manuel</a><a href="/atlas-site/articles">Écrits</a><button class="theme-bt" id="theme-bt" type="button" aria-label="Changer de thème">◐</button></nav></header><main class="doc"><nav class="cote" aria-label="Le manuel"><h2>Le manuel</h2><ol><li><a href="/atlas-site/manuel/prise-en-main">Prise en main</a></li><li><a href="/atlas-site/manuel/l-arbre">L&#39;Arbre</a></li><li><a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a></li><li><a href="/atlas-site/manuel/le-code">Le Code</a></li><li><a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a></li><li><a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et inventaire</a></li><li><a href="/atlas-site/manuel/le-panneau-git">Le panneau Git</a></li><li><a href="/atlas-site/manuel/le-tableau">Le Tableau</a></li><li><a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a></li><li><a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a></li><li><a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a></li><li><a href="/atlas-site/manuel/brancher-l-ia">Brancher l&#39;IA</a></li><li><a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l&#39;IA lit et écrit</a></li><li><a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a></li><li><a href="/atlas-site/manuel/la-ligne-de-commande">La ligne de commande</a></li><li><a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a></li><li><a href="/atlas-site/manuel/le-clavier">Le clavier</a></li><li><a href="/atlas-site/manuel/les-precedents">Les précédents</a></li><li><a href="/atlas-site/manuel/les-decisions-metier">Les décisions métier</a></li><li><a href="/atlas-site/manuel/le-glossaire">Le glossaire</a></li><li><a href="/atlas-site/manuel/la-recette">La recette</a></li><li><a href="/atlas-site/manuel/deposer-une-recette">Déposer une recette</a></li><li><a href="/atlas-site/manuel/la-vue-d-ensemble" aria-current="page">La vue d&#39;ensemble</a></li></ol></nav><article class="corps"><h1>La vue d&#39;ensemble</h1><p class="chapo">L&#39;écran sur lequel une feature s&#39;ouvre : ce qu&#39;elle fait et où est son risque, en quelques boîtes, révélé par crans. Pour qui découvre une feature avant d&#39;en relire le détail.</p><blockquote>
+<p>L’écran sur lequel une feature s’ouvre : ce qu’elle fait et où est son risque, en quelques boîtes, révélé par crans. Pour qui découvre une feature avant d’en relire le détail.</p>
+</blockquote>
+<h2 id="ce-quelle-montre-et-pourquoi-elle-vient-dabord">Ce qu’elle montre, et pourquoi elle vient d’abord</h2>
+<p>Quand tu ouvres une feature, le centre de l’écran ne montre pas l’<a href="/atlas-site/manuel/le-glossaire#arbre">Arbre</a>
+entier : il montre la <a href="/atlas-site/manuel/le-glossaire#vue-d-ensemble">vue d’ensemble</a>, un schéma de quelques
+boîtes. Chaque boîte est un symbole du diff — une méthode, un fichier, un contrat — choisi parce qu’il
+dit le plus de ce que la feature <strong>fait</strong> : une entrée HTTP neuve, un service qui change beaucoup, un
+contrat modifié. Les nœuds que tu as notés 3 ou 4, ceux qu’Atlas propose en criticité 4 et les appels
+qui sortent de la carte sans destination connue y sont d’office, même s’ils sont loin du reste.</p>
+<p>L’idée est de comprendre la feature en quelques minutes, puis d’aller plus loin là où tu le juges
+utile. Le schéma replie, il ne retire rien : tout ce qu’il ne dessine pas est compté dans sa barre, et
+reste dans l’Arbre.</p>
+<p>Le sélecteur au-dessus de la colonne centrale porte trois mots : <strong><code>vue d’ensemble</code></strong>, <strong><code>par flux</code></strong>
+et <strong><code>par fichier</code></strong>. Les deux derniers sont les deux <a href="/atlas-site/manuel/le-glossaire#disposition">dispositions</a>
+de l’Arbre, décrites dans <a href="/atlas-site/manuel/l-arbre">L’Arbre</a>. Au clavier, une lettre chacune : <code>Espace a e</code>,
+<code>Espace a a</code>, <code>Espace a f</code> ; celle de ce qui est affiché masque la colonne, et masquée, toute lettre
+la remontre dans sa disposition. Le <strong><code>?</code></strong> au bout du sélecteur ouvre la règle du jeu de la vue
+affichée : comment elle se construit, d’où viennent ses flèches, comment la relire. Chaque fois que tu ouvres une feature, elle s’ouvre sur la vue
+d’ensemble ; rouvrir celle qui est déjà à l’écran garde ce que tu regardais. Deux exceptions : en <a href="/atlas-site/manuel/la-recette">mode recette</a>, et sur une feature qui ne touche aucun
+symbole que la vue dessine — l’Arbre passe alors devant et dit pourquoi, et le bouton
+<strong><code>vue d’ensemble</code></strong> s’éteint en le disant (<code>rien à dessiner</code>). Une carte qui ne se lit pas s’ouvre
+aussi sur l’Arbre, qui affiche l’erreur.</p>
+<p>Au-dessus du schéma se tient l’<a href="/atlas-site/manuel/le-glossaire#index-des-contrats">index des contrats</a>, le même
+qu’en tête de l’Arbre (voir <a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a>) : comprendre une
+feature commence souvent par ce dont d’autres dépendent. Un contrat cliqué ouvre son code à droite
+sans quitter la vue ; <code>Espace a c</code> plie ou déplie l’index.</p>
+<h2 id="lire-le-schéma">Lire le schéma</h2>
+<p>Le schéma range <strong>une colonne par service</strong> — un service est un repo membre de la feature — dans
+l’ordre de la carte. En tête de colonne : le nom court du repo, et combien de ses nœuds touchés sont
+dessinés, par exemple <code>3 sur 11</code>. Le flux se lit <strong>de haut en bas</strong> : une boîte qui en appelle une
+autre est au-dessus d’elle. Dans une même colonne et à la même hauteur, les boîtes se rangent côte à
+côte quand la place le permet.</p>
+<h3 id="une-boîte">Une boîte</h3>
+<table>
+<thead>
+<tr>
+<th>ce que tu vois</th>
+<th>ce que ça dit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>le <a href="/atlas-site/manuel/le-glossaire#rond">rond</a> à gauche</td>
+<td>l’état de ta relecture, comme dans l’Arbre : creux à relire, plein endossé, cerclé d’ambre <a href="/atlas-site/manuel/le-glossaire#a-revoir">à revoir</a>, l’anneau de ta note 3 ou 4</td>
+</tr>
+<tr>
+<td>un <code>?</code> cerclé devant le rond</td>
+<td>tu as dit « <a href="/atlas-site/manuel/le-glossaire#pas-compris">pas compris</a> » sur ce nœud (atténué : un collègue l’a dit)</td>
+</tr>
+<tr>
+<td>la <a href="/atlas-site/manuel/le-glossaire#pastille">pastille</a></td>
+<td>la couche du nœud, les mêmes lettres et couleurs que l’Arbre</td>
+</tr>
+<tr>
+<td>le nom en vert</td>
+<td>le code est <a href="/atlas-site/manuel/le-glossaire#neuf">neuf</a> : aucune de ses lignes n’existait à la base</td>
+</tr>
+<tr>
+<td><code>▶ PATCH</code>, <code>⇄ GET</code></td>
+<td>le verbe d’une entrée HTTP, ou d’un <a href="/atlas-site/manuel/le-glossaire#appel-reseau">appel réseau</a></td>
+</tr>
+<tr>
+<td>des types sous le nom, en bleu puis en orange</td>
+<td>ce que le nœud prend, puis ce qu’il rend — deux entrées, puis <code>+N</code>. En gras et à pleine encre : un <a href="/atlas-site/manuel/le-glossaire#contrat">contrat</a> que la feature touche ; les autres types sont atténués. Sans enveloppes déclarées par la stack (<code>Promise</code>, <code>Observable</code>…), rien ne s’affiche</td>
+</tr>
+<tr>
+<td>un fond rouge</td>
+<td>la <a href="/atlas-site/manuel/le-glossaire#criticite-proposee">criticité proposée</a> par Atlas : clair pour 3, plus soutenu et liseré pour 4</td>
+</tr>
+<tr>
+<td>un bord en tirets, et une ligne <code>angle mort · …</code></td>
+<td>Atlas a renoncé à suivre le flux à cet endroit : <code>destination inconnue</code>, <code>appel non suivi</code>, <code>méthode introuvable</code>…</td>
+</tr>
+<tr>
+<td>une ligne <code>alice 3</code></td>
+<td>la note qu’un collègue a posée, nommée — jamais une moyenne</td>
+</tr>
+</tbody>
+</table>
+<p>Une <strong>boîte d’homonymes</strong> réunit un appel, l’endpoint qu’il atteint et le service de même
+nom : une seule chose à lire, posée sur le premier maillon. Sa ligne dit le chemin, par exemple
+<code>front → api · 3 maillons</code>. Son rond est celui d’un groupe : plein quand tout ce qui s’y relit est
+endossé, creux tant qu’il en reste. Ses types sont ceux de tous ses maillons, chacun dit une fois.</p>
+<p>Le fond rouge s’efface dès que tu endosses le nœud : ta note prime sur la proposition. Le détail des
+fonds et des raisons est dans <a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a>.</p>
+<h3 id="les-liens">Les liens</h3>
+<p>Un lien relie deux boîtes quand la carte prouve un chemin de l’une à l’autre — le même chemin que
+l’Arbre, par les mêmes appels. Entre deux boîtes, le chemin peut passer par des nœuds que le schéma ne
+dessine pas encore : le lien est alors en tirets et porte <code>⋯2</code> (deux nœuds cachés en chemin). Un lien
+qui franchit un appel HTTP prend l’encre de l’inter-service et porte <code>⇄</code>. Sans chemin prouvé, aucun
+lien : deux boîtes isolées sont deux choses que la feature touche sans qu’Atlas sache les relier.</p>
+<p>Passe la souris sur une boîte : elle et ses voisines restent à pleine encre, le reste recule. Ce n’est
+qu’un repère — rien ne se masque.</p>
+<h2 id="révéler-plus">Révéler plus</h2>
+<p>À l’ouverture, le schéma montre <strong>les six premières boîtes</strong> de l’ordre, plus ce qui est montré
+d’office. Chaque <a href="/atlas-site/manuel/le-glossaire#cran">cran</a> en ajoute six. Un appel, son endpoint et son service
+de même nom, que la carte relie, font une seule boîte : le budget compte ce que tu vois apparaître.
+Deux homonymes que rien ne relie font deux boîtes, donc deux places.</p>
+<p>La barre en haut du schéma porte les gestes :</p>
+<table>
+<thead>
+<tr>
+<th>geste</th>
+<th>ce qu’il fait</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>+</code> et <code>-</code>, le pointeur sur le schéma</td>
+<td>un cran de plus, un cran de moins</td>
+</tr>
+<tr>
+<td>les traits entre <code>−</code> et <code>+</code></td>
+<td>un trait par cran ; un clic saute à ce cran ; le dernier s’écrit <code>tout</code></td>
+</tr>
+<tr>
+<td><strong><code>↺ initial</code></strong></td>
+<td>revient au premier cran, efface ce que tu as révélé à la main et referme le nœud ouvert ; il n’apparaît qu’une fois que tu as bougé ou ouvert un nœud</td>
+</tr>
+<tr>
+<td><strong><code>révéler ses N voisins</code></strong>, sur la boîte ouverte</td>
+<td>dessine les nœuds touchés qui l’appellent ou qu’elle appelle</td>
+</tr>
+<tr>
+<td>une étape du Parcours</td>
+<td>dessine et allume ses nœuds (voir plus bas)</td>
+</tr>
+</tbody>
+</table>
+<p>À côté des crans, le compte : <code>8 boîtes · 12 nœuds sur 40</code> — huit boîtes dessinées, douze nœuds
+dedans, sur les quarante que la feature touche. Ce que tu as révélé à la main se compte à part,
+<code>+4 à la main</code>, et se retire d’un clic sur son <code>×</code>, sans toucher au cran.</p>
+<blockquote>
+<p>⚠️ <code>+</code> et <code>-</code> n’agissent que <strong>le pointeur sur le schéma</strong>. Ailleurs, la touche ne fait rien : pas
+de surprise pendant que tu lis le Code.</p>
+</blockquote>
+<h3 id="lordre">L’ordre</h3>
+<p>L’ordre suit une table de points, mesurée sur des features relues à la main : il fait passer devant
+ce qui décrit le mieux une feature. Quatre questions, additionnées :</p>
+<table>
+<thead>
+<tr>
+<th>question</th>
+<th>ce qui gagne des points</th>
+<th>ce qui en perd</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>quel rôle ?</td>
+<td>une entrée HTTP (+3), une garde (+2), un service ou un contrat (+1)</td>
+<td>un composant d’écran (−1)</td>
+</tr>
+<tr>
+<td>quelle ampleur ?</td>
+<td>un symbole modifié sur 10 lignes ou plus (+3), un symbole neuf de 10 lignes ou plus, un en-tête de classe (+2)</td>
+<td>un <a href="/atlas-site/manuel/le-glossaire#noeud-fichier">nœud-fichier</a> modifié (−4)</td>
+</tr>
+<tr>
+<td>quels liens ?</td>
+<td>appelé et appelant (+2), appelant seulement (+1)</td>
+<td>aucun lien (−3)</td>
+</tr>
+<tr>
+<td>où dans la carte ?</td>
+<td>greffé sous l’appel qui l’atteint (+2), dans un flux (+1)</td>
+<td>dans le <a href="/atlas-site/manuel/le-glossaire#reste-du-diff">reste du diff</a> (−3)</td>
+</tr>
+</tbody>
+</table>
+<p>À égalité, le symbole qui ajoute le plus de lignes passe devant. Être neuf ne fait pas passer devant :
+à ampleur égale, un symbole modifié compte un point de plus qu’un symbole neuf. Le
+<a href="/atlas-site/manuel/le-glossaire#decor-de-test">décor de test</a>, les tests et la configuration ne sont jamais dessinés.</p>
+<h3 id="ce-qui-est-toujours-affiché">Ce qui est toujours affiché</h3>
+<p>La ligne <strong><code>toujours affichés, quel que soit le cran :</code></strong> dit ce qui est dessiné sans entamer le
+budget ; le survol de chaque mot dit pourquoi :</p>
+<table>
+<thead>
+<tr>
+<th>mot de la barre</th>
+<th>ce qui est montré</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>2 jugés critiques par Atlas</code></td>
+<td>les nœuds qu’Atlas propose en criticité 4 et que tu n’as pas encore endossés</td>
+</tr>
+<tr>
+<td><code>3 notés 3 ou 4 par un relecteur</code></td>
+<td>les nœuds qu’un relecteur — toi ou un collègue — a notés 3 ou 4</td>
+</tr>
+<tr>
+<td><code>1 appel vers une destination inconnue</code></td>
+<td>un nœud dont le flux sort de la carte sans que la destination soit prouvée</td>
+</tr>
+<tr>
+<td><code>1 migration de base</code></td>
+<td>une migration de base de données</td>
+</tr>
+</tbody>
+</table>
+<p>Rien de tel : la ligne n’apparaît pas. Quand un signal de criticité porte plus d’un tiers de la
+feature, il ne désigne plus aucun nœud : la barre le dit une fois, sur sa propre ligne, par exemple
+<code>toute la feature … : 71 nœuds sur 105</code>, la raison à la place des points.</p>
+<h3 id="ce-que-le-schéma-ne-dessine-pas">Ce que le schéma ne dessine pas</h3>
+<p>Le survol du compte (<code>8 boîtes · 12 nœuds sur 40</code>) le dit en phrases : ce qui est
+<a href="/atlas-site/manuel/le-glossaire#de-cote">de côté</a>, les fichiers de configuration, de module ou de test, les
+nœuds appelés sans être modifiés — le <a href="/atlas-site/manuel/le-glossaire#contexte">contexte</a>, par où passent les
+liens en pointillé —, les flux touchés par <a href="/atlas-site/manuel/le-glossaire#impact-par-ricochet">ricochet</a> et les
+<a href="/atlas-site/manuel/le-glossaire#angle-mort">angles morts</a>. Tout cela reste dans l’Arbre.</p>
+<h2 id="ouvrir-un-nœud-et-lendosser">Ouvrir un nœud et l’endosser</h2>
+<p>Comme dans l’Arbre, la colonne Code est <strong>fermée</strong> tant qu’aucun nœud n’est ouvert : le schéma prend sa
+place. Un clic sur une boîte — ou <code>Entrée</code> sur une boîte qui a le focus — l’ouvre, sur un quart de
+l’écran par défaut (la largeur se règle dans <a href="/atlas-site/manuel/configurer-un-projet">Config › Atlas</a>), avec le
+code du nœud dans le <a href="/atlas-site/manuel/le-glossaire#panneau-code">panneau Code</a>, exactement comme un clic dans
+l’Arbre : la même tête, les mêmes fils, la même colonne de relecture. Aucune bulle ne s’ouvre sur le
+schéma. La boîte ouverte se cerne de la couleur de sélection, et ses voisines restent allumées. Le nœud ouvert
+reste dessiné tant qu’il est ouvert, même quand ton geste le fait sortir de l’office ; et un nœud ouvert
+d’ailleurs — <code>Alt+→</code>, un lien du Code, un fil du Journal — se cerne lui aussi, s’il est dessiné.</p>
+<p>En vue d’ensemble, la tête du nœud ouvert porte en plus :</p>
+<ul>
+<li>six boutons, <strong><code>0</code> <code>1</code> <code>2</code> <code>3</code> <code>4</code> <code>?</code></strong>, qui font exactement ce que font les touches : endosser,
+endosser en notant, dire « pas compris ». Le bouton de ta note est enfoncé ;</li>
+<li>les angles morts du nœud en phrase entière, une ligne chacun.</li>
+</ul>
+<p>Les touches <code>0</code>, <code>1</code>-<code>4</code> et <code>?</code> agissent sur le nœud ouvert à droite, avec les règles de l’Arbre : un
+nœud hors de la <a href="/atlas-site/manuel/le-glossaire#worklist">worklist</a> ne s’endosse pas, un fil de l’IA non ouvert
+s’ouvre d’abord. Le schéma suit le geste : le rond se remplit, une note 3 ou 4 fait monter le nœud
+d’office, le fond rouge proposé s’éteint. Le geste lui-même est décrit dans
+<a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a>.</p>
+<p>Pour revenir à l’état d’ouverture — aucun nœud ouvert, la colonne Code refermée — reclique la boîte
+ouverte, clique dans le vide du schéma ou le bouton <code>⟩</code> du Code, tape <code>Échap</code>, ou clique <strong><code>↺ initial</code></strong>.</p>
+<p>Les angles morts qui ne se posent sur aucune boîte ne se listent pas ici : leur nombre est dans l’onglet
+Relecture (« N angles morts »), qui mène à l’Inventaire, rangés par nature ;
+<a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a> dit quoi faire de chacun.</p>
+<h2 id="le-volet-gauche--le-ticket-et-le-parcours">Le volet gauche : le Ticket et le Parcours</h2>
+<p>Le volet gauche reste celui de l’Arbre. Deux de ses vues servent la vue d’ensemble, sous la famille
+Parcours : <strong>Ticket</strong> — la spec, ses critères, ce qu’on a compris — et <strong>Parcours</strong> — les étapes du
+voyage de la donnée, écrites par l’IA. Les deux sont décrites dans
+<a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a>.</p>
+<p>En vue d’ensemble, un clic sur une étape du Parcours <strong>révèle ses nœuds</strong> dans le schéma et les
+<strong>épingle</strong> : ils restent allumés, le reste recule. Recliquer l’étape, ou cliquer dans le vide du
+schéma, les éteint — ils restent dessinés, comptés <code>à la main</code>. Dans l’Arbre, la même étape isole son
+flux, comme avant. Les gestes du volet qui visent l’Arbre — isoler un critère du Ticket, une loupe
+d’Inventaire ou de repo — montrent d’abord l’Arbre ; la ligne « contrats » de Relecture, elle, ouvre
+l’index sans quitter la vue.</p>
+<p>Chaque étape du Parcours montre sa phrase de tête — la première ligne de ce que l’IA a écrit, le reste
+au survol. Son numéro est cerclé en pointillé quand elle cite un nœud que la carte ne porte plus : le
+code a bougé depuis que l’étape a été écrite.</p>
+<h3 id="discuter-une-étape">Discuter une étape</h3>
+<p>Une question se pose souvent au niveau du récit — « pourquoi cette étape passe-t-elle par le front ? »,
+« il manque l’audit » — et elle a sa place : le <a href="/atlas-site/manuel/le-glossaire#fil-detape">fil d’étape</a>. Dans le pied
+de chaque étape, au survol, <strong><code>discuter</code></strong> ouvre une boîte sous elle ; une étape qui porte un fil montre
+à la place son <strong>nombre de messages</strong>, toujours visible. Ce bouton est un geste à lui : il ouvre ou replie
+le fil sous l’étape sans isoler son flux — le clic sur l’étape garde le sien. Le fil se lit replié tant
+que tu ne l’ouvres pas ; il se répond, se résout et se range comme tout fil, et <strong>ne se publie pas</strong> :
+il n’a aucune ancre chez l’hébergeur. Une étape porte un seul fil : on y ajoute.</p>
+<p>L’IA réécrit le parcours en entier, et le numéro d’une étape se décale. Le fil, lui, retrouve son étape
+par sa <strong>phrase de tête</strong> — à l’espace près, jamais à la casse. Si plus aucune étape ne la porte, il
+passe en bas de l’onglet, sous « Fils sans leur étape », marqué <strong><code>étape disparue</code></strong> : il reste lisible
+et se répond, mais il n’atterrit jamais sur une autre étape et n’est jamais compté comme un nœud
+orphelin. Sans parcours lisible, il dit <code>étape — parcours non lu</code> ; si deux étapes portaient la même
+phrase, <code>étape ambiguë</code> — l’IA ne peut plus écrire un tel parcours. Le Journal nomme ces fils par le
+numéro et la phrase de l’étape, et son clic ouvre l’onglet Parcours sur elle, fil déplié
+(<a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a>).</p>
+<p>L’IA ouvre ou complète un fil d’étape par l’outil <code>comment</code>, en désignant l’étape par son numéro <strong>et</strong>
+sa phrase : si la phrase n’est pas celle de l’étape — le parcours a pu changer —, l’écriture est
+refusée et le refus dit ce que l’étape porte (<a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l’IA lit et écrit</a>).</p>
+<h2 id="ce-que-lia-en-lit">Ce que l’IA en lit</h2>
+<p>L’outil <code>digest</code> porte, pour chaque nœud que la vue dessinerait, un champ <code>vue</code> : son <strong>rang</strong> dans
+l’ordre de révélation (1 = montré d’abord), s’il est <strong>montré d’office</strong> et pourquoi, et les angles
+morts que la vue lui rattache. Un nœud sans <code>vue</code> est un nœud que la vue ne dessine jamais. Le détail
+des champs est dans <a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l’IA lit et écrit</a>. La vue elle-même vit
+sans skill : tout ce qu’elle montre vient du code et de tes endossements ; les skills ne font que
+l’enrichir — le Parcours, la spec du ticket.</p>
+<h2 id="raccourcis">Raccourcis</h2>
+<table>
+<thead>
+<tr>
+<th>touche</th>
+<th>effet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Espace a e</code> · <code>a a</code> · <code>a f</code></td>
+<td>vue d’ensemble · Arbre par flux · par fichier — la lettre affichée masque la colonne</td>
+</tr>
+<tr>
+<td><code>Espace a c</code></td>
+<td>plier ⇄ déplier l’index des contrats, au-dessus du schéma</td>
+</tr>
+<tr>
+<td><code>+</code> / <code>-</code></td>
+<td>révéler un cran de plus / de moins — le pointeur sur le schéma</td>
+</tr>
+<tr>
+<td><code>Entrée</code></td>
+<td>ouvrir la boîte qui a le focus</td>
+</tr>
+<tr>
+<td><code>Échap</code></td>
+<td>refermer le nœud ouvert : l’état d’ouverture, colonne Code fermée</td>
+</tr>
+<tr>
+<td><code>0</code>, <code>1</code>-<code>4</code>, <code>?</code></td>
+<td>endosser, noter, « pas compris » — sur le nœud ouvert à droite</td>
+</tr>
+</tbody>
+</table>
+<p>En vue d’ensemble, <code>Espace a p</code> (tout plier) ne fait rien : la boîte des touches dit
+<code>en vue d’ensemble</code>. En <a href="/atlas-site/manuel/la-recette">mode recette</a>, la vue d’ensemble ne
+s’ouvre pas : <code>Espace a e</code> y dit <code>en mode recette</code>. Le reste du clavier est dans
+<a href="/atlas-site/manuel/le-clavier">Le clavier</a>.</p>
+<h2 id="ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</h2>
+<ul>
+<li><strong>Il ne retient pas ta révélation.</strong> Le cran, les voisins révélés, l’étape épinglée valent pour la
+feature ouverte ; ouvrir une autre feature, ou recharger la page, repart de l’ouverture.</li>
+<li><strong>Il ne relie pas deux boîtes sans preuve.</strong> Pas de lien deviné par un nom ou un fichier : deux
+boîtes isolées le restent.</li>
+<li><strong>Il ne retire rien.</strong> Ce qui n’est pas dessiné est compté dans la barre et lisible dans l’Arbre.</li>
+<li><strong>Il n’agrège pas les notes.</strong> Ton anneau dit ta note, les collègues sont nommés un par un.</li>
+<li><strong>Il ne remplace pas l’Arbre.</strong> Le contexte, les bandes de ricochet, les replis, les tests et les
+fils de feature restent dans l’Arbre et le volet gauche.</li>
+<li><strong>Discuter une étape ne la réécrit pas.</strong> Le parcours reste écrit par l’IA ; un fil d’étape ne se
+pose ni sur un critère d’acceptation, ni chez l’hébergeur, et ne se rattache pas seul à une étape
+dont la phrase a changé.</li>
+</ul>
+<h2 id="limites-connues">Limites connues</h2>
+<ul>
+<li>Une <strong>entrée refusée</strong> désigne une ligne d’un fichier, pas un symbole : elle ne se pose sur aucune
+boîte, et se compte avec les angles morts de l’onglet Relecture.</li>
+<li>Les flèches du clavier font défiler le schéma ; elles ne vont pas de boîte en boîte. On passe d’une
+boîte à l’autre à la souris, ou avec <code>Tab</code> puis <code>Entrée</code>.</li>
+<li>Quand ta note promeut un nœud (un 3 ou un 4), il sort du budget des crans : une autre boîte peut
+apparaître pour prendre sa place, allumée un instant pour que l’œil la trouve.</li>
+<li>Une feature qui touche beaucoup de services serre ses colonnes : les noms passent à la ligne.</li>
+</ul>
+<nav class="suite" aria-label="Page suivante et précédente"><a href="/atlas-site/manuel/deposer-une-recette"><small>← précédent</small>Déposer une recette</a></nav></article><nav class="cote toc" aria-label="Sur cette page"><h2>Sur cette page</h2><ul><li><a href="#ce-quelle-montre-et-pourquoi-elle-vient-dabord">Ce qu’elle montre, et pourquoi elle vient d’abord</a></li><li><a href="#lire-le-schéma">Lire le schéma</a></li><li><a class="h3" href="#une-boîte">Une boîte</a></li><li><a class="h3" href="#les-liens">Les liens</a></li><li><a href="#révéler-plus">Révéler plus</a></li><li><a class="h3" href="#lordre">L’ordre</a></li><li><a class="h3" href="#ce-qui-est-toujours-affiché">Ce qui est toujours affiché</a></li><li><a class="h3" href="#ce-que-le-schéma-ne-dessine-pas">Ce que le schéma ne dessine pas</a></li><li><a href="#ouvrir-un-nœud-et-lendosser">Ouvrir un nœud et l’endosser</a></li><li><a href="#le-volet-gauche--le-ticket-et-le-parcours">Le volet gauche : le Ticket et le Parcours</a></li><li><a class="h3" href="#discuter-une-étape">Discuter une étape</a></li><li><a href="#ce-que-lia-en-lit">Ce que l’IA en lit</a></li><li><a href="#raccourcis">Raccourcis</a></li><li><a href="#ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</a></li><li><a href="#limites-connues">Limites connues</a></li></ul></nav></main><footer class="pied"><div class="dedans"><span>Atlas — suivi et validation de code.</span><a href="/atlas-site/manuel/prise-en-main">Manuel</a></div></footer><script>
+    document.getElementById('theme-bt')?.addEventListener('click', () => {
+      const r = document.documentElement;
+      // clair → sombre → système, et le tour recommence. « Système » RETIRE la clé : c'est ce qui
+      // rend le choix distinct d'une absence de choix.
+      const suite = { clair: 'sombre', sombre: '', '': 'clair' };
+      const v = suite[r.dataset.theme || ''];
+      if (v) { r.dataset.theme = v; try { localStorage.setItem('atlas-site-theme', v); } catch {} }
+      else { delete r.dataset.theme; try { localStorage.removeItem('atlas-site-theme'); } catch {} }
+    });
+  </script></body></html>

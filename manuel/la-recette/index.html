@@ -1,0 +1,335 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>La recette · Atlas</title><meta name="description" content="Tester une feature de bout en bout, à la façon de ton projet, et retrouver le résultat rangé à côté du code relu : ce qu'Atlas demande, sous quelle forme le lui rendre, ce qu'il en garde et ce qu'il en refuse. Pour qui teste — un humain, un script, ou l'IA de ta session."><link rel="canonical" href="https://gregoirelacoste.github.io/atlas-site/manuel/la-recette"><meta property="og:title" content="La recette · Atlas"><meta property="og:description" content="Tester une feature de bout en bout, à la façon de ton projet, et retrouver le résultat rangé à côté du code relu : ce qu'Atlas demande, sous quelle forme le lui rendre, ce qu'il en garde et ce qu'il en refuse. Pour qui teste — un humain, un script, ou l'IA de ta session."><meta property="og:type" content="website"><meta property="og:url" content="https://gregoirelacoste.github.io/atlas-site/manuel/la-recette"><meta name="twitter:card" content="summary"><link rel="icon" href="/atlas-site/favicon.svg" type="image/svg+xml"><script>
+    (() => { try { const t = localStorage.getItem('atlas-site-theme');
+      if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t; } catch {} })();
+  </script><link rel="stylesheet" href="/atlas-site/_astro/Base.D32RNicN.css"></head><body><header class="tete"><a class="marque" href="/atlas-site">🗺️ Atlas</a><nav><a href="/atlas-site/installer">Installer</a><a href="/atlas-site/manuel/prise-en-main" aria-current="page">Manuel</a><a href="/atlas-site/articles">Écrits</a><button class="theme-bt" id="theme-bt" type="button" aria-label="Changer de thème">◐</button></nav></header><main class="doc"><nav class="cote" aria-label="Le manuel"><h2>Le manuel</h2><ol><li><a href="/atlas-site/manuel/prise-en-main">Prise en main</a></li><li><a href="/atlas-site/manuel/l-arbre">L&#39;Arbre</a></li><li><a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a></li><li><a href="/atlas-site/manuel/le-code">Le Code</a></li><li><a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a></li><li><a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et inventaire</a></li><li><a href="/atlas-site/manuel/le-panneau-git">Le panneau Git</a></li><li><a href="/atlas-site/manuel/le-tableau">Le Tableau</a></li><li><a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a></li><li><a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a></li><li><a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a></li><li><a href="/atlas-site/manuel/brancher-l-ia">Brancher l&#39;IA</a></li><li><a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l&#39;IA lit et écrit</a></li><li><a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a></li><li><a href="/atlas-site/manuel/la-ligne-de-commande">La ligne de commande</a></li><li><a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a></li><li><a href="/atlas-site/manuel/le-clavier">Le clavier</a></li><li><a href="/atlas-site/manuel/les-precedents">Les précédents</a></li><li><a href="/atlas-site/manuel/les-decisions-metier">Les décisions métier</a></li><li><a href="/atlas-site/manuel/le-glossaire">Le glossaire</a></li><li><a href="/atlas-site/manuel/la-recette" aria-current="page">La recette</a></li><li><a href="/atlas-site/manuel/deposer-une-recette">Déposer une recette</a></li><li><a href="/atlas-site/manuel/la-vue-d-ensemble">La vue d&#39;ensemble</a></li></ol></nav><article class="corps"><h1>La recette</h1><p class="chapo">Tester une feature de bout en bout, à la façon de ton projet, et retrouver le résultat rangé à côté du code relu : ce qu&#39;Atlas demande, sous quelle forme le lui rendre, ce qu&#39;il en garde et ce qu&#39;il en refuse. Pour qui teste — un humain, un script, ou l&#39;IA de ta session.</p><blockquote>
+<p>Tester une feature de bout en bout, à la façon de ton projet, et retrouver le résultat rangé à côté
+du code relu : ce qu’Atlas demande, sous quelle forme le lui rendre, ce qu’il en garde et ce qu’il en
+refuse. Pour qui teste — un humain, un script, ou l’IA de ta session.</p>
+</blockquote>
+<p>Le vocabulaire, une fois. Une <strong><a href="/atlas-site/manuel/le-glossaire#feature">feature</a></strong> est le ticket qu’Atlas suit ;
+sa <strong><a href="/atlas-site/manuel/le-glossaire#carte">carte</a></strong> est le chemin d’appels qu’il en reconstruit, faite de
+<strong><a href="/atlas-site/manuel/le-glossaire#noeud">nœuds</a></strong> — une ligne par symbole, identifié par son
+<a href="/atlas-site/manuel/le-glossaire#repo">repo</a>, son fichier et son nom. Le <strong><a href="/atlas-site/manuel/le-glossaire#workspace">workspace</a></strong>
+est le dossier <code>.atlas-workspace/</code> du projet, partagé par git avec l’équipe. Une
+<strong><a href="/atlas-site/manuel/le-glossaire#recette">recette</a></strong> est un passage de test sur une feature : une demande validée,
+les commits sur lesquels on a testé, puis tout ce que le test a rapporté — verdicts, passages dans le
+code, requêtes, captures d’écran, réparations d’environnement.</p>
+<h2 id="le-parti-pris--atlas-ne-teste-pas">Le parti pris : Atlas ne teste pas</h2>
+<p>Atlas ne lance rien : ni ta pile, ni un navigateur, ni une API. Le projet teste <strong>à sa façon</strong> (un
+script, un skill projet, quelqu’un qui clique). Atlas fait quatre choses, seulement celles-là :</p>
+<table>
+<thead>
+<tr>
+<th>ce qu’Atlas fait</th>
+<th>ce que ça veut dire pour toi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>il <strong>dit</strong> ce qu’il attend</td>
+<td>une liste d’étapes numérotées, chacune avec ce qu’il faut rapporter, et le format du dépôt</td>
+</tr>
+<tr>
+<td>il <strong>range</strong> le résultat</td>
+<td>dans le workspace, partagé par git</td>
+</tr>
+<tr>
+<td>il <strong>rattache</strong> au code</td>
+<td>chaque lieu rapporté sous la forme <code>repo/chemin:ligne</code> devient un nœud de la carte, ou il est refusé avec sa raison</td>
+</tr>
+<tr>
+<td>il <strong>filtre</strong> les secrets</td>
+<td>au dépôt, en disant quels champs il a retirés, jamais leur valeur</td>
+</tr>
+</tbody>
+</table>
+<p>Tout passe par la commande <code>atlas recette</code> et ses six verbes : un script de CI, un terminal ou l’IA
+de ta session déposent pareil.</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> recette</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> demande</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> PROJ-412</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [--json]                   </span><span style="color:#6A737D;--shiki-dark:#6A737D"># ce qu'Atlas attend, et le format du dépôt</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> recette</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> open</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> PROJ-412</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [--oui] [--label L] [--etape </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"cas"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">] </span><span style="color:#6A737D;--shiki-dark:#6A737D"># ouvre après ton oui ; --etape : un cas de CE run</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> recette</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> depose</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> PROJ-412</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> resultat.json</span><span style="color:#6A737D;--shiki-dark:#6A737D">               # range un résultat ; `-` lit l'entrée standard</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> recette</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> ecart</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> PROJ-412</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "&lt;changement&gt;"</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> --peut-masquer</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> oui</span><span style="color:#D73A49;--shiki-dark:#F97583">|</span><span style="color:#6F42C1;--shiki-dark:#B392F0">non</span><span style="color:#6A737D;--shiki-dark:#6A737D">   # consigne une réparation d'environnement</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> recette</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> close</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> PROJ-412</span><span style="color:#6A737D;--shiki-dark:#6A737D">                              # ferme la recette</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> recette</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> show</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> PROJ-412</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [--json] [--recette ID]       </span><span style="color:#6A737D;--shiki-dark:#6A737D"># relit une recette : ce qui est couvert, ce qui ne l'est pas</span></span></code></pre>
+<p>Chaque verbe parle à l’<strong><a href="/atlas-site/manuel/le-glossaire#instance">instance</a></strong> du projet <strong>de ton dossier
+courant</strong>, et à elle seule ; hors de tout projet, il s’arrête (<a href="/atlas-site/manuel/la-ligne-de-commande">La ligne de commande</a>).</p>
+<h2 id="la-demande--ce-quatlas-attend">La demande : ce qu’Atlas attend</h2>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> recette</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> demande</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> PROJ-412</span></span></code></pre>
+<p>La demande est calculée <strong>à chaque appel</strong>, depuis le ticket et la carte d’aujourd’hui. Elle aligne des
+étapes dans cet ordre, numérotées à partir de 1 :</p>
+<table>
+<thead>
+<tr>
+<th>nature</th>
+<th>d’où elle vient</th>
+<th>ce qu’il faut rapporter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>critere</code></td>
+<td>un <a href="/atlas-site/manuel/le-glossaire#critere">critère</a> d’acceptation de <code>ticket.md</code>, mot pour mot</td>
+<td>le verdict et une note, une capture de l’écran qui montre le résultat, les requêtes de l’étape, ce qu’ont reçu les nœuds du diff traversés</td>
+</tr>
+<tr>
+<td><code>entree</code></td>
+<td>une <a href="/atlas-site/manuel/le-glossaire#entree">entrée</a> que la feature modifie et qu’<strong>aucun test n’atteint</strong></td>
+<td>le verdict, la requête ou le geste qui l’exerce, ce qu’a reçu l’entrée</td>
+</tr>
+<tr>
+<td><code>regression</code></td>
+<td>un <a href="/atlas-site/manuel/le-glossaire#flux">flux</a> que la feature ne touche pas mais qui consomme ce qu’elle modifie — l’<a href="/atlas-site/manuel/le-glossaire#impact-par-ricochet">impact par ricochet</a></td>
+<td>le verdict, une capture de l’écran concerné</td>
+</tr>
+<tr>
+<td><code>socle</code></td>
+<td>ce que ton projet veut à chaque recette : le commun, puis chaque service touché</td>
+<td>le verdict</td>
+</tr>
+</tbody>
+</table>
+<p>Le titre d’une étape dit pourquoi elle est là. Une même entrée ou un même flux n’entre qu’une fois.</p>
+<p>Une entrée qu’un test atteint déjà n’est <strong>pas</strong> demandée. Sans <code>ticket.md</code>, ou sans carte lisible,
+un avertissement <code>⚠</code> dit quelles étapes manquent.</p>
+<p>La commande imprime ensuite <strong>le format du dépôt</strong>, le même texte que tout le monde suit. <code>--json</code> rend
+la demande brute, pour un script.</p>
+<h3 id="les-points-darrêt-suggérés">Les points d’arrêt suggérés</h3>
+<p>La demande propose aussi, tirés de la carte, des <strong>points d’arrêt</strong> : un appel HTTP à rejouer (paramètres,
+requête, réponse), un écran à capturer (un fichier de famille <code>component</code> ou <code>page</code>), une entrée touchée à
+appeler — douze au plus, les plus proches du diff d’abord, sortes alternées, chacun avec sa raison et son
+lieu. Ce sont des <strong>pistes</strong> : l’IA choisit et dit pourquoi. La recette dit ensuite ce qui n’a pas été posé.</p>
+<h3 id="le-scénario-de-recette-et-le-socle">Le scénario de recette, et le socle</h3>
+<p>Le <strong>scénario</strong> dit comment on prouve la feature (<code>features/&lt;id&gt;/recettes/scenario.md</code>) : <code>## titre</code> ouvre un cas, puis <code>- critere:</code> (le début du
+critère, mot pour mot), <code>- socle:</code>, <code>- impact:</code>, <code>- marge:</code>, <code>- lieux:</code>, <code>- faire:</code>, <code>- attendu:</code>. Gabarit :
+<code>atlas recette scenario PROJ-412 --gabarit</code>. La demande le <strong>confronte</strong> au ticket et à la carte, et dit
+chaque écart : critère sans cas, critère disparu, impact sans cas, socle introuvable ou hors carte. Une
+recette retient la version qu’elle a jouée.</p>
+<p>Le <strong>socle</strong> est une bibliothèque : un scénario par capacité d’un service, dans <code>.atlas-workspace/socle/</code>. Ses <strong>lieux</strong> l’ancrent sur le
+code : une feature qui touche ces nœuds, ou les fait ricocher, se le voit <strong>proposer</strong>. Un scénario le cite
+par son id ; un flux d’<strong>impact</strong> qu’un socle cité rejoue n’est pas redemandé. Un service touché (un repo qui porte une entrée sur la
+carte) sans socle se dit. <code>atlas recette socle --cherche "tag:auth"</code> le fouille ; Config › Projet le montre.</p>
+<p>Un cas pour <strong>ce run seulement</strong> : <code>open --etape "…"</code>.</p>
+<h2 id="ouvrir--ton-oui-et-les-commits-relevés">Ouvrir : ton oui, et les commits relevés</h2>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> recette</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> open</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> PROJ-412</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> --label</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "avant la démo"</span></span></code></pre>
+<p>Rien ne commence avant un <strong>oui</strong> sur la demande. Dans un terminal, sans <code>--oui</code>, la commande imprime
+la demande et te le demande (<code>[o/N]</code>). <code>--oui</code> est la trace d’un oui donné ailleurs — à l’IA de ta
+session, qui le relaie.</p>
+<p>Sans terminal et sans <code>--oui</code> (un script de CI), la recette ne s’ouvre que si <strong>une recette précédente
+de cette feature</strong> a déjà validé <strong>la même demande</strong>, étape pour étape (même nature, même titre, même
+ordre). Un critère ajouté au ticket change la demande : il faut un nouveau oui.</p>
+<p>L’ouverture est aussi refusée quand :</p>
+<table>
+<thead>
+<tr>
+<th>situation</th>
+<th>le refus dit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>une recette est déjà ouverte sur cette feature</td>
+<td>laquelle, et qu’il faut déposer dedans ou la fermer</td>
+</tr>
+<tr>
+<td>la demande est vide</td>
+<td>ni critère, ni entrée, ni régression, ni socle : rien à tester</td>
+</tr>
+<tr>
+<td>aucun repo de la feature ne se résout</td>
+<td>rien à relever, donc rien à tester</td>
+</tr>
+</tbody>
+</table>
+<p>À l’ouverture, Atlas <strong>relève lui-même</strong> le commit de chaque repo de la feature, et note si sa copie
+de travail a des modifications non commitées. Tu ne déclares jamais sur quel code tu testes : Atlas le
+lit. La commande l’affiche, un repo par ligne, avec <code>— copie modifiée</code> le cas échéant.</p>
+<p>Son identifiant : la date d’ouverture, puis ton <code>--label</code> en minuscules sans accents.</p>
+<h2 id="déposer">Déposer</h2>
+<p>Ce que le test rend — le format du dépôt, les lieux <code>repo/chemin:ligne</code>, le rattachement par la route,
+les frontières hors carte, les secrets filtrés et les écarts d’environnement — a sa page :
+<strong><a href="/atlas-site/manuel/deposer-une-recette">Déposer une recette</a></strong>. Tu y vas pour écrire un test ou un script qui
+rend ses résultats à Atlas ; tu restes ici pour la demande, l’ouverture, la fermeture et la relecture.</p>
+<h2 id="fermer">Fermer</h2>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> recette</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> close</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> PROJ-412</span></span></code></pre>
+<p>Atlas relève <strong>à nouveau</strong> les commits et les compare à ceux de l’ouverture, pour toujours :</p>
+<table>
+<thead>
+<tr>
+<th>ce qu’Atlas constate</th>
+<th>ce que la commande dit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mêmes commits, aucune copie modifiée</td>
+<td>rien de plus que <code>✓ recette … fermée</code></td>
+</tr>
+<tr>
+<td>un commit a bougé, ou un repo est apparu ou a disparu</td>
+<td>« ⚠ le code a changé pendant la recette »</td>
+</tr>
+<tr>
+<td>mêmes commits, mais une copie modifiée</td>
+<td>« copie modifiée : le code a pu changer pendant, Atlas ne peut pas le dire »</td>
+</tr>
+</tbody>
+</table>
+<p>Fermée, la recette parle aussi dans l’onglet <strong>Ticket</strong> : sous chaque <a href="/atlas-site/manuel/le-glossaire#critere">critère</a>, le verdict de la
+<strong>dernière recette fermée</strong> — <code>recette ok</code>, <code>recette ko</code>, <code>recette : pas lancé</code>, <code>recette : sans verdict</code>, ou <code>pas dans la recette</code> quand le critère a été écrit ou réécrit depuis (le rattachement se
+fait au texte exact). C’est un second fait, <strong>à côté</strong> de la case : il ne coche ni ne décoche rien, la
+couverture reste la lecture du code et la coche reste à toi. La tête de la liste dit de quelle
+recette il s’agit ; un dossier de recette illisible y donne « pas pu lire la recette », et aucun
+verdict plutôt que celui d’une autre recette.</p>
+<h2 id="relire-une-recette">Relire une recette</h2>
+<p><code>atlas recette show PROJ-412 [--recette ID]</code> — la plus récente par défaut, relue contre la carte et les
+commits <strong>d’aujourd’hui</strong> :</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>recette 2026-09-30T10-00-00-000Z_avant-la-demo · avant la démo · ouverte 2026-09-30 10:00 · fermée 2026-09-30 11:10</span></span>
+<span class="line"><span>  porte le code actuel</span></span>
+<span class="line"><span>  étapes : 3 passées · 1 échouée · 1 pas lancée · 1 sans verdict, sur 6</span></span>
+<span class="line"><span>    passées : 2 vues en échec · 1 jamais vue en échec · 0 contre-épreuve impossible · 0 sans le dire</span></span>
+<span class="line"><span>  nœuds du diff : 7 traversés · 2 non traversés · 4 rien rapporté · 0 nés après</span></span>
+<span class="line"><span>  4 échanges sur des routes hors carte · 1 ambigu — top : GET /clients/7/historique ×3 · POST /paiements ×1</span></span>
+<span class="line"><span>  frontière hors carte : 2 (repos : projet-paiement)</span></span>
+<span class="line"><span>  écarts d'environnement : 2, dont 1 qui peuvent masquer un problème</span></span>
+<span class="line"><span>    ⚠ variable PAIEMENT_URL posée à la main</span></span>
+<span class="line"><span>  2 captures · 5 requêtes · 9 passages</span></span></code></pre>
+<h3 id="les-nœuds-du-diff-en-quatre-états">Les nœuds du diff, en quatre états</h3>
+<p>Chaque nœud que la feature modifie — hors lignes de test — tombe dans un seul état :</p>
+<table>
+<thead>
+<tr>
+<th>état</th>
+<th>quand</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>traversé</strong></td>
+<td>au moins un passage, une capture ou une requête s’y rattache — une requête par son lieu ou par sa route, jamais refusée (400 ou plus)</td>
+</tr>
+<tr>
+<td><strong>non traversé</strong></td>
+<td>son repo est dans <code>observe</code>, et rien ne s’y rattache — ou, dit <strong>non traversé (réseau)</strong>, c’est une entrée <code>▶</code> ou un appel <code>⇄</code> d’un repo de <code>observeReseau</code> sans aucune requête</td>
+</tr>
+<tr>
+<td><strong>rien rapporté</strong></td>
+<td>personne n’a observé son repo : on ne sait pas</td>
+</tr>
+</tbody>
+</table>
+<p>Un nœud que seules des requêtes refusées (400 ou plus) ont atteint compte parmi les non traversés,
+mais se dit <strong>atteinte, N requêtes refusées</strong> ; <code>show</code> les nomme sous la ligne des nœuds.
+| <strong>né après</strong> | son fichier n’existait pas au commit testé — le nœud est arrivé après la recette |</p>
+<p>Si la carte ne se lit pas, la ligne dit « nœuds du diff : pas pu lire la carte », jamais des zéros —
+et rien n’est dit des échanges hors carte ni des désaccords. Les frontières, elles, se comptent toujours :
+elles ne dépendent pas de la carte. Un lieu du test qui contredit la route ajoute une ligne
+« désaccords lieu/route : N ».</p>
+<h3 id="la-fraîcheur">La fraîcheur</h3>
+<p>La deuxième ligne compare les commits de la recette à ceux d’aujourd’hui :</p>
+<table>
+<thead>
+<tr>
+<th>ce qu’elle dit</th>
+<th>quand</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>« porte le code actuel »</td>
+<td>aucun repo n’a bougé</td>
+</tr>
+<tr>
+<td>« à refaire — N commits depuis, sur … »</td>
+<td>des commits sont arrivés, comptés repo par repo</td>
+</tr>
+<tr>
+<td>« faite sur une copie modifiée »</td>
+<td>une copie avait des modifications à l’ouverture ; ce cas l’emporte</td>
+</tr>
+<tr>
+<td>« fraîcheur : pas pu regarder »</td>
+<td>un repo ne se relit plus, ou ses commits ne se comptent pas</td>
+</tr>
+</tbody>
+</table>
+<h3 id="dans-lécran--le-mode-recette">Dans l’écran : le mode recette</h3>
+<p>Le header porte une bascule <strong>code | recette</strong> (<code>Espace r a</code> par flux, <code>Espace r f</code> par fichier ;
+rejoués, ils rendent le mode code). En recette, il dit quelle recette tu lis et sa fraîcheur —
+<strong>⟲ à refaire</strong> en ambre. Que le code ait pu changer pendant la recette se dit sous ses commits, onglet <strong>Recette</strong>.</p>
+<p>L’<a href="/atlas-site/manuel/le-glossaire#arbre">Arbre</a> se lit comme un <strong>débogueur</strong> : ce qui a tourné porte <code>×N</code> en bleu après
+son nom (ses passages et requêtes ; pas sur un « voir ↑ »), <strong>tout le reste s’estompe</strong> — non traversé, rien
+rapporté (<code>? rien rapporté</code>, sur le diff seul), né après (<code>∅ né après</code>) ; les parents d’un nœud traversé
+restent lisibles, et les comptes ne comptent que le diff. Sur le diff, une ligne dit aussi
+<code>○ non traversé (réseau)</code> ou <code>○ atteinte, N requêtes refusées</code> ; une requête refusée ne compte jamais
+dans <code>×N</code>. Quand une même requête est posée sur un appel <code>⇄</code> <strong>et</strong> sur l’entrée <code>▶</code> d’en face, la
+correspondance entre les deux sort de l’estompe et dit <strong>traversée ×N</strong> — rien au-delà : les enfants de
+l’entrée gardent leur état. En vue par fichier, il n’y a pas de correspondance à allumer. À côté des quatre
+comptes, la tête dit <strong>N échanges sur des routes hors carte · M ambigus</strong> (les routes les plus fréquentes
+au survol) ; un clic ouvre le volet Recette sur cette section. Carte illisible, ou aucun échange hors
+carte : rien, jamais un zéro. « Relu » est suspendu, les ronds se taisent ; <code>0</code>, <code>1</code>–<code>4</code>, <code>?</code> n’endossent pas.</p>
+<p>Le panneau de droite montre le <strong>Passage</strong> sous <strong>la tête du Code</strong> : l’état du nœud (<code>● traversé · ×3</code>), le
+commit que la recette a testé, un bouton par événement, puis des blocs qui se plient : requête, réponse,
+reçu, rendu, capture. Un corps JSON se plie objet par objet. Les requêtes listées sont celles qui
+atteignent le nœud par leur lieu <strong>ou par leur route</strong>, refusées comprises. Chacune dit son <strong>témoin</strong>
+(lieu du test · par la route · lieu du test et route), <strong>version non confrontée</strong> le cas échéant, son refus
+(<code>refusée (401) — …</code>) et ses <strong>frontières hors carte</strong> (<code>repo/fichier:ligne</code>, la raison au survol). Un nœud
+que la route n’a pas su choisir dit la requête et <strong>ambigu entre …</strong> ; celui qu’un lieu du test désignait à
+tort dit que ce lieu <strong>contredit la route</strong> — ni l’un ni l’autre n’est un passage.</p>
+<p>Le volet gauche ne porte que la famille du mode. En recette : <strong>Recette</strong> (environnement — la couverture
+dit aussi <strong>réseau capté : …</strong> —, commits, étapes <code>C1</code>… avec verdict et provenance, les <strong>échanges hors
+carte</strong> — routes groupées avec leur nombre, « N sans émetteur » là seulement où un appel <code>⇄</code> de la carte
+porte la route, ambigus, lieux contredits, frontières et leurs repos ; « pas pu lire la carte » sans
+carte —, écarts), <strong>Non-régression</strong> (socle par service, puis impact ; chaque ligne <strong>se coche à la main</strong>,
+nommée — un dépôt peut la redire) et <strong>Captures</strong> (son étape et son lieu, ou <strong>rattachée à rien</strong> ; un clic
+ouvre sa loupe).</p>
+<h2 id="avec-lia--le-skill-atlasrecette">Avec l’IA : le skill <code>atlas:recette</code></h2>
+<p>Le <a href="/atlas-site/manuel/le-glossaire#plugin">plugin</a> Atlas porte un <a href="/atlas-site/manuel/le-glossaire#skill">skill</a> qui mène
+la recette dans ta session de code (<a href="/atlas-site/manuel/brancher-l-ia">Brancher l’IA</a>) :</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>/atlas:recette PROJ-412 avec mon-test-e2e</span></span></code></pre>
+<p>Il ne se lance <strong>que sur demande</strong> — la tienne, ou celle d’un agent que tu as lancé. Il te montre la demande — ce que la dernière recette n’a pas
+couvert en tête — et <strong>attend ton oui</strong>. Le test, il le confie au skill de ton projet nommé après
+<code>avec</code>, avec la demande et le format mot pour mot ; sans skill nommé, il te demande comment la pile se
+lance. Il dépose au fil des étapes, consigne chaque écart, ferme, puis signe son <a href="/atlas-site/manuel/le-glossaire#moment">moment</a> dans le
+<a href="/atlas-site/manuel/le-glossaire#fil-de-feature">fil de feature</a> : testé, échoué, pas couvert — c’est ce qui coche <code>recette</code> dans le panneau
+Relecture. Il ne modifie jamais
+le code de la feature pour faire passer un test, et ne marque jamais <code>ok</code> ce qui n’a pas tourné.</p>
+<p>Côté lecture, l’IA dispose d’un <a href="/atlas-site/manuel/le-glossaire#outil">outil</a> <code>recette</code> qui rend un <strong>résumé</strong> :
+les comptes, les étapes pas passées, les nœuds non couverts (coupés au-delà de 30), les écarts qui
+peuvent masquer — jamais les corps (5 Ko au lieu de 115 sur une vraie recette).
+Il est en <strong>lecture seule</strong> (<a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l’IA lit et écrit</a>).</p>
+<h2 id="où-cest-rangé">Où c’est rangé</h2>
+<p>Chaque recette a son dossier, dans le workspace :</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>.atlas-workspace/features/PROJ-412/recettes/&lt;id&gt;/recette.json</span></span>
+<span class="line"><span>.atlas-workspace/features/PROJ-412/recettes/&lt;id&gt;/captures/001-credits.png</span></span></code></pre>
+<p>Rien n’est ignoré par git : la recette et ses captures voyagent avec le workspace
+(<a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a>). Seule la commande l’écrit ; illisible, elle est sautée, jamais réécrite.</p>
+<h2 id="ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</h2>
+<ul>
+<li><strong>Il ne teste pas</strong> : c’est ton projet qui teste.</li>
+<li><strong>Il ne valide rien.</strong> Une recette verte n’endosse aucun nœud : l’<a href="/atlas-site/manuel/le-glossaire#endossement">endossement</a>
+reste ton geste, sur le rond (<a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a>).</li>
+<li><strong>Il ne devine pas un lieu</strong>, ni un émetteur, ni une version, et <strong>ne recopie jamais un secret
+retiré</strong> (<a href="/atlas-site/manuel/deposer-une-recette">Déposer une recette</a>).</li>
+<li><strong>Il n’ajoute pas d’étape de lui-même</strong> : ce qui n’est ni dans le ticket, ni dans la carte, ni dans
+le socle n’est pas demandé.</li>
+<li><strong>Il ne publie rien</strong> chez l’hébergeur.</li>
+</ul>
+<h2 id="limites-connues">Limites connues</h2>
+<ul>
+<li><strong>La lecture recalcule la carte</strong> : ouvrir le mode ou l’onglet prend quelques secondes sur une grosse
+feature (6,8 s mesurées sur 321 nœuds), et la pastille d’activité le dit.</li>
+<li><strong>« Né après » se juge au fichier</strong> : un symbole ajouté plus tard dans un fichier qui existait déjà
+au commit testé se lit « non traversé » ou « rien rapporté ». Sur une copie modifiée, rien n’est
+« né après ».</li>
+</ul>
+<nav class="suite" aria-label="Page suivante et précédente"><a href="/atlas-site/manuel/le-glossaire"><small>← précédent</small>Le glossaire</a><a class="droite" href="/atlas-site/manuel/deposer-une-recette"><small>suivant →</small>Déposer une recette</a></nav></article><nav class="cote toc" aria-label="Sur cette page"><h2>Sur cette page</h2><ul><li><a href="#le-parti-pris--atlas-ne-teste-pas">Le parti pris : Atlas ne teste pas</a></li><li><a href="#la-demande--ce-quatlas-attend">La demande : ce qu’Atlas attend</a></li><li><a class="h3" href="#les-points-darrêt-suggérés">Les points d’arrêt suggérés</a></li><li><a class="h3" href="#le-scénario-de-recette-et-le-socle">Le scénario de recette, et le socle</a></li><li><a href="#ouvrir--ton-oui-et-les-commits-relevés">Ouvrir : ton oui, et les commits relevés</a></li><li><a href="#déposer">Déposer</a></li><li><a href="#fermer">Fermer</a></li><li><a href="#relire-une-recette">Relire une recette</a></li><li><a class="h3" href="#les-nœuds-du-diff-en-quatre-états">Les nœuds du diff, en quatre états</a></li><li><a class="h3" href="#la-fraîcheur">La fraîcheur</a></li><li><a class="h3" href="#dans-lécran--le-mode-recette">Dans l’écran : le mode recette</a></li><li><a href="#avec-lia--le-skill-atlasrecette">Avec l’IA : le skill atlas:recette</a></li><li><a href="#où-cest-rangé">Où c’est rangé</a></li><li><a href="#ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</a></li><li><a href="#limites-connues">Limites connues</a></li></ul></nav></main><footer class="pied"><div class="dedans"><span>Atlas — suivi et validation de code.</span><a href="/atlas-site/manuel/prise-en-main">Manuel</a></div></footer><script>
+    document.getElementById('theme-bt')?.addEventListener('click', () => {
+      const r = document.documentElement;
+      // clair → sombre → système, et le tour recommence. « Système » RETIRE la clé : c'est ce qui
+      // rend le choix distinct d'une absence de choix.
+      const suite = { clair: 'sombre', sombre: '', '': 'clair' };
+      const v = suite[r.dataset.theme || ''];
+      if (v) { r.dataset.theme = v; try { localStorage.setItem('atlas-site-theme', v); } catch {} }
+      else { delete r.dataset.theme; try { localStorage.removeItem('atlas-site-theme'); } catch {} }
+    });
+  </script></body></html>

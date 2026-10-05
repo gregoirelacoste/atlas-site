@@ -1,0 +1,394 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>La ligne de commande · Atlas</title><meta name="description" content="Toutes les commandes de l'exécutable atlas : ouvrir une carte, déclarer un projet, piloter les instances, se mettre à jour, brancher ton IA, construire et contrôler l'index des précédents — ce que chacune fait, écrit, et ne fait pas."><link rel="canonical" href="https://gregoirelacoste.github.io/atlas-site/manuel/la-ligne-de-commande"><meta property="og:title" content="La ligne de commande · Atlas"><meta property="og:description" content="Toutes les commandes de l'exécutable atlas : ouvrir une carte, déclarer un projet, piloter les instances, se mettre à jour, brancher ton IA, construire et contrôler l'index des précédents — ce que chacune fait, écrit, et ne fait pas."><meta property="og:type" content="website"><meta property="og:url" content="https://gregoirelacoste.github.io/atlas-site/manuel/la-ligne-de-commande"><meta name="twitter:card" content="summary"><link rel="icon" href="/atlas-site/favicon.svg" type="image/svg+xml"><script>
+    (() => { try { const t = localStorage.getItem('atlas-site-theme');
+      if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t; } catch {} })();
+  </script><link rel="stylesheet" href="/atlas-site/_astro/Base.D32RNicN.css"></head><body><header class="tete"><a class="marque" href="/atlas-site">🗺️ Atlas</a><nav><a href="/atlas-site/installer">Installer</a><a href="/atlas-site/manuel/prise-en-main" aria-current="page">Manuel</a><a href="/atlas-site/articles">Écrits</a><button class="theme-bt" id="theme-bt" type="button" aria-label="Changer de thème">◐</button></nav></header><main class="doc"><nav class="cote" aria-label="Le manuel"><h2>Le manuel</h2><ol><li><a href="/atlas-site/manuel/prise-en-main">Prise en main</a></li><li><a href="/atlas-site/manuel/l-arbre">L&#39;Arbre</a></li><li><a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a></li><li><a href="/atlas-site/manuel/le-code">Le Code</a></li><li><a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a></li><li><a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et inventaire</a></li><li><a href="/atlas-site/manuel/le-panneau-git">Le panneau Git</a></li><li><a href="/atlas-site/manuel/le-tableau">Le Tableau</a></li><li><a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a></li><li><a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a></li><li><a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a></li><li><a href="/atlas-site/manuel/brancher-l-ia">Brancher l&#39;IA</a></li><li><a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l&#39;IA lit et écrit</a></li><li><a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a></li><li><a href="/atlas-site/manuel/la-ligne-de-commande" aria-current="page">La ligne de commande</a></li><li><a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a></li><li><a href="/atlas-site/manuel/le-clavier">Le clavier</a></li><li><a href="/atlas-site/manuel/les-precedents">Les précédents</a></li><li><a href="/atlas-site/manuel/les-decisions-metier">Les décisions métier</a></li><li><a href="/atlas-site/manuel/le-glossaire">Le glossaire</a></li><li><a href="/atlas-site/manuel/la-recette">La recette</a></li><li><a href="/atlas-site/manuel/deposer-une-recette">Déposer une recette</a></li><li><a href="/atlas-site/manuel/la-vue-d-ensemble">La vue d&#39;ensemble</a></li></ol></nav><article class="corps"><h1>La ligne de commande</h1><p class="chapo">Toutes les commandes de l&#39;exécutable atlas : ouvrir une carte, déclarer un projet, piloter les instances, se mettre à jour, brancher ton IA, construire et contrôler l&#39;index des précédents — ce que chacune fait, écrit, et ne fait pas.</p><blockquote>
+<p>Toutes les commandes de l’exécutable <code>atlas</code> : ouvrir une carte, déclarer un projet, piloter les
+instances, se mettre à jour, brancher ton IA, construire et contrôler l’index des précédents — ce que
+chacune fait, écrit, et ne fait pas.</p>
+</blockquote>
+<p>Elle ne couvre ni l’installation du paquet (<a href="/atlas-site/manuel/prise-en-main">Prise en main</a>), ni les clés de
+<code>.atlas-workspace/</code> (<a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a>,
+<a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a>), ni ce qu’une IA fait une fois
+branchée (<a href="/atlas-site/manuel/brancher-l-ia">Brancher l’IA</a>). <code>atlas help</code> donne la même liste, en plus court.</p>
+<p>Le vocabulaire, une fois : une <strong><a href="/atlas-site/manuel/le-glossaire#feature">feature</a></strong> est le ticket qu’Atlas suit un à la fois, et sa <strong><a href="/atlas-site/manuel/le-glossaire#carte">carte</a></strong>
+le <a href="/atlas-site/manuel/le-glossaire#flux">flux</a> d’appels qu’il en reconstruit. Une <strong><a href="/atlas-site/manuel/le-glossaire#instance">instance</a></strong> tourne en arrière-plan et sert l’API comme la
+page web d’<strong>un</strong> <a href="/atlas-site/manuel/le-glossaire#projet">projet</a>, sur son port — une instance par projet. Un <strong><a href="/atlas-site/manuel/le-glossaire#workspace">workspace</a></strong> — ou <strong><a href="/atlas-site/manuel/le-glossaire#chapeau">chapeau</a></strong> — héberge plusieurs repos d’un même projet, sous
+<code>.atlas-workspace/</code> ; le <strong><a href="/atlas-site/manuel/le-glossaire#registre">registre</a></strong> est la liste des projets connus. Le <strong><a href="/atlas-site/manuel/le-glossaire#plugin">plugin</a></strong> pose les
+<strong>skills</strong> Atlas dans Claude Code ; <strong>MCP</strong> est le protocole par lequel un client IA interroge
+Atlas.</p>
+<h2 id="toutes-les-commandes-dun-coup-dœil">Toutes les commandes, d’un coup d’œil</h2>
+<table>
+<thead>
+<tr>
+<th>Commande</th>
+<th>À quoi elle sert</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>atlas</code></td>
+<td>ouvre la carte du projet du dossier courant (démarre son instance si besoin)</td>
+</tr>
+<tr>
+<td><code>atlas init</code></td>
+<td>déclare un dossier comme projet Atlas</td>
+</tr>
+<tr>
+<td><code>atlas start [projet]</code></td>
+<td>démarre l’instance d’un projet — sans argument, le projet par défaut</td>
+</tr>
+<tr>
+<td><code>atlas stop [projet | --all]</code></td>
+<td>arrête une instance, ou toutes</td>
+</tr>
+<tr>
+<td><code>atlas restart [projet | --all]</code></td>
+<td>l’arrête puis la redémarre</td>
+</tr>
+<tr>
+<td><code>atlas status</code></td>
+<td>les instances en marche : projet, adresse, mémoire</td>
+</tr>
+<tr>
+<td><code>atlas ports [début-fin]</code></td>
+<td>la plage de ports des instances sur cette machine</td>
+</tr>
+<tr>
+<td><code>atlas version</code></td>
+<td>la version de l’instance, en JSON</td>
+</tr>
+<tr>
+<td><code>atlas logs [projet]</code></td>
+<td>suit le journal d’une instance</td>
+</tr>
+<tr>
+<td><code>atlas update</code></td>
+<td>installe la dernière version publiée, redémarre les instances</td>
+</tr>
+<tr>
+<td><code>atlas promote</code></td>
+<td>(contributeurs d’Atlas) installe TON code dans TON instance</td>
+</tr>
+<tr>
+<td><code>atlas plugin [install] [gemini|codex|cursor]</code></td>
+<td><a href="/atlas-site/manuel/le-glossaire#branche">branche</a> les skills Atlas sur ta session de code (Claude Code par défaut)</td>
+</tr>
+<tr>
+<td><code>atlas mcp</code></td>
+<td>le serveur que ton IA interroge (lancé par elle)</td>
+</tr>
+<tr>
+<td><code>atlas brief &lt;TICKET&gt;</code></td>
+<td>la carte d’une feature en une page de texte</td>
+</tr>
+<tr>
+<td><code>atlas precedents --build</code></td>
+<td>construit ou rafraîchit l’index des reviews passées</td>
+</tr>
+<tr>
+<td><code>atlas precedents --controle</code></td>
+<td>le contrôle humain : des paires tirées, tu réponds</td>
+</tr>
+<tr>
+<td><code>atlas precedents &lt;TICKET&gt;</code></td>
+<td>ce que les reviews passées disent de cette feature</td>
+</tr>
+<tr>
+<td><code>atlas claude</code></td>
+<td>(contributeurs d’Atlas) une session Claude Code isolée à ses skills</td>
+</tr>
+<tr>
+<td><code>atlas help</code></td>
+<td>cette liste</td>
+</tr>
+</tbody>
+</table>
+<p><code>-h</code> et <code>--help</code> valent <code>help</code>. Une commande inconnue affiche <code>commande inconnue : …</code>, réimprime
+cette aide et sort en erreur.</p>
+<h2 id="ouvrir-une-carte">Ouvrir une carte</h2>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#6A737D;--shiki-dark:#6A737D">   # ouvre le projet du dossier courant, dans son propre onglet</span></span></code></pre>
+<p>Tapée sans argument (ou avec <code>open</code>), <code>atlas</code> cherche un <code>.atlas-workspace/</code> en remontant depuis le
+dossier courant — comme git remonte à son <code>.git/</code> —, démarre l’<strong>instance de ce projet</strong> si elle ne
+tourne pas, puis ouvre le navigateur à son adresse. Hors de tout projet, elle ouvre le projet par
+défaut et le dit. Sans navigateur possible (poste sans interface), elle imprime l’URL au lieu
+d’échouer, et n’écrit rien d’autre que le pidfile, le journal de l’instance et le projet dans le
+registre.</p>
+<p>Rien ne bascule : chaque projet a son instance et son onglet. Taper <code>atlas</code> dans un autre chapeau
+ouvre <strong>un autre onglet</strong>, et ne change rien à ceux qui sont déjà ouverts. <code>atlas brief</code> et
+<code>atlas precedents</code> parlent de même à l’instance du projet <strong>de leur dossier</strong>, et à elle seule —
+lancées hors de tout projet, elles le disent et s’arrêtent, plutôt que de répondre sur un projet
+deviné.</p>
+<h2 id="déclarer-un-projet">Déclarer un projet</h2>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> init</span><span style="color:#6A737D;--shiki-dark:#6A737D">                        # dans un terminal : demande l'IA, le chapeau, la stack, puis fait tout</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> init</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> /chemin/vers/chapeau</span><span style="color:#6A737D;--shiki-dark:#6A737D">   # déclare un autre dossier</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> init</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> --stack</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> nest,angular</span><span style="color:#6A737D;--shiki-dark:#6A737D">   # force les stacks au lieu de les laisser se déduire</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> init</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> --ia</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> claude,gemini</span><span style="color:#6A737D;--shiki-dark:#6A737D">     # branche ces IA sans demander (--yes : Claude Code)</span></span></code></pre>
+<p><code>atlas init</code> crée <code>.atlas-workspace/</code> : <code>project.json</code>, <code>features/</code>, un <code>.gitignore</code> et
+<code>ESPACES.md</code> (qui écrit quoi) — voir
+<a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a>. Le <code>.gitignore</code> exclut d’office le
+<strong><a href="/atlas-site/manuel/le-glossaire#casier-local">casier local</a></strong> de chacun (<code>features/*/curation/local/</code> : les fils ouverts, la branche lue) et
+l’ancien <code>features/*/curation.json</code>, chacun avec sa raison. Ce qui se partage et ce qui reste à toi est dans
+<a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a>. Propre à la commande :</p>
+<ul>
+<li><code>DIR</code> est optionnel (défaut : le dossier courant) et doit déjà exister, sinon elle sort en erreur.</li>
+<li><code>--stack a,b</code> accepte aussi <code>--stack=a,b</code> ; une <a href="/atlas-site/manuel/le-glossaire#stack">stack</a> inconnue fait échouer la commande en listant
+les quinze livrées : <code>angular</code>, <code>axios</code>, <code>express</code>, <code>fastify</code>, <code>graphql</code>, <code>hono</code>, <code>jest</code>, <code>koa</code>,
+<code>nest</code>, <code>next</code>, <code>nuxt</code>, <code>react</code>, <code>svelte</code>, <code>typescript</code>, <code>vue</code>.</li>
+<li><strong>Sans <code>--stack</code>, elle n’écrit aucune liste de stacks</strong> : elle imprime ce que les dépendances
+prouvent, et le serveur le redérive à chaque chargement. Avec <code>--stack</code>, ton choix gagne : il est
+écrit tel quel, ce qui était détecté en plus devient un refus, et l’écart est signalé sans rien
+changer.</li>
+<li>Elle lit les branches des repos membres pour écrire <strong><a href="/atlas-site/manuel/le-glossaire#ce-qui-fait-une-feature">ce qui fait une feature</a> ici</strong> — un jeton de
+ticket dans le nom, ou bien chaque branche — et la <strong><a href="/atlas-site/manuel/le-glossaire#ligne-de-base">ligne de base</a></strong> du projet. Deux décisions,
+modifiables ensuite depuis Config › Projet (<a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a>).</li>
+<li>Elle refuse de s’exécuter sur le <a href="/atlas-site/manuel/le-glossaire#repo">repo</a> d’Atlas lui-même, et si <code>.atlas-workspace/</code> existe déjà elle
+le dit et <strong>n’écrase rien</strong> — mais elle continue, et réenregistre le projet dans le registre.
+« N’écrase rien » vaut aussi pour le <code>.gitignore</code> : sur un workspace déjà là, <code>atlas init</code> ne le
+complète pas. C’est « Partager », dans Config › Projet, qui y ajoute les règles manquantes.</li>
+</ul>
+<p>Chaque décision s’imprime au passage, une ligne chacune — <code>✓ stacks DÉTECTÉES…</code>,
+<code>✓ features par BRANCHE…</code> ou <code>par TICKET</code>, <code>✓ ligne de base : …</code>, puis le dossier créé. La ligne de
+base est détectée par repo : la branche que désigne <code>origin/HEAD</code> quand ce n’est pas une feature,
+sinon la première présente parmi <code>develop</code>, <code>master</code>, <code>main</code>. Deux cas ne s’écrivent pas et se
+disent, <code>⚠ bases hétérogènes</code> et <code>⚠ aucune ligne de base détectée</code> — Atlas cherchera alors
+<code>develop</code>, et le dira repo par repo. La déclaration reste à toi.</p>
+<h2 id="les-instances">Les instances</h2>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> start</span><span style="color:#6A737D;--shiki-dark:#6A737D">              # démarre le projet par défaut (★ dans `atlas status`)</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> start</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> boutique</span><span style="color:#6A737D;--shiki-dark:#6A737D">     # démarre ce projet — un nom du registre, ou un chemin</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> stop</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> --all</span><span style="color:#6A737D;--shiki-dark:#6A737D">         # les arrête toutes ; `atlas stop boutique` n'arrête que celle-là</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> restart</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> --all</span><span style="color:#6A737D;--shiki-dark:#6A737D">      # redémarre toutes celles qui tournent (ce que fait `atlas update`)</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> ports</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> 3130-3149</span><span style="color:#6A737D;--shiki-dark:#6A737D">    # déplace la plage de ports de cette machine</span></span></code></pre>
+<p>Une <strong>instance</strong> sert <strong>un</strong> projet, fixé à son démarrage, sur <strong>son</strong> port. <code>atlas start</code> ne fait
+rien si l’instance du projet répond déjà ; sinon il la démarre détachée, puis attend jusqu’à
+15 secondes qu’elle réponde <strong>pour ce projet-là</strong>. Sans argument, il démarre le <strong>projet par
+défaut</strong> — même lancé dans le dossier d’un autre projet ; c’est <code>atlas</code> seul qui suit le dossier. Un
+nom que portent deux projets n’en démarre aucun : le refus montre les deux chemins, à toi de passer
+celui que tu veux.</p>
+<p><strong>Le port.</strong> Chaque projet reçoit un port de la plage <strong>3030–3049</strong> et le garde d’un démarrage à
+l’autre. Occupé par un autre programme, l’instance le dit et prend le suivant libre, qui devient son
+adresse ; jamais hors de la plage, et une plage pleine nomme <code>atlas ports</code>. <code>ATLAS_PORT</code> force un
+port précis.</p>
+<p><code>atlas stop</code> arrête proprement, force au bout de 10 secondes, et <strong>refuse de tuer à l’aveugle</strong> une
+instance que son pidfile ne porte pas (lancée par <code>npm run dev</code>). <code>atlas status</code> liste les instances
+en marche — projet, adresse, pid, mémoire (sous Linux), défaut marqué ★ — puis les projets arrêtés. Une instance d’une version d’avant
+les instances par projet apparaît avec « ⚠ instance d’avant la 183 » : elle suit encore l’ancien
+« projet actif » ; <code>atlas restart --all</code> la remplace. <code>atlas version</code> répond <strong>selon ce qu’elle a pu
+voir</strong> : l’instance du projet courant si elle répond, sinon le fichier écrit par le paquet installé,
+sinon <code>{"version":"?"}</code>. Elle ne dit <strong>jamais</strong> si cette version est la dernière — c’est Config ›
+Atlas qui juge, en trois états (<a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a>).</p>
+<p><strong>Une instance inactive s’arrête seule</strong> après une heure sans onglet ni session (<code>idleMinutes</code> dans
+le registre, <code>0</code> = jamais) ; une session qui revient la redémarre. Pidfile et journal sont indexés
+<strong>par port</strong> dans le dossier d’état d’Atlas (<code>~/.local/state/atlas/</code>, ou <code>$XDG_STATE_HOME/atlas</code>).</p>
+<h2 id="se-mettre-à-jour">Se mettre à jour</h2>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> update</span><span style="color:#6A737D;--shiki-dark:#6A737D">                        # installe la dernière version PUBLIÉE, redémarre, rafraîchit le plugin</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> promote</span><span style="color:#6A737D;--shiki-dark:#6A737D">                       # (contributeurs d'Atlas) reconstruit TON code, l'installe, redémarre</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> promote</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> --from</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> ~/dev/atlas</span><span style="color:#6A737D;--shiki-dark:#6A737D">    # depuis un dossier qui n'est pas ton clone courant</span></span></code></pre>
+<p>Même fin pour les deux (redémarrage, plugin rafraîchi, version affichée), mais <strong>pas la même
+personne</strong> :</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><code>atlas update</code></th>
+<th><code>atlas promote</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pour qui</td>
+<td>tout le monde, de n’importe où</td>
+<td>un contributeur, dans un clone du dépôt Atlas</td>
+</tr>
+<tr>
+<td>installe quoi</td>
+<td>la dernière version <strong>publiée</strong> au registre npm</td>
+<td><strong>ton code local</strong>, empaqueté puis installé</td>
+</tr>
+<tr>
+<td>en échec</td>
+<td>dit qu’il manque le registre et le jeton, avec les deux lignes <code>npm config set</code></td>
+<td>dit qu’aucun clone n’est trouvable en remontant depuis le dossier courant ; <code>--from CHEMIN</code> en donne un</td>
+</tr>
+</tbody>
+</table>
+<p><code>atlas promote</code> n’apparaît dans <code>atlas help</code> que si un tel clone existe à portée — elle reste tapable
+sinon.</p>
+<blockquote>
+<p>⚠️ Depuis un clone du dépôt Atlas, <code>atlas update</code> <strong>fait ce qu’elle dit</strong>, pas ce qu’on croit
+vouloir : elle prévient (« ceci installe la dernière version PUBLIÉE, pas ton code ») puis
+installe quand même la version publiée — qui peut être <strong>en dessous</strong> du code que tu viens
+d’écrire. C’est <code>atlas promote</code> qu’il faut taper pour tester son propre code.</p>
+</blockquote>
+<p>Les deux <strong>écrivent</strong> : un paquet npm installé en global (hors d’Atlas et hors de ton projet),
+<strong>toutes les instances en marche</strong> redémarrées par ce binaire-là (aucune ne reste à l’ancienne
+version à côté des autres ; si aucune ne tournait, le projet par défaut démarre), et le plugin rafraîchi — seulement s’il est déjà installé.</p>
+<h2 id="brancher-ton-ia">Brancher ton IA</h2>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> plugin</span><span style="color:#6A737D;--shiki-dark:#6A737D">                 # affiche les gestes des quatre clients, sans rien exécuter</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> plugin</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> install</span><span style="color:#6A737D;--shiki-dark:#6A737D">         # Claude Code : branche les skills Atlas sur ta session de code</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> plugin</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> install</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> gemini</span><span style="color:#6A737D;--shiki-dark:#6A737D">  # Gemini CLI : lie l'extension (même dossier, mêmes skills)</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> plugin</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> install</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> codex</span><span style="color:#6A737D;--shiki-dark:#6A737D">   # Codex (ou cursor) : imprime les gestes, à lancer toi-même (non éprouvé)</span></span></code></pre>
+<p>Sans argument, <code>atlas plugin</code> n’exécute rien. <code>install</code> exécute les gestes de Claude Code :
+elle écrit dans <strong>ta configuration Claude Code</strong> globale, jamais dans ce projet ni dans un repo. Si
+le plugin est déjà posé, elle le <strong>réinstalle entièrement</strong> au lieu de répondre « déjà installé » —
+le numéro de version ne prouve pas qu’il n’y a rien de neuf. Ce qu’il permet est dans
+<a href="/atlas-site/manuel/brancher-l-ia">Brancher l’IA</a> et <a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l’IA lit et écrit</a>.
+Un client inconnu est <strong>refusé</strong> — jamais Claude Code à sa place.</p>
+<h2 id="les-commandes-qui-servent-lia">Les commandes qui servent l’IA</h2>
+<p>Trois commandes ne se tapent pas de mémoire tous les jours : elles sont la surface par laquelle une
+IA (ou un <a href="/atlas-site/manuel/le-glossaire#skill">skill</a> que tu écris toi-même) parle à Atlas.</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> mcp</span><span style="color:#6A737D;--shiki-dark:#6A737D">                 # le serveur MCP — lancé par ton client IA, pas à la main</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> brief</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> PROJ-412</span><span style="color:#6A737D;--shiki-dark:#6A737D">      # la carte d'une feature, en une page de texte</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> claude</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> --dry-run</span><span style="color:#6A737D;--shiki-dark:#6A737D">    # (contributeurs d'Atlas) la session isolée, sans la lancer</span></span></code></pre>
+<p><strong><code>atlas mcp</code></strong> démarre le serveur <strong>MCP</strong> sur l’entrée/sortie standard. Elle trouve le projet
+depuis le dossier où la session a été ouverte, et parle à <strong>l’instance de ce projet</strong> — elle la
+démarre si besoin, et la redémarre si elle s’est arrêtée pendant une pause. Deux sessions sur deux
+projets ont chacune la leur, et aucune ne déplace l’autre. Chaque question nomme son projet et
+chaque réponse doit venir du même : une réponse d’un autre projet (un port repris, une instance
+d’une version d’avant) est <strong>rejetée</strong> avec les deux noms, plutôt que de rendre une carte plausible
+et fausse. Elle n’écrit rien elle-même — ce que les outils qu’elle expose peuvent écrire
+est dans <a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l’IA lit et écrit</a>.</p>
+<p><strong><code>atlas brief &lt;TICKET&gt;</code></strong> imprime, sur la sortie standard, la carte d’une feature réduite à du
+texte — de quoi la coller dans une revue, ou la donner à lire à un agent qui n’ouvre pas Atlas.
+<code>--base &lt;branche&gt;</code> force la branche de comparaison pour cet appel. Elle parle à l’instance du projet
+<strong>du dossier courant</strong>, qu’elle démarre si besoin (en silence, sur l’erreur standard, pour ne pas
+polluer le texte produit) ; hors de tout projet, elle le dit et s’arrête. Elle laisse jusqu’à 5 minutes avant d’abandonner : une réponse lente sur une grosse
+feature multi-repos n’est pas une panne.</p>
+<p><strong><code>atlas claude [--dry-run] [ARGS…]</code></strong> ouvre une session Claude Code <strong>isolée</strong> aux skills d’Atlas —
+ni les skills, ni le <code>CLAUDE.md</code> du projet que tu fais relire. Elle ne sert qu’à faire relire Atlas
+par lui-même ; sur <em>ton</em> projet, c’est <code>atlas plugin install</code> qui te concerne. Elle échoue sans
+<code>.atlas-workspace/</code> trouvable, ou sans binaire <code>claude</code> dans le PATH.</p>
+<h2 id="lindex-des-précédents">L’index des précédents</h2>
+<p>Un <strong>précédent</strong> est le souvenir de ce qu’une review a déjà dit sur un <a href="/atlas-site/manuel/le-glossaire#noeud">nœud</a> du même genre — une
+méthode, un <a href="/atlas-site/manuel/le-glossaire#contrat">contrat</a> — dans une <strong>autre</strong> feature. Atlas les sert nœud par nœud, à condition qu’un
+<strong>index</strong> existe ; il ne se construit jamais sur le chemin d’une carte.</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> precedents</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> --build</span><span style="color:#6A737D;--shiki-dark:#6A737D">                      # construit ou rafraîchit l'index du projet</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> precedents</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> --build</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> --full</span><span style="color:#6A737D;--shiki-dark:#6A737D">               # sans repartir de l'index déjà là</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> precedents</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> --build</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> --out</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> ~/essai.json</span><span style="color:#6A737D;--shiki-dark:#6A737D">   # un index candidat ; celui du projet reste intact</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> precedents</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> --controle</span><span style="color:#6A737D;--shiki-dark:#6A737D">                   # le contrôle humain : des paires, tu réponds</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> precedents</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> PROJ-412</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [--json]            </span><span style="color:#6A737D;--shiki-dark:#6A737D"># les précédents des nœuds de cette feature</span></span></code></pre>
+<h3 id="ce-que-la-commande-imprime-sur-les-imports">Ce que la commande imprime sur les imports</h3>
+<p>Un précédent <strong>importé</strong> est tiré d’un ticket écrit, pas d’une conversation de review : son <a href="/atlas-site/manuel/le-glossaire#ancre">ancre</a> et
+son commit sont prouvés, mais personne n’y a répondu. Ce qu’il vaut, et le réglage qui décide s’il est
+servi, sont dans <a href="/atlas-site/manuel/les-precedents">Les précédents</a> ; la ligne de commande, elle, le <strong>montre</strong> à
+trois endroits.</p>
+<table>
+<thead>
+<tr>
+<th>où</th>
+<th>ce que tu lis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--build</code>, sous la première ligne</td>
+<td><code>dont N IMPORTÉS d'un ticket (hors de la mesure : sans fenêtre close, ils ne peuvent pas être une cible)</code> — seulement s’il y en a</td>
+</tr>
+<tr>
+<td><code>atlas precedents PROJ-412</code>, sous l’en-tête</td>
+<td><code>N importé(s) dans l'index · servis (précédés de 📥 — une piste, jamais un verdict)</code> — le cas courant ; ou <code>· non servis (precedents.serveImports est faux) — ils se lisent dans le Journal, ils ne remontent pas ici</code> quand le projet a écrit <code>false</code></td>
+</tr>
+<tr>
+<td>sur la ligne d’un précédent servi</td>
+<td>après <code>ouvert par l'IA</code> : <code>· 📥 importé du ticket — tiré d'un ticket, pas d'une conversation : l'ancre et le commit sont prouvés, mais personne n'y a répondu et personne n'a endossé après</code></td>
+</tr>
+</tbody>
+</table>
+<p>Le compteur ne s’imprime que s’il y a des imports dans l’index, ou si le projet a écrit <code>false</code> : un
+projet qui n’en a jamais eu, et n’a rien refusé, ne voit pas cette ligne. Et le nombre compte <strong>tout l’index</strong>, pas seulement ce
+qui a été servi à cette feature.</p>
+<p>Le réglage <code>precedents.serveImports</code> de <code>project.json</code> vaut <strong>vrai</strong> par défaut, et doit être un
+<strong>booléen</strong>. Écrit entre guillemets (<code>"false"</code>), il est lu comme le défaut, donc <strong>vrai</strong>, et la
+commande le dit en tête, sur une ligne <code>⚠</code> :
+<code>precedents.serveImports = "false" (chaîne) : lu comme le défaut (vrai) — écris `true` ou `false` sans guillemets dans project.json</code>.
+Sans cette ligne, « servis » se lirait comme ta décision. Tu n’as pas à l’écrire à la main : la
+case « Servir aussi les précédents importés d’un ticket », dans Config › Projet, l’écrit pour toi en
+booléen (<a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a>), et une valeur illisible s’y dit aussi,
+sous la case, avec la même phrase. La clé elle-même est décrite dans
+<a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a>.</p>
+<h3 id="ce-que-chaque-forme-écrit">Ce que chaque forme écrit</h3>
+<p><code>--build</code> écrit l’index local, <code>.atlas-workspace/precedents.json</code> (ou le fichier de <code>--out</code>), et
+ajoute une ligne à la <strong><a href="/atlas-site/manuel/le-glossaire#chronologie">chronologie</a></strong> (une ligne par construction de l’index, lisible dans Config ›
+Projet — voir <a href="/atlas-site/manuel/les-precedents">Les précédents</a>) — quand il n’en ajoute pas, il imprime pourquoi. <code>--controle</code>
+écrit <code>.atlas-workspace/controles/&lt;date&gt;.json</code>, et rien si tu abandonnes. La forme <code>atlas precedents PROJ-412</code> <strong>lit</strong> l’index, mais elle n’est pas muette
+pour autant : elle y <strong>consigne</strong> ce qu’elle vient de servir, à quel nœud et quand — c’est ce registre
+qui permet à ton IA de dire ensuite ce qu’elle en a fait. Un service déjà consigné avance son compte
+au lieu de se redoubler.</p>
+<h3 id="les-gardes">Les gardes</h3>
+<p>Propre à la ligne de commande : <code>--build</code> est une passe de <strong>plusieurs minutes</strong> et <strong>la commande
+attend</strong>, jusqu’à une heure avant d’abandonner — si elle abandonne, elle nomme la cause et ajoute
+que le serveur a pu finir sans elle (regarde <code>atlas logs</code>, ou la chronologie dans Config › Projet ;
+ne relance pas d’office). <code>--controle</code> a besoin d’un <strong>vrai terminal</strong> : dans un tube ou un script,
+elle refuse avant d’avoir rien démarré. Et sans argument reconnu, la commande imprime ses trois
+usages et sort en erreur.</p>
+<p>Tout le reste — ce qu’est un précédent, ce que chaque drapeau change, ce que le build imprime, la
+<a href="/atlas-site/manuel/le-glossaire#sonde">sonde</a>, les trente paires du contrôle et la chronologie — est dans
+<a href="/atlas-site/manuel/les-precedents">Les précédents</a>.</p>
+<h2 id="variables-denvironnement-et-options-globales">Variables d’environnement et options globales</h2>
+<p>Trois seulement changent ce que fait une commande de cette page ; la liste complète (jetons
+GitLab/GitHub, trace de debug…) est dans <a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Effet</th>
+<th>Défaut</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ATLAS_PORT</code></td>
+<td>force le port de l’instance que <code>start</code> démarre (<code>PORT</code> ne vaut que pour <code>npm run dev</code>)</td>
+<td>le port du projet, dans la plage</td>
+</tr>
+<tr>
+<td><code>ATLAS_WORKSPACE</code></td>
+<td>le projet que sert une instance lancée à la main (<code>npm run dev</code>) — <code>atlas start</code> le pose lui-même</td>
+<td>la remontée depuis le dossier courant, puis le projet par défaut</td>
+</tr>
+<tr>
+<td><code>ATLAS_CLAUDE_BIN</code></td>
+<td>le binaire lancé par <code>atlas claude</code> et par <code>atlas plugin</code></td>
+<td><code>claude</code></td>
+</tr>
+</tbody>
+</table>
+<p>Aucune option globale (<code>--verbose</code>, <code>--json</code>…) ne s’applique à toutes les commandes : chaque
+commande a les siennes, listées ci-dessus.</p>
+<h2 id="ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</h2>
+<ul>
+<li>Rien ne se met à jour tout seul : <code>atlas update</code> est toujours un geste que tu tapes, et elle ne
+vérifie pas si tu es en retard — elle installe ce que le registre appelle « la dernière version ».
+C’est Config › Atlas qui juge, en trois états (<a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a>).</li>
+<li><code>atlas init</code> ne fait pas <code>git init</code>, ne crée aucune branche, et ne branche que les IA choisies.</li>
+<li>Aucune commande de cette page ne touche un repo analysé : ni son contenu, ni ses branches, ni un
+dépôt distant. Ce qui écrit hors d’Atlas se compte sur les doigts d’une main, et rien n’en passe
+par une commande (<a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l’IA lit et écrit</a>).</li>
+<li><code>atlas mcp</code> ne se tape pas à la main : c’est un serveur de protocole, lancé par ton client IA.</li>
+<li>Une instance ne sert jamais deux projets, et aucune commande ne la fait changer de projet : une
+commande qui parle d’une feature parle à l’instance du projet de son dossier, et hors de tout
+projet elle refuse plutôt que de répondre sur un projet deviné.</li>
+<li>Aucune commande ne reconstruit l’index des précédents en passant : seul <code>--build</code> le fait, et
+aucun contrôle ne le corrige — le contrôle n’écrit que son propre fichier. La case
+« Reconstruire l’index chaque semaine » de Config › Projet est le seul déclencheur qui ne soit pas
+une commande, et elle est décochée par défaut (<a href="/atlas-site/manuel/les-precedents">Les précédents</a>).</li>
+<li>Aucune commande n’imprime un mode d’emploi d’Atlas à coller dans un skill maison : brancher ton
+propre skill sur Atlas est un geste que tu écris.</li>
+</ul>
+<h2 id="limites-connues">Limites connues</h2>
+<p><code>atlas update</code> et <code>atlas promote</code> ne sont éprouvées que sous Linux : la façon dont elles retrouvent
+le binaire fraîchement installé ne tient pas encore sous Windows (détail dans
+<a href="/atlas-site/manuel/prise-en-main">Prise en main</a>). <code>atlas plugin</code> et <code>atlas claude</code> supposent un binaire
+<code>claude</code> dans le PATH — sans lui, elles le disent et s’arrêtent, elles ne l’installent pas.
+<code>atlas precedents --controle</code> n’a pas encore été joué sur un vrai projet : ses gardes ont été
+éprouvées sur un workspace jetable, pas ses trente questions.</p>
+<nav class="suite" aria-label="Page suivante et précédente"><a href="/atlas-site/manuel/quand-atlas-ne-voit-pas"><small>← précédent</small>Quand Atlas ne voit pas</a><a class="droite" href="/atlas-site/manuel/gitlab-et-github"><small>suivant →</small>GitLab et GitHub</a></nav></article><nav class="cote toc" aria-label="Sur cette page"><h2>Sur cette page</h2><ul><li><a href="#toutes-les-commandes-dun-coup-dœil">Toutes les commandes, d’un coup d’œil</a></li><li><a href="#ouvrir-une-carte">Ouvrir une carte</a></li><li><a href="#déclarer-un-projet">Déclarer un projet</a></li><li><a href="#les-instances">Les instances</a></li><li><a href="#se-mettre-à-jour">Se mettre à jour</a></li><li><a href="#brancher-ton-ia">Brancher ton IA</a></li><li><a href="#les-commandes-qui-servent-lia">Les commandes qui servent l’IA</a></li><li><a href="#lindex-des-précédents">L’index des précédents</a></li><li><a class="h3" href="#ce-que-la-commande-imprime-sur-les-imports">Ce que la commande imprime sur les imports</a></li><li><a class="h3" href="#ce-que-chaque-forme-écrit">Ce que chaque forme écrit</a></li><li><a class="h3" href="#les-gardes">Les gardes</a></li><li><a href="#variables-denvironnement-et-options-globales">Variables d’environnement et options globales</a></li><li><a href="#ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</a></li><li><a href="#limites-connues">Limites connues</a></li></ul></nav></main><footer class="pied"><div class="dedans"><span>Atlas — suivi et validation de code.</span><a href="/atlas-site/manuel/prise-en-main">Manuel</a></div></footer><script>
+    document.getElementById('theme-bt')?.addEventListener('click', () => {
+      const r = document.documentElement;
+      // clair → sombre → système, et le tour recommence. « Système » RETIRE la clé : c'est ce qui
+      // rend le choix distinct d'une absence de choix.
+      const suite = { clair: 'sombre', sombre: '', '': 'clair' };
+      const v = suite[r.dataset.theme || ''];
+      if (v) { r.dataset.theme = v; try { localStorage.setItem('atlas-site-theme', v); } catch {} }
+      else { delete r.dataset.theme; try { localStorage.removeItem('atlas-site-theme'); } catch {} }
+    });
+  </script></body></html>

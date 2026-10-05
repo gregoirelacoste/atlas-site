@@ -1,0 +1,162 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Le harnais qui se remplit tout seul · Atlas</title><meta name="description" content="Tout le monde écrit des fichiers d'instructions pour son IA, et les études disent qu'ils ne servent à rien. Ce qu'on a construit à la place : un harnais que personne n'écrit, nourri par la relecture, et une mesure qui refuse d'être un score."><link rel="canonical" href="https://gregoirelacoste.github.io/atlas-site/articles/2026-09-20-le-harnais-qui-se-remplit-tout-seul"><meta property="og:title" content="Le harnais qui se remplit tout seul · Atlas"><meta property="og:description" content="Tout le monde écrit des fichiers d'instructions pour son IA, et les études disent qu'ils ne servent à rien. Ce qu'on a construit à la place : un harnais que personne n'écrit, nourri par la relecture, et une mesure qui refuse d'être un score."><meta property="og:type" content="website"><meta property="og:url" content="https://gregoirelacoste.github.io/atlas-site/articles/2026-09-20-le-harnais-qui-se-remplit-tout-seul"><meta name="twitter:card" content="summary"><link rel="icon" href="/atlas-site/favicon.svg" type="image/svg+xml"><script>
+    (() => { try { const t = localStorage.getItem('atlas-site-theme');
+      if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t; } catch {} })();
+  </script><link rel="stylesheet" href="/atlas-site/_astro/Base.D32RNicN.css"></head><body><header class="tete"><a class="marque" href="/atlas-site">🗺️ Atlas</a><nav><a href="/atlas-site/installer">Installer</a><a href="/atlas-site/manuel/prise-en-main">Manuel</a><a href="/atlas-site/articles" aria-current="page">Écrits</a><button class="theme-bt" id="theme-bt" type="button" aria-label="Changer de thème">◐</button></nav></header><main class><article class="corps" style="margin: 0 auto; padding-left: 1.25rem; padding-right: 1.25rem;"><div style="color: var(--encre-2); font-size: .85rem;">20 septembre 2026</div><h1 id="le-harnais-qui-se-remplit-tout-seul">Le harnais qui se remplit tout seul</h1>
+<p>Il y a un mot qui s’est imposé cette année dans tout ce qui touche aux agents de code :
+le <strong>harnais</strong>. OpenAI l’a employé en février, Birgitta Böckeler chez Martin Fowler en avril,
+et il circulait déjà l’année d’avant. L’idée derrière est simple et elle change la façon de
+regarder ces outils : un agent, ce n’est pas un modèle. C’est un modèle <strong>plus tout ce qu’on
+met autour</strong> — ce qu’on lui donne à lire, ce qu’on lui permet de faire, ce qui vérifie derrière
+lui, ce qu’il retient d’une fois sur l’autre.</p>
+<p>Ce « tout autour » pèse lourd. À modèle identique et sur les mêmes tâches, on a mesuré des taux
+de résolution qui vont de zéro à plus de soixante pour cent selon le harnais. L’écart entre
+deux harnais dépasse l’écart entre deux modèles. Autrement dit, la question « quel modèle » est
+devenue moins importante que la question « dans quoi il tourne ».</p>
+<p>Et pendant ce temps, du côté de ceux qui relisent, les chiffres vont dans l’autre sens. Une
+étude de télémétrie sur vingt-deux mille développeurs, publiée cette année, donne le temps
+médian de relecture d’une contribution en hausse de plus de quatre cents pour cent depuis
+l’arrivée des assistants, les incidents par contribution en hausse aussi, et près d’un tiers
+des contributions fusionnées sans relecture du tout. Ce sont des chiffres d’éditeurs, juges et
+parties, et je n’en garde que le signe. Le signe est clair : on produit plus vite que l’on ne
+sait vérifier.</p>
+<p>Atlas est né dans cette position-là, celle du relecteur. Ce que je voudrais raconter ici,
+c’est comment on en est venu à le voir comme un harnais — et pourquoi c’est un harnais d’un
+genre un peu particulier, que personne n’écrit.</p>
+<h2 id="ce-quil-y-a-dans-un-harnais">Ce qu’il y a dans un harnais</h2>
+<p>Böckeler propose une grille que je trouve plus utile que toutes les autres. Un harnais est
+fait de deux sortes de pièces. Les <strong>guides</strong>, qu’on donne à l’agent avant qu’il agisse : des
+instructions, du contexte, des exemples. Et les <strong>capteurs</strong>, qui regardent ce qu’il a fait
+après coup : des tests, un linter, un autre modèle qui juge. Chaque pièce peut être mécanique
+(un test tourne en quelques millisecondes et ne se trompe pas) ou inférentielle (un modèle
+qui lit et donne son avis, plus souple et moins fiable).</p>
+<p>Elle ajoute une phrase que j’ai relue plusieurs fois : <em>un bon harnais ne cherche pas
+forcément à supprimer l’intervention humaine, mais à la diriger là où elle compte le plus.</em></p>
+<p>C’est exactement la question que se pose un relecteur devant trois dépôts modifiés par une
+IA en une après-midi. Pas « est-ce que je relis tout » — on ne peut plus — mais « où est-ce que
+je regarde ». Un outil qui reconstruit le chemin d’une fonctionnalité à travers les services,
+qui dit quel contrat de données a bougé et qui en dépend, qui marque ce qui a été relu et ce
+qui ne l’a pas été : c’est un harnais. Il ne code pas, il n’exécute rien, il n’orchestre aucune
+boucle. Il fournit le contexte et il pose des capteurs autour d’un travail que d’autres font.
+Böckeler appellerait ça un harnais externe.</p>
+<h2 id="les-fichiers-dinstructions-pourrissent">Les fichiers d’instructions pourrissent</h2>
+<p>La pièce de harnais la plus répandue aujourd’hui est un fichier texte à la racine du projet,
+avec un nom en majuscules, qui explique à l’IA comment se comporter ici. Tout le monde en a un.
+Je pensais que ça marchait.</p>
+<p>Une équipe de l’ETH Zurich a mesuré. Sur des tâches réelles, avec et sans ce fichier, le
+résultat est net : <strong>aucun gain significatif</strong>, une légère tendance à la baisse, et vingt pour
+cent de coût d’inférence en plus. Le détail qui fait mal : les instructions sont bien suivies.
+L’agent explore davantage, comme on le lui demande, pour rien. Et l’étude précise que ça tient
+aussi bien pour les fichiers rédigés par des développeurs que pour ceux générés par un modèle.</p>
+<p>OpenAI, dans son propre retour d’expérience, le dit avec une image : un gros fichier
+d’instructions devient <em>un cimetière de règles périmées</em>. Ils l’ont remplacé par une centaine de
+lignes de table des matières, et ils tiennent sa fraîcheur avec des vérifications automatiques,
+comme du code.</p>
+<p>Une troisième étude réconcilie les deux : avec les mêmes tâches, un fichier statique apporte
+presque rien ; un fichier <strong>raffiné contre des essais qui échouent</strong> apporte davantage. La
+conclusion des auteurs tient en une ligne : ce qui est décisif, ce n’est pas le fichier, c’est
+<em>la façon dont il est produit</em>.</p>
+<p>Je suis arrivé à ces lectures avec une gêne que je n’avais pas nommée. Le fichier
+d’instructions de mon propre projet est tenu avec soin, relu à chaque changement de règle, et
+la documentation d’usage écrite en le vérifiant contre le code y a quand même trouvé une
+vingtaine d’écarts en une seule passe. Un harnais écrit à la main est un harnais qui a raison
+le jour où on l’écrit.</p>
+<h2 id="ne-rien-écrire">Ne rien écrire</h2>
+<p>D’où le pari, qui n’est pas apparu comme une idée mais comme une contrainte qu’on s’est
+imposée : <strong>le harnais de projet, personne ne l’écrit</strong>. Il est fait de ce que l’usage laisse.</p>
+<p>Concrètement, une relecture avec Atlas laisse des traces, et ces traces ont une forme
+précise. Un fil de discussion, posé sur une ligne de code, avec la réponse de l’auteur en
+dessous. Un endossement — « j’ai relu ceci » — avec, depuis peu, une note qui dit ce que ça
+casse si c’est faux. Un point d’interrogation, partagé et signé, qui dit « je n’ai pas compris
+ce que ça fait ». Une conclusion dans le fil du ticket : ce qu’on a compris de la cause, ce
+qu’on a décidé.</p>
+<p>Rien de tout ça n’est une instruction. Ce sont des <strong>faits</strong>, ancrés sur le code qui les
+porte, datés, et périssables : quand la ligne change, le fil se périme, l’endossement passe
+« à revoir », l’annotation s’atténue. Un fait périmé se voit. Une règle périmée, non — c’est
+toute la différence avec le cimetière.</p>
+<p>Le harnais, c’est l’accumulation de ces faits, et la question devient : à quoi ça sert, pour
+l’IA qui relira la prochaine fonctionnalité ?</p>
+<h2 id="les-précédents">Les précédents</h2>
+<p>Quand l’IA relit une nouvelle fonctionnalité avec Atlas, elle reçoit, nœud par nœud, ce
+qu’une relecture passée a dit <strong>sur un nœud du même type</strong> — et depuis cette semaine, du même
+fichier en priorité, ou d’un fichier qui partage un contrat de données avec lui. Elle ne reçoit
+pas un jugement. Elle reçoit le fil tel qu’il a été écrit, et ce qu’il a <strong>coûté</strong> : un humain
+a répondu, ou n’a rien dit ; le code visé a changé après, ou pas ; l’endroit a été endossé
+ensuite, ou reste en attente ; un test est apparu, ou non.</p>
+<p>C’est une base de cas, au sens où on l’entendait dans les années quatre-vingt-dix : on ne
+généralise pas, on retrouve le cas le plus proche et on laisse le lecteur juger. Le
+skill de relecture lit le précédent <strong>avant</strong> le code, se fait son opinion, et cite ce qu’il a
+utilisé. Il ne peut citer que ce qu’on lui a servi : une clé absente est refusée à
+l’écriture. Ce qu’un précédent lui a apporté, il le dit aussi — à côté, ou manquant — et ce
+retour ne devient jamais du savoir : il reste un signal pour ceux qui règlent le tri.</p>
+<p>Longtemps, seuls les fils ouverts par l’IA entraient dans cette base. On a fini par y admettre
+les fils ouverts par un humain, à une condition : qu’ils aient eu une suite. Un commentaire
+humain resté sans réponse ni résolution n’apprend rien à personne ; un commentaire humain suivi
+d’une réponse, c’est le meilleur précédent qu’on ait.</p>
+<h2 id="une-mesure-qui-refuse-dêtre-un-score">Une mesure qui refuse d’être un score</h2>
+<p>C’est là que la conversation a été la plus longue. La demande était claire, le 19 septembre :</p>
+<blockquote>
+<p>« Il faut que ce soit lisible par l’humain sous forme simplifiée… scoring, évolution, niveau…
+on doit voir une progression, on doit voir des économies de token… La mesure est facteur clé
+de succès et de rétention. »</p>
+</blockquote>
+<p>Et ma réponse a été de refuser le score. Pas la mesure — le score.</p>
+<p>Un score de maturité, on sait ce que ça devient : on l’a vu avec les modèles de maturité des
+années 2000, on le voit avec les notes de performance des sites web. Dès qu’un nombre unique
+résume un système, le système se met à travailler pour le nombre. Et un score de harnais, en
+plus, mentirait sur sa propre base : il additionnerait des choses mesurées et des choses
+devinées, et personne ne saurait plus lesquelles.</p>
+<p>Ce qu’on a construit s’appelle une <strong>chronologie</strong>, et le mot a été choisi contre « score »,
+« niveau » et « progression ». Chaque reconstruction de l’index des précédents <strong>ajoute une
+ligne</strong> — rien ne s’édite, rien ne se réécrit. Chaque ligne dit ce que l’usage a accumulé et ce
+que ça rend, avec trois règles qui ne bougent pas :</p>
+<ul>
+<li><strong>chaque nombre porte son dénominateur</strong>. Pas « 73 % » : « 73 % (163 sur 223 paires, 120
+questions) » ;</li>
+<li><strong>ce qui n’a pas été mesuré le dit</strong>, au lieu d’afficher zéro. Sur la première ligne réelle
+du projet où Atlas est né, l’effet sur les relectures se lit « pas encore d’historique », et
+le contrôle humain « pas encore fait ». C’est vrai, et c’est plus utile qu’un zéro ;</li>
+<li><strong>ce qui manque est nommé</strong>. Le tri n’a pas servi la bonne cible trente-trois fois ; pour
+chacune, la ligne dit laquelle était attendue, laquelle a été servie, et pourquoi — le plus
+souvent « deux souvenirs aussi proches l’un que l’autre : rien ne les départage ». Ce n’est pas
+une pénalité, c’est une
+liste de travail.</li>
+</ul>
+<p>La ligne se lit dans la configuration du projet, sous les autres réglages, et dans le
+terminal quand on lance la reconstruction. On la compare à la précédente. On voit ce qui a été
+gagné et ce qui a été perdu — et une cible qui a simplement quitté l’index parce que son fil
+a été résolu n’est pas comptée comme une perte. De temps en temps, on joue un contrôle : Atlas
+tire trente paires, et l’humain dit pour chacune si la cible aurait dû être servie. Le
+désaccord, s’il y en a un, s’inscrit sur la ligne suivante. C’est lui qui décide si la
+définition de « voisin » tient.</p>
+<p>La première ligne du projet où Atlas est né dit ceci : 364 précédents, dont 231 ouverts par
+l’IA et 133 par un humain ; sur les questions où l’on peut vérifier, le bon fichier est servi
+73 fois sur 100. Je ne sais pas encore si c’est bien. Je sais que la ligne suivante me dira si
+c’est mieux, et que personne ne pourra la maquiller.</p>
+<h2 id="ce-quon-a-refusé">Ce qu’on a refusé</h2>
+<p>Trois choses, pour finir, parce qu’un positionnement se lit surtout à ce qu’il écarte.</p>
+<p>On a refusé que l’IA <strong>synthétise</strong> ce cerveau du projet — un résumé des apprentissages par
+framework, par dépôt, par ticket. C’était tentant, et c’est la pathologie la mieux documentée
+d’un contexte entretenu par un modèle : à force de réécrire, il raccourcit, puis il efface.
+Dix-huit mille jetons réécrits en cent vingt-deux d’une étape à l’autre, dans une étude de
+cette année. Les faits restent des faits, servis tels quels ; la synthèse, si quelqu’un la
+veut, il l’écrit lui-même et il la signe.</p>
+<p>On a refusé que les <strong>outils</strong> d’Atlas écrivent du code. Un skill peut coder, dans la session
+de l’utilisateur, entre un prologue qui lit la carte et un épilogue qui consigne ce qui a été
+fait — mais aucun outil ne modifie un dépôt. Ce qui est à l’humain n’a pas d’outil : la
+validation, la spécification, la résolution d’un fil. L’absence est la garantie.</p>
+<p>Et on a refusé de mesurer l’effet avant d’avoir un historique. L’index se construit depuis
+quelques jours. Ce que les précédents changent à une relecture — moins de faux positifs, des
+questions mieux posées, des jetons économisés — se mesurera avec et sans, sur les mêmes
+fonctionnalités, dans un mois. La ligne le dira. Jusque-là elle dit « pas encore », et c’est
+la seule chose honnête qu’elle puisse dire.</p>
+</article></main><footer class="pied"><div class="dedans"><span>Atlas — suivi et validation de code.</span><a href="/atlas-site/manuel/prise-en-main">Manuel</a></div></footer><script>
+    document.getElementById('theme-bt')?.addEventListener('click', () => {
+      const r = document.documentElement;
+      // clair → sombre → système, et le tour recommence. « Système » RETIRE la clé : c'est ce qui
+      // rend le choix distinct d'une absence de choix.
+      const suite = { clair: 'sombre', sombre: '', '': 'clair' };
+      const v = suite[r.dataset.theme || ''];
+      if (v) { r.dataset.theme = v; try { localStorage.setItem('atlas-site-theme', v); } catch {} }
+      else { delete r.dataset.theme; try { localStorage.removeItem('atlas-site-theme'); } catch {} }
+    });
+  </script></body></html>

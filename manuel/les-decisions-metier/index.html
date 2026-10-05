@@ -1,0 +1,255 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Les décisions métier · Atlas</title><meta name="description" content="Une règle du projet que le code ne dit pas — « un client ne s'efface jamais, il s'archive » — posée sur le contrat qu'elle concerne, et resservie à l'IA partout où ce contrat est touché ou consommé. Comment elle se pose, où elle revient, comment elle cesse de valoir, et ce qu'on mesure."><link rel="canonical" href="https://gregoirelacoste.github.io/atlas-site/manuel/les-decisions-metier"><meta property="og:title" content="Les décisions métier · Atlas"><meta property="og:description" content="Une règle du projet que le code ne dit pas — « un client ne s'efface jamais, il s'archive » — posée sur le contrat qu'elle concerne, et resservie à l'IA partout où ce contrat est touché ou consommé. Comment elle se pose, où elle revient, comment elle cesse de valoir, et ce qu'on mesure."><meta property="og:type" content="website"><meta property="og:url" content="https://gregoirelacoste.github.io/atlas-site/manuel/les-decisions-metier"><meta name="twitter:card" content="summary"><link rel="icon" href="/atlas-site/favicon.svg" type="image/svg+xml"><script>
+    (() => { try { const t = localStorage.getItem('atlas-site-theme');
+      if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t; } catch {} })();
+  </script><link rel="stylesheet" href="/atlas-site/_astro/Base.D32RNicN.css"></head><body><header class="tete"><a class="marque" href="/atlas-site">🗺️ Atlas</a><nav><a href="/atlas-site/installer">Installer</a><a href="/atlas-site/manuel/prise-en-main" aria-current="page">Manuel</a><a href="/atlas-site/articles">Écrits</a><button class="theme-bt" id="theme-bt" type="button" aria-label="Changer de thème">◐</button></nav></header><main class="doc"><nav class="cote" aria-label="Le manuel"><h2>Le manuel</h2><ol><li><a href="/atlas-site/manuel/prise-en-main">Prise en main</a></li><li><a href="/atlas-site/manuel/l-arbre">L&#39;Arbre</a></li><li><a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a></li><li><a href="/atlas-site/manuel/le-code">Le Code</a></li><li><a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a></li><li><a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et inventaire</a></li><li><a href="/atlas-site/manuel/le-panneau-git">Le panneau Git</a></li><li><a href="/atlas-site/manuel/le-tableau">Le Tableau</a></li><li><a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a></li><li><a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a></li><li><a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a></li><li><a href="/atlas-site/manuel/brancher-l-ia">Brancher l&#39;IA</a></li><li><a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l&#39;IA lit et écrit</a></li><li><a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a></li><li><a href="/atlas-site/manuel/la-ligne-de-commande">La ligne de commande</a></li><li><a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a></li><li><a href="/atlas-site/manuel/le-clavier">Le clavier</a></li><li><a href="/atlas-site/manuel/les-precedents">Les précédents</a></li><li><a href="/atlas-site/manuel/les-decisions-metier" aria-current="page">Les décisions métier</a></li><li><a href="/atlas-site/manuel/le-glossaire">Le glossaire</a></li><li><a href="/atlas-site/manuel/la-recette">La recette</a></li><li><a href="/atlas-site/manuel/deposer-une-recette">Déposer une recette</a></li><li><a href="/atlas-site/manuel/la-vue-d-ensemble">La vue d&#39;ensemble</a></li></ol></nav><article class="corps"><h1>Les décisions métier</h1><p class="chapo">Une règle du projet que le code ne dit pas — « un client ne s&#39;efface jamais, il s&#39;archive » — posée sur le contrat qu&#39;elle concerne, et resservie à l&#39;IA partout où ce contrat est touché ou consommé. Comment elle se pose, où elle revient, comment elle cesse de valoir, et ce qu&#39;on mesure.</p><blockquote>
+<p>Une règle du projet que le code ne dit pas — « un client ne s’efface jamais, il s’archive » —
+posée sur le contrat qu’elle concerne, et resservie à l’IA partout où ce contrat est touché ou
+consommé. Comment elle se pose, où elle revient, comment elle cesse de valoir, et ce qu’on mesure.</p>
+</blockquote>
+<p>Le vocabulaire, une fois. Un <strong><a href="/atlas-site/manuel/le-glossaire#contrat">contrat</a></strong> est un type que d’autres parties du code partagent — une
+entité, un DTO, une interface, un enum (<a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a>). Un
+<strong><a href="/atlas-site/manuel/le-glossaire#fil">fil</a></strong> est une conversation ancrée sur un <a href="/atlas-site/manuel/le-glossaire#noeud">nœud</a> de la <a href="/atlas-site/manuel/le-glossaire#carte">carte</a> (<a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a>).
+Un <strong>précédent</strong> est un fil passé, resservi à un nœud du même genre (<a href="/atlas-site/manuel/les-precedents">Les précédents</a>).
+Une <strong><a href="/atlas-site/manuel/le-glossaire#decision-metier">décision métier</a></strong> est un fil d’un genre particulier : il porte une règle, il est posé sur un
+contrat, et il revient par ce contrat.</p>
+<h2 id="le-problème-quelle-résout">Le problème qu’elle résout</h2>
+<p>Les choix métier d’un <a href="/atlas-site/manuel/le-glossaire#projet">projet</a> ne vivent ni dans le code ni dans ce que l’IA sait. Un humain les dit en
+passant — dans le <a href="/atlas-site/manuel/le-glossaire#fil-de-feature">fil de feature</a>, dans une réponse en review — et ils ne ressortent plus jamais. Le
+fil de feature n’est pas une source de précédents : il parle de la <a href="/atlas-site/manuel/le-glossaire#feature">feature</a> entière, pas d’un nœud. Et
+les précédents ordinaires reviennent <strong>par ressemblance de type</strong> : un service qui ressemble à un
+autre service reçoit ce qui a été dit sur le premier. Pour une règle métier, c’est la mauvaise clé.
+« Un client s’archive » n’a rien à faire sur un autre service qui ne touche jamais un client, même
+s’il lui ressemble trait pour trait.</p>
+<p>La décision métier change la clé : elle revient <strong>par le contrat</strong>. Là où <code>Client</code> est touché, ou là
+où un nœud l’importe, la règle est servie. Ailleurs, jamais.</p>
+<h2 id="poser-une-décision">Poser une décision</h2>
+<p>Il n’y a <strong>pas de geste dans l’écran</strong> pour poser une décision : c’est l’IA qui la pose, quand tu le
+lui demandes ou d’après ce que tu as dit. Elle passe par l’outil <code>comment</code>, avec la ref du contrat
+seule et <code>decision: true</code> (<a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l’IA lit et écrit</a>). La première
+ligne du message est la règle, telle qu’on la collerait dans une conversation ; les lignes suivantes
+disent ce qui casse si on l’oublie.</p>
+<p>Atlas vérifie <strong>avant d’écrire</strong> que l’<a href="/atlas-site/manuel/le-glossaire#ancre">ancre</a> est bien un contrat, en lisant la carte de la feature en
+cours :</p>
+<table>
+<thead>
+<tr>
+<th>où l’IA la pose</th>
+<th>ce qu’Atlas répond</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>un contrat de la carte (couche <code>contract</code>)</td>
+<td>acceptée — avec l’<a href="/atlas-site/manuel/le-glossaire#empreinte">empreinte</a> du contrat à cet instant</td>
+</tr>
+<tr>
+<td>un type que la carte ne retient qu’au grain de son fichier, et que ce fichier déclare</td>
+<td>acceptée</td>
+</tr>
+<tr>
+<td>le fichier d’un contrat (<code>…::__file__</code>)</td>
+<td>acceptée : la règle vaut pour tout ce que le fichier déclare</td>
+</tr>
+<tr>
+<td>un contrat que la feature ne touche pas, mais qu’un de ses fichiers importe sous ce nom</td>
+<td>acceptée, sans empreinte</td>
+</tr>
+<tr>
+<td>une méthode</td>
+<td>refusée — et le refus <strong>nomme les contrats que cette méthode consomme</strong></td>
+</tr>
+<tr>
+<td>le fil de feature</td>
+<td>refusée : une règle sans contrat reste dans le fil de feature, et n’est pas servie</td>
+</tr>
+<tr>
+<td>une ligne précise</td>
+<td>refusée : une décision porte sur le contrat entier</td>
+</tr>
+<tr>
+<td>un symbole que la carte ne connaît pas</td>
+<td>refusée, en disant où chercher : un contrat que <code>digest</code> rend</td>
+</tr>
+<tr>
+<td>une carte qu’Atlas n’arrive pas à lire</td>
+<td>refusée — « pas pu regarder », jamais un oui par ignorance</td>
+</tr>
+</tbody>
+</table>
+<p>Le quatrième cas est le plus courant : on code le service qui archive un client, on ne touche pas le
+type <code>Client</code>. Le type n’a alors pas de nœud dans la carte — un contrat n’en a que si la feature le
+modifie —, mais le fichier du service l’importe, et c’est une preuve qu’il existe sous ce nom, à ce
+chemin. Ce qu’elle ne prouve pas, c’est que ce nom est un type plutôt qu’une fonction exportée.</p>
+<p>Un même contrat peut porter plusieurs décisions. La seule chose refusée est la même règle deux
+fois : même contrat, même première ligne. Et une décision ne capte pas les fils ordinaires — un
+constat posé sur le même contrat ouvre son propre fil à côté.</p>
+<h2 id="où-elle-revient">Où elle revient</h2>
+<p>Sur <strong>une autre feature</strong>, la commande des précédents sert aussi les décisions :</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> precedents</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> PROJ-412</span></span></code></pre>
+<p>Une décision est servie à deux sortes de nœuds, et à eux seuls :</p>
+<ul>
+<li><strong>le nœud du contrat lui-même</strong>, quand la feature le touche ;</li>
+<li><strong>chaque nœud qui consomme ce contrat par import</strong> — qu’il le reçoive comme contrat greffé sous lui
+dans l’<a href="/atlas-site/manuel/le-glossaire#arbre">Arbre</a>, ou que son fichier l’importe sans que la feature touche le contrat.</li>
+</ul>
+<p>Les deux grains se rejoignent : une décision posée sur <code>Client</code> revient à un nœud qui importe le
+fichier de <code>Client</code>, que la carte retienne ce contrat au grain du type ou à celui du fichier. Elle ne
+revient <strong>jamais</strong> à un nœud qui importe <code>Order</code> du même fichier, et jamais à un nœud d’un autre <a href="/atlas-site/manuel/le-glossaire#repo">repo</a>
+qui porterait un chemin identique.</p>
+<p>⚠️ Un nœud du <strong>même type</strong> qui ne touche pas ce contrat ne reçoit rien. C’est toute la différence
+avec un précédent ordinaire, et c’est pourquoi une décision <strong>n’entre jamais dans l’index des
+précédents</strong> : même servie par erreur par ressemblance, elle serait fausse partout où elle arrive.</p>
+<p>La feature qui a posé la décision ne se la ressert pas : ses propres fils lui reviennent déjà par le
+<a href="/atlas-site/manuel/le-glossaire#panneau-code">panneau Code</a> et par ce que lit l’IA.</p>
+<h2 id="ce-que-la-commande-imprime">Ce que la commande imprime</h2>
+<p>En tête, une ligne dit combien de décisions ont été servies, combien le <a href="/atlas-site/manuel/le-glossaire#chapeau">chapeau</a> en connaît et
+combien sont remplacées. Un daemon d’avant cette fonction ne les sert pas : la ligne dit alors « pas
+pu regarder », jamais zéro.</p>
+<p>Puis, sous chaque nœud, la décision a <strong>sa propre ligne</strong>, à côté du précédent du nœud s’il en a un :</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>api::src/client.service.ts::remove</span></span>
+<span class="line"><span>  ◆ décision « Un client ne s'efface jamais, il s'archive. »  [PROJ-380::t7c0f38e4] · posée le 2026-09-30 par l'IA</span></span>
+<span class="line"><span>    sur api::src/types.ts::Client · ce nœud importe ce contrat · contrat inchangé depuis</span></span></code></pre>
+<p>Elle ne prend <strong>jamais la place</strong> d’un précédent, et ne compte pas dans le plafond de trois par type
+de nœud. Toutes les décisions qui s’appliquent sont servies : ce ne sont pas des candidats qu’on
+classe, ce sont des règles qui valent.</p>
+<table>
+<thead>
+<tr>
+<th>ce qui revient</th>
+<th>ce que ça veut dire</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>la règle</td>
+<td>sa première ligne, et sa clé <code>&lt;feature&gt;::&lt;fil&gt;</code> — celle qu’on cite</td>
+</tr>
+<tr>
+<td>la date et l’auteur</td>
+<td><code>posée le … par l'IA</code> ou <code>par l'humain</code></td>
+</tr>
+<tr>
+<td>le contrat</td>
+<td>celui qu’elle concerne</td>
+</tr>
+<tr>
+<td>pourquoi ce nœud</td>
+<td><code>ce nœud EST ce contrat</code> ou <code>ce nœud importe ce contrat</code></td>
+</tr>
+<tr>
+<td>le contrat depuis</td>
+<td><code>inchangé depuis</code> · <code>CHANGÉ depuis — relis-la contre le code</code> · <code>pas pu regarder si le contrat a changé depuis</code></td>
+</tr>
+</tbody>
+</table>
+<p>L’état du contrat compare son empreinte au moment où la décision a été posée avec celle de la carte
+d’aujourd’hui. Sans l’une des deux — une décision posée sur un contrat que sa feature ne touchait
+pas, ou un contrat qui n’a pas de nœud dans la carte d’aujourd’hui —, c’est « pas pu regarder »,
+jamais « inchangé ».</p>
+<p>Chaque décision servie <strong>se consigne</strong>, comme un précédent : le nœud qui l’a reçue, la première et la
+dernière fois, et combien de fois. C’est ce <a href="/atlas-site/manuel/le-glossaire#registre">registre</a> qui rend possibles la citation et la <a href="/atlas-site/manuel/le-glossaire#sonde">sonde</a>.</p>
+<h2 id="citer-écarter">Citer, écarter</h2>
+<p>Quand l’IA s’appuie sur une décision servie, elle la <strong>cite</strong> : le fil qui porte ce qu’elle en a fait
+passe sa clé exacte dans <code>precedents</code>, comme pour un précédent. La citation est <strong>vérifiée à
+l’écriture</strong> : une clé inventée, ou une décision qui n’a <strong>jamais été servie à cette feature</strong>, est
+refusée. Les skills <code>resolve</code> et <code>review</code> exigent cette citation dès qu’une décision a orienté le code
+ou un constat, et leur compte rendu nomme les décisions citées
+(<a href="/atlas-site/manuel/brancher-l-ia">Brancher l’IA</a>).</p>
+<p>Une décision lue et <strong>écartée</strong> se sonde, comme un précédent : <code>hors-sujet</code>, <code>deja-su</code> ou <code>perime</code>,
+au nœud où elle a été reçue — jamais ailleurs (<a href="/atlas-site/manuel/les-precedents">Les précédents</a>).</p>
+<h2 id="quand-elle-ne-vaut-plus---remplacée-">Quand elle ne vaut plus : « remplacée »</h2>
+<p>Une règle métier change sans qu’une ligne de code bouge. La décision qui ne vaut plus se marque
+<strong><a href="/atlas-site/manuel/le-glossaire#remplacee">remplacée</a></strong>, en nommant celle qui la remplace :</p>
+<ol>
+<li>l’IA pose d’abord la nouvelle décision, <strong>sur le même contrat</strong> ;</li>
+<li>puis elle marque l’ancienne : <code>comment</code> avec <code>remplacee</code> (la clé de l’ancienne) et <code>remplaceePar</code>
+(la clé de la nouvelle).</li>
+</ol>
+<p>Sans remplaçante, le marquage est <strong>refusé</strong>, et le refus dit de poser la nouvelle d’abord. Une
+remplaçante posée sur un autre contrat, déjà remplacée elle-même, ou qui n’est pas une décision, est
+refusée aussi. L’IA peut marquer une décision <strong>même si l’humain y a parlé</strong> : ce n’est pas ranger,
+rien ne disparaît.</p>
+<p>Remplacée, une décision <strong>cesse aussitôt d’être servie</strong> — au prochain appel de la commande, sans
+reconstruire l’index : le service lit les fils en direct. Elle reste <strong>lisible</strong> :</p>
+<ul>
+<li>dans le <strong><a href="/atlas-site/manuel/le-glossaire#journal">Journal</a></strong>, sa ligne porte <code>◆ décision métier</code> et <code>↻ remplacée → &lt;clé&gt;</code>, un lien ;</li>
+<li>dans le <strong>panneau Code</strong>, le fil porte les mêmes marques, un lien <code>→ ouvrir celle qui la remplace</code>,
+et un bouton <strong>↩ Défaire « remplacée »</strong>. L’infobulle dit quand, par qui, et laquelle vaut.</li>
+</ul>
+<p>Le lien <strong>atterrit sur le fil</strong> de celle qui vaut, comme un clic du Journal : le nœud dans l’Arbre, le
+fil au centre du Code. Si elle vit dans une autre feature, celle-ci s’ouvre d’abord. Une remplaçante
+qui n’atterrit pas — fil introuvable, ou symbole sans nœud dans la carte — ne promet plus le clic : le
+lien devient « ⚠ n’atterrit pas — <raison> », la raison au survol. Dans une autre feature, Atlas ne
+peut le savoir qu’une fois celle-ci ouverte : c’est alors le panneau Code qui le dit. Un clic avec
+Ctrl ou ⌘ ouvre la feature dans un nouvel onglet, sans atterrir sur le fil.</p>
+<p>Défaire est un geste <strong>de l’humain</strong> : l’IA marque, elle ne démarque pas. Défaite, la décision est de
+nouveau servie au prochain appel.</p>
+<p>⚠️ L’IA ne <strong>range</strong> pas une décision. Ranger retirerait la règle du service sans nommer ce qui la
+remplace : c’est exactement ce que « remplacée » refuse. L’humain, lui, peut ranger, comme n’importe
+quel fil.</p>
+<h2 id="ce-quon-mesure">Ce qu’on mesure</h2>
+<p>À chaque reconstruction de l’index, la <strong><a href="/atlas-site/manuel/le-glossaire#chronologie">chronologie</a></strong> porte un bloc « Les règles métier servies
+ont-elles été reprises ? » (<a href="/atlas-site/manuel/les-precedents">Les précédents</a>). Il compte, par feature et par
+décision servie, ce qu’elle est devenue :</p>
+<table>
+<thead>
+<tr>
+<th>suite</th>
+<th>quand</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>citée</strong></td>
+<td>un fil de la feature la cite</td>
+</tr>
+<tr>
+<td><strong>écartée</strong></td>
+<td>pas citée, mais une sonde de la feature l’écarte</td>
+</tr>
+<tr>
+<td><strong>sans suite</strong></td>
+<td>ni l’un ni l’autre</td>
+</tr>
+</tbody>
+</table>
+<p>La ligne dit les trois avec leur dénominateur — <code>1 citée · 1 écartée · 2 sans suite, sur 4 servies</code> —
+et l’écart avec la ligne d’avant, en mots. Une ligne bâtie avant cette fonction dit « pas pu
+regarder » ; aucune décision servie se dit tel quel. Le bloc n’a <strong>pas de direction</strong> : plus de
+citations n’est ni mieux ni moins bien tant qu’on ne sait pas ce qu’elles valent. Une citation de
+décision n’est jamais comptée comme un précédent cité.</p>
+<h2 id="ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</h2>
+<ul>
+<li><strong>Il ne pose pas de décision tout seul</strong>, et l’écran n’a pas de geste pour en poser une : c’est
+l’IA, à ta demande ou d’après ce que tu as dit.</li>
+<li><strong>Il ne sert jamais une décision par ressemblance</strong> : ni au nœud d’un autre contrat, ni au nœud du
+même type qui ne touche pas celui-ci. Une règle qui ne porte sur aucun contrat reste dans le fil de
+feature, et n’est pas servie.</li>
+<li><strong>Il ne partage aucune décision entre projets</strong> : une décision métier reste privée à son projet.</li>
+<li><strong>Il ne transforme pas une décision en test</strong>, et ne vérifie pas que le code la respecte.</li>
+<li><strong>Il ne supprime jamais une décision remplacée</strong> : elle reste lisible, et se défait.</li>
+<li><strong>L’utilité mesurée ne change encore rien</strong> à ce qui est servi : on mesure d’abord.</li>
+</ul>
+<h2 id="limites-connues">Limites connues</h2>
+<ul>
+<li><strong>Poser une décision sur un contrat que la feature ne touche pas</strong> prouve que le nom existe à ce
+chemin — un fichier l’importe —, pas que c’est un type plutôt qu’une fonction exportée.</li>
+<li><strong>Le contrat « depuis »</strong> ne se lit qu’avec deux empreintes : une décision posée sur un contrat non
+touché dira « pas pu regarder » tant que le contrat n’est pas un nœud de la carte.</li>
+<li><strong>Le lien vers la remplaçante ouvre sa feature</strong>, pas le fil lui-même : il reste à le retrouver dans
+le Journal de cette feature.</li>
+<li><strong>Le texte des décisions servies n’est pas compté</strong> dans le coût en tokens de la commande.</li>
+<li><strong>Un DTO d’un fichier mixte</strong> se greffe sous le nœud qui le nomme dans sa signature, pas par import :
+une décision peut revenir par ce chemin, un peu moins prouvé que l’import.</li>
+</ul>
+<nav class="suite" aria-label="Page suivante et précédente"><a href="/atlas-site/manuel/les-precedents"><small>← précédent</small>Les précédents</a><a class="droite" href="/atlas-site/manuel/le-glossaire"><small>suivant →</small>Le glossaire</a></nav></article><nav class="cote toc" aria-label="Sur cette page"><h2>Sur cette page</h2><ul><li><a href="#le-problème-quelle-résout">Le problème qu’elle résout</a></li><li><a href="#poser-une-décision">Poser une décision</a></li><li><a href="#où-elle-revient">Où elle revient</a></li><li><a href="#ce-que-la-commande-imprime">Ce que la commande imprime</a></li><li><a href="#citer-écarter">Citer, écarter</a></li><li><a href="#quand-elle-ne-vaut-plus---remplacée-">Quand elle ne vaut plus : « remplacée »</a></li><li><a href="#ce-quon-mesure">Ce qu’on mesure</a></li><li><a href="#ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</a></li><li><a href="#limites-connues">Limites connues</a></li></ul></nav></main><footer class="pied"><div class="dedans"><span>Atlas — suivi et validation de code.</span><a href="/atlas-site/manuel/prise-en-main">Manuel</a></div></footer><script>
+    document.getElementById('theme-bt')?.addEventListener('click', () => {
+      const r = document.documentElement;
+      // clair → sombre → système, et le tour recommence. « Système » RETIRE la clé : c'est ce qui
+      // rend le choix distinct d'une absence de choix.
+      const suite = { clair: 'sombre', sombre: '', '': 'clair' };
+      const v = suite[r.dataset.theme || ''];
+      if (v) { r.dataset.theme = v; try { localStorage.setItem('atlas-site-theme', v); } catch {} }
+      else { delete r.dataset.theme; try { localStorage.removeItem('atlas-site-theme'); } catch {} }
+    });
+  </script></body></html>
