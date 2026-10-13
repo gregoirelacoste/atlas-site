@@ -1,0 +1,417 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Les critères, les cas et leur preuve · Atlas</title><meta name="description" content="Ce que le Harnais relit dans tes tickets, tes scénarios de recette et tes décisions métier, à qui il le sert — et quand il cesse de le servir parce que le code a bougé."><link rel="canonical" href="https://gregoirelacoste.github.io/atlas-site/manuel/les-criteres-les-cas-et-leur-preuve"><meta property="og:title" content="Les critères, les cas et leur preuve · Atlas"><meta property="og:description" content="Ce que le Harnais relit dans tes tickets, tes scénarios de recette et tes décisions métier, à qui il le sert — et quand il cesse de le servir parce que le code a bougé."><meta property="og:type" content="website"><meta property="og:url" content="https://gregoirelacoste.github.io/atlas-site/manuel/les-criteres-les-cas-et-leur-preuve"><meta name="twitter:card" content="summary"><link rel="icon" href="/atlas-site/favicon.svg" type="image/svg+xml"><script>
+    (() => { try { const t = localStorage.getItem('atlas-site-theme');
+      if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t; } catch {} })();
+  </script><link rel="stylesheet" href="/atlas-site/_astro/Base.D32RNicN.css"></head><body><header class="tete"><a class="marque" href="/atlas-site">🗺️ Atlas</a><nav><a href="/atlas-site/installer">Installer</a><a href="/atlas-site/manuel/prise-en-main" aria-current="page">Manuel</a><a href="/atlas-site/articles">Écrits</a><button class="theme-bt" id="theme-bt" type="button" aria-label="Changer de thème">◐</button></nav></header><main class="doc"><nav class="cote" aria-label="Le manuel"><h2>Le manuel</h2><ol><li><a href="/atlas-site/manuel/prise-en-main">Prise en main</a></li><li><a href="/atlas-site/manuel/l-arbre">L&#39;Arbre</a></li><li><a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a></li><li><a href="/atlas-site/manuel/le-code">Le Code</a></li><li><a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a></li><li><a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et inventaire</a></li><li><a href="/atlas-site/manuel/le-panneau-git">Le panneau Git</a></li><li><a href="/atlas-site/manuel/le-tableau">Le Tableau</a></li><li><a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a></li><li><a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a></li><li><a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a></li><li><a href="/atlas-site/manuel/brancher-l-ia">Brancher l&#39;IA</a></li><li><a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l&#39;IA lit et écrit</a></li><li><a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a></li><li><a href="/atlas-site/manuel/la-ligne-de-commande">La ligne de commande</a></li><li><a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a></li><li><a href="/atlas-site/manuel/le-clavier">Le clavier</a></li><li><a href="/atlas-site/manuel/les-precedents">Les précédents</a></li><li><a href="/atlas-site/manuel/les-decisions-metier">Les décisions métier</a></li><li><a href="/atlas-site/manuel/le-glossaire">Le glossaire</a></li><li><a href="/atlas-site/manuel/la-recette">La recette</a></li><li><a href="/atlas-site/manuel/deposer-une-recette">Déposer une recette</a></li><li><a href="/atlas-site/manuel/la-vue-d-ensemble">La vue d&#39;ensemble</a></li><li><a href="/atlas-site/manuel/le-harnais">Le Harnais</a></li><li><a href="/atlas-site/manuel/les-criteres-les-cas-et-leur-preuve" aria-current="page">Les critères, les cas et leur preuve</a></li><li><a href="/atlas-site/manuel/la-page-harnais">La page Harnais</a></li><li><a href="/atlas-site/manuel/les-panneaux-et-les-modules">Les panneaux et les modules</a></li></ol></nav><article class="corps"><h1>Les critères, les cas et leur preuve</h1><p class="chapo">Ce que le Harnais relit dans tes tickets, tes scénarios de recette et tes décisions métier, à qui il le sert — et quand il cesse de le servir parce que le code a bougé.</p><blockquote>
+<p>Ce que le Harnais relit dans tes tickets, tes scénarios de recette et tes décisions métier, à qui il
+le sert — et quand il cesse de le servir parce que le code a bougé.</p>
+</blockquote>
+<p>Le <strong><a href="/atlas-site/manuel/le-glossaire#harnais">Harnais</a></strong> sert à l’IA de ta session de code les règles de ton
+<a href="/atlas-site/manuel/le-glossaire#projet">projet</a> là où elles s’appliquent (<a href="/atlas-site/manuel/le-harnais">Le Harnais</a>). Une
+partie de ces règles est déjà écrite ailleurs : les <a href="/atlas-site/manuel/le-glossaire#critere">critères</a>
+d’acceptation de tes tickets, les cas de ton scénario de <a href="/atlas-site/manuel/le-glossaire#recette">recette</a>, tes
+<a href="/atlas-site/manuel/le-glossaire#decision-metier">décisions métier</a>. Le Harnais ne les recopie pas : il les <strong>relit
+là où ils sont écrits</strong>, en fait des éléments qu’il sert comme une <a href="/atlas-site/manuel/le-glossaire#consigne">consigne</a>
+— la règle d’un endroit —, et dit pour chacun ce qui le prouve.</p>
+<h2 id="trois-sources-relues-sur-place">Trois sources, relues sur place</h2>
+<table>
+<thead>
+<tr>
+<th>ce qu’il relit</th>
+<th>où c’est écrit</th>
+<th>ce qui devient un élément</th>
+<th>sa clé</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>les critères</td>
+<td>le <code>ticket.md</code> de la <a href="/atlas-site/manuel/le-glossaire#feature">feature</a></td>
+<td>chaque critère</td>
+<td><code>PROJ-412#3</code></td>
+</tr>
+<tr>
+<td>le scénario de recette</td>
+<td><code>recettes/scenario.md</code> de la feature</td>
+<td>chaque cas qui ne cite aucun critère</td>
+<td><code>PROJ-412#cas-&lt;titre&gt;</code></td>
+</tr>
+<tr>
+<td>les décisions métier</td>
+<td>leur <a href="/atlas-site/manuel/le-glossaire#fil">fil</a>, posé sur un <a href="/atlas-site/manuel/le-glossaire#contrat">contrat</a></td>
+<td>chaque décision d’un fil non rangé</td>
+<td><code>PROJ-380::&lt;fil&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<p>Les deux premiers sont <strong>servis</strong> par le <a href="/atlas-site/manuel/le-glossaire#hook">hook</a> — la commande que Claude Code
+lance avant chaque geste de l’IA — quand elle touche leur endroit. Les décisions sont seulement
+<strong>comptées</strong> : elles ont leur propre canal (plus bas).</p>
+<p>Rien n’est copié. L’<a href="/atlas-site/manuel/le-glossaire#instance">instance</a> de ton projet relit chaque feature du
+<a href="/atlas-site/manuel/le-glossaire#workspace">workspace</a> la première fois qu’on le lui demande, puis seulement celle dont un
+fichier a bougé — le ticket, un <a href="/atlas-site/manuel/le-glossaire#parcours">parcours</a>, une recette, le scénario. Un
+critère que tu viens d’écrire est servi au geste suivant. Ce qui ne se lit pas se dit dans
+<code>atlas consigne liste</code>, par feature : « ticket.md ne se lit pas : ses critères ne sont pas indexés »,
+« le parcours ne se lit pas : ses critères restent déclarés », « la recette ne se lit pas : vérifié et
+contredit ne se lisent pas », « le scénario de recette ne se lit pas : ses cas ne sont pas indexés ».</p>
+<h2 id="un-critère-de-ticket">Un critère de ticket</h2>
+<p>Un critère vit dans le <code>ticket.md</code> de sa feature (<a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a>).
+Sa clé : <code>PROJ-412#3</code>, le troisième critère du ticket de PROJ-412 dans l’ordre écrit — pas le numéro
+posé devant.</p>
+<p><strong>Son endroit</strong> : les fichiers des symboles que le dernier parcours de la feature cite comme preuve de
+ce critère, quel qu’en soit l’auteur — situer n’est pas prouver —, et les lignes écrites sous lui,
+indentées d’au moins quatre espaces. Sans endroit, il n’est servi nulle part. Ces lignes ne sont
+<strong>jamais lues comme un critère</strong>, ni ici ni dans l’onglet Ticket :</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">1.</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> Un remboursement refusé dit pourquoi.</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">    -</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> où: dossier projet-api/src/remboursement</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">    -</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> portée: ticket</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">2.</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> La ligne de commande garde son montant d'origine.</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">    -</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> remplace: PROJ-380#2</span></span></code></pre>
+<table>
+<thead>
+<tr>
+<th>ligne</th>
+<th>ce qu’elle dit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>- où:</code></td>
+<td>un endroit, écrit comme pour une consigne (<code>fichier</code>, <code>dossier</code>, <code>famille</code>, <code>geste</code>…) ; répétable</td>
+</tr>
+<tr>
+<td><code>- portée:</code></td>
+<td><code>durable</code> (défaut) : prouvé, il vaut pour tous · <code>ticket</code> : il ne sort jamais de sa feature</td>
+</tr>
+<tr>
+<td><code>- remplace:</code></td>
+<td>la clé d’un critère ou d’un cas qui ne vaut plus ; plusieurs, séparées par des espaces ou des virgules</td>
+</tr>
+</tbody>
+</table>
+<p>La <strong><a href="/atlas-site/manuel/le-glossaire#portee">portée</a></strong> ne joue qu’une fois le critère prouvé : déclaré, il ne
+sort jamais de sa feature, quelle que soit sa portée.</p>
+<p>Une autre clé est refusée, comme une valeur illisible, et la liste le dit —
+<code>⚠ PROJ-412#2 : « endroit » sous le critère 2 : clé inconnue — où · portée · remplace</code> — ; le critère
+garde le reste. Une ligne indentée sans deux-points reste du texte libre. Une clé de <code>remplace:</code> qu’aucun
+élément ne porte se dit aussi : « aucun critère ne porte cette clé ».</p>
+<h2 id="le-niveau-de-preuve">Le niveau de preuve</h2>
+<p>Le <strong><a href="/atlas-site/manuel/le-glossaire#niveau-de-preuve">niveau de preuve</a></strong> décide à qui un élément est servi :</p>
+<table>
+<thead>
+<tr>
+<th>niveau</th>
+<th>quand</th>
+<th>servi à</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>déclaré</strong></td>
+<td>rien ne le prouve encore</td>
+<td>aux seules sessions de sa feature</td>
+</tr>
+<tr>
+<td><strong>codé</strong></td>
+<td>la relecture <code>as-coded</code> l’a couvert, preuve citée · tu l’as coché <code>- [x]</code></td>
+<td>à toute session qui touche son endroit</td>
+</tr>
+<tr>
+<td><strong>vérifié</strong></td>
+<td>la dernière recette fermée l’a passé — daté de sa fermeture</td>
+<td>à toute session qui touche son endroit</td>
+</tr>
+<tr>
+<td><strong>contredit</strong></td>
+<td>la dernière recette fermée a échoué dessus</td>
+<td>à personne</td>
+</tr>
+<tr>
+<td><strong><a href="/atlas-site/manuel/le-glossaire#a-revoir">à revoir</a></strong></td>
+<td>codé par la relecture, mais un de ses symboles de preuve a bougé depuis</td>
+<td>à personne</td>
+</tr>
+<tr>
+<td><strong>remplacé</strong></td>
+<td>un autre critère ou cas le <code>remplace:</code></td>
+<td>à personne</td>
+</tr>
+</tbody>
+</table>
+<p>« Codé » se lit dans le <strong>dernier</strong> parcours écrit, s’il vient d’<code>as-coded</code> — le
+<a href="/atlas-site/manuel/le-glossaire#skill">skill</a> qui relit le diff — et couvre le critère entier, avec au moins un
+symbole cité. Celui de <code>resolve</code>, la session qui a codé, ne prouve jamais : réécrit après la relecture,
+il ramène le critère à déclaré. La recette l’emporte sur la coche et la relecture ; un remplacement,
+sur tout. Reformulé, un critère perd la preuve de la relecture et de la recette, qui se recolle à son
+texte.</p>
+<h2 id="quand-le-code-de-preuve-a-bougé---à-revoir-">Quand le code de preuve a bougé : « à revoir »</h2>
+<p>Un critère codé par la relecture repose sur son <strong><a href="/atlas-site/manuel/le-glossaire#code-de-preuve">code de preuve</a></strong> :
+les symboles que le parcours d’<code>as-coded</code> cite pour lui. Le code, lui, continue d’avancer — dans la
+même feature, ou dans un autre ticket une fois celle-ci mergée. Atlas le surveille en trois temps.</p>
+<ol>
+<li><strong>Le parcours relève ses commits.</strong> Chaque fois que l’IA écrit un parcours, Atlas note au passage
+le commit de chaque repo de la feature, comme à l’ouverture d’une recette. L’IA ne le fournit pas.</li>
+<li><strong>La passe de l’index relit le code.</strong> <code>atlas precedents --build</code> — la passe qui construit l’index
+des <a href="/atlas-site/manuel/le-glossaire#precedent">précédents</a> (<a href="/atlas-site/manuel/les-precedents">Les précédents</a>) — relit,
+pour chaque critère codé par la relecture, chacun de ses symboles de preuve : depuis le commit de
+sa relecture, ses lignes ont-elles changé ? Atlas lit la <a href="/atlas-site/manuel/le-glossaire#branche">branche</a> de
+la feature tant qu’elle n’est pas mergée dans ce repo, la <a href="/atlas-site/manuel/le-glossaire#ligne-de-base">ligne de base</a>
+ensuite — là où un autre ticket peut l’avoir touché. Seul le code commité compte, et seules les
+lignes du symbole : un appelant modifié, une ligne voisine, ne comptent pas.</li>
+<li><strong>Le hook le lit aussitôt.</strong> Dès que l’index change, l’élément change de niveau au geste suivant,
+sans redémarrer quoi que ce soit.</li>
+</ol>
+<p>Trois issues, jamais deux :</p>
+<table>
+<thead>
+<tr>
+<th>ce que la passe a lu</th>
+<th>le niveau</th>
+<th>ce que l’IA lit en le recevant</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>au moins un symbole de preuve a changé, a été renommé ou retiré, ou son fichier a disparu</td>
+<td>à revoir</td>
+<td>rien : il n’est plus servi</td>
+</tr>
+<tr>
+<td>tous intacts</td>
+<td>codé</td>
+<td><code>· inchangé au 2026-10-09</code> — le jour de la passe</td>
+</tr>
+<tr>
+<td>un symbole illisible, aucune passe depuis la relecture, aucun commit relevé</td>
+<td>codé</td>
+<td><code>· fraîcheur pas regardée</code></td>
+</tr>
+</tbody>
+</table>
+<p>Un verdict ne vaut que pour <strong>sa</strong> relecture : quand <code>as-coded</code> réécrit le parcours, la lecture
+précédente ne compte plus, et le critère redevient codé, « fraîcheur pas regardée », jusqu’à la passe
+suivante. Seul un critère codé par la relecture se relit ainsi : coché par toi ou vérifié par une
+recette, il garde son niveau.</p>
+<p><code>atlas precedents --build</code> en donne le compte — <code>fraîcheur des critères codés : 12 relus · 1 à revoir</code>.
+S’il n’a pas pu la lire, il le dit, et garde la lecture précédente : un critère à revoir le reste.
+C’est <code>atlas consigne liste</code> qui nomme chaque critère à revoir, et le symbole qui a bougé — la
+<a href="/atlas-site/manuel/la-page-harnais">page Harnais</a> aussi, à son accueil :</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>⚠ à revoir PROJ-412#3 — Un remboursement refusé dit pourquoi.</span></span>
+<span class="line"><span>      son code de preuve a bougé depuis la relecture (refuserRemboursement) : une relecture as-coded le confirme</span></span></code></pre>
+<p>La phrase est coupée à 90 caractères ; entre parenthèses, le nom de chaque symbole qui a changé.
+<strong>Pour en sortir</strong>, relance la relecture — <code>/atlas:as-coded PROJ-412</code> dans ta session de code
+(<a href="/atlas-site/manuel/brancher-l-ia">Brancher l’IA</a>) —, qui juge si le code couvre toujours le critère, puis
+<code>atlas precedents --build</code> pour la nouvelle lecture. Ta coche <code>- [x]</code> ou une recette qui le passe le
+rendent aussi servi, sans relecture.</p>
+<blockquote>
+<p>⚠️ Ce n’est pas le « à revoir » du rond. Dans l’Arbre, « à revoir »
+est un symbole que <strong>tu</strong> as endossé et dont le code a changé depuis
+(<a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a>) ; ici, c’est un critère que la <strong>relecture de
+l’IA</strong> a prouvé et dont le code a changé. Le premier se voit dans l’Arbre ; le second, dans la liste
+et sur la <a href="/atlas-site/manuel/la-page-harnais">page Harnais</a>. Endosser un symbole ne remet pas un critère en service, et l’inverse non plus.</p>
+</blockquote>
+<h2 id="un-cas-de-recette-hors-critère">Un cas de recette hors critère</h2>
+<p>Le scénario de recette dit comment prouver la feature, cas par cas
+(<a href="/atlas-site/manuel/la-recette">La recette</a>). Un <strong><a href="/atlas-site/manuel/le-glossaire#cas-de-recette">cas de recette</a></strong> qui cite
+un critère (<code>- critere:</code>) est le <em>comment</em> de ce critère : le critère est déjà un élément, le cas n’en
+ajoute pas un second. Les autres — un <a href="/atlas-site/manuel/le-glossaire#impact-par-ricochet">flux d’impact</a> à rejouer (<code>- impact:</code>), un scénario du socle
+(<code>- socle:</code>), un cas à la marge (<code>- marge:</code>) — deviennent chacun un élément, servi comme un critère.</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">## La facture d'une commande remboursée reste lisible</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">-</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> impact: Facture.lire</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">-</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> lieux: projet-api/src/facture/facture.service.ts:42</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">-</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> où: dossier projet-api/src/facture</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">-</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> portée: ticket</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">-</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> remplace: PROJ-380#cas-une-facture-se-relit</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">-</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> faire: rembourser la commande, puis ouvrir sa facture</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">-</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> attendu: la facture s'ouvre, son total inchangé</span></span></code></pre>
+<p>Sa clé vient de son titre : <code>PROJ-412#cas-la-facture-d-une-commande-remboursee-reste-lisible</code> — sans
+accents, en minuscules, chaque suite de signes qui n’est ni lettre ni chiffre devenue un tiret,
+64 caractères au plus. Renommer un cas change sa clé.</p>
+<table>
+<thead>
+<tr>
+<th>clé</th>
+<th>ce que le Harnais en fait</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>- lieux:</code></td>
+<td>chaque <code>repo/chemin:ligne</code> situe le cas dans ce <strong>fichier</strong> ; un lieu sans ligne ou sans repo est refusé, et la liste le dit : <code>« projet-api/src/avoir.ts » : il manque `:ligne`</code></td>
+</tr>
+<tr>
+<td><code>- où:</code></td>
+<td>un endroit écrit comme pour une consigne ; répétable</td>
+</tr>
+<tr>
+<td><code>- portée:</code></td>
+<td><code>durable</code> (défaut) ou <code>ticket</code>, comme sous un critère</td>
+</tr>
+<tr>
+<td><code>- remplace:</code></td>
+<td>la clé d’un critère (<code>PROJ-380#2</code>) ou d’un cas (<code>PROJ-380#cas-…</code>) qui ne vaut plus</td>
+</tr>
+<tr>
+<td><code>- attendu:</code></td>
+<td>sa première ligne arrive avec le cas, comme le pourquoi d’une consigne</td>
+</tr>
+</tbody>
+</table>
+<p>Une portée inconnue est refusée par le scénario lui-même : <code>atlas recette demande PROJ-412</code> dit ses
+lignes refusées. Un lieu ou un endroit illisible est refusé dans la liste, et le cas garde le reste.
+Le gabarit d’<code>atlas recette scenario PROJ-412 --gabarit</code> porte ces clés.</p>
+<p><strong>Son niveau</strong> vient de la dernière recette fermée de sa feature : les étapes que ce cas couvrait,
+telles que la demande les a figées à l’ouverture. Une étape en échec : <strong>contredit</strong> ; au moins une
+passée, aucune en échec : <strong>vérifié</strong> ; sinon <strong>déclaré</strong>, et donc servi à sa seule feature. Un cas
+renommé depuis la recette perd ce verdict.</p>
+<h2 id="ce-que-lia-reçoit">Ce que l’IA reçoit</h2>
+<p>Les éléments arrivent par le hook, avec les consignes, selon les mêmes règles : la première fois que
+l’IA touche un endroit dans une session, la plus précise d’abord, et une écriture refusée une fois
+pour qu’elle les lise (<a href="/atlas-site/manuel/le-harnais">Le Harnais</a>). Leur plafond est à part : <strong>trois critères ou
+cas au plus</strong> par geste, en plus des cinq consignes. Au-delà de 300 caractères, un élément servi est
+coupé, et finit par « (entier dans son ticket) » — « (entier dans son scénario de recette) » pour un cas.</p>
+<p><strong>Sa feature</strong> est celle de la branche sortie dans le checkout du fichier touché, lue dans son <code>HEAD</code>
+selon <a href="/atlas-site/manuel/le-glossaire#ce-qui-fait-une-feature">ce qui fait une feature</a> ; pour une commande, le
+checkout d’où elle part. Un <a href="/atlas-site/manuel/le-glossaire#worktree">worktree</a> compte pour sa propre branche.
+Tête détachée, branche qui n’est pas une feature : rien de déclaré n’arrive.</p>
+<p>Chaque élément dit d’où il vient, entre parenthèses, après l’endroit qui l’a fait arriver :</p>
+<table>
+<thead>
+<tr>
+<th>ce qu’il est</th>
+<th>ce que l’IA lit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>critère déclaré</td>
+<td><code>critère PROJ-412#3 · déclaré, rien ne le prouve encore</code></td>
+</tr>
+<tr>
+<td>déclaré, qu’un parcours de <code>resolve</code> dit couvert</td>
+<td><code>critère PROJ-412#3 · déclaré, couvert selon le parcours de resolve du 2026-10-09, pas encore relu</code></td>
+</tr>
+<tr>
+<td>codé par la relecture</td>
+<td><code>critère PROJ-412#3 · codé (relu par as-coded, le 2026-10-07) · inchangé au 2026-10-09</code></td>
+</tr>
+<tr>
+<td>codé par ta coche</td>
+<td><code>critère PROJ-412#3 · codé (coché par un humain)</code></td>
+</tr>
+<tr>
+<td>vérifié</td>
+<td><code>critère PROJ-412#3 · vérifié par la recette du 2026-10-08</code></td>
+</tr>
+<tr>
+<td>cas déclaré</td>
+<td><code>cas de recette PROJ-412#cas-… · déclaré, rien ne le prouve encore</code></td>
+</tr>
+</tbody>
+</table>
+<p>Un parcours écrit avant que le champ <code>skill</code> existe se dit « couvert selon un parcours d’avant
+(moment inconnu) ».</p>
+<h2 id="les-décisions-métier--comptées-pas-resservies">Les décisions métier : comptées, pas resservies</h2>
+<p>Une décision métier est une règle que l’IA a posée sur un contrat, dans un fil
+(<a href="/atlas-site/manuel/les-decisions-metier">Les décisions métier</a>). Le Harnais l’indexe par la clé de ce fil, sa
+première ligne pour phrase et son contrat pour endroit — sans la recopier. Une décision d’un fil rangé
+n’y est pas ; une <strong>remplacée</strong> y est, et le dit.</p>
+<p>Le hook ne la sert <strong>jamais</strong> : elle revient déjà par <code>atlas precedents</code>, au nœud du contrat et à ce
+qui l’importe, quel que soit ton client ; deux canaux la feraient arriver deux fois. La liste les compte :</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>3 décisions sur contrat : 2 servies par `atlas precedents` au contrat et à qui l'importe, 1 remplacée, plus servie</span></span></code></pre>
+<p>Une remplacée n’est servie nulle part ; elle reste comptée, comme elle reste lisible. Pour les lire une
+à une : leur fil, <code>atlas precedents PROJ-412</code>, ou la page Harnais, sous « Décisions sur contrat ».</p>
+<h2 id="ce-que-dit-atlas-consigne-liste">Ce que dit <code>atlas consigne liste</code></h2>
+<p>Après les consignes et leurs gestes (<a href="/atlas-site/manuel/le-harnais">Le Harnais</a>), la liste finit par trois blocs :</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>3 décisions sur contrat : 2 servies par `atlas precedents` au contrat et à qui l'importe, 1 remplacée, plus servie</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>tronc commun : servi à chaque ouverture de session, ≈ 41 tokens (estimés sur la taille du texte)</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>14 éléments indexés par renvoi, critères de tickets et cas de recette — 6 déclarés · 4 codés · 2 vérifiés · 1 à revoir · 1 remplacé : codés et vérifiés servis à tous (sauf portée « ticket »), déclarés à leur seule feature</span></span>
+<span class="line"><span>⚠ PROJ-98 : le parcours ne se lit pas : ses critères restent déclarés</span></span>
+<span class="line"><span>⚠ PROJ-412#cas-un-avoir-se-relit : « projet-api/src/avoir.ts » : il manque `:ligne`</span></span>
+<span class="line"><span>⚠ à revoir PROJ-412#3 — Un remboursement refusé dit pourquoi.</span></span>
+<span class="line"><span>      son code de preuve a bougé depuis la relecture (refuserRemboursement) : une relecture as-coded le confirme</span></span></code></pre>
+<table>
+<thead>
+<tr>
+<th>ligne</th>
+<th>ce qu’elle dit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>les décisions</td>
+<td>combien, dont combien remplacées ; absente s’il n’y en a aucune</td>
+</tr>
+<tr>
+<td>le <a href="/atlas-site/manuel/le-glossaire#tronc-commun">tronc commun</a></td>
+<td>le poids estimé des consignes sans endroit, servies à l’ouverture de chaque session (<a href="/atlas-site/manuel/le-harnais">Le Harnais</a>) ; absente s’il n’y en a aucune</td>
+</tr>
+<tr>
+<td>les éléments</td>
+<td>combien de critères et de cas, par niveau</td>
+</tr>
+<tr>
+<td><code>⚠ &lt;feature&gt;</code> · <code>⚠ &lt;clé&gt;</code></td>
+<td>une source qui ne se lit pas, une ligne refusée sous un critère ou dans un cas, avec sa raison</td>
+</tr>
+<tr>
+<td><code>⚠ à revoir</code></td>
+<td>chaque critère à revoir, et les symboles qui ont bougé</td>
+</tr>
+</tbody>
+</table>
+<h2 id="sur-la-page-harnais">Sur la page Harnais</h2>
+<p>La <a href="/atlas-site/manuel/la-page-harnais">page Harnais</a> montre au centre l’élément que tu y sélectionnes. Le haut :
+ce qu’il est (« critère d’un ticket », « cas de recette », « décision sur un contrat »), sa feature, sa
+phrase, sa marque et sa portée (« portée : durable » ou « portée : le temps de son ticket »). Puis sa
+provenance, le texte même que l’IA reçoit avec lui —
+<code>critère PROJ-412#3 · codé (relu par as-coded, le 2026-10-07) · inchangé au 2026-10-09</code> —, et où il se
+corrige : le <code>ticket.md</code> ou le scénario de recette de sa feature, ou, pour une décision, son fil, par
+une autre décision sur le même contrat.</p>
+<p>Suivent, s’il y a lieu : « Ce que l’IA en reçoit », une phrase de plus de 300 caractères coupée ;
+« Remplacé par » et son remplaçant, qui s’ouvre ; <strong>Où il s’applique</strong> (pour une décision, <strong>Son contrat</strong>),
+sous-titré par ce qui en est servi — « contredit : plus servi », « servie par <code>atlas precedents</code> » ;
+<strong>À revoir</strong>, les symboles de preuve qui ont bougé ; <strong>Prouvé par</strong>, ceux que la relecture lui a
+rattachés.</p>
+<p><strong>Une règle métier renvoie à sa preuve.</strong> Une consigne côté produit peut porter une table <code>## Règle</code>
+(<a href="/atlas-site/manuel/le-harnais">Le Harnais</a>) : pour qu’une de ses lignes cite un critère ou un cas, écris sa clé,
+<strong>seule</strong> dans une case — <code>PROJ-412#2</code> ou <code>PROJ-412#cas-une-facture-se-relit</code>. La page montre en face
+de la ligne le niveau de l’élément cité, « sans renvoi » ou « introuvable » ; une ligne qui renvoie à
+un élément contredit fait dire « Règle contredite : un écart de recette sur une de ses lignes. ».</p>
+<h2 id="ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</h2>
+<ul>
+<li><strong>Il ne recopie ni ne réécrit un critère, un cas ou une décision</strong> : il les relit ; <code>ticket.md</code> et
+<code>scenario.md</code> restent à toi et à tes skills.</li>
+<li><strong>Il ne juge pas qu’un critère est tenu</strong> : « codé » dit qu’une relecture a rattaché du code au
+critère, pas que ce code est juste ; seule une recette « vérifie ».</li>
+<li><strong>Il ne relance aucune relecture</strong> quand le code de preuve bouge : il retire le critère, le dit, et
+te laisse relire.</li>
+<li><strong>Il ne sert pas une décision métier par le hook</strong>, et ne fond pas ses deux canaux.</li>
+<li><strong>Il ne compte pas le code non commité</strong> pour décider qu’un critère est à revoir.</li>
+</ul>
+<h2 id="limites-connues">Limites connues</h2>
+<ul>
+<li><strong>La fraîcheur ne se lit qu’à la passe</strong> : entre deux passes de l’index — seule au repos de l’instance,
+ou <code>atlas precedents --build</code> —, un critère dont le code a bougé reste servi comme codé.</li>
+<li><strong>Un parcours écrit avant cette version</strong> ne porte pas ses commits : ses critères codés restent
+« fraîcheur pas regardée » jusqu’à une nouvelle relecture <code>as-coded</code>. Plus ancien encore, il ne dit
+pas son skill : ses critères restent déclarés.</li>
+<li><strong>Un cas n’est situé qu’au grain du fichier</strong> : la ligne d’un lieu est exigée, mais tout le fichier
+le fait arriver. Le repo d’un lieu n’est pas vérifié : une faute de frappe donne un endroit que rien
+ne touche, sans le dire.</li>
+<li><strong>Les décisions ne sont que comptées</strong> par la liste, qui ne les nomme pas ; la page Harnais, si.</li>
+<li><strong>« À revoir » d’un critère ne se voit pas dans l’Arbre</strong> : seulement dans <code>atlas consigne liste</code> et
+sur la <a href="/atlas-site/manuel/la-page-harnais">page Harnais</a>, qui ne relit qu’à son ouverture ou sur ↻.</li>
+</ul>
+<nav class="suite" aria-label="Page suivante et précédente"><a href="/atlas-site/manuel/le-harnais"><small>← précédent</small>Le Harnais</a><a class="droite" href="/atlas-site/manuel/la-page-harnais"><small>suivant →</small>La page Harnais</a></nav></article><nav class="cote toc" aria-label="Sur cette page"><h2>Sur cette page</h2><ul><li><a href="#trois-sources-relues-sur-place">Trois sources, relues sur place</a></li><li><a href="#un-critère-de-ticket">Un critère de ticket</a></li><li><a href="#le-niveau-de-preuve">Le niveau de preuve</a></li><li><a href="#quand-le-code-de-preuve-a-bougé---à-revoir-">Quand le code de preuve a bougé : « à revoir »</a></li><li><a href="#un-cas-de-recette-hors-critère">Un cas de recette hors critère</a></li><li><a href="#ce-que-lia-reçoit">Ce que l’IA reçoit</a></li><li><a href="#les-décisions-métier--comptées-pas-resservies">Les décisions métier : comptées, pas resservies</a></li><li><a href="#ce-que-dit-atlas-consigne-liste">Ce que dit atlas consigne liste</a></li><li><a href="#sur-la-page-harnais">Sur la page Harnais</a></li><li><a href="#ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</a></li><li><a href="#limites-connues">Limites connues</a></li></ul></nav></main><footer class="pied"><div class="dedans"><span>Atlas — suivi et validation de code.</span><a href="/atlas-site/manuel/prise-en-main">Manuel</a></div></footer><script>
+    document.getElementById('theme-bt')?.addEventListener('click', () => {
+      const r = document.documentElement;
+      // clair → sombre → système, et le tour recommence. « Système » RETIRE la clé : c'est ce qui
+      // rend le choix distinct d'une absence de choix.
+      const suite = { clair: 'sombre', sombre: '', '': 'clair' };
+      const v = suite[r.dataset.theme || ''];
+      if (v) { r.dataset.theme = v; try { localStorage.setItem('atlas-site-theme', v); } catch {} }
+      else { delete r.dataset.theme; try { localStorage.removeItem('atlas-site-theme'); } catch {} }
+    });
+  </script></body></html>

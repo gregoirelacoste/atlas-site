@@ -1,0 +1,210 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Les panneaux et les modules · Atlas</title><meta name="description" content="Composer son espace de lecture, déplacer les vues et retrouver sa disposition sur cette machine."><link rel="canonical" href="https://gregoirelacoste.github.io/atlas-site/manuel/les-panneaux-et-les-modules"><meta property="og:title" content="Les panneaux et les modules · Atlas"><meta property="og:description" content="Composer son espace de lecture, déplacer les vues et retrouver sa disposition sur cette machine."><meta property="og:type" content="website"><meta property="og:url" content="https://gregoirelacoste.github.io/atlas-site/manuel/les-panneaux-et-les-modules"><meta name="twitter:card" content="summary"><link rel="icon" href="/atlas-site/favicon.svg" type="image/svg+xml"><script>
+    (() => { try { const t = localStorage.getItem('atlas-site-theme');
+      if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t; } catch {} })();
+  </script><link rel="stylesheet" href="/atlas-site/_astro/Base.D32RNicN.css"></head><body><header class="tete"><a class="marque" href="/atlas-site">🗺️ Atlas</a><nav><a href="/atlas-site/installer">Installer</a><a href="/atlas-site/manuel/prise-en-main" aria-current="page">Manuel</a><a href="/atlas-site/articles">Écrits</a><button class="theme-bt" id="theme-bt" type="button" aria-label="Changer de thème">◐</button></nav></header><main class="doc"><nav class="cote" aria-label="Le manuel"><h2>Le manuel</h2><ol><li><a href="/atlas-site/manuel/prise-en-main">Prise en main</a></li><li><a href="/atlas-site/manuel/l-arbre">L&#39;Arbre</a></li><li><a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a></li><li><a href="/atlas-site/manuel/le-code">Le Code</a></li><li><a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a></li><li><a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et inventaire</a></li><li><a href="/atlas-site/manuel/le-panneau-git">Le panneau Git</a></li><li><a href="/atlas-site/manuel/le-tableau">Le Tableau</a></li><li><a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a></li><li><a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a></li><li><a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a></li><li><a href="/atlas-site/manuel/brancher-l-ia">Brancher l&#39;IA</a></li><li><a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l&#39;IA lit et écrit</a></li><li><a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a></li><li><a href="/atlas-site/manuel/la-ligne-de-commande">La ligne de commande</a></li><li><a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a></li><li><a href="/atlas-site/manuel/le-clavier">Le clavier</a></li><li><a href="/atlas-site/manuel/les-precedents">Les précédents</a></li><li><a href="/atlas-site/manuel/les-decisions-metier">Les décisions métier</a></li><li><a href="/atlas-site/manuel/le-glossaire">Le glossaire</a></li><li><a href="/atlas-site/manuel/la-recette">La recette</a></li><li><a href="/atlas-site/manuel/deposer-une-recette">Déposer une recette</a></li><li><a href="/atlas-site/manuel/la-vue-d-ensemble">La vue d&#39;ensemble</a></li><li><a href="/atlas-site/manuel/le-harnais">Le Harnais</a></li><li><a href="/atlas-site/manuel/les-criteres-les-cas-et-leur-preuve">Les critères, les cas et leur preuve</a></li><li><a href="/atlas-site/manuel/la-page-harnais">La page Harnais</a></li><li><a href="/atlas-site/manuel/les-panneaux-et-les-modules" aria-current="page">Les panneaux et les modules</a></li></ol></nav><article class="corps"><h1>Les panneaux et les modules</h1><p class="chapo">Composer son espace de lecture, déplacer les vues et retrouver sa disposition sur cette machine.</p><blockquote>
+<p>Composer son espace de lecture, déplacer les vues et retrouver sa disposition sur cette machine.</p>
+</blockquote>
+<p>Un <strong>panneau</strong> est un emplacement : il porte la taille, le repère actif, l’agrandissement et le
+masquage. Un <strong>module</strong> est une vue : Arbre, Détail, Fichiers, Contrats, Ticket, Git ou Recette.
+Ticket réunit Statistiques, Journal, Ticket et Parcours. Sa lecture voyage avec lui. Flux et Ensemble
+sont deux modes d’Arbre ; Code et Passage sont deux représentations de Détail.</p>
+<h2 id="commencer-à-lire">Commencer à lire</h2>
+<p>La disposition initiale présente Fichiers à gauche, Arbre en vue d’ensemble au centre, Détail à
+droite et Git dans l’emplacement inférieur. Les trois emplacements
+principaux et celui du bas peuvent tous recevoir un module. Tableau, Config et Harnais sont des
+pages globales ; les fermer rend l’espace laissé derrière elles.</p>
+<h2 id="choisir-déplacer-échanger">Choisir, déplacer, échanger</h2>
+<p>Le choix en tête de chaque panneau liste les modules, avec la raison quand l’un ne peut pas être
+ouvert dans le contexte courant. Choisir un module déjà installé échange les deux contenus.
+Choisir un module rangé remplace le contenu de ce panneau ; la lecture remplacée reste disponible
+en choisissant de nouveau son module.</p>
+<p>Ticket offre quatre boutons de navigation entre ses sous-vues. Fichiers et Ticket peuvent se lire
+en bas ; Git peut prendre un panneau principal. Un clic rend le panneau actif, indiqué par son
+bord. Il ne change pas le symbole actuellement lu ni la cible d’endossement.</p>
+<p>La frontière entre deux fenêtres se glisse à la souris. Un séparateur focalisé se règle aussi
+avec les flèches du clavier. <strong>Agrandir</strong> donne temporairement la place à un panneau ; le même geste ou Échap
+rend les tailles et les modules précédents. <strong>↺</strong> restaure la disposition initiale.</p>
+<p>La disposition, les tailles et la visibilité se retiennent localement, par projet. Elles ne font
+pas partie du workspace partagé. Si une extension manque après rechargement, l’écran la nomme
+et permet de choisir une autre vue ou de restaurer la disposition.</p>
+<h2 id="les-touches-ciblent-la-vue">Les touches ciblent la vue</h2>
+<p><code>Espace</code> liste les commandes des modules installés : <code>f</code> Fichiers, <code>a</code> Arbre, <code>c</code> Détail,
+<code>g</code> Git, <code>t</code> Ticket, <code>k</code> Contrats et <code>r</code> Recette. <code>s</code> ouvre la recherche : fichier (<code>f</code>),
+grep (<code>g</code>) ou usages (<code>d</code>). Dans Arbre, <code>a f</code> choisit Flux et <code>a e</code> choisit Ensemble.
+Dans Ticket, <code>t s/j/t/p</code> choisit Statistiques, Journal, Ticket ou Parcours.
+La lettre suivante choisit une option du module : <code>Espace c p</code> règle les plis du Code,
+même au centre ou en bas. Si Détail est rangé, <code>c</code> disparaît de ce premier niveau.
+Il reste disponible dans le choix d’un panneau. Aucune lettre répétée ne masque une vue.
+Inventaire n’est plus proposé dans les sélecteurs. Les lectures restent présentes tant que
+leurs modules sont installés ; un plein écran retire seulement les autres panneaux temporairement.</p>
+<p>Une flèche désigne un panneau : <code>←</code> gauche, <code>↑</code> centre, <code>→</code> droite, <code>↓</code> bas.
+<code>Espace ↑ f</code> installe Fichiers au centre ; <code>Espace ↑ ↑</code> agrandit ou restaure le centre.
+<code>Espace ↑ 0</code> cache ou révèle le contenu central, avec sa lecture conservée. La barre de commandes
+reste accessible : verticale pour les panneaux principaux repliés, horizontale pour celui du bas.
+Les quatre flèches sont réunies sur une seule ligne dans la boîte Espace.
+<code>Espace 0</code> revient à la disposition initiale. Le rendu du Code se choisit avec
+<code>Espace c s</code> (unifié ou côte à côte).
+Quand son panneau est agrandi, Code passe automatiquement au côte à côte et au fichier entier.
+Le panneau transmet sa présentation ; Code porte cette adaptation. Restaurer retrouve la lecture
+compacte avec son rendu choisi et ses plis, sans mémoriser le choix automatique.</p>
+<p>Depuis l’Arbre, les flèches parcourent les nœuds, <code>Alt+↑/↓</code> font défiler le Code et <code>0</code>, <code>1–4</code>, <code>?</code>
+gardent leur sens. Mettre le Code ailleurs n’ajoute aucun changement de focus à chaque nœud.
+Un Code hors écran garde son contenu, mais ces touches n’endossent aucune lecture invisible.
+Échap dépile l’interaction visible avant de quitter la lecture ; il ne masque pas un panneau
+simplement parce qu’il est actif.</p>
+<h2 id="fichiers--projet-et-feature">Fichiers : Projet et Feature</h2>
+<p>Un seul module offre les deux périmètres. <strong>Projet</strong> explore tous les repos, recherche un fichier
+par nom et lit aussi les fichiers du disque sans feature. <strong>Feature</strong> range les fichiers touchés,
+avec leurs symboles, ronds, fils et comptes de relecture. Changer de périmètre ne change pas
+l’identité actuellement lue et ne transforme pas un fichier du disque en symbole endossable.</p>
+<h2 id="ajouter-une-vue-locale">Ajouter une vue locale</h2>
+<p>Le guide contributeur vit dans <code>web/extensions-locales/README.md</code> et l’exemple technique dans
+<code>fixtures/modules/temoin.ts</code>. Cet exemple n’est pas une vue proposée dans l’application.
+Une extension est chargée à la construction de
+l’interface, depuis son dossier local, et déclarée par son propre descripteur. Elle reçoit feature
+et sélection et demande ses synergies au contrat commun.</p>
+<h2 id="composer-pour-une-question-précise">Composer pour une question précise</h2>
+<p>La première disposition suffit pour commencer. Composer devient utile lorsque deux représentations
+répondent ensemble à ta question. Par exemple, tu veux confronter une étape du Parcours à la spec
+du Ticket : installe Ticket dans le panneau inférieur et passe entre ses sous-vues avec leurs boutons.
+La sélection de Parcours continue à viser l’Arbre ; elle ne cherche pas le panneau du centre.
+Tu peux ensuite échanger Code et Arbre si le fichier demande davantage de largeur. Les panneaux
+portent les dimensions, donc l’échange transporte les lectures sans échanger leurs tailles.</p>
+<p>Autre exemple : tu relis le travail fichier par fichier tout en gardant les flux à portée de vue.
+Installe Fichiers dans le panneau gauche, puis choisis Feature. L’Arbre reste dans son panneau.
+Cliquer un symbole dans Fichiers ouvre la même identité que cliquer son occurrence dans l’Arbre.
+La <a href="/atlas-site/manuel/le-glossaire#note-de-criticite">note de criticité</a> porte sur cette identité, pas sur la
+liste qui a permis de la trouver. Le compte de relecture reste commun aux deux représentations.</p>
+<p>Ces compositions sont des possibilités, pas un ordre de lecture. La disposition peut être plus
+pratique pour une question et moins pour la suivante. Tu peux la restaurer sans effacer ce que tu
+as déjà endossé : l’organisation des vues est une préférence locale, la lecture est un fait de
+la feature. Ne confonds pas non plus le retour à la disposition initiale avec une navigation
+arrière. Le premier range les modules ; la seconde revient à un contenu précédemment consulté.</p>
+<h2 id="parcourir-lire-endosser--une-séquence">Parcourir, lire, endosser : une séquence</h2>
+<p>Commence par ouvrir une feature, puis choisis la représentation par flux dans l’Arbre. Clique une
+ligne : elle est sélectionnée et le Code montre son symbole. Le panneau de l’Arbre reste actif.
+Utilise les flèches pour poursuivre la lecture ; <code>Alt+↓</code> fait défiler le Code sans quitter cet
+Arbre. Quand le symbole est endossable, <code>0</code> le marque relu sans note. Les chiffres ajoutent ton
+jugement ; <code>?</code> dit que tu n’as pas compris. Les règles sont celles de <a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a>.</p>
+<p>Maintenant échange les modules Code et Arbre par le choix du panneau central. Le Code est au
+centre et l’Arbre à droite. Clique une ligne de l’Arbre : la même séquence reprend depuis ce
+panneau. Il n’est pas nécessaire de cliquer le Code avant chaque endossement. Le focus est celui
+du geste, alors que la cible de la lecture est le symbole ouvert. Ce sont deux faits distincts.</p>
+<p>Si un autre panneau prend le plein écran, les chiffres ne partent plus sur le Code invisible. Restaurer retrouve
+la lecture ; cliquer un autre nœud la remplace et révèle le panneau. Un fichier ouvert depuis
+Projet peut être absent du diff ou ne correspondre à aucun symbole endossable. Dans ce cas,
+l’ancien symbole ne reste pas la cible des chiffres. Voir la source n’est pas automatiquement
+avoir quelque chose à endosser.</p>
+<h2 id="panneau-actif-et-contrôles-ordinaires">Panneau actif et contrôles ordinaires</h2>
+<p>Le bord actif repère le panneau où tu agis. Les commandes de composition désignent explicitement
+le panneau avec une flèche ; elles ne dépendent pas du dernier panneau activé.
+Les commandes nommées, comme afficher Code ou plier l’Arbre, continuent à viser leur module.
+Elles ne deviennent pas des commandes du dernier panneau cliqué. Tu peux donc composer au clavier
+sans réapprendre les gestes de lecture chaque fois qu’une vue change de place.</p>
+<p>Un champ reste un champ : les lettres y saisissent le texte, les flèches y gardent leur fonction
+habituelle, et Espace n’ouvre pas la boîte des raccourcis. Sur un bouton focalisé, Espace ouvre
+l’aide ; Entrée active le bouton. Le choix de module utilise les contrôles du navigateur ; tu peux y parcourir les
+options puis confirmer. Quitte le contrôle pour reprendre les accords de l’application. L’actualisation
+d’un compteur ou l’arrivée d’une source dans un autre panneau ne lui transfère pas le focus.</p>
+<p>Le même principe vaut pour les fenêtres de recherche et les discussions. Une boîte ouverte reste
+l’interaction en cours. Les commandes des modules ne doivent pas agir derrière elle. Cette règle
+empêche notamment une note de partir alors que tu réponds dans un fil. Les possibilités d’une
+commande sont dites dans la boîte des raccourcis ; relire la raison est plus utile que répéter
+une touche qui vient d’être refusée.</p>
+<h2 id="installer-ranger-agrandir">Installer, ranger, agrandir</h2>
+<p><strong>Installer</strong> donne un panneau à un module. <strong>Ranger</strong> arrive lorsque tu choisis une autre vue à sa
+place : le module n’occupe plus d’emplacement. <strong>Agrandir</strong> donne temporairement l’espace à un
+panneau et retire les autres de l’affichage. Ces états n’ont pas la même conséquence lorsqu’une
+navigation demande à retrouver une vue.</p>
+<p>Un module installé a une place. Un module rangé n’en a plus. Utilise le
+sélecteur ou <code>Espace</code>, une flèche, puis sa lettre. Sur un panneau occupé, ce choix range son contenu ;
+ce n’est pas un échange, puisque le module demandé n’avait pas de place de départ. À l’inverse,
+choisir une vue déjà installée dans le choix d’un panneau échange les deux modules.</p>
+<p>L’agrandissement est temporaire. Agrandir le Code met les autres panneaux hors écran ; restaurer
+rend leur visibilité précédente aux modules installés. Cacher un panneau par <code>Espace</code>, flèche, <code>0</code>
+conserve son contenu et sa barre de commandes ; répéter le même accord le révèle à sa taille précédente.
+Choisir son module dans la barre le révèle aussi. Le rendu côte à côte change uniquement la présentation
+du Code ; le plein écran reste un geste du panneau. L’organisation et les tailles
+ordinaires sont mémorisés ; l’agrandissement sert l’interaction du moment. Il ne devient pas une
+nouvelle disposition obligatoire à la prochaine ouverture.</p>
+<h2 id="échap-suit-ce-que-tu-es-en-train-de-faire">Échap suit ce que tu es en train de faire</h2>
+<p>La pile de gestes garde le sens de la lecture. Une boîte de raccourcis se ferme avant le Code.
+Un choix ouvert dans un fil
+se referme sans poster. Une sélection qui allume les occurrences s’éteint avant la navigation.
+Les loupes, l’isolement d’un flux et les agrandissements se défont avant de quitter le contenu.</p>
+<p>Lorsque rien de prioritaire n’est ouvert, Échap quitte la lecture issue de la navigation. Il ne
+dit pas « fermer le panneau actif ». Sinon, cliquer Ticket pour relire la spec changerait le sens
+d’Échap, et déplacer Code changerait encore ce sens. Le plein écran se commande explicitement
+par deux mêmes flèches ou le bouton Agrandir. Le comportement du retour historique est
+décrit dans <a href="/atlas-site/manuel/le-code">Le Code</a>, celui des accords dans <a href="/atlas-site/manuel/le-clavier">Le clavier</a>.</p>
+<p>Pour comprendre un Échap qui ne quitte pas immédiatement le Code, regarde ce qui vient de changer :
+une surbrillance est-elle tombée, une loupe a-t-elle été retirée, un rendu côte à côte est-il revenu
+à l’unifié ? Il n’est pas nécessaire de recomposer l’écran après chaque dépilement. Les modules
+continuent de représenter les mêmes identités, à leurs places actuelles.</p>
+<h2 id="les-pouvoirs-des-modules">Les pouvoirs des modules</h2>
+<p>Les modules coopèrent par des capacités déclarées. Un geste ponctuel demande une action à son
+destinataire : Arbre ouvre la sélection dans Détail ; Statistiques, dans Ticket, filtre les nœuds
+d’Arbre ; Parcours y isole une entrée. Ces gestes retrouvent le module installé, quelle que soit sa
+place. Un destinataire rangé n’est pas installé automatiquement.</p>
+<p>Un pouvoir de lecture fournit au contraire des faits tant que son module est installé. Recette
+est le fournisseur de la <strong>lecture d’exécution</strong>. Arbre et Fichiers montrent les nœuds traversés ;
+Détail montre les passages de la sélection. Le module Recette indique les vues installées qu’il
+influence. Un seul fournisseur est accepté pour chaque pouvoir : il n’y a pas de priorité cachée
+entre deux modules concurrents.</p>
+<p>Ticket et Recette peuvent cohabiter. Ticket conserve Statistiques, Journal, Ticket et Parcours.
+Ses filtres continuent à agir sur Arbre, y compris lorsqu’il représente une recette ; ils ne changent
+ni la recette choisie ni ses verdicts. Recette fournit les faits d’exécution, Ticket demande des
+navigations ou des filtres : chacun a un rôle lisible.</p>
+<h2 id="git-et-recette">Git et Recette</h2>
+<p>Git contient toujours Local, Branches &amp; repos et Revue. Son déplacement n’est pas un changement
+de mode. Le repo sélectionné et la lecture en cours restent les siens. Les faits de Local sont
+aussi ceux dont Fichiers et Relecture se servent ; composer l’espace n’ajoute pas un second
+inventaire du disque. Une activité liée à l’affichage se suspend lorsque son panneau est hors écran
+ou lorsque l’espace passe derrière une page.</p>
+<p>Installer Recette active sa coopération dans la disposition que tu as choisie. Aucun autre module
+ne change de panneau. Recette contient les critères, le protocole, la Non-régression et les Captures,
+sous des choix internes. Le choix de recette et sa fraîcheur vivent dans ce module.
+Détail montre le Passage du nœud sélectionné — événements, échanges ou médias — à la place du Code.
+Feature, recette choisie et sélection sont communes ; les vues ne se commandent pas par leurs
+emplacements et n’importent pas le fonctionnement interne des autres modules.</p>
+<p>Ces modules restent déplaçables pendant la recette. <code>Espace r a</code> ouvre Protocole. Remplacer Recette
+par un autre module rend la lecture normale de Code, Fichiers et Arbre, sur la même sélection.
+Cacher ou agrandir un panneau ne retire pas son module : le pouvoir de Recette reste actif. Les
+boutons code / recette du header ont disparu ; la présence du fournisseur suffit à déterminer la lecture.
+Les touches d’endossement du code ne deviennent pas des validations de recette.
+Les règles de la recette et de ses preuves sont décrites dans <a href="/atlas-site/manuel/la-recette">La recette</a>.</p>
+<h2 id="retrouver-un-espace-utilisable">Retrouver un espace utilisable</h2>
+<p>Une disposition appartient à cette machine et à ce projet. Recharger la page retrouve les modules,
+tailles et visibilités enregistrées. Changer de feature conserve l’organisation du projet, mais les
+contenus deviennent ceux de la feature courante. Une source arrivée en retard pour un contenu
+quitté ne doit pas être présentée comme la lecture suivante. Le panneau est un hôte ; il n’est
+pas un moyen de garder deux features concurrentes sous un même header.</p>
+<p>Si une vue locale a été retirée, son identifiant peut rester dans les préférences. Atlas le nomme
+et laisse choisir une autre vue. Une préférence ancienne ou illisible revient à une disposition
+utilisable. Le bouton ↺ est aussi un point de reprise quand tu as perdu le fil de tes échanges.
+Les fichiers du projet, le Ticket et les endossements ne sont pas réécrits pour corriger la disposition.</p>
+<p>Pour comparer deux organisations, garde une question et une feature identiques. Compte les gestes
+pour trouver un nœud, lire sa source, endosser, suivre un critère et retrouver un fil. Sépare les
+gestes uniques de composition de ceux qui se répètent à chaque nœud. Le résultat utile est ce que
+tu observes sur ce parcours précis : une autre disposition n’est pas présumée meilleure parce
+qu’elle offre davantage de choix.</p>
+<h2 id="ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</h2>
+<p>Ce premier espace propose quatre emplacements et une instance de chaque module. Il ne découpe
+pas arbitrairement l’écran, ne multiplie pas une même vue et ne transforme pas Code en éditeur
+ou en terminal. Les pages Tableau, Config et Harnais restent globales. Les règles de flux, de
+ricochet, d’endossement et de recette restent celles décrites dans leurs pages.</p>
+<p>Les extensions sont locales à la construction de l’interface. Cette ouverture ne constitue pas
+un catalogue ni une publication de vues. La disposition personnelle n’est pas une donnée partagée
+du workspace et ne devient pas une consigne pour les autres relecteurs. Elle sert à organiser
+ton espace ; elle ne dit pas à leur place ce qu’ils doivent avoir lu ou compris.</p>
+<nav class="suite" aria-label="Page suivante et précédente"><a href="/atlas-site/manuel/la-page-harnais"><small>← précédent</small>La page Harnais</a></nav></article><nav class="cote toc" aria-label="Sur cette page"><h2>Sur cette page</h2><ul><li><a href="#commencer-à-lire">Commencer à lire</a></li><li><a href="#choisir-déplacer-échanger">Choisir, déplacer, échanger</a></li><li><a href="#les-touches-ciblent-la-vue">Les touches ciblent la vue</a></li><li><a href="#fichiers--projet-et-feature">Fichiers : Projet et Feature</a></li><li><a href="#ajouter-une-vue-locale">Ajouter une vue locale</a></li><li><a href="#composer-pour-une-question-précise">Composer pour une question précise</a></li><li><a href="#parcourir-lire-endosser--une-séquence">Parcourir, lire, endosser : une séquence</a></li><li><a href="#panneau-actif-et-contrôles-ordinaires">Panneau actif et contrôles ordinaires</a></li><li><a href="#installer-ranger-agrandir">Installer, ranger, agrandir</a></li><li><a href="#échap-suit-ce-que-tu-es-en-train-de-faire">Échap suit ce que tu es en train de faire</a></li><li><a href="#les-pouvoirs-des-modules">Les pouvoirs des modules</a></li><li><a href="#git-et-recette">Git et Recette</a></li><li><a href="#retrouver-un-espace-utilisable">Retrouver un espace utilisable</a></li><li><a href="#ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</a></li></ul></nav></main><footer class="pied"><div class="dedans"><span>Atlas — suivi et validation de code.</span><a href="/atlas-site/manuel/prise-en-main">Manuel</a></div></footer><script>
+    document.getElementById('theme-bt')?.addEventListener('click', () => {
+      const r = document.documentElement;
+      // clair → sombre → système, et le tour recommence. « Système » RETIRE la clé : c'est ce qui
+      // rend le choix distinct d'une absence de choix.
+      const suite = { clair: 'sombre', sombre: '', '': 'clair' };
+      const v = suite[r.dataset.theme || ''];
+      if (v) { r.dataset.theme = v; try { localStorage.setItem('atlas-site-theme', v); } catch {} }
+      else { delete r.dataset.theme; try { localStorage.removeItem('atlas-site-theme'); } catch {} }
+    });
+  </script></body></html>
