@@ -1,0 +1,395 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Amorcer le Harnais · Atlas</title><meta name="description" content="Retrouve les savoirs de ton projet dans son histoire, conserve leurs preuves et reprends la lecture par lots, sans activer de consigne à ta place."><link rel="canonical" href="https://gregoirelacoste.github.io/atlas-site/manuel/amorcer-le-harnais"><meta property="og:title" content="Amorcer le Harnais · Atlas"><meta property="og:description" content="Retrouve les savoirs de ton projet dans son histoire, conserve leurs preuves et reprends la lecture par lots, sans activer de consigne à ta place."><meta property="og:type" content="website"><meta property="og:url" content="https://gregoirelacoste.github.io/atlas-site/manuel/amorcer-le-harnais"><meta name="twitter:card" content="summary"><link rel="icon" href="/atlas-site/favicon.svg" type="image/svg+xml"><script>
+    (() => { try { const t = localStorage.getItem('atlas-site-theme');
+      if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t; } catch {} })();
+  </script><link rel="stylesheet" href="/atlas-site/_astro/Base.D32RNicN.css"></head><body><header class="tete"><a class="marque" href="/atlas-site">🗺️ Atlas</a><nav><a href="/atlas-site/installer">Installer</a><a href="/atlas-site/manuel/prise-en-main" aria-current="page">Manuel</a><a href="/atlas-site/articles">Écrits</a><button class="theme-bt" id="theme-bt" type="button" aria-label="Changer de thème">◐</button></nav></header><main class="doc"><nav class="cote" aria-label="Le manuel"><h2>Le manuel</h2><ol><li><a href="/atlas-site/manuel/prise-en-main">Prise en main</a></li><li><a href="/atlas-site/manuel/l-arbre">L&#39;Arbre</a></li><li><a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a></li><li><a href="/atlas-site/manuel/le-code">Le Code</a></li><li><a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a></li><li><a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et inventaire</a></li><li><a href="/atlas-site/manuel/le-panneau-git">Le panneau Git</a></li><li><a href="/atlas-site/manuel/le-tableau">Le Tableau</a></li><li><a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a></li><li><a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a></li><li><a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a></li><li><a href="/atlas-site/manuel/brancher-l-ia">Brancher l&#39;IA</a></li><li><a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l&#39;IA lit et écrit</a></li><li><a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a></li><li><a href="/atlas-site/manuel/la-ligne-de-commande">La ligne de commande</a></li><li><a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a></li><li><a href="/atlas-site/manuel/le-clavier">Le clavier</a></li><li><a href="/atlas-site/manuel/les-precedents">Les précédents</a></li><li><a href="/atlas-site/manuel/les-decisions-metier">Les décisions métier</a></li><li><a href="/atlas-site/manuel/le-glossaire">Le glossaire</a></li><li><a href="/atlas-site/manuel/la-recette">La recette</a></li><li><a href="/atlas-site/manuel/deposer-une-recette">Déposer une recette</a></li><li><a href="/atlas-site/manuel/la-vue-d-ensemble">La vue d&#39;ensemble</a></li><li><a href="/atlas-site/manuel/le-harnais">Le Harnais</a></li><li><a href="/atlas-site/manuel/les-criteres-les-cas-et-leur-preuve">Les critères, les cas et leur preuve</a></li><li><a href="/atlas-site/manuel/la-page-harnais">La page Harnais</a></li><li><a href="/atlas-site/manuel/les-panneaux-et-les-modules">Les panneaux et les modules</a></li><li><a href="/atlas-site/manuel/le-diagramme-d-un-flux">Le diagramme d&#39;un flux</a></li><li><a href="/atlas-site/manuel/chercher-dans-le-harnais">Chercher dans le Harnais</a></li><li><a href="/atlas-site/manuel/amorcer-le-harnais" aria-current="page">Amorcer le Harnais</a></li></ol></nav><article class="corps"><h1>Amorcer le Harnais</h1><p class="chapo">Retrouve les savoirs de ton projet dans son histoire, conserve leurs preuves et reprends la lecture par lots, sans activer de consigne à ta place.</p><blockquote>
+<p>Retrouve les savoirs de ton projet dans son histoire, conserve leurs preuves et reprends la lecture par lots, sans activer de consigne à ta place.</p>
+</blockquote>
+<p>L’<strong><a href="/atlas-site/manuel/le-glossaire#amorcage">amorçage</a></strong> constitue un premier
+<a href="/atlas-site/manuel/le-glossaire#harnais">Harnais</a>, le savoir que ton projet rend consultable à l’IA, depuis
+les commits, la documentation et les commentaires de code. Le skill <code>atlas:amorcer-harnais</code>
+interprète ces sources avec <strong>le modèle de ta session</strong>. Atlas lit les versions Git, vérifie les
+citations et conserve les résultats. Il n’appelle aucun modèle depuis son serveur.</p>
+<p>Tu peux commencer sans ticket, sans conversation de review et sans consigne préexistante. Une
+<strong><a href="/atlas-site/manuel/le-glossaire#piste-historique">piste historique</a></strong> est un élément extrait de ces sources,
+avec sa formulation, son explication et ses preuves. Elle devient consultable après son dépôt,
+sans attendre une validation individuelle de tout le corpus. Elle n’est pas une
+<a href="/atlas-site/manuel/le-glossaire#consigne">consigne</a>, une instruction active du projet, par le seul fait de
+son import.</p>
+<h2 id="lancer-le-skill-depuis-ton-projet">Lancer le skill depuis ton projet</h2>
+<p>Ouvre ta session IA sous le dossier du projet, avec le plugin Atlas à jour
+(<a href="/atlas-site/manuel/brancher-l-ia">Brancher l’IA</a>). Dans Claude Code, lance :</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>/atlas:amorcer-harnais</span></span></code></pre>
+<p>Dans un autre client, demande <code>atlas:amorcer-harnais</code> par son nom. Le skill se lance sur demande
+explicite, de toi ou d’un agent que tu as lancé. Il n’est pas un
+<a href="/atlas-site/manuel/le-glossaire#moment">moment</a>, une étape signée de la vie d’une feature : aucun passage
+ne se coche dans Relecture.</p>
+<p>Tu peux joindre directement les précisions : dépôt <code>projet-api</code>, référence <code>main</code>, chemins à lire,
+chemins à exclure et budget. Le skill demande celles qui manquent. Il commence par lire l’état
+d’Atlas : identité du projet, dépôts membres, bornes et passes déjà conservées. Une instance qui
+ne se lit pas ou répond pour un autre projet l’arrête. Il ne complète pas depuis un autre projet.</p>
+<p>L’accueil d’Atlas porte une invitation à lancer ce skill. <strong>Cliquer cette invitation ouvre le
+Harnais ; cela ne lance pas l’IA.</strong> Clique ensuite <strong>Amorçage historique</strong>, en tête de la
+<a href="/atlas-site/manuel/la-page-harnais">page Harnais</a>. Cet espace explique le skill et montre ses résultats.
+Le lancement et la conduite de la lecture restent dans ta session de code.</p>
+<h2 id="fixer-les-références-et-les-chemins">Fixer les références et les chemins</h2>
+<p>Une <strong><a href="/atlas-site/manuel/le-glossaire#passe-d-amorcage">passe d’amorçage</a></strong> est une lecture dont les dépôts,
+références, chemins et bornes sont conservés ensemble. <strong><a href="/atlas-site/manuel/le-glossaire#t0">T0</a></strong> est le
+commit fixé pour chaque dépôt. Une branche ou un tag est résolu une fois en commit : si la
+branche avance ensuite, la passe garde ce commit. Plusieurs dépôts peuvent avoir des T0 différents.</p>
+<table>
+<thead>
+<tr>
+<th>tu précises</th>
+<th>comment le choisir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>les dépôts</td>
+<td>un à trente noms de repos membres du projet ; chacun une seule fois</td>
+</tr>
+<tr>
+<td>la référence de chaque dépôt</td>
+<td>une branche, un tag ou un commit disponible localement dans Git</td>
+</tr>
+<tr>
+<td>les chemins inclus</td>
+<td>des préfixes relatifs au dépôt, ou la chaîne vide pour tout inclure</td>
+</tr>
+<tr>
+<td>les chemins exclus</td>
+<td>des préfixes relatifs à retirer des chemins inclus ; une liste vide est valable</td>
+</tr>
+<tr>
+<td>les bornes</td>
+<td>celles annoncées par Atlas, ou des valeurs explicites pour cette passe</td>
+</tr>
+</tbody>
+</table>
+<p>Les chemins sont <strong>des préfixes, pas des globs</strong>. <code>src</code> vise ce chemin et ses descendants, pas
+<code>src2</code> ; <code>src/**/*.ts</code> ne demande pas tous les fichiers TypeScript. Dans les arguments de l’outil,
+<code>inclus: [""]</code> signifie tout le dépôt. Les chemins absolus, la remontée <code>..</code>, <code>.git</code> et
+<code>.atlas-workspace</code> ne sont pas des chemins de corpus acceptés.</p>
+<p>Les inclusions et exclusions bornent les fichiers de documentation, les commentaires et les
+chemins du diff. Les messages de commit restent complets : les exclure par chemin n’est pas un
+filtre proposé. Le corpus suit <strong>l’ascendance Git de T0</strong>, pas les seules dates. Un commit ancien
+sur une branche jamais réunie à T0 n’y entre pas. Un commit futur n’y entre pas non plus.</p>
+<p>La première passe énumère les messages, les diffs par parent et les versions de documents ou de
+commentaires touchées par les commits retenus. Elle ajoute aussi les documents et commentaires
+présents à T0, même inchangés dans ces commits. Pour un merge, chaque parent a son diff. Le skill
+doit lire message et diff avant de raconter ce qu’un correctif a fait.</p>
+<p>Atlas ne sort aucune branche et ne lance aucun script du projet. Il ne récupère pas de nouvel
+historique distant pendant cette lecture. Si ton clone est incomplet, la passe le dit : les
+sources accessibles peuvent être lues, mais les ancêtres manquants restent inconnus.</p>
+<h2 id="borner-la-lecture-et-son-coût">Borner la lecture et son coût</h2>
+<p>Avant l’extraction, le skill annonce les bornes. Après fixation de T0, il rend les références
+résolues, les sources énumérées, les exclusions et les limites. Lis ce premier bilan : une borne
+atteinte n’est pas une absence de savoir dans le projet.</p>
+<table>
+<thead>
+<tr>
+<th>borne de l’outil</th>
+<th>défaut</th>
+<th>ce qu’elle borne</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>commits</code></td>
+<td>1 000</td>
+<td>les commits retenus par dépôt ; au-delà, les plus anciens ne sont pas parcourus</td>
+</tr>
+<tr>
+<td><code>fichiers</code></td>
+<td>3 000</td>
+<td>les versions de fichiers énumérées dans l’ensemble de la passe</td>
+</tr>
+<tr>
+<td><code>octetsSource</code></td>
+<td>262 144</td>
+<td>la lecture entière d’une source</td>
+</tr>
+<tr>
+<td><code>octetsLot</code></td>
+<td>98 304</td>
+<td>le texte total d’un lot</td>
+</tr>
+<tr>
+<td><code>sourcesLot</code></td>
+<td>12</td>
+<td>les sources tentées dans un lot</td>
+</tr>
+</tbody>
+</table>
+<p>Chaque borne accepte un entier positif, jusqu’à cinq fois son défaut. Elles se règlent à la
+fixation d’une passe, pas au milieu d’un lot. Une source entière qui dépasse le budget d’un lot
+est signalée et exclue ; elle n’est pas découpée pour faire croire à une lecture complète. Une
+source illisible ou dépassant la borne de lecture garde aussi sa raison.</p>
+<p>Un <strong><a href="/atlas-site/manuel/le-glossaire#lot-historique">lot historique</a></strong> est la portion lue puis déposée avant
+de passer à la suivante. Il rend les textes, leurs lieux et leurs empreintes, les limites,
+le nombre de sources restantes, les octets lus et le temps de lecture. Les sources tentées et
+les sources effectivement lues ne sont donc pas toujours aussi nombreuses. Un lot peut ne
+produire aucune piste utile : <strong>déposer zéro proposition est valable</strong> et fait avancer la passe.</p>
+<p>Les limites de Git et les exclusions de fichiers ne mesurent pas les tokens facturés par ton
+modèle. Le nombre d’appels, le volume et le temps de lecture décrivent le coût de construction ;
+les lectures et l’interprétation de ta session ajoutent leur propre coût. Garde ces coûts
+distincts de la taille des réponses obtenues ensuite par la recherche.</p>
+<h2 id="comprendre-ce-qui-est-extrait">Comprendre ce qui est extrait</h2>
+<p>Le skill classe selon la matière disponible dans les six
+<a href="/atlas-site/manuel/le-glossaire#famille-du-harnais">familles du Harnais</a>. Une famille sans source reste vide.</p>
+<table>
+<thead>
+<tr>
+<th>famille</th>
+<th>matière historique</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Règle</td>
+<td>contrainte écrite</td>
+</tr>
+<tr>
+<td>Engagement</td>
+<td>promesse explicite</td>
+</tr>
+<tr>
+<td>Garde</td>
+<td>vérification décrite</td>
+</tr>
+<tr>
+<td>Méthode</td>
+<td>procédure</td>
+</tr>
+<tr>
+<td>Mémoire</td>
+<td>épisode, correctif ou retour arrière</td>
+</tr>
+<tr>
+<td>Contexte</td>
+<td>explication technique ou métier</td>
+</tr>
+</tbody>
+</table>
+<p>La famille indique ce que la piste raconte, <strong>pas son autorité actuelle</strong>. Une Règle importée
+reste une piste. Un Engagement ne fabrique aucun ancien critère de ticket ; une Méthode ne
+déclare aucun skill du projet.</p>
+<p>Chaque proposition distingue trois formes de preuve :</p>
+<table>
+<thead>
+<tr>
+<th>valeur conservée</th>
+<th>ce qu’elle affirme</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>explicite</code></td>
+<td>la source écrit la contrainte, la promesse ou la raison</td>
+</tr>
+<tr>
+<td><code>observation</code></td>
+<td>le changement est visible dans le diff</td>
+</tr>
+<tr>
+<td><code>inference</code></td>
+<td>l’IA interprète ce qu’elle a lu</td>
+</tr>
+</tbody>
+</table>
+<p>Un test ajouté ne prouve ni qu’il a tourné ni qu’il échouait avant. Un diff peut montrer le retrait
+d’une vérification sans en expliquer la raison. L’explication absente reste inconnue. La
+formulation et l’explication de l’IA restent séparées des citations : une reformulation ne se lit
+pas entre guillemets comme si la source l’avait écrite.</p>
+<p>Atlas accepte les citations seulement si elles reprennent des <strong>lignes entières exactes</strong> des
+sources lues. Une citation inventée ou tronquée est refusée. Une proposition peut citer les lots
+antérieurs de la passe et des passes précédentes reliées ; elle cite toujours au moins une source
+du lot qu’elle dépose. <strong>Une preuve héritée reste soumise à la passe courante</strong> : dépôt encore
+inclus, commit — et parent pour un diff — dans l’ascendance de son T0, chemin dans ses inclusions
+et hors de ses exclusions. Si l’ascendance ne peut pas être prouvée, le dépôt de la proposition
+est refusé. Si les chemins inclus ou exclus changent, un ancien diff doit être <strong>relu dans la
+nouvelle passe</strong> avant d’être cité : son ancien filtrage ne vaut pas pour ce nouveau périmètre.</p>
+<p>Le modèle déclaré dans la provenance est celui indiqué par la session, pas une attestation
+d’Atlas sur le fournisseur réellement utilisé.</p>
+<p>Les épisodes peuvent relier plusieurs commits, un retour arrière ou un déplacement. Chaque lien
+porte sa justification, ses preuves et son état, établi ou ambigu. Un même chemin ou un texte
+presque identique ne prouve pas qu’il s’agit du même épisode. Une annonce, une contradiction et
+un remplacement établi restent distingués. Leurs liens n’activent ni ne retirent une consigne.</p>
+<p>Un <strong>lieu historique</strong> accepte seulement un fichier ou un dossier prouvé par une version de
+fichier effectivement citée. Pour <code>fichier projet-api/docs/migrations.md</code>, cite une version de
+ce fichier ; pour <code>dossier projet-api/docs</code>, cite une version d’un fichier qu’il contient.
+Un document qui mentionne <code>src/migrations/retour.ts</code> ne prouve pas l’existence de ce fichier.
+Les lieux de type <code>symbole</code> ou <code>contrat</code> sont refusés, même si leur nom apparaît dans une citation.
+Conserve alors le fichier réellement prouvé, ou <code>endroits: []</code>, en annonçant la limite dans
+<code>limites</code>.</p>
+<p>L’applicabilité reste séparée du lieu : choisis <code>historique</code> ou <code>indeterminee</code>.
+<strong><code>actuelle-etablie</code> est refusé à l’import</strong> : le corpus historique ne prouve pas l’applicabilité
+actuelle. Un nom de fichier qui existe encore ne prouve pas que la règle s’applique aujourd’hui.
+Une suppression du lieu n’efface pas le souvenir conservé ; l’activation humaine choisit son lieu
+actuel.</p>
+<h2 id="reprendre-une-passe-interrompue">Reprendre une passe interrompue</h2>
+<p>Dans <strong>Harnais → Amorçage historique</strong>, clique <strong>Actualiser les passes</strong>, puis déplie une ligne
+de <strong>Passes et reprises</strong>. Elle donne l’identifiant de passe, les sources parcourues, les lots
+déposés, les bornes, les mesures, les exclusions, les restants et les inconnus. Donne cet
+identifiant au skill en lui demandant explicitement de reprendre cette passe.</p>
+<p>La reprise repart <strong>après le dernier dépôt durable</strong>, pas après le dernier texte que l’IA avait
+commencé à lire. Un lot lu mais non déposé est rendu identique. Si le dépôt avait réussi avant
+l’interruption, rejouer exactement le même contenu ne duplique pas les éléments. Le dépôt d’un
+contenu différent sous le même lot est refusé : il faut une nouvelle révision, pas réécrire
+l’ancien lot.</p>
+<p>Une passe relancée avec les mêmes paramètres <strong>et les mêmes commits résolus</strong> retrouve son suivi.
+Pour réinterpréter un corpus, demande une nouvelle passe reliée à la précédente, même si T0 ne
+bouge pas. Une proposition identique — clé de continuité, portée, lieux, citations Git et
+interprétation — conserve son identité et sa version : elle
+ne redevient pas neuve parce qu’elle traverse une autre passe.</p>
+<p>Une interprétation modifiée produit une version distincte. Une portée ou des lieux différents
+peuvent distinguer l’identité elle-même. Les gestes humains d’une version ne passent pas
+silencieusement à une autre. Ainsi, rejouer une proposition mise de côté ne la rétablit pas ;
+une nouvelle interprétation reste visible comme nouvelle version, avec ses propres gestes.</p>
+<h2 id="actualiser-à-t1">Actualiser à T1</h2>
+<p><strong><a href="/atlas-site/manuel/le-glossaire#t1">T1</a></strong> est la nouvelle référence choisie lors d’une actualisation.
+Relance le skill en donnant l’identifiant de la passe précédente et les nouvelles références.
+Il fixe une nouvelle passe, liée à l’ancienne, et Atlas vérifie l’ascendance dépôt par dépôt.</p>
+<table>
+<thead>
+<tr>
+<th>situation</th>
+<th>lecture effectuée</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T0 est ancêtre de T1 et les chemins sont identiques</td>
+<td>nouveaux commits et versions de fichiers affectées</td>
+</tr>
+<tr>
+<td>les chemins changent</td>
+<td>nouvelle lecture complète, dans les bornes choisies</td>
+</tr>
+<tr>
+<td>la référence reste identique</td>
+<td>réinterprétation du corpus dans une révision distincte</td>
+</tr>
+<tr>
+<td>l’ascendance est perdue ou réécrite</td>
+<td>avertissement et révision complète bornée</td>
+</tr>
+</tbody>
+</table>
+<p>Les preuves de T0 restent conservées. Le skill peut les rouvrir pour relier un épisode aux
+nouveaux commits, mais leur réutilisation dans une proposition exige leur admissibilité dans
+la nouvelle passe. Demande un bilan des ajouts, nouvelles interprétations, contradictions et
+limites. Une histoire réécrite ou inaccessible ne veut jamais dire « aucun changement ».
+Les sources anciennes ne sont pas complétées silencieusement par la documentation actuelle.</p>
+<h2 id="consulter-les-preuves-et-agir">Consulter les preuves et agir</h2>
+<p>Dans <strong>Pistes importées · toutes les versions</strong>, choisis une version. La liste avance par groupes
+de quarante, avec <strong>Versions précédentes</strong> et <strong>Versions suivantes</strong>. La fiche donne formulation,
+explication, famille, preuve, portée, applicabilité, lieux historiques, date d’import, extraction,
+liens, limites et gestes humains. La date des sources se lit séparément, sur leurs boutons.</p>
+<p>Clique <strong>Ouvrir la preuve · lignes …</strong>, ou un bouton portant dépôt, commit et source. <strong>Preuve à
+sa version exacte</strong> montre le texte conservé et son intégrité ; Atlas essaie aussi de le relire
+au commit annoncé. Si ce commit ou le dépôt n’est plus accessible, la fiche le dit et garde
+l’extrait importé. Elle ne le remplace pas par celui du checkout actuel.</p>
+<p>La <a href="/atlas-site/manuel/chercher-dans-le-harnais">recherche commune</a> retrouve les pistes avec les mots du
+problème, sans fichier ni feature. Un résultat historique porte <strong>Ouvrir les preuves historiques
+et les gestes humains</strong> : ce bouton rejoint la version concernée. La recherche ordinaire propose
+la dernière version de chaque identité ; l’espace d’amorçage garde toutes les versions. Une
+question ne relance ni parcours Git historique ni interprétation IA.</p>
+<table>
+<thead>
+<tr>
+<th>ton geste</th>
+<th>ce qu’il change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>écrire une raison puis <strong>Mettre cette version de côté</strong></td>
+<td>retire cette version des pistes proposées par la recherche ; conserve texte, preuves et raison</td>
+</tr>
+<tr>
+<td>juger un rapprochement dans la recherche</td>
+<td>juge ce résultat pour un problème, sans mettre sa source de côté</td>
+</tr>
+<tr>
+<td><strong>Activer comme consigne · geste humain</strong></td>
+<td>ouvre le choix explicite pour une Règle, une Garde ou un Contexte</td>
+</tr>
+</tbody>
+</table>
+<p>La mise de côté et l’activation exigent ton identité Git ; la raison est conservée sur cette version.</p>
+<p>Pour activer, relis le contenu montré, écris ta raison et le lieu actuel :
+<code>fichier projet-api/src/migrations/retour.ts</code>, <code>dossier projet-api/src/migrations</code>, ou <strong><code>tronc commun</code></strong>.
+Le premier désigne un fichier exact ; le deuxième, un dossier. Coche <strong>J’active explicitement ce
+contenu au lieu saisi.</strong>, puis clique <strong>Activer cette consigne</strong>.</p>
+<p>Atlas crée une consigne de code adoptée par l’humain, avec l’explication, ta raison et la
+provenance historique. Règle devient une instruction à faire, Garde une vérification, Contexte
+une explication. Le lieu saisi exprime ton choix actuel ; les anciens lieux ne le choisissent
+pas pour toi. La consigne suit ensuite la <a href="/atlas-site/manuel/le-harnais">vie ordinaire des consignes</a>.</p>
+<p>L’activation applique aussi leur format : notamment une phrase de 120 caractères au plus. Une
+piste plus longue ne devient pas automatiquement une consigne raccourcie. Engagement, Méthode
+et Mémoire restent consultables et peuvent être mis de côté. Une version déjà mise de côté ne
+peut pas être activée ; aucun bouton ne défait cette mise de côté. Mettre la piste de côté
+après son activation n’invalide pas la consigne créée : celle-ci garde ses propres gestes.</p>
+<h3 id="si-lactivation-reste-à-reprendre">Si l’activation reste à reprendre</h3>
+<p>Avant de créer la consigne, Atlas enregistre durablement ton intention : auteur, lieu, raison
+et date d’origine. Elle reste visible sous <code>activationEnCours</code> jusqu’à la fin du transfert et
+de son indexation. Un incident après cet enregistrement peut donc laisser <strong>une consigne déjà
+active</strong>, même si la confirmation finale manque.</p>
+<p>La fiche affiche alors <strong>Activation à reprendre</strong>. Le retour du geste précise <strong>consigne déjà
+active</strong> si la création a été confirmée, ou <strong>issue du transfert à vérifier</strong> si elle reste
+inconnue. La réponse HTTP <code>202</code> porte <code>activation.etat: "a-reprendre"</code> et sa raison ; elle ne
+signifie pas que l’activation a été refusée. L’état terminé porte <code>activation.etat: "terminee"</code>.</p>
+<p>Redémarre le serveur Atlas pour reprendre automatiquement le transfert, ou renvoie le même
+geste sur la même version, avec <strong>l’auteur, le lieu et la raison d’origine</strong>. Dans la fiche,
+recopie ces valeurs conservées, coche à nouveau la confirmation et clique <strong>Activer cette
+consigne</strong>. Changer ces valeurs pendant la reprise est refusé. La reprise conserve le geste
+humain et son adoption sans les dupliquer ; elle retire <code>activationEnCours</code> quand le transfert
+et l’indexation sont terminés. Mettre la version de côté est refusé tant que cette activation
+reste en cours.</p>
+<h2 id="lire-le-bilan-sans-inventer-un-gain">Lire le bilan sans inventer un gain</h2>
+<p>Le bilan du skill doit rendre le projet, les commits fixés, le périmètre effectivement lu,
+exclu, restant ou inconnu, les octets, sources et temps de lecture. Il donne les familles
+alimentées, y compris vides, les ajouts, les nouvelles interprétations et les contradictions.
+Les comptes de la page permettent de revenir aux passes ; ils ne notent pas la qualité du savoir.</p>
+<p>La fidélité des pistes, leur utilité pour un humain, les faux amis, les abstentions et les
+besoins entièrement couverts exigent un jugement humain. Le
+<a href="/atlas-site/manuel/chercher-dans-le-harnais#rejeu-amorcage">rejeu comparatif</a> dispose d’un
+protocole technique, mais aucun panel humain réel ne démontre actuellement un gain. Les coûts
+de construction et de consultation se lisent séparément ; produire davantage de pistes ne
+prouve pas que les bonnes contraintes arrivent.</p>
+<h2 id="ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</h2>
+<ul>
+<li><strong>Il n’importe pas Jira, les discussions de merge request, une messagerie ou une décision orale.</strong>
+Une information absente des commits, documents et commentaires reste inconnue.</li>
+<li><strong>L’import n’active aucune consigne</strong>, même dans Règle ; il refuse une applicabilité déclarée actuelle.
+Il n’ajoute aucune instruction au hook ou au tronc commun.</li>
+<li><strong>Il ne réécrit pas les projets analysés</strong>, n’exécute pas leurs scripts et ne fabrique aucun ancien
+ticket, conversation, service à l’IA ou jugement humain.</li>
+<li><strong>Les sources ne commandent pas le skill</strong> : une instruction trouvée dans un document ou un
+commit reste du contenu du corpus, pas une action à exécuter.</li>
+</ul>
+<h2 id="limites-connues">Limites connues</h2>
+<p>La documentation est reconnue par les extensions <code>.md</code>, <code>.mdx</code>, <code>.rst</code>, <code>.txt</code> et <code>.adoc</code>. Les
+commentaires sont lus lexicalement dans les fichiers TypeScript, JavaScript, Java, Kotlin, Swift,
+C, C++, CSS, Go et Rust reconnus par leur extension. Seuls <code>//</code> et <code>/* … */</code> sont lus, avec les
+lignes originales conservées et les chaînes retirées. <strong>Les syntaxes imbriquées et les regex ne
+sont pas garanties</strong> ; les autres syntaxes ou extensions ne sont pas lues comme commentaires.
+Le diff d’un fichier peut néanmoins appartenir au corpus : cela ne prouve pas que ses
+commentaires ont été reconnus séparément.</p>
+<p>Les citations vérifiées et les lieux prouvés ne certifient pas toutes les conclusions du modèle
+ni l’applicabilité actuelle : relis les preuves avant de choisir un lieu actuel. Un historique
+incomplet, un binaire, une lecture refusée ou une source trop grosse conserve sa limite. Une
+passe bornée ne promet jamais d’avoir lu toute l’histoire. Les preuves et les pistes restent
+consultables ; leur utilité générale et un gain de qualité restent non établis.</p>
+<nav class="suite" aria-label="Page suivante et précédente"><a href="/atlas-site/manuel/chercher-dans-le-harnais"><small>← précédent</small>Chercher dans le Harnais</a></nav></article><nav class="cote toc" aria-label="Sur cette page"><h2>Sur cette page</h2><ul><li><a href="#lancer-le-skill-depuis-ton-projet">Lancer le skill depuis ton projet</a></li><li><a href="#fixer-les-références-et-les-chemins">Fixer les références et les chemins</a></li><li><a href="#borner-la-lecture-et-son-coût">Borner la lecture et son coût</a></li><li><a href="#comprendre-ce-qui-est-extrait">Comprendre ce qui est extrait</a></li><li><a href="#reprendre-une-passe-interrompue">Reprendre une passe interrompue</a></li><li><a href="#actualiser-à-t1">Actualiser à T1</a></li><li><a href="#consulter-les-preuves-et-agir">Consulter les preuves et agir</a></li><li><a class="h3" href="#si-lactivation-reste-à-reprendre">Si l’activation reste à reprendre</a></li><li><a href="#lire-le-bilan-sans-inventer-un-gain">Lire le bilan sans inventer un gain</a></li><li><a href="#ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</a></li><li><a href="#limites-connues">Limites connues</a></li></ul></nav></main><footer class="pied"><div class="dedans"><span>Atlas — suivi et validation de code.</span><a href="/atlas-site/manuel/prise-en-main">Manuel</a></div></footer><script>
+    document.getElementById('theme-bt')?.addEventListener('click', () => {
+      const r = document.documentElement;
+      // clair → sombre → système, et le tour recommence. « Système » RETIRE la clé : c'est ce qui
+      // rend le choix distinct d'une absence de choix.
+      const suite = { clair: 'sombre', sombre: '', '': 'clair' };
+      const v = suite[r.dataset.theme || ''];
+      if (v) { r.dataset.theme = v; try { localStorage.setItem('atlas-site-theme', v); } catch {} }
+      else { delete r.dataset.theme; try { localStorage.removeItem('atlas-site-theme'); } catch {} }
+    });
+  </script></body></html>

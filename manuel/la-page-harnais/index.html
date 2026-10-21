@@ -1,0 +1,495 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>La page Harnais · Atlas</title><meta name="description" content="Consulte les six familles, l'amorçage historique, la recherche par problème et ses mesures ; ouvre les preuves et choisis tes gestes humains."><link rel="canonical" href="https://gregoirelacoste.github.io/atlas-site/manuel/la-page-harnais"><meta property="og:title" content="La page Harnais · Atlas"><meta property="og:description" content="Consulte les six familles, l'amorçage historique, la recherche par problème et ses mesures ; ouvre les preuves et choisis tes gestes humains."><meta property="og:type" content="website"><meta property="og:url" content="https://gregoirelacoste.github.io/atlas-site/manuel/la-page-harnais"><meta name="twitter:card" content="summary"><link rel="icon" href="/atlas-site/favicon.svg" type="image/svg+xml"><script>
+    (() => { try { const t = localStorage.getItem('atlas-site-theme');
+      if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t; } catch {} })();
+  </script><link rel="stylesheet" href="/atlas-site/_astro/Base.D32RNicN.css"></head><body><header class="tete"><a class="marque" href="/atlas-site">🗺️ Atlas</a><nav><a href="/atlas-site/installer">Installer</a><a href="/atlas-site/manuel/prise-en-main" aria-current="page">Manuel</a><a href="/atlas-site/articles">Écrits</a><button class="theme-bt" id="theme-bt" type="button" aria-label="Changer de thème">◐</button></nav></header><main class="doc"><nav class="cote" aria-label="Le manuel"><h2>Le manuel</h2><ol><li><a href="/atlas-site/manuel/prise-en-main">Prise en main</a></li><li><a href="/atlas-site/manuel/l-arbre">L&#39;Arbre</a></li><li><a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a></li><li><a href="/atlas-site/manuel/le-code">Le Code</a></li><li><a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a></li><li><a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et inventaire</a></li><li><a href="/atlas-site/manuel/le-panneau-git">Le panneau Git</a></li><li><a href="/atlas-site/manuel/le-tableau">Le Tableau</a></li><li><a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a></li><li><a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a></li><li><a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a></li><li><a href="/atlas-site/manuel/brancher-l-ia">Brancher l&#39;IA</a></li><li><a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l&#39;IA lit et écrit</a></li><li><a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a></li><li><a href="/atlas-site/manuel/la-ligne-de-commande">La ligne de commande</a></li><li><a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a></li><li><a href="/atlas-site/manuel/le-clavier">Le clavier</a></li><li><a href="/atlas-site/manuel/les-precedents">Les précédents</a></li><li><a href="/atlas-site/manuel/les-decisions-metier">Les décisions métier</a></li><li><a href="/atlas-site/manuel/le-glossaire">Le glossaire</a></li><li><a href="/atlas-site/manuel/la-recette">La recette</a></li><li><a href="/atlas-site/manuel/deposer-une-recette">Déposer une recette</a></li><li><a href="/atlas-site/manuel/la-vue-d-ensemble">La vue d&#39;ensemble</a></li><li><a href="/atlas-site/manuel/le-harnais">Le Harnais</a></li><li><a href="/atlas-site/manuel/les-criteres-les-cas-et-leur-preuve">Les critères, les cas et leur preuve</a></li><li><a href="/atlas-site/manuel/la-page-harnais" aria-current="page">La page Harnais</a></li><li><a href="/atlas-site/manuel/les-panneaux-et-les-modules">Les panneaux et les modules</a></li><li><a href="/atlas-site/manuel/le-diagramme-d-un-flux">Le diagramme d&#39;un flux</a></li><li><a href="/atlas-site/manuel/chercher-dans-le-harnais">Chercher dans le Harnais</a></li><li><a href="/atlas-site/manuel/amorcer-le-harnais">Amorcer le Harnais</a></li></ol></nav><article class="corps"><h1>La page Harnais</h1><p class="chapo">Consulte les six familles, l&#39;amorçage historique, la recherche par problème et ses mesures ; ouvre les preuves et choisis tes gestes humains.</p><blockquote>
+<p>Consulte les six familles, l’amorçage historique, la recherche par problème et ses mesures ; ouvre les preuves et choisis tes gestes humains.</p>
+</blockquote>
+<p>Le <strong><a href="/atlas-site/manuel/le-glossaire#harnais">Harnais</a></strong> sert les règles du <a href="/atlas-site/manuel/le-glossaire#projet">projet</a>
+à l’IA là où elle travaille (<a href="/atlas-site/manuel/le-harnais">Le Harnais</a>). Sa <a href="/atlas-site/manuel/le-glossaire#page">page</a>
+rassemble les <a href="/atlas-site/manuel/le-glossaire#consigne">consignes</a>, les <a href="/atlas-site/manuel/le-glossaire#critere">critères</a>,
+les <a href="/atlas-site/manuel/le-glossaire#cas-de-recette">cas de recette</a>, les <a href="/atlas-site/manuel/le-glossaire#decision-metier">décisions métier</a>
+(<a href="/atlas-site/manuel/les-criteres-les-cas-et-leur-preuve">leur preuve</a>), les <a href="/atlas-site/manuel/le-glossaire#precedent">précédents</a>,
+les mots du projet, le socle de recette et les skills du projet. Elle remplace la carte, comme le Tableau et Config.</p>
+<h2 id="louvrir-la-fermer">L’ouvrir, la fermer</h2>
+<table>
+<thead>
+<tr>
+<th>geste</th>
+<th>effet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>le bouton <strong>Harnais</strong> du <a href="/atlas-site/manuel/le-glossaire#header">header</a>, entre Tableau et Config</td>
+<td>ouvre la page ; recliqué, la referme</td>
+</tr>
+<tr>
+<td><code>Espace h h</code></td>
+<td>la même chose, dans les deux sens</td>
+</tr>
+<tr>
+<td>sur l’<a href="/atlas-site/manuel/le-glossaire#accueil">accueil</a>, « Le Harnais — ce que le projet sait et sert à l’IA »</td>
+<td>l’ouvre</td>
+</tr>
+<tr>
+<td><code>Échap</code>, ou « ← Carte · Échap » en haut de la page</td>
+<td>revient à la carte, ou à l’accueil sans feature</td>
+</tr>
+</tbody>
+</table>
+<p><code>Espace</code> est la <a href="/atlas-site/manuel/le-glossaire#touche-maitresse">touche maîtresse</a>, qui ouvre la boîte des
+raccourcis (<a href="/atlas-site/manuel/le-clavier">Le clavier</a>). Le Harnais est au projet, pas à un ticket : la page
+s’ouvre <strong>aussi sans feature</strong>, et tu la retrouves au démarrage.</p>
+<p><strong>La liste se lit à l’ouverture</strong> : une consigne adoptée au terminal ou un critère nouveau n’arrive
+qu’après <strong>↻</strong>, en haut à droite. L’amorçage a son bouton d’actualisation. La tête dit l’état de lecture :</p>
+<table>
+<thead>
+<tr>
+<th>la tête dit</th>
+<th>ce que tu vois</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>« lu il y a 3 min » (« relecture… » pendant un ↻)</td>
+<td>la dernière lecture</td>
+</tr>
+<tr>
+<td>« pas pu lire : » et la raison</td>
+<td>l’erreur seule : ni famille ni compte — jamais un Harnais vide qui se lirait « aucune consigne »</td>
+</tr>
+<tr>
+<td>« pas pu relire : … — c’est la lecture d’avant qui est montrée »</td>
+<td>la lecture précédente, gardée</td>
+</tr>
+</tbody>
+</table>
+<p>Deux colonnes : à gauche un filtre, un champ et les <strong>six familles</strong> ; à droite l’élément ouvert, ce
+que l’IA recevrait au champ, ou — sans rien d’ouvert — l’accueil de la page. Le <strong>?</strong> près du titre
+ouvre la règle du jeu de la page.</p>
+<h2 id="les-six-familles">Les six familles</h2>
+<p>Chaque <a href="/atlas-site/manuel/le-glossaire#famille-du-harnais">famille du Harnais</a> répond à une question de l’IA.
+La liste les range dans l’ordre du hook, la règle d’abord :</p>
+<table>
+<thead>
+<tr>
+<th>famille</th>
+<th>sa question</th>
+<th>ce que l’IA reçoit</th>
+<th>ce qu’elle range</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Règle</strong></td>
+<td>que dois-je faire ici ?</td>
+<td>« à appliquer »</td>
+<td>les consignes (faire, éviter), les règles métier, les décisions sur contrat</td>
+</tr>
+<tr>
+<td><strong>Engagement</strong></td>
+<td>qu’a-t-on promis ici ?</td>
+<td>« établi : garde-le, ou dis que ton ticket le change »</td>
+<td>les critères des tickets, les cas de recette</td>
+</tr>
+<tr>
+<td><strong>Garde</strong></td>
+<td>qu’est-ce qui casse si je me trompe, et qu’est-ce qui me le dira ?</td>
+<td>« à vérifier après ton changement »</td>
+<td>les vérifications déclarées, les scénarios du socle ; les tests d’un nœud et ce qui en dépend se servent au prologue des skills, pas au hook</td>
+</tr>
+<tr>
+<td><strong>Méthode</strong></td>
+<td>comment fait-on ça ici ?</td>
+<td>rien au hook : au lancement du moment</td>
+<td>un skill du projet par moment, déclaré dans Config › Projet</td>
+</tr>
+<tr>
+<td><strong>Mémoire</strong></td>
+<td>que s’est-il passé ici ?</td>
+<td>« une piste, à vérifier »</td>
+<td>les précédents, vécus ou importés d’un ticket</td>
+</tr>
+<tr>
+<td><strong>Contexte</strong></td>
+<td>comment parle-t-on et pense-t-on ici ?</td>
+<td>« à savoir »</td>
+<td>les explications (techniques, métier), les mots du <a href="/atlas-site/manuel/le-glossaire#vocabulaire-du-projet">vocabulaire du projet</a></td>
+</tr>
+</tbody>
+</table>
+<p>Chaque famille garde <strong>son icône</strong> au pied du Code et dans la règle du jeu. Sa tête donne question,
+<strong>comptes par état</strong> — <code>5 en vigueur · 0 mis en doute · 1 retiré</code> — et attente humaine, zéros compris.
+Clic ou <code>Entrée</code> plie ou déplie. À l’arrivée, elle s’ouvre jusqu’à 150 lignes ou si un regard l’attend.
+Au-delà, « 40 de plus — tout montrer » ouvre toute la liste.</p>
+<p>Une famille vide dit pourquoi. Une source illisible reste <strong>dans sa famille</strong>, sans vider les autres ;
+sans famille connue, elle reste en tête sous « Sources qui ne disent pas leur famille ».</p>
+<h3 id="les-trois-états">Les trois états</h3>
+<p>Un élément est dans l’un de trois états, <strong>déduit</strong> de ce que ses sources portent, jamais écrit, et
+toujours dit par sa <strong>cause datée</strong> :</p>
+<table>
+<thead>
+<tr>
+<th>état</th>
+<th>ce que ça veut dire</th>
+<th>une cause</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>en vigueur</strong></td>
+<td>l’IA le reçoit tel qu’il est écrit</td>
+<td>« vérifié par la recette du 08-10 », « écrite par l’IA de la session d’alice (resolve) le 09-10 »</td>
+</tr>
+<tr>
+<td><strong>mis en doute</strong></td>
+<td>encore servi, avec sa cause</td>
+<td>code de l’ancre changé, recette contraire, écarts <code>perime</code> ou <code>contredit-code</code> dans deux sessions ; <code>hors-sujet</code> et <code>deja-su</code> restent locaux</td>
+</tr>
+<tr>
+<td><strong>retiré</strong></td>
+<td>plus servi, toujours lisible</td>
+<td>« invalidée par bob le 09-10 : <raison> », « remplacé par PROJ-413#2 », « son lieu n’existe plus (…, disparu le 12-10) » — et, si git sait où le fichier est parti, « le fichier a été renommé : il est devenu … »</td>
+</tr>
+</tbody>
+</table>
+<p>Un humain qui <strong>confirme</strong> un élément mis en doute le remet en vigueur, et sa confirmation devient la
+cause. Pour un précédent, seuls les motifs <code>perime</code> et <code>contredit-code</code> peuvent ouvrir ce doute.</p>
+<h3 id="attend-un-humain">Attend un humain</h3>
+<p>La ligne attend un humain si elle est sans confirmation, mise en doute,
+<strong><a href="/atlas-site/manuel/le-glossaire#dormante">dormante</a></strong> (plus de 30 jours sans service), contredite par un
+<a href="/atlas-site/manuel/le-glossaire#constat">constat</a> non tranché depuis son service, ou illisible. Elle dit <strong>toutes
+ses raisons</strong>. Un précédent n’attend ici que s’il est mis en doute. Les jugements de recherche
+restent distincts des anciens verdicts au pied du Code.</p>
+<h2 id="une-ligne-par-élément">Une ligne par élément</h2>
+<p>Chaque élément tient sur une ligne, de la même hauteur :</p>
+<table>
+<thead>
+<tr>
+<th>de gauche à droite</th>
+<th>ce qu’elle dit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>l’icône et le type</td>
+<td>la famille, puis « consigne », « règle métier », « critère », « précédent importé »…</td>
+</tr>
+<tr>
+<td>la phrase</td>
+<td>l’élément, tel que sa source l’écrit (elle cède en fin de ligne)</td>
+</tr>
+<tr>
+<td>son lieu</td>
+<td>« fichier projet-api/src/a.ts », « stack nest », « couche ctrl », « service app », « tronc commun », « contrat Client », « ticket PROJ-412 »</td>
+</tr>
+<tr>
+<td>son état et sa cause</td>
+<td><code>en vigueur</code>, <code>mise en doute</code>, <code>retirée</code> et la cause datée</td>
+</tr>
+<tr>
+<td>la dernière fois servi</td>
+<td>« servi le 14-10 (3 fois) », « jamais vu servi », « servi sans trace » (un mot, un scénario : leur canal ne trace rien), « traces : pas pu lire »</td>
+</tr>
+<tr>
+<td><code>attend</code></td>
+<td>l’élément attend un humain (sa raison est au survol)</td>
+</tr>
+</tbody>
+</table>
+<p>Dans une famille, ce qui attend un humain vient d’abord, puis ce qui est en doute, ce qui tient, ce qui
+est parti ; les moments de la Méthode gardent l’ordre des moments. « Jamais vu servi » est un fait des
+<strong>traces</strong>, qui tombent des casiers au-delà de 1 500 par poste : jamais « jamais servi ». Si les traces
+ne se lisent pas, la ligne le dit, et la tête de page aussi.</p>
+<h3 id="le-filtre">Le filtre</h3>
+<p>« Filtrer : un mot, un chemin, une clé » garde ce qui correspond, sans souci de casse ni d’accents :
+la phrase, la clé, le lieu, le type, la famille, la cause, la feature, une case de la table d’une règle
+métier. Chaque mot tapé doit se trouver. La légende dit « 12 sur 840 éléments correspondent à « … » » ;
+<code>Échap</code> vide le champ. Les comptes des familles ne bougent pas. Le bouton <strong>attend un humain · 9</strong> ne
+garde que ce qui attend, sources illisibles comprises.</p>
+<h3 id="le-survol">Le survol</h3>
+<p>Survoler une ligne — à la souris, ou au curseur du clavier — ouvre une carte qui dit <strong>la famille et sa
+question</strong>, <strong>le type</strong>, <strong>d’où l’élément est né</strong> (le moment, qui, quand), <strong>son état et sa cause</strong>, la
+dernière fois servi, et <strong>les mots exacts que l’IA reçoit</strong> : ceux du hook pour une consigne ou un
+critère, ceux de <code>atlas precedents</code> pour un précédent, le vocabulaire de la session pour un mot, la
+première ligne de <code>atlas moment</code> pour un skill. Un élément retiré, ou un scénario du socle que le hook
+ne sert pas, dit « L’IA ne reçoit rien », et pourquoi.</p>
+<h2 id="lélément-ouvert">L’élément ouvert</h2>
+<p>Un clic ouvre l’élément à droite. Tout ce que le survol dit s’y retrouve, sous « En bref », puis :</p>
+<table>
+<thead>
+<tr>
+<th>section</th>
+<th>ce qu’elle montre</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sa source</strong></td>
+<td>où il est écrit : un lien qui l’ouvre — le ticket d’un critère, le scénario d’un cas, le fil d’un précédent ou d’une décision —, un chemin à copier — la consigne, un scénario du socle —, ou Config › Projet pour un mot ou un skill</td>
+</tr>
+<tr>
+<td><strong>Sa vie</strong></td>
+<td>ses événements <strong>datés</strong>, dans l’ordre du calendrier : née, adoptée, confirmée, écartée (avec la session), le code qui a changé, la recette qui contredit, invalidée avec sa raison ; pour un précédent, le fil ouvert, ses citations, ses écarts et <strong>chaque verdict d’un humain, à son nœud</strong></td>
+</tr>
+<tr>
+<td><strong>Ses traces</strong></td>
+<td>chaque service, une <a href="/atlas-site/manuel/le-glossaire#trace-de-service">trace de service</a> : date, canal (hook, ouverture de session, prologue d’un skill, lecture à la demande), moment, session, fichier et symboles, et les lignes que la session a écrites ensuite — ou « non garanti » avec sa cause, aucune ligne</td>
+</tr>
+<tr>
+<td><strong>Ce que l’IA en a fait</strong></td>
+<td>ce qu’elle a dit : citée dans un fil, écartée avec sa raison ; « ni cité ni écarté » ; « pas pu lire » si les fils ne se lisent pas. Lu à l’ouverture, une fois</td>
+</tr>
+<tr>
+<td><strong>Ce que l’IA reçoit</strong></td>
+<td>ses mots exacts, ou « Ce que l’IA ne reçoit pas » et pourquoi</td>
+</tr>
+<tr>
+<td><strong>Agir</strong></td>
+<td>les gestes que son type permet (plus bas)</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>⚠️ Une trace est un fait d’<strong>écriture</strong>, pas une preuve d’influence : « servi avant que ces lignes
+s’écrivent » dit l’ordre, jamais « l’IA a suivi ». Seul ce que l’IA <strong>dit</strong> — une citation, un écart —
+dit ce qu’elle en a fait.</p>
+</blockquote>
+<p>Selon le type, la fiche ajoute :</p>
+<ul>
+<li><strong>une consigne</strong> : son côté, sa nature, son ticket, <strong>Pourquoi</strong>, <strong>Ce que le hook en a vu</strong> (servie
+4 fois, <a href="/atlas-site/manuel/le-glossaire#reprise-apres-un-refus">reprise après un refus</a>, écartée, dormante, sa
+<a href="/atlas-site/manuel/le-glossaire#recidive">récidive</a>), <strong>Contredite par</strong> les constats qui la visent, <strong>Mise en
+doute</strong> avec toutes les refs que le code a bougées, <strong>La règle</strong> d’une règle métier — sa table et, par
+ligne, le niveau du critère ou du cas qu’elle cite —, <strong>Où elle s’applique</strong> (chaque endroit ; un clic
+sur un fichier le pose dans le champ), <strong>Gestes ignorés</strong>, <strong>Sources</strong> ;</li>
+<li><strong>un critère, un cas, une décision</strong> : sa provenance, sa portée, où il se corrige, ce qui le prouve
+(<a href="/atlas-site/manuel/les-criteres-les-cas-et-leur-preuve">Les critères, les cas et leur preuve</a>) ;</li>
+<li><strong>un précédent</strong> : en pastilles sa date, ce qu’est devenu son code, l’index, qui l’a ouvert ; les
+<strong>Verdicts des humains</strong>, nœud par nœud ; <strong>Son ancre</strong> ;</li>
+<li><strong>un mot, un scénario du socle, un moment</strong> : sa définition et ses noms, son service et ses lieux,
+ou le skill déclaré ;</li>
+<li><strong>une source illisible</strong> : ce qu’elle est, ce qu’elle fait perdre — jamais « rien n’est servi » à
+tort —, toutes ses raisons ; celle d’une recette dit qu’aucun critère de la feature n’est jugé.</li>
+</ul>
+<h2 id="un-fichier-ou-un-nœud">Un fichier ou un nœud</h2>
+<p>Le champ « Un fichier ou un nœud » montre ce que l’IA y <strong>recevrait</strong> à sa première touche. Écris
+<code>repo/chemin.ts</code> ou <code>repo::chemin.ts::nom</code> : le centre rejoue le choix du hook lui-même — son plafond
+de cinq consignes et trois critères compris — et le rend famille par famille, dans l’ordre et avec les
+mots du hook. Dessous, les précédents de l’endroit (« une piste, à vérifier »), avec le verdict des
+humains nœud par nœud. Pour un nœud, le hook ne sert pas les symboles : le bloc « Ce que l’outil
+<code>harnais</code> ajoute » porte ce que l’IA lit en le demandant.</p>
+<p>Ce qui ne se sait pas se dit à part : ce que le plafond coupe, les critères qui ne se servent qu’aux
+sessions de leur feature, un repo inconnu, une couche que le chemin ne prouve pas, la
+<strong>Reconnaissance</strong> (les limites connues du registre et des manifestes du service : langage non lu,
+capacité absente — elles ne prouvent pas qu’aucune consigne de stack ne s’applique), et que la Garde et
+la Méthode ne se servent jamais au hook. Une saisie qui n’est ni un fichier ni un nœud est refusée avec
+sa forme ; sans le contexte du projet, « pas pu lire ». <code>Échap</code> vide le champ.</p>
+<p>Depuis un élément ouvert, « ← ce que l’IA reçoit à … » revient à cette lecture.</p>
+<h2 id="amorçage-historique--du-skill-au-geste-humain">Amorçage historique : du skill au geste humain</h2>
+<p>L’accroche d’accueil autour d’<code>atlas:amorcer-harnais</code> ouvre le Harnais ; <strong>Amorçage historique</strong>
+ouvre son espace explicatif. L’<a href="/atlas-site/manuel/le-glossaire#amorcage">amorçage</a> extrait le savoir des commits,
+documents et commentaires. <strong>Lance le skill dans ta session IA</strong>. Références, budgets et reprises :
+<a href="/atlas-site/manuel/amorcer-le-harnais">Amorcer le Harnais</a>.</p>
+<table>
+<thead>
+<tr>
+<th>dans cet espace</th>
+<th>ton geste</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Actualiser les passes</strong></td>
+<td>relire l’état après un dépôt de l’IA</td>
+</tr>
+<tr>
+<td><strong>Passes et reprises</strong></td>
+<td>déplier commits fixés, bornes, limites, mesures et identifiant de reprise</td>
+</tr>
+<tr>
+<td><strong>Pistes importées · toutes les versions</strong></td>
+<td>choisir ; avancer par quarante avec <strong>Versions précédentes</strong> et <strong>Versions suivantes</strong></td>
+</tr>
+<tr>
+<td><strong>Ouvrir la preuve · lignes …</strong></td>
+<td>lire le texte conservé, son intégrité et sa disponibilité au commit exact</td>
+</tr>
+<tr>
+<td><strong>Mettre cette version de côté</strong></td>
+<td>raison requise ; retirer de la recherche en gardant les preuves</td>
+</tr>
+<tr>
+<td><strong>Activer comme consigne · geste humain</strong></td>
+<td>pour Règle, Garde ou Contexte : raison, lieu actuel et confirmation explicite</td>
+</tr>
+</tbody>
+</table>
+<p>Les pistes se consultent ici et dans la recherche ; <strong>elles ne s’ajoutent pas aux six familles à
+gauche</strong>. L’activation humaine crée une consigne adoptée dans la bibliothèque.</p>
+<p><strong>Activation à reprendre</strong> : la consigne peut déjà être active. Reprends avec l’auteur, le lieu
+et la raison d’origine, ou redémarre Atlas. Les réponses périmées sont ignorées après une nouvelle
+sélection, lecture ou sortie. Un geste envoyé peut avoir abouti : relis sa version.</p>
+<h2 id="chercher-un-problème-lire-les-six-mesures">Chercher un problème, lire les six mesures</h2>
+<p>Le champ de recherche accepte les mots du problème, sans fichier ni feature. <strong>Chercher · nouvelle
+tâche</strong> ouvre un contexte ; <strong>Reformuler ce problème</strong> reprend explicitement celui de la réponse.
+<strong>Nouvelle tâche</strong> vide les champs sans fermer le contexte conservé. Les résultats gardent leur
+source, leur identité, leur version et les faits du classement. <strong>Juger ce rapprochement</strong> porte par
+défaut sur ce problème et cette version ; étendre au nœud exige un choix explicite et une preuve.</p>
+<p><strong>Les six questions</strong> ouvrent chacune leurs cas, inconnus et preuves : observation, déclarations de
+hors-sujet, pertinence humaine, couverture complète, répétition, volume. <strong>Actuel</strong> est évolutif ; un
+relevé daté conserve ses preuves. Recherche et mesures restent <strong>en évaluation</strong> : aucun gain de
+pertinence ni adoption automatique n’est démontré faute de panel humain réservé. Mode d’emploi et
+limites de collecte : <a href="/atlas-site/manuel/chercher-dans-le-harnais">Chercher dans le Harnais</a>.</p>
+<h2 id="la-règle-du-jeu">La règle du jeu</h2>
+<p>Le <strong>?</strong> ouvre sa modale : les six familles et leurs mots, les trois états, ce qu’est « attend un
+humain », ce qu’une trace <strong>sait</strong> (quel élément, quel canal, quelle session, quels fichiers, les lignes
+écrites ensuite quand le client en rend le détail) et <strong>ne sait pas</strong> (si l’IA a suivi ; les lignes d’un
+terminal, d’un client sans hook ; les services d’avant la borne des casiers ; ce que le hook ne sert
+pas). <code>Échap</code> la ferme.</p>
+<h2 id="agir--dun-clic-ou-au-terminal">Agir : d’un clic, ou au terminal</h2>
+<p>Sous une consigne, <strong>Agir</strong> propose les gestes utiles et indique qui peut invalider : porteur du
+produit ou développeur selon son côté. <strong>Invalider</strong> exige ta raison dans le champ (<strong>Entrée</strong>
+invalide aussi). La page se relit après le geste ; un refus s’écrit sous les boutons.</p>
+<table>
+<thead>
+<tr>
+<th>la consigne est</th>
+<th>les boutons</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>à regarder</td>
+<td><strong>Confirmer</strong> · <strong>Invalider</strong></td>
+</tr>
+<tr>
+<td>adoptée ou confirmée par un humain</td>
+<td><strong>Invalider</strong></td>
+</tr>
+<tr>
+<td>retouchée depuis son adoption</td>
+<td><strong>Adopter</strong> (la nouvelle version) · <strong>Confirmer</strong> (celle en vigueur) · <strong>Invalider</strong></td>
+</tr>
+<tr>
+<td>mise en doute</td>
+<td><strong>Confirmer</strong> (elle revient en vigueur) · <strong>Invalider</strong></td>
+</tr>
+<tr>
+<td>invalidée</td>
+<td><strong>Adopter</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Dessous, les mêmes gestes en commandes, chacune avec son bouton <strong>copier</strong> : à lancer <strong>dans un terminal,
+depuis le dossier du projet</strong> (sans terminal, Atlas refuse — <a href="/atlas-site/manuel/le-harnais">Le Harnais</a>), puis <strong>↻</strong>.
+Un critère, un cas, une décision se corrigent à leur source ; un précédent se confirme ou s’invalide au
+<strong>nœud</strong> où tu le relis, au pied du Code ; un mot, un skill et un scénario du socle se déclarent dans
+Config › Projet ou par <code>atlas recette socle</code> — aucun outil de l’IA n’y écrit.</p>
+<h2 id="ajouter--atlasharnais">Ajouter : <code>/atlas:harnais</code></h2>
+<p>Pour retenir une règle, lance <code>/atlas:harnais</code> dans ta session de code. Il propose famille, type et
+endroit, lit ce qui existe déjà et demande le pourquoi d’une règle ou vérification. Il écrit après
+ton accord, puis donne <code>atlas consigne confirmer &lt;id&gt;</code> : confirmer reste ton geste.</p>
+<table>
+<thead>
+<tr>
+<th>tu veux retenir</th>
+<th>il fait</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>une règle, une vérification, une explication</td>
+<td>écrit une consigne, sa raison exigée pour règle et vérification</td>
+</tr>
+<tr>
+<td>une règle métier avec contrat et feature</td>
+<td>pose une décision sur ce contrat</td>
+</tr>
+<tr>
+<td>une règle métier sans contrat ou feature</td>
+<td>écrit une consigne produit</td>
+</tr>
+<tr>
+<td>un mot, un skill par moment</td>
+<td>renvoie à Config › Projet</td>
+</tr>
+<tr>
+<td>un critère, un cas</td>
+<td>renvoie au ticket ou à la recette</td>
+</tr>
+<tr>
+<td>un précédent</td>
+<td>n’en ajoute pas : il naît d’un fil</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sans ticket, le hook doit prouver ton lancement personnel depuis moins d’une demi-heure</strong>.
+Un agent, Gemini CLI ou Codex exige un ticket. La consigne reste servie d’office et à regarder.
+Symbole, contrat et entrée ne la servent pas au hook ; recherche et <code>atlas precedents</code> ont leur
+service (<a href="/atlas-site/manuel/le-harnais">Le Harnais</a>). Cette condition ne concerne pas l’amorçage historique.</p>
+<p>Ce skill ne signe aucun moment dans Relecture. Un « retiens ça » qui ne le lance pas ne l’autorise
+pas à écrire au Harnais.</p>
+<h2 id="raccourcis">Raccourcis</h2>
+<table>
+<thead>
+<tr>
+<th>touche</th>
+<th>effet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Échap</code></td>
+<td>dans un champ : le vide, puis en sort ; dans la règle du jeu : la ferme ; ailleurs : ferme la page</td>
+</tr>
+<tr>
+<td><code>↑</code> <code>↓</code></td>
+<td>dans la liste : déplacer le curseur ; depuis le filtre, <code>↓</code> descend dans la liste</td>
+</tr>
+<tr>
+<td><code>→</code> <code>←</code></td>
+<td>déplier / replier une famille ; sur une ligne, <code>←</code> remonte à sa famille</td>
+</tr>
+<tr>
+<td><code>Entrée</code></td>
+<td>plier ou déplier la famille, ou ouvrir la ligne à droite</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</h2>
+<ul>
+<li><strong>Il ne réécrit pas les sources</strong> : statut d’une consigne et jugement d’un rapprochement sont des
+gestes distincts ; un critère, un cas ou une décision se corrige à sa source.</li>
+<li><strong>Il ne vérifie pas qui invalide</strong> : « le porteur du produit » et « un développeur » sont une indication.</li>
+<li><strong>Il ne dit pas « jamais servi » sur une lecture ratée, ni « en vigueur » sur une ignorance</strong> : ce
+qu’il n’a pas pu lire se dit « pas pu lire ».</li>
+<li><strong>Il ne lit pas un dossier</strong> : le champ attend un fichier ou un nœud.</li>
+</ul>
+<h2 id="limites-connues">Limites connues</h2>
+<ul>
+<li><strong>La couche se juge au chemin</strong>, comme le hook : celle que seul le code dit n’y est pas.</li>
+<li><strong>Gemini CLI et Codex n’ont pas de hook</strong> : leurs gestes ne laissent aucune trace ; ce qu’elles
+reçoivent à l’ouverture ou au prologue se trace, ce qu’elles écrivent ensuite est « non garanti ».</li>
+<li><strong>Les traces tombent des casiers</strong> au-delà de 1 500 par poste : « jamais vu servi » ne veut pas dire
+« jamais servi ».</li>
+<li><strong>La page ne sait pas quelle feature travaille</strong> à un endroit : ce qui n’est que déclaré, ou de
+portée ticket, ne se montre au champ que par une note.</li>
+<li><strong>La vie ne remonte pas avant la version qui la garde</strong> : tant que le hook, ou l’ouverture de
+session pour le tronc commun, n’est pas observé depuis plus de 30 jours, aucune consigne n’est dite
+dormante.</li>
+<li><strong>La vie d’un autre poste arrive en retard</strong> : écrite toutes les dix minutes au plus, puis partagée avec le workspace.</li>
+<li><strong>Contredite et récidive suivent l’index des précédents</strong> : un constat neuf n’y compte qu’à
+la reconstruction suivante, au premier repos de l’instance.</li>
+</ul>
+<nav class="suite" aria-label="Page suivante et précédente"><a href="/atlas-site/manuel/les-criteres-les-cas-et-leur-preuve"><small>← précédent</small>Les critères, les cas et leur preuve</a><a class="droite" href="/atlas-site/manuel/les-panneaux-et-les-modules"><small>suivant →</small>Les panneaux et les modules</a></nav></article><nav class="cote toc" aria-label="Sur cette page"><h2>Sur cette page</h2><ul><li><a href="#louvrir-la-fermer">L’ouvrir, la fermer</a></li><li><a href="#les-six-familles">Les six familles</a></li><li><a class="h3" href="#les-trois-états">Les trois états</a></li><li><a class="h3" href="#attend-un-humain">Attend un humain</a></li><li><a href="#une-ligne-par-élément">Une ligne par élément</a></li><li><a class="h3" href="#le-filtre">Le filtre</a></li><li><a class="h3" href="#le-survol">Le survol</a></li><li><a href="#lélément-ouvert">L’élément ouvert</a></li><li><a href="#un-fichier-ou-un-nœud">Un fichier ou un nœud</a></li><li><a href="#amorçage-historique--du-skill-au-geste-humain">Amorçage historique : du skill au geste humain</a></li><li><a href="#chercher-un-problème-lire-les-six-mesures">Chercher un problème, lire les six mesures</a></li><li><a href="#la-règle-du-jeu">La règle du jeu</a></li><li><a href="#agir--dun-clic-ou-au-terminal">Agir : d’un clic, ou au terminal</a></li><li><a href="#ajouter--atlasharnais">Ajouter : /atlas:harnais</a></li><li><a href="#raccourcis">Raccourcis</a></li><li><a href="#ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</a></li><li><a href="#limites-connues">Limites connues</a></li></ul></nav></main><footer class="pied"><div class="dedans"><span>Atlas — suivi et validation de code.</span><a href="/atlas-site/manuel/prise-en-main">Manuel</a></div></footer><script>
+    document.getElementById('theme-bt')?.addEventListener('click', () => {
+      const r = document.documentElement;
+      // clair → sombre → système, et le tour recommence. « Système » RETIRE la clé : c'est ce qui
+      // rend le choix distinct d'une absence de choix.
+      const suite = { clair: 'sombre', sombre: '', '': 'clair' };
+      const v = suite[r.dataset.theme || ''];
+      if (v) { r.dataset.theme = v; try { localStorage.setItem('atlas-site-theme', v); } catch {} }
+      else { delete r.dataset.theme; try { localStorage.removeItem('atlas-site-theme'); } catch {} }
+    });
+  </script></body></html>

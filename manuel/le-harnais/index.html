@@ -1,0 +1,411 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Le Harnais · Atlas</title><meta name="description" content="Les règles de ton projet et les critères de tes tickets, servis à ton IA là où ils s'appliquent — et ce qu'Atlas lui garde fermé."><link rel="canonical" href="https://gregoirelacoste.github.io/atlas-site/manuel/le-harnais"><meta property="og:title" content="Le Harnais · Atlas"><meta property="og:description" content="Les règles de ton projet et les critères de tes tickets, servis à ton IA là où ils s'appliquent — et ce qu'Atlas lui garde fermé."><meta property="og:type" content="website"><meta property="og:url" content="https://gregoirelacoste.github.io/atlas-site/manuel/le-harnais"><meta name="twitter:card" content="summary"><link rel="icon" href="/atlas-site/favicon.svg" type="image/svg+xml"><script>
+    (() => { try { const t = localStorage.getItem('atlas-site-theme');
+      if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t; } catch {} })();
+  </script><link rel="stylesheet" href="/atlas-site/_astro/Base.D32RNicN.css"></head><body><header class="tete"><a class="marque" href="/atlas-site">🗺️ Atlas</a><nav><a href="/atlas-site/installer">Installer</a><a href="/atlas-site/manuel/prise-en-main" aria-current="page">Manuel</a><a href="/atlas-site/articles">Écrits</a><button class="theme-bt" id="theme-bt" type="button" aria-label="Changer de thème">◐</button></nav></header><main class="doc"><nav class="cote" aria-label="Le manuel"><h2>Le manuel</h2><ol><li><a href="/atlas-site/manuel/prise-en-main">Prise en main</a></li><li><a href="/atlas-site/manuel/l-arbre">L&#39;Arbre</a></li><li><a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a></li><li><a href="/atlas-site/manuel/le-code">Le Code</a></li><li><a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a></li><li><a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et inventaire</a></li><li><a href="/atlas-site/manuel/le-panneau-git">Le panneau Git</a></li><li><a href="/atlas-site/manuel/le-tableau">Le Tableau</a></li><li><a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a></li><li><a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a></li><li><a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a></li><li><a href="/atlas-site/manuel/brancher-l-ia">Brancher l&#39;IA</a></li><li><a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l&#39;IA lit et écrit</a></li><li><a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a></li><li><a href="/atlas-site/manuel/la-ligne-de-commande">La ligne de commande</a></li><li><a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a></li><li><a href="/atlas-site/manuel/le-clavier">Le clavier</a></li><li><a href="/atlas-site/manuel/les-precedents">Les précédents</a></li><li><a href="/atlas-site/manuel/les-decisions-metier">Les décisions métier</a></li><li><a href="/atlas-site/manuel/le-glossaire">Le glossaire</a></li><li><a href="/atlas-site/manuel/la-recette">La recette</a></li><li><a href="/atlas-site/manuel/deposer-une-recette">Déposer une recette</a></li><li><a href="/atlas-site/manuel/la-vue-d-ensemble">La vue d&#39;ensemble</a></li><li><a href="/atlas-site/manuel/le-harnais" aria-current="page">Le Harnais</a></li><li><a href="/atlas-site/manuel/les-criteres-les-cas-et-leur-preuve">Les critères, les cas et leur preuve</a></li><li><a href="/atlas-site/manuel/la-page-harnais">La page Harnais</a></li><li><a href="/atlas-site/manuel/les-panneaux-et-les-modules">Les panneaux et les modules</a></li><li><a href="/atlas-site/manuel/le-diagramme-d-un-flux">Le diagramme d&#39;un flux</a></li><li><a href="/atlas-site/manuel/chercher-dans-le-harnais">Chercher dans le Harnais</a></li><li><a href="/atlas-site/manuel/amorcer-le-harnais">Amorcer le Harnais</a></li></ol></nav><article class="corps"><h1>Le Harnais</h1><p class="chapo">Les règles de ton projet et les critères de tes tickets, servis à ton IA là où ils s&#39;appliquent — et ce qu&#39;Atlas lui garde fermé.</p><blockquote>
+<p>Les règles de ton projet et les critères de tes tickets, servis à ton IA là où ils s’appliquent —
+et ce qu’Atlas lui garde fermé.</p>
+</blockquote>
+<p>Une <strong><a href="/atlas-site/manuel/le-glossaire#consigne">consigne</a></strong> est une règle de ton <a href="/atlas-site/manuel/le-glossaire#projet">projet</a>,
+attachée à un endroit. Le <strong><a href="/atlas-site/manuel/le-glossaire#harnais">Harnais</a></strong> la sert à l’IA quand elle y travaille,
+comme les <a href="/atlas-site/manuel/le-glossaire#critere">critères</a> de tes tickets. Elle fait autorité ; les
+<a href="/atlas-site/manuel/les-decisions-metier">décisions métier</a> reviennent par leur <a href="/atlas-site/manuel/le-glossaire#contrat">contrat</a>,
+les <a href="/atlas-site/manuel/les-precedents">précédents</a> comme des pistes.</p>
+<h2 id="ce-quest-une-consigne">Ce qu’est une consigne</h2>
+<p>Une consigne tient en <strong>une phrase</strong> qu’on peut coller dans une conversation, suivie de son pourquoi.
+Deux clés la rangent :</p>
+<table>
+<thead>
+<tr>
+<th>clé</th>
+<th>valeurs</th>
+<th>ce qu’elle dit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>côté</code></td>
+<td><code>code</code> · <code>produit</code></td>
+<td><code>code</code> : comment on construit ici. <code>produit</code> : ce que le produit garantit à qui s’en sert — une règle métier</td>
+</tr>
+<tr>
+<td><code>nature</code></td>
+<td><code>éviter</code> · <code>faire</code> · <code>pourquoi</code> · <code>vérifier</code> · <code>métier</code></td>
+<td><code>éviter</code>, <code>faire</code>, <code>métier</code> : une <strong>règle</strong> (son pourquoi est exigé quand l’IA l’écrit) ; <code>vérifier</code> ; <code>pourquoi</code> : une <strong>explication</strong>, technique côté <code>code</code>, métier côté <code>produit</code></td>
+</tr>
+</tbody>
+</table>
+<p>L’<strong>endroit</strong> : une ou plusieurs lignes <code>où</code>, chacune <code>&lt;sorte&gt; &lt;valeur&gt;</code>. Sept sortes sont servies :</p>
+<table>
+<thead>
+<tr>
+<th>tu écris</th>
+<th>ce que ça désigne</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>fichier projet-api/src/paiement/paiement.service.ts</code></td>
+<td>ce fichier : le <a href="/atlas-site/manuel/le-glossaire#repo-membre">repo membre</a>, puis le chemin dans le repo</td>
+</tr>
+<tr>
+<td><code>dossier projet-api/src/paiement</code></td>
+<td>tout fichier dessous, à la frontière d’un dossier : <code>src/paiement</code> ne couvre pas <code>src/paiement2</code></td>
+</tr>
+<tr>
+<td><code>famille migration</code></td>
+<td>tout fichier que les règles de nom de tes <a href="/atlas-site/manuel/le-glossaire#stack">stacks</a> et de <code>project.json</code> rangent dans cette <a href="/atlas-site/manuel/le-glossaire#famille">famille</a></td>
+</tr>
+<tr>
+<td><code>couche ctrl</code></td>
+<td>tout fichier dont le <strong>chemin</strong> prouve la <a href="/atlas-site/manuel/le-glossaire#couche">couche</a> ; sinon rien, et le geste compte « non garanti », à part</td>
+</tr>
+<tr>
+<td><code>service projet-api</code></td>
+<td>tout fichier de ce <a href="/atlas-site/manuel/le-glossaire#repo-membre">repo membre</a></td>
+</tr>
+<tr>
+<td><code>stack nest</code></td>
+<td>tout fichier d’un repo où elle est prouvée ou déclarée</td>
+</tr>
+<tr>
+<td><code>geste git commit</code></td>
+<td>une commande que l’IA lance : ses mots entiers, dans l’ordre, options sautées</td>
+</tr>
+</tbody>
+</table>
+<p>Un service ou une stack inconnu du projet est refusé, les noms existants dits. Quatre autres sortes
+se lisent sans être servies : <code>symbole</code> ou
+<code>contrat projet-api::src/x.ts::Nom</code>, une <a href="/atlas-site/manuel/le-glossaire#entree">entrée</a> (<code>entrée POST /api/remboursements</code>), un mot du
+<a href="/atlas-site/manuel/le-glossaire#vocabulaire-du-projet">vocabulaire du projet</a> (<code>mot panier</code>). L’IA les lit
+par l’<a href="/atlas-site/manuel/le-glossaire#outil">outil</a> <code>harnais</code> (<a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l’IA lit et écrit</a>).</p>
+<p><code>geste git commit</code> touche <code>git -C . commit</code> comme <code>cd projet-api &amp;&amp; git commit</code>, jamais <code>git commit-tree</code>.
+Un <a href="/atlas-site/manuel/le-glossaire#worktree">worktree</a> hors du <a href="/atlas-site/manuel/le-glossaire#chapeau">chapeau</a> compte comme son repo principal.</p>
+<p>Une consigne <strong>sans ligne <code>où</code></strong> est du <strong><a href="/atlas-site/manuel/le-glossaire#tronc-commun">tronc commun</a></strong> : elle
+vaut partout, et l’IA la reçoit à l’ouverture de chaque session, pas à un endroit (plus bas).</p>
+<h2 id="écrire-une-consigne">Écrire une consigne</h2>
+<p>Chaque consigne est <strong>un fichier</strong> Markdown, <code>.atlas-workspace/consignes/&lt;id&gt;.md</code>, dont le nom est
+l’identifiant : minuscules, chiffres et tirets, 64 caractères au plus. Le dossier se partage avec le
+<a href="/atlas-site/manuel/le-glossaire#workspace">workspace</a> (<a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a>). Exemple, <code>migration-avec-down.md</code> :</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold"># Une migration s'écrit avec son retour arrière : jamais de down vide.</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">-</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> côté: code</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">-</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> nature: éviter</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">-</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> où: famille migration</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">-</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> où: dossier projet-api/src/migrations</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">-</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> ticket: PROJ-380</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">-</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> source: PROJ-380::t3a9c2f10</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">## Pourquoi</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">Un down vide a bloqué un retour arrière en production.</span></span></code></pre>
+<table>
+<thead>
+<tr>
+<th>ligne</th>
+<th>ce qu’elle porte</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code># …</code> (obligatoire)</td>
+<td>la consigne, 120 caractères au plus</td>
+</tr>
+<tr>
+<td><code>- côté:</code> · <code>- nature:</code> (obligatoires)</td>
+<td>voir plus haut ; <code>produit</code> va avec <code>métier</code> ou <code>pourquoi</code></td>
+</tr>
+<tr>
+<td><code>- sous:</code></td>
+<td>une précision libre : forme écartée, modèle à suivre, choix en attente, décision</td>
+</tr>
+<tr>
+<td><code>- où:</code> (répétable)</td>
+<td>un endroit ; aucun = tronc commun</td>
+</tr>
+<tr>
+<td><code>- ticket:</code></td>
+<td>le ticket qui l’a fait naître</td>
+</tr>
+<tr>
+<td><code>- source:</code> (répétable)</td>
+<td>le <a href="/atlas-site/manuel/le-glossaire#fil">fil</a> qui la fonde, par sa clé <code>&lt;feature&gt;::&lt;fil&gt;</code> ; active, elle prend la place de ce précédent dans ses fichiers et dossiers (<a href="/atlas-site/manuel/les-precedents">Les précédents</a>)</td>
+</tr>
+<tr>
+<td><code>## Pourquoi</code></td>
+<td>ce que la règle évite, ce qui a coûté</td>
+</tr>
+<tr>
+<td><code>## Règle</code></td>
+<td>une règle métier en table Markdown : une ligne d’en-tête, puis une ligne par cas</td>
+</tr>
+</tbody>
+</table>
+<p>Avant les sections, seules des lignes <code>- clé: valeur</code>. <strong>Un seul refus, et rien n’est lu</strong> : clé
+inconnue ou en double, autre section que Pourquoi ou Règle, endroit mal formé, source qui n’est pas une
+clé de fil, table illisible, phrase trop longue. Refusée, elle n’est servie à personne ;
+<code>atlas consigne liste</code> la montre précédée de <code>⚠</code>.</p>
+<p>⚠️ <strong>Le fichier porte le contenu, jamais la provenance.</strong> Une ligne <code>- statut:</code>, <code>- origine:</code>,
+<code>- adoptee:</code>, <code>- confirmee:</code> ou <code>- invalidee:</code> est refusée : « la provenance (statut, origine, adoption,
+confirmation) ne s’écrit pas dans le fichier : Atlas la pose au geste ».</p>
+<h2 id="ce-que-lia-reçoit-et-quand">Ce que l’IA reçoit, et quand</h2>
+<p>Le service automatique passe par un <strong><a href="/atlas-site/manuel/le-glossaire#hook">hook</a></strong>, lancé avant une lecture,
+une écriture ou une commande de Claude Code. <code>atlas consigne --hook</code> vient avec le
+<a href="/atlas-site/manuel/le-glossaire#plugin">plugin</a>, installé par <code>atlas plugin install</code>
+(<a href="/atlas-site/manuel/brancher-l-ia">Brancher l’IA</a>). Il demande à l’<a href="/atlas-site/manuel/le-glossaire#instance">instance</a> de ton projet quoi servir.</p>
+<p>La reconnaissance lui dit ses limites de langage, capacité et manifeste : une stack non établie
+ne devient pas « absente ».</p>
+<p><strong>La première fois que l’IA touche un endroit dans une session, elle reçoit ses consignes</strong>, et ses
+critères (<a href="/atlas-site/manuel/les-criteres-les-cas-et-leur-preuve">Les critères, les cas et leur preuve</a>) :</p>
+<table>
+<thead>
+<tr>
+<th>ce que fait l’IA</th>
+<th>ce que fait le hook</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>elle <strong>lit</strong> un fichier — par l’éditeur, ou par une commande qui le nomme</td>
+<td>il ajoute les consignes à ce qu’elle lit ; l’outil passe</td>
+</tr>
+<tr>
+<td>elle <strong>écrit</strong> un fichier dont elle n’a encore reçu aucune consigne dans la session</td>
+<td>il <strong>refuse l’écriture une fois</strong> si une <strong>règle</strong> est servie ; le reste s’ajoute sans refuser</td>
+</tr>
+<tr>
+<td>elle lance une commande qu’une consigne <code>geste</code> désigne</td>
+<td>il ajoute la consigne ; la commande passe</td>
+</tr>
+</tbody>
+</table>
+<p>Une règle refuse parce que ce qui est ajouté arrive <strong>après</strong> le geste. La tentative suivante passe ; une commande qui n’écrit aucun fichier (<code>git commit</code>) n’est jamais refusée.</p>
+<p><strong>Une écriture par le shell compte comme une écriture par l’éditeur</strong> quand Atlas sait lire ce qu’elle
+vise : une redirection (<code>&gt;</code>, <code>&gt;&gt;</code>), <code>tee</code>, <code>sed -i</code>, <code>mv</code>, <code>cp</code>, <code>rm</code>, <code>touch</code>, <code>git restore</code>… — sur un fichier nommé par un chemin ou un nom à extension.</p>
+<p>Le texte reçu a un bloc par famille, sous ses mots : « Règle … — à appliquer », « Engagement … — établi : garde-le, ou dis que ton ticket le change » (critères, cas), « Garde … — à vérifier après ton changement », « Contexte … — à savoir » ;
+puis, par élément, sa phrase et, entre parenthèses, l’endroit qui l’a fait arriver, <strong>d’où il vient</strong> —
+<code>consigne adoptée par alice le 09-10</code>,
+<code>critère PROJ-412#3 · relu par as-coded le …</code> — et la première ligne de son Pourquoi, jamais la
+table. Un refus tombe une fois, pour que tu lises ces règles.</p>
+<p>Ce qui règle le choix :</p>
+<ul>
+<li><strong>une fois par endroit et par session</strong> : une consigne de dossier ne revient pas à chaque fichier
+touché dedans, mais par un autre de ses endroits, dans une nouvelle session, après un redémarrage de
+l’instance ou douze heures sans geste ;</li>
+<li><strong>la plus précise d’abord</strong> : un fichier ou une commande, puis un dossier (le plus profond d’abord),
+une famille, une couche, un service, une stack ; à précision égale, ce qui vient d’un humain, puis le
+produit, puis l’identifiant : ce que l’IA écrit ne chasse jamais les tiennes du plafond ;</li>
+<li><strong>cinq consignes et trois critères ou <a href="/atlas-site/manuel/le-glossaire#cas-de-recette">cas de recette</a> au plus</strong> par geste, deux plafonds séparés. Au-delà, le texte le
+dit — « … et 2 autres au-delà du plafond, non servies. » — et ils comptent comme vus : une écriture
+n’est refusée qu’une fois.</li>
+</ul>
+<p><strong>Ce que ça coûte.</strong> Le hook tourne dans toutes tes sessions Claude Code, même hors projet. Mesuré le 14-10, hors démarrage de la commande : 32 à 40 ms par geste, 123 à 134 ms au premier de l’instance. Il ne bloque jamais :
+hors projet, sans instance, sur une réponse illisible ou de plus d’1,5 s, l’outil passe ;
+ce qui arrive trop tard revient au prochain geste au même endroit. <strong>Il ne démarre
+aucune instance</strong> : <code>atlas</code>, <code>atlas start</code> ou le <a href="/atlas-site/manuel/le-glossaire#serveur-mcp">serveur MCP</a>, si.</p>
+<p><strong>Le tronc commun arrive autrement : à l’ouverture de la session.</strong> Le hook ne le sert jamais ; le
+serveur MCP le joint à ses instructions quand ta session démarre, quel que soit le client — Claude
+Code, Gemini CLI, Codex (<a href="/atlas-site/manuel/brancher-l-ia">Brancher l’IA</a>).
+En font partie les consignes actives sans endroit, dans l’ordre du plafond — ce qu’un humain a adopté
+ou confirmé, puis le produit, puis l’identifiant — sous le titre « LES CONSIGNES DU PROJET (tronc commun) », chacune suivie de sa provenance.</p>
+<p>Trois états : dix consignes au plus — au-delà, « … et 3 autres, au-delà du plafond de 10 :
+<code>atlas consigne liste</code> les montre. » ; <strong>rien</strong> sans consigne ou hors d’un projet Atlas ;
+« pas pu les lire (…) » avec la raison si l’instance ne répond pas à temps ou sert un autre projet. La liste en dit le poids, estimé sur la taille du texte.</p>
+<h2 id="la-vie-dune-consigne-gardée">La vie d’une consigne, gardée</h2>
+<p>Chaque réponse du hook arrivée à temps nourrit la
+<strong><a href="/atlas-site/manuel/le-glossaire#vie-d-une-consigne">vie d’une consigne</a></strong> : comptes, premier et dernier service,
+<strong><a href="/atlas-site/manuel/le-glossaire#reprise-apres-un-refus">reprises après un refus</a></strong> — une écriture refusée puis
+rejouée au même fichier dans la même session. Les 200 dernières sessions par poste gardent gestes,
+poids estimé, refus et reprises.</p>
+<p>L’instance garde cette vie en mémoire et l’écrit toutes les dix minutes au plus, et à l’arrêt :
+<code>.atlas-workspace/consignes/vie/&lt;ton adresse git&gt;.&lt;machine&gt;.json</code>. Deux machines font deux postes,
+additionnés. La <a href="/atlas-site/manuel/la-page-harnais">page Harnais</a> lit la mémoire locale et le disque partagé des autres.
+Chaque service laisse aussi une <strong>trace</strong>, dans le même casier : élément, session, canal, fichier, lignes écrites ensuite
+(<a href="/atlas-site/manuel/les-criteres-les-cas-et-leur-preuve">Les critères, les cas et leur preuve</a>).</p>
+<p><strong>Sans identité git</strong>, ton poste ne garde rien : la page le dit parmi les illisibles, avec la commande
+à lancer — puis <code>atlas restart</code>. <strong>Un casier illisible n’est jamais écrasé</strong> : ton poste n’y note rien
+jusqu’à réparation ; celui d’un autre poste compte parmi les illisibles.</p>
+<h2 id="servie-doffice-à-regarder-invalidée">Servie d’office, à regarder, invalidée</h2>
+<p><strong>Toute consigne qui se lit est servie</strong> dès qu’elle existe, que l’IA l’ait écrite par son outil ou toi
+à la main, sans aucun geste. Elle reste <strong><a href="/atlas-site/manuel/le-glossaire#a-regarder">à regarder</a></strong> tant qu’aucun
+humain ne l’a adoptée ou confirmée ; seule une retirée n’est plus servie.</p>
+<p><strong>Trois états, dits par leur cause</strong> : en vigueur, mis en doute, retiré — déduits des cachets et de l’index.
+<strong>Mise en doute</strong>, elle reste servie, avec sa cause : son ancre a changé, ou deux sessions IA l’ont
+déclarée <code>perime</code> ou <code>contredit-code</code>. <code>hors-sujet</code> et <code>deja-su</code> restent locaux. <strong>Retirée</strong> — invalidée,
+ou son fichier n’existe plus —, elle n’est plus servie mais reste lisible. Ta confirmation la remet en vigueur et devient la cause affichée. Le code se relit au build de l’index ; avant, « code pas regardé ».</p>
+<table>
+<thead>
+<tr>
+<th>geste</th>
+<th>par où</th>
+<th>à quelle condition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>l’IA <strong>écrit</strong></td>
+<td>l’outil <code>consigne</code>, geste <code>ecrire</code> ; Atlas écrit le fichier</td>
+<td>un identifiant libre (tiré de la phrase s’il manque), son ticket (sauf <code>/atlas:harnais</code>), une raison pour une règle ou une vérification, ni la phrase d’une invalidée, ni une phrase qui vit déjà là</td>
+</tr>
+<tr>
+<td>l’IA <strong>écarte</strong></td>
+<td>l’outil <code>sonde</code>, <code>ecarte</code></td>
+<td>un élément servi, par sa clé, avec une raison parmi quatre (hors sujet · déjà su · périmé · contredit par le code) et un détail libre en plus — c’est ce que tu relis</td>
+</tr>
+<tr>
+<td>tu <strong>confirmes</strong></td>
+<td><code>atlas consigne confirmer &lt;id&gt;</code></td>
+<td>une consigne servie : tu gardes la version servie, elle n’est plus à regarder</td>
+</tr>
+<tr>
+<td>tu <strong>adoptes</strong></td>
+<td><code>atlas consigne adopter &lt;id&gt;</code></td>
+<td>une invalidée, ou une retouchée depuis son adoption : le fichier tel qu’il est, s’il se lit</td>
+</tr>
+<tr>
+<td>tu <strong>invalides</strong></td>
+<td><code>atlas consigne invalider &lt;id&gt; &lt;la raison&gt;</code></td>
+<td>une raison écrite, toujours</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Le ticket</strong> d’une consigne que l’IA écrit : celui qu’elle donne, sinon celui du fil de son <code>fait</code> — jamais
+d’une <code>source</code> —, une feature déclarée du projet ; sans aucun, rien n’est écrit — sauf pour <code>/atlas:harnais</code> <strong>lancé par toi</strong> (le hook <code>UserPromptSubmit</code> le prouve, une demi-heure) ; sinon le ticket est exigé, toujours sans ce hook (Gemini CLI, Codex). <strong>Depuis un fil sans <code>où</code></strong>
+non plus : la réponse liste les endroits du nœud, ou « tronc commun ».</p>
+<p><strong>Le doublon</strong> : même phrase au même endroit, casse, accents et blancs mis à part, refusée face à
+une consigne, un critère, un cas ou une décision. La réponse montre dix lignes au plus : comparaison
+de phrases, pas de sens.</p>
+<p><strong>Le fait</strong>, facultatif : la clé du fil qui la fonde. Atlas le vérifie — un humain y a répondu, ou le
+code a bougé depuis — et le garde dans sa provenance ; faux ou invérifiable, tout est refusé, avec pourquoi.</p>
+<p><strong>L’IA ne peut jamais</strong> modifier, adopter, confirmer ni invalider une consigne : aucun outil n’y mène,
+et la porte lui ferme le dossier.</p>
+<p>Chaque geste laisse un <strong><a href="/atlas-site/manuel/le-glossaire#cachet">cachet</a></strong>, posé <strong>par Atlas</strong> : qui (l’adresse de <code>git config user.email</code> dans le chapeau), quand, si tu l’as demandée (<code>/atlas:harnais</code>), sur quelle version du texte,
+la raison d’un écart ou d’une invalidation, et la session de l’IA qui écarte (celle du client ; sans elle, le serveur MCP, et la cause le dit) — jamais ce que l’appelant prétend. Les cachets vivent dans
+<code>.atlas-workspace/consignes/cachets/</code>, un fichier par auteur, jamais réécrits : le statut se déduit de
+leur suite. Sans identité git, aucun geste n’est posé. Un cachet contraire à ces règles ne compte pas : la liste dit <code>⚠ geste ignoré</code>, et pourquoi.</p>
+<p>Un geste retient <strong>son texte</strong> : retouché ensuite, même illisible, il reste servi, et la liste prévient « ⚠ retouchée depuis son adoption ». <code>adopter</code> sert la nouvelle, <code>confirmer</code> garde celle en vigueur.</p>
+<p><code>atlas consigne liste</code> se lit partout, même depuis un script : par consigne, <code>● en vigueur</code>, <code>⚠ mise en doute</code> ou <code>✗ retirée</code>, son identifiant, sa phrase ; dessous, sa cause datée,
+<code>à regarder : … servie d'office</code> et la commande qui tranche, qui l’a adoptée — <code>alice (IA), le 2026-10-09</code> quand l’IA de la session d’alice l’a écrite (<code>l'IA de la session d'alice, à sa demande (harnais)</code>) —, sur quel fait, les écarts de l’IA.
+Puis illisibles, décisions métier, tronc commun et critères (<a href="/atlas-site/manuel/les-criteres-les-cas-et-leur-preuve">Les critères, les cas et leur preuve</a>).</p>
+<p>Les trois gestes <strong>exigent un terminal</strong> : lancés par l’IA ou un script, refusés —
+« « atlas consigne invalider » est un geste de l’humain : il se lance dans un terminal. » Un geste sans effet est dit, pas posé : adopter une consigne servie telle quelle (le refus dit de la
+confirmer), confirmer une invalidée ou une déjà confirmée, invalider deux fois. Aucun ne s’applique à un critère. La <a href="/atlas-site/manuel/la-page-harnais">page Harnais</a> les fait aussi, d’un clic.</p>
+<h2 id="chercher-ajouter-et-amorcer">Chercher, ajouter et amorcer</h2>
+<p><a href="/atlas-site/manuel/chercher-dans-le-harnais">Chercher dans le Harnais</a> : une question suffit, sans fichier ni feature.
+La recherche reste en évaluation. <code>/atlas:harnais</code> propose, montre, écrit, puis donne la commande
+de confirmation.</p>
+<p>L’<a href="/atlas-site/manuel/le-glossaire#amorcage">amorçage</a> extrait des pistes des commits, documents et commentaires :
+<code>/atlas:amorcer-harnais</code>, sans ticket. Une piste classée Règle n’est <strong>pas une consigne active</strong>.
+L’import ne la sert ni au hook ni au tronc commun. Dans <strong>Harnais → Amorçage historique</strong>, tu
+actives une Règle, une Garde ou un Contexte : raison, lieu actuel et confirmation explicite exigés.
+Atlas crée une consigne de code adoptée par l’humain, avec sa provenance. Engagement, Méthode et
+Mémoire restent des pistes.
+Parcours, preuves et limites : <a href="/atlas-site/manuel/amorcer-le-harnais">Amorcer le Harnais</a>.</p>
+<h2 id="les-critères-les-cas-et-les-décisions">Les critères, les cas et les décisions</h2>
+<p>Le Harnais sert aussi les critères de tes tickets et les cas de ton scénario de
+<a href="/atlas-site/manuel/le-glossaire#recette">recette</a>, et compte les décisions métier :
+<a href="/atlas-site/manuel/les-criteres-les-cas-et-leur-preuve">Les critères, les cas et leur preuve</a>.</p>
+<h2 id="la-porte-du-workspace">La porte du workspace</h2>
+<p>Atlas tient une partie de <code>.atlas-workspace/</code> : il y date, signe et met en forme ce qu’il
+écrit. La <strong><a href="/atlas-site/manuel/le-glossaire#porte">porte</a></strong> refuse à l’IA toute écriture <strong>à la main</strong> sur ces
+chemins, par l’éditeur comme par le shell, et lui dit par où passer :</p>
+<table>
+<thead>
+<tr>
+<th>sous <code>.atlas-workspace/</code></th>
+<th>par où l’IA passe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>features/&lt;id&gt;/feature.json</code></td>
+<td>l’outil <code>declare</code></td>
+</tr>
+<tr>
+<td>les annotations, les fils, le <a href="/atlas-site/manuel/le-glossaire#parcours">parcours</a>, le plan d’une feature</td>
+<td>les outils <code>annotate</code>, <code>comment</code>, <code>parcours</code>, <code>plan</code></td>
+</tr>
+<tr>
+<td><code>precedents/</code></td>
+<td>l’outil <code>sonde</code></td>
+</tr>
+<tr>
+<td><code>harnais-historique/</code></td>
+<td>l’outil <code>amorcage_harnais</code>, sans activation humaine</td>
+</tr>
+<tr>
+<td><code>consignes/</code>, cachets compris</td>
+<td>l’outil <code>consigne</code></td>
+</tr>
+<tr>
+<td>la curation d’une feature (tes <a href="/atlas-site/manuel/le-glossaire#endossement">endossements</a>)</td>
+<td>aucun outil : c’est ton geste</td>
+</tr>
+<tr>
+<td>les recettes, le scénario de recette, <code>socle/</code></td>
+<td>la commande <code>atlas recette</code> (<a href="/atlas-site/manuel/la-recette">La recette</a>)</td>
+</tr>
+<tr>
+<td><code>project.json</code></td>
+<td>aucun outil : Config › Projet, ou ta main</td>
+</tr>
+</tbody>
+</table>
+<p>Le refus commence par « Atlas tient lui-même .atlas-workspace/… », nomme ce que le chemin contient
+et revient <strong>à chaque fois</strong>. Effacer ou déplacer un dossier qui contient ces fichiers est refusé aussi.</p>
+<p>Restent ouverts : <strong>la <a href="/atlas-site/manuel/le-glossaire#spec">spec</a></strong>, <code>ticket.md</code>, que le skill <code>ticket</code> écrit
+dans ta session ; ce que la porte ne nomme pas (un POC, une stack maison) ; <strong>lire</strong> tout fichier du
+workspace ; écrire <strong>ailleurs</strong> à partir de l’un d’eux. Jugée sur le chemin seul, elle tient <strong>même
+sans instance</strong>. Elle ne concerne que l’IA.</p>
+<h2 id="la-porte-des-moments">La porte des moments</h2>
+<p><code>review</code>, <code>as-coded</code>, <code>answer</code> et <code>recette</code> n’écrivent pas de code, mais le retrait de <code>Write</code> et <code>Edit</code> de leur skill ne vaut que le tour qui le lance.
+La <strong><a href="/atlas-site/manuel/le-glossaire#porte-des-moments">porte des moments</a></strong> tient la règle d’un tour à l’autre : <code>atlas moment &lt;son nom&gt;</code>, lancé par le skill, l’ouvre pour l’agent qui le lance ; le
+<a href="/atlas-site/manuel/le-glossaire#hook">hook</a> refuse alors <strong>à chaque fois</strong> toute écriture dans un repo du projet, en disant comment en sortir. Du fil principal, elle tient aussi ses agents d’aide. Signer le moment, lancer
+<code>resolve</code> ou <code>resolve-review</code>, ou finir la session la ferme (<code>atlas moment fin</code> pour <code>answer</code>).</p>
+<h2 id="le-skill-dune-écriture">Le skill d’une écriture</h2>
+<p>Chaque écriture de l’IA dit <strong>de quel skill elle vient</strong>, par son champ <code>skill</code> : l’un des six
+<a href="/atlas-site/manuel/le-glossaire#moment">moments</a> — <code>ticket</code>, <code>resolve</code>, <code>review</code>, <code>resolve-review</code>, <code>as-coded</code>,
+<code>recette</code> —, <code>answer</code>, <code>harnais</code>, <code>amorcer-harnais</code>, ou <code>aucun</code> hors de tout skill.</p>
+<p>Il est <strong>exigé</strong> par <code>comment</code>, <code>annotate</code>, <code>parcours</code>, <code>consigne</code> et le dépôt d’<code>amorcage_harnais</code> : sans lui, ou inconnu, l’écriture
+est refusée, la liste donnée. N’en demandent pas :
+<a href="/atlas-site/manuel/le-glossaire#ranger">ranger</a> un fil, marquer une décision <a href="/atlas-site/manuel/le-glossaire#remplacee">remplacée</a>,
+une annotation qui ne touche que la structure de la <a href="/atlas-site/manuel/le-glossaire#carte">carte</a>. Un message qui
+signe un moment porte ce moment d’office ; un <code>skill</code> contraire est refusé. Les neuf skills d’Atlas
+passent le leur ; le serveur MCP l’annonce à chaque ouverture.</p>
+<p>La provenance d’un critère codé le dit, à l’IA comme sur la <a href="/atlas-site/manuel/la-page-harnais">page Harnais</a> :
+« (review) », « moment inconnu », « hors moment » (<code>aucun</code>).</p>
+<blockquote>
+<p>⚠️ <strong>Après une mise à jour, redémarre ta session de code.</strong> Un ancien outil sans ce champ fait
+refuser <strong>toutes</strong> ses écritures. L’ancien <code>proposer</code> écrit et rend <code>ecrire</code> ; <code>adopter</code> est refusé.</p>
+</blockquote>
+<h2 id="ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</h2>
+<ul>
+<li><strong>Il ne vérifie pas que le code respecte une consigne</strong> : il la sert au bon moment, il ne remplace
+ni un test ni la CI ; une reprise après un refus ne dit pas qu’elle a été suivie.</li>
+<li><strong>Il n’approuve rien à ta place</strong> : le hook ajoute ou refuse, il n’autorise jamais un outil — les
+demandes de permission de Claude Code restent les tiennes.</li>
+<li><strong>Il ne fond pas consignes et précédents</strong>, et ne partage aucune consigne entre projets.</li>
+</ul>
+<h2 id="limites-connues">Limites connues</h2>
+<ul>
+<li><strong>Le hook n’existe que dans Claude Code, avec le plugin</strong> : Gemini CLI et Codex, ou un serveur MCP
+déclaré à la main, n’ont ni service à l’endroit ni porte, ni porte des moments (règle par le texte du skill seul), et rien ne le signale ; seuls le tronc
+commun et ce que leur IA demande par l’outil <code>harnais</code> leur arrivent. Leurs traces sont « non garanties ».</li>
+<li><strong>Une commande qui écrit sans dire où n’est pas vue</strong> — un script qui ouvre un fichier, <code>patch</code>,
+<code>git apply</code> : ni consigne ni porte ; Atlas compte ces gestes — la part « gestes non garantis » de la page
+Harnais —, sans dire lesquels.</li>
+<li><strong>Les outils de recherche de Claude Code ne déclenchent rien</strong> : seuls lecture, écriture et shell passent par le hook.</li>
+<li><strong>Le terminal n’est pas une authentification</strong> : l’instance ne vérifie pas qui l’appelle — une porte
+qu’une IA ne prend pas par mégarde, pas une serrure.</li>
+<li><strong>Un casier de cachets illisible perd ses invalidations</strong> : la consigne repart servie, et le hook
+le dit — « non garanti », dans ce que l’IA reçoit.</li>
+<li><strong>Le tronc commun n’arrive qu’à l’ouverture</strong> : une session longue ne le reçoit pas une seconde fois.</li>
+</ul>
+<nav class="suite" aria-label="Page suivante et précédente"><a href="/atlas-site/manuel/la-vue-d-ensemble"><small>← précédent</small>La vue d&#39;ensemble</a><a class="droite" href="/atlas-site/manuel/les-criteres-les-cas-et-leur-preuve"><small>suivant →</small>Les critères, les cas et leur preuve</a></nav></article><nav class="cote toc" aria-label="Sur cette page"><h2>Sur cette page</h2><ul><li><a href="#ce-quest-une-consigne">Ce qu’est une consigne</a></li><li><a href="#écrire-une-consigne">Écrire une consigne</a></li><li><a href="#ce-que-lia-reçoit-et-quand">Ce que l’IA reçoit, et quand</a></li><li><a href="#la-vie-dune-consigne-gardée">La vie d’une consigne, gardée</a></li><li><a href="#servie-doffice-à-regarder-invalidée">Servie d’office, à regarder, invalidée</a></li><li><a href="#chercher-ajouter-et-amorcer">Chercher, ajouter et amorcer</a></li><li><a href="#les-critères-les-cas-et-les-décisions">Les critères, les cas et les décisions</a></li><li><a href="#la-porte-du-workspace">La porte du workspace</a></li><li><a href="#la-porte-des-moments">La porte des moments</a></li><li><a href="#le-skill-dune-écriture">Le skill d’une écriture</a></li><li><a href="#ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</a></li><li><a href="#limites-connues">Limites connues</a></li></ul></nav></main><footer class="pied"><div class="dedans"><span>Atlas — suivi et validation de code.</span><a href="/atlas-site/manuel/prise-en-main">Manuel</a></div></footer><script>
+    document.getElementById('theme-bt')?.addEventListener('click', () => {
+      const r = document.documentElement;
+      // clair → sombre → système, et le tour recommence. « Système » RETIRE la clé : c'est ce qui
+      // rend le choix distinct d'une absence de choix.
+      const suite = { clair: 'sombre', sombre: '', '': 'clair' };
+      const v = suite[r.dataset.theme || ''];
+      if (v) { r.dataset.theme = v; try { localStorage.setItem('atlas-site-theme', v); } catch {} }
+      else { delete r.dataset.theme; try { localStorage.removeItem('atlas-site-theme'); } catch {} }
+    });
+  </script></body></html>

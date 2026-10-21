@@ -1,0 +1,359 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Le diagramme d&#39;un flux · Atlas</title><meta name="description" content="Un flux de la feature dessiné en couloirs, dans un module à part : une colonne par service, le temps de haut en bas, une boîte par étape, un losange par décision, une flèche quand un service en appelle un autre. Pour qui veut voir d'un coup ce qu'un scénario traverse, et dans quel ordre."><link rel="canonical" href="https://gregoirelacoste.github.io/atlas-site/manuel/le-diagramme-d-un-flux"><meta property="og:title" content="Le diagramme d'un flux · Atlas"><meta property="og:description" content="Un flux de la feature dessiné en couloirs, dans un module à part : une colonne par service, le temps de haut en bas, une boîte par étape, un losange par décision, une flèche quand un service en appelle un autre. Pour qui veut voir d'un coup ce qu'un scénario traverse, et dans quel ordre."><meta property="og:type" content="website"><meta property="og:url" content="https://gregoirelacoste.github.io/atlas-site/manuel/le-diagramme-d-un-flux"><meta name="twitter:card" content="summary"><link rel="icon" href="/atlas-site/favicon.svg" type="image/svg+xml"><script>
+    (() => { try { const t = localStorage.getItem('atlas-site-theme');
+      if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t; } catch {} })();
+  </script><link rel="stylesheet" href="/atlas-site/_astro/Base.D32RNicN.css"></head><body><header class="tete"><a class="marque" href="/atlas-site">🗺️ Atlas</a><nav><a href="/atlas-site/installer">Installer</a><a href="/atlas-site/manuel/prise-en-main" aria-current="page">Manuel</a><a href="/atlas-site/articles">Écrits</a><button class="theme-bt" id="theme-bt" type="button" aria-label="Changer de thème">◐</button></nav></header><main class="doc"><nav class="cote" aria-label="Le manuel"><h2>Le manuel</h2><ol><li><a href="/atlas-site/manuel/prise-en-main">Prise en main</a></li><li><a href="/atlas-site/manuel/l-arbre">L&#39;Arbre</a></li><li><a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a></li><li><a href="/atlas-site/manuel/le-code">Le Code</a></li><li><a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a></li><li><a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et inventaire</a></li><li><a href="/atlas-site/manuel/le-panneau-git">Le panneau Git</a></li><li><a href="/atlas-site/manuel/le-tableau">Le Tableau</a></li><li><a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a></li><li><a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a></li><li><a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a></li><li><a href="/atlas-site/manuel/brancher-l-ia">Brancher l&#39;IA</a></li><li><a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l&#39;IA lit et écrit</a></li><li><a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a></li><li><a href="/atlas-site/manuel/la-ligne-de-commande">La ligne de commande</a></li><li><a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a></li><li><a href="/atlas-site/manuel/le-clavier">Le clavier</a></li><li><a href="/atlas-site/manuel/les-precedents">Les précédents</a></li><li><a href="/atlas-site/manuel/les-decisions-metier">Les décisions métier</a></li><li><a href="/atlas-site/manuel/le-glossaire">Le glossaire</a></li><li><a href="/atlas-site/manuel/la-recette">La recette</a></li><li><a href="/atlas-site/manuel/deposer-une-recette">Déposer une recette</a></li><li><a href="/atlas-site/manuel/la-vue-d-ensemble">La vue d&#39;ensemble</a></li><li><a href="/atlas-site/manuel/le-harnais">Le Harnais</a></li><li><a href="/atlas-site/manuel/les-criteres-les-cas-et-leur-preuve">Les critères, les cas et leur preuve</a></li><li><a href="/atlas-site/manuel/la-page-harnais">La page Harnais</a></li><li><a href="/atlas-site/manuel/les-panneaux-et-les-modules">Les panneaux et les modules</a></li><li><a href="/atlas-site/manuel/le-diagramme-d-un-flux" aria-current="page">Le diagramme d&#39;un flux</a></li><li><a href="/atlas-site/manuel/chercher-dans-le-harnais">Chercher dans le Harnais</a></li><li><a href="/atlas-site/manuel/amorcer-le-harnais">Amorcer le Harnais</a></li></ol></nav><article class="corps"><h1>Le diagramme d&#39;un flux</h1><p class="chapo">Un flux de la feature dessiné en couloirs, dans un module à part : une colonne par service, le temps de haut en bas, une boîte par étape, un losange par décision, une flèche quand un service en appelle un autre. Pour qui veut voir d&#39;un coup ce qu&#39;un scénario traverse, et dans quel ordre.</p><blockquote>
+<p>Un flux de la feature dessiné en couloirs, dans un module à part : une colonne par service, le temps
+de haut en bas, une boîte par étape, un losange par décision, une flèche quand un service en appelle
+un autre. Pour qui veut voir d’un coup ce qu’un scénario traverse, et dans quel ordre.</p>
+</blockquote>
+<h2 id="ce-quil-montre-et-ce-que-larbre-ne-dit-pas">Ce qu’il montre, et ce que l’Arbre ne dit pas</h2>
+<p>L’<a href="/atlas-site/manuel/le-glossaire#arbre">Arbre</a> dit <strong>qui appelle qui</strong> : sous une méthode, chaque méthode qu’elle
+appelle apparaît une fois, quel que soit le nombre d’appels. C’est voulu — l’Arbre range ce qu’il faut
+relire, et un symbole se relit une fois — mais ça ne dit pas dans quel ordre le programme avance, ni
+sous quelle condition, ni quand il passe d’un service à l’autre.</p>
+<p>Le <strong><a href="/atlas-site/manuel/le-glossaire#diagramme">diagramme</a></strong> reprend <strong>un scénario</strong> : un
+<a href="/atlas-site/manuel/le-glossaire#flux">flux</a> de la feature qui porte du changement, de son
+<a href="/atlas-site/manuel/le-glossaire#entree">entrée</a> — une route HTTP par exemple — à sa réponse. Il le dessine comme
+un organigramme, <strong>une colonne par service</strong> (le repo de chaque étape), <strong>le temps de haut en bas</strong> :
+l’ordre où le code évalue ses appels, jamais une trace d’exécution.</p>
+<table>
+<thead>
+<tr>
+<th>Forme</th>
+<th>Ce que c’est</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ovale du haut</td>
+<td>le <strong>début</strong> : la route de l’entrée (<code>POST …/quota/create · v2</code>), sinon son déclencheur</td>
+</tr>
+<tr>
+<td>rectangle</td>
+<td>une <strong>étape</strong> : l’entrée, une méthode que la feature change, un passage qui y mène</td>
+</tr>
+<tr>
+<td>losange</td>
+<td>une <strong>décision</strong> : une condition, un <code>switch</code>, un <code>try</code> qui capture — ses branches étiquetées</td>
+</tr>
+<tr>
+<td>parallélogramme</td>
+<td>la <strong>réponse</strong> de l’entrée HTTP</td>
+</tr>
+<tr>
+<td>ovale du bas</td>
+<td>la <strong>fin</strong></td>
+</tr>
+<tr>
+<td>ovale <code>KO</code></td>
+<td>une <strong>sortie d’erreur</strong> : la branche finit là, sur ce qui sort (<code>KO · NotFoundException · 404</code>)</td>
+</tr>
+<tr>
+<td>flèche violette</td>
+<td>un <strong>appel vers un service</strong> : elle part de l’étape qui l’émet, change de colonne, la requête écrite au-dessus de l’arrivée</td>
+</tr>
+<tr>
+<td>flèche violette fine</td>
+<td>la <strong>réponse</strong> d’un appel attendu, qui revient à l’appelant</td>
+</tr>
+<tr>
+<td>flèche en tirets</td>
+<td>une <strong>fonction confiée</strong> : rien ne prouve qu’elle est appelée</td>
+</tr>
+</tbody>
+</table>
+<p>C’est un <a href="/atlas-site/manuel/les-panneaux-et-les-modules">module</a> à part, <strong>Diagramme</strong>, qui s’installe dans
+n’importe quel panneau : à côté de l’Arbre, pour lire les deux ensemble, ou sans lui. Il ne remplace
+rien : l’Arbre garde ses deux modes, Flux et Ensemble. Le dessin est souvent plus large que son
+panneau : il défile, ou s’agrandit avec le panneau (<code>Espace</code>, la flèche du panneau deux fois).</p>
+<h2 id="linstaller-et-quel-scénario-il-montre">L’installer, et quel scénario il montre</h2>
+<p>Choisis <strong>Diagramme</strong> dans la liste d’un panneau, ou tape <code>Espace</code>, la flèche du panneau, puis <code>d</code>
+(<code>Espace ← d</code> le pose à gauche). En tête, <strong>un onglet par scénario</strong> : chaque flux que la
+<a href="/atlas-site/manuel/le-glossaire#carte">carte</a> isole et qui part d’un symbole, dans l’ordre de l’Arbre, au nom de
+sa tête — l’intention courte que l’IA y a posée, sinon <code>Classe.méthode</code>. Un clic sur un onglet montre
+ce scénario ; <code>Espace d l</code> amène le focus sur l’onglet actif, <code>←</code> <code>→</code> passent au voisin. Les titres s’écrivent <strong>en entier</strong>
+(à la ligne, jamais coupés par « … ») ; <code>replier ▴</code> ne garde que le scénario montré.</p>
+<p>Quand l’Arbre est à l’écran, le module le <strong>suit</strong> : choisir une ligne dans l’Arbre amène le scénario
+du flux qui la porte, comme le Code suit la sélection. Une ligne hors de tout flux laisse le scénario
+montré. L’Arbre masqué ou absent, une sélection venue d’ailleurs ne le fait pas bouger. À son arrivée,
+il part du scénario de la ligne choisie dans l’Arbre s’il est à l’écran, sinon du premier.</p>
+<p>Un flux dont la tête est un <strong>fichier</strong> — un écran, un composant — n’a pas de diagramme : le
+diagramme suit les appels écrits dans le corps d’un symbole, et un fichier n’en a pas. Choisi dans
+l’Arbre, il reste celui qu’affiche le module : son onglet dit <code>… · sans diagramme</code>, et le corps dit
+<code>pas de diagramme pour ce flux : il part d’un fichier, pas d’un symbole — …</code>. Jamais un autre scénario
+à sa place.</p>
+<p>D’où vient le scénario montré se lit dans l’<strong>infobulle de son onglet</strong> : <code>le scénario du nœud choisi dans l’Arbre</code> (parti de ta sélection), <code>le premier scénario de la carte</code> (rien n’était choisi dans un flux),
+<code>aucun nœud choisi dans un flux : le scénario montré avant</code> (la ligne choisie n’est dans aucun flux),
+<code>choisi ici</code> (tu as choisi l’onglet). Sous les onglets, une ligne dit ce qu’il compte :</p>
+<p>| Ce que tu lis | Ce que ça veut dire |
+|—|—|| <code>6 étapes · 2 décisions · 1 appel entre services</code> | ce que le dessin porte — sans les boîtes <code>déjà plus haut</code>, ni un appel qui revient chez soi |
+| <code>1 effet atteint</code> · <code>1 limite</code> | ceux de tout le scénario, entrées atteintes comprises, au pied du dessin ; un clic déplie la section et y descend |
+| <code>affichage : détail 1 · ajusté ▾</code> | un menu : le <strong>détail</strong> (1 · 2 · tout, voir plus bas) et la <strong>taille</strong> (<code>ajusté</code>, qui tient en largeur sans agrandir ni passer sous 40 %, 100 %, 75 %, 50 %) |</p>
+<p>Le scénario se calcule <strong>à la demande</strong>, pour le seul flux affiché : l’ouvrir relit la carte de la feature
+avec l’ordre de ses appels — le temps d’une carte. Pendant ce temps, le module dit
+<code>calcul du scénario « … » — la carte se relit avec l’ordre de ses appels…</code>, et l’indicateur d’activité du
+header nomme <code>diagramme de &lt;la feature&gt;</code>. Changer d’onglet le redemande, une carte rechargée aussi. Rangé
+ou masqué, le module ne demande rien. Une seule demande part à la fois : un scénario choisi pendant le
+calcul est retenu, servi dès que la réponse en cours arrive, et celle-ci est jetée.</p>
+<p>Sans feature ou sans carte, le module ne s’installe pas et le dit. Sur une carte qui n’isole aucun
+flux, il n’y a pas d’onglet et le corps dit <code>la carte n’isole aucun flux</code>. Il lit le code, jamais une
+exécution : il reste disponible quand <a href="/atlas-site/manuel/la-recette">Recette</a> est installée. Si la route refuse le
+scénario, le module affiche son refus et les têtes qu’elle accepte ; si elle ne répond pas, il dit
+<code>pas pu lire le diagramme :</code> et la raison. Jamais un dessin vide.</p>
+<h2 id="ce-qui-fait-une-étape">Ce qui fait une étape</h2>
+<p>Le dessin ne montre pas chaque appel : il montre les <strong>étapes principales</strong>.</p>
+<ul>
+<li><strong>L’entrée</strong>, toujours, juste sous le début.</li>
+<li><strong>Une méthode que la feature change</strong> (des lignes changées), et <strong>le chemin</strong> depuis l’entrée
+jusqu’à elle. Une méthode inchangée n’est qu’un passage : elle ne se dessine que si elle mène à une
+étape, et quand elle ne fait que passer elle se <strong>fond</strong> dans l’étape où elle mène, qui le dit en
+tête : <code>par ServiceDeCommandes.valider</code>. Si elle mène à plusieurs étapes, elle se dessine, discrète.</li>
+<li><strong>Un appel vers un autre service</strong>, et son <strong>étape d’arrivée</strong> dans la colonne de ce service.</li>
+<li><strong>Une décision</strong> dont une branche mène à une étape. Les autres ne se dessinent pas.</li>
+</ul>
+<p>Une méthode changée <strong>sans intention</strong> posée par l’IA (ni intention courte, ni phrase), qui ne mène à
+aucune autre étape, est un <strong>utilitaire</strong> : elle ne fait pas d’étape, elle se compte dans celle qui la
+contient.</p>
+<p>Le <strong>détail</strong> compte les étapes changées traversées depuis l’entrée de chaque service. Au détail <strong>1</strong>
+(défaut), la première étape changée sous l’entrée ; le plus profond ne se dessine pas, et l’étape visible
+qui le contient dit <code>+N dedans</code>. Au détail <strong>2</strong>, une de plus ; <strong>tout</strong>, sans borne. Les crans de la barre,
+ou <code>Espace d p</code>, le changent sans redemander le scénario. L’arrivée d’un appel entre services recommence
+le compte : un service appelé montre au moins sa première étape changée.</p>
+<p>Une étape déjà dessinée plus haut dans le même scénario devient une boîte en tirets,
+<code>déjà plus haut</code>, sans redire sa suite.</p>
+<h2 id="lire-une-boîte">Lire une boîte</h2>
+<p>Une étape porte, de haut en bas :</p>
+<ul>
+<li><code>par …</code> en italique, quand des passages s’y fondent ;</li>
+<li>son <strong>libellé</strong> : l’intention courte que l’IA a posée en codant, le nom du code en petit dessous —
+sinon le nom du code seul ; le même libellé que la ligne de l’Arbre et la boîte de la vue d’ensemble,
+avec ses marques <code>~</code> et <code>?</code> ; neuve, son nom est <strong>vert</strong> ;</li>
+<li><code>3 l.</code> en gras quand la feature la change, <code>inchangée</code> pour un passage ; puis <code>+N dedans</code> ;</li>
+<li>l’endroit d’où elle est appelée quand il compte : <code>dans une boucle (for-of)</code>,
+<code>confiée à setTimeout · déclenchement non prouvé</code>, <code>fonction déclarée · déclenchement non prouvé</code>,
+une construction qu’Atlas ne lit pas — une arrivée dit celui de la requête qui y mène ;</li>
+<li>un appel réseau de son corps qu’aucune entrée ne reçoit dans la carte : <code>appel POST …/audit · aucune entrée appariée</code> ;</li>
+<li>pour une arrivée, <code>suite non lue :</code> et sa raison quand son corps ne se lit pas.</li>
+</ul>
+<p>Une étape <strong>changée</strong> a un bord franc ; une étape de <strong>chemin</strong> est sur le fond pâle du contexte, son
+texte en gris. L’infobulle donne <code>Classe.méthode</code>, le repo et le fichier.</p>
+<p>Un <strong>losange</strong> dit le <strong>code de sa condition</strong>, tel que le langage l’a lu, et d’où il vient :
+<code>dto.caseId ?</code> · <code>if · l.12</code>. Une condition de plus de 28 signes est coupée par <code>…</code>, entière au survol ;
+un clic l’ouvre dans le Code. Ses branches sont étiquetées, dans les mots de la construction pour que
+« oui » reste vrai :</p>
+<table>
+<thead>
+<tr>
+<th>Construction</th>
+<th>Question</th>
+<th>Branches</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>if … else</code>, <code>? :</code></td>
+<td><code>dto.ok ?</code></td>
+<td><code>oui</code> · <code>non</code></td>
+</tr>
+<tr>
+<td><code>if</code> sans <code>else</code>, <code>&amp;&amp;</code></td>
+<td><code>dto.ok ?</code></td>
+<td><code>oui</code>, l’autre file tout droit (<code>non</code>)</td>
+</tr>
+<tr>
+<td><code>||</code></td>
+<td><code>dto.ok ?</code></td>
+<td><code>non</code>, l’autre file tout droit (<code>oui</code>)</td>
+</tr>
+<tr>
+<td><code>??</code></td>
+<td><code>dto.x absent ?</code></td>
+<td><code>oui</code> · <code>non</code></td>
+</tr>
+<tr>
+<td><code>?.</code></td>
+<td><code>this.svc présent ?</code></td>
+<td><code>oui</code> · <code>non</code></td>
+</tr>
+<tr>
+<td><code>switch</code></td>
+<td><code>selon dto.kind</code></td>
+<td><code>cas 1</code>, <code>cas 2</code>… · <code>défaut</code> · <code>autre cas</code></td>
+</tr>
+<tr>
+<td><code>try … catch</code></td>
+<td><code>échec ?</code></td>
+<td><code>oui</code> (ce que la capture fait) · <code>non</code></td>
+</tr>
+</tbody>
+</table>
+<p>Quand le langage n’a pas lu de condition (un fichier qui ne la lit pas), le losange garde la forme
+seule : <code>condition ?</code>, <code>valeur absente ?</code>, <code>présent ?</code>, <code>selon ?</code>.</p>
+<p>Une branche qui ne mène à aucune étape n’est pas dessinée : son chemin file tout droit sous le
+losange, avec son étiquette. Une boucle ne fait pas de cadre : ses étapes le disent.</p>
+<p>La <strong>réponse</strong> dit <code>réponse 201 · TypeRendu</code> : le <strong>code</strong> quand la stack le prouve (voir plus bas),
+le type quand la carte lit celui que l’entrée rend (sans son enveloppe, <code>Promise</code> par exemple) ; sans
+l’un ni l’autre, <code>réponse</code>.</p>
+<p>Une <strong>sortie d’erreur</strong> — un <code>throw</code>, ou un <code>return</code> qui rend une erreur du langage (<code>Error</code>,
+<code>TypeError</code>…) — finit sa branche sur un ovale <code>KO</code> qui nomme ce qui sort : la classe de l’erreur
+(<code>KO · NotFoundException</code>), <code>erreur non nommée</code> quand rien ne la nomme (<code>throw e</code>), puis son statut HTTP
+quand la stack le déclare (<code>· 404</code>). Rien n’en repart. Elle ne se dessine que dans le corps d’une étape
+dessinée : celle d’une étape trop profonde pour le détail reste dedans. Un <code>throw</code> écrit dans le bloc
+d’un <code>try</code>, ou dans une étape appelée depuis ce bloc, ne finit rien. Un <code>return</code> d’une erreur ne finit
+le flux que dans l’entrée : dans une étape appelée, l’appelant reçoit une valeur.</p>
+<p>Un <code>return</code> écrit dans une branche finit cette branche : elle file vers la fin du corps qui l’écrit —
+la réponse, ou la suite de l’appelant.</p>
+<h2 id="ce-que-le-dessin-dit-seulement-avec-une-preuve">Ce que le dessin dit seulement avec une preuve</h2>
+<p>Seule l’introspection d’Atlas se dessine : la carte, et ce que le lecteur de langage et les stacks
+prouvent. Rien n’est lu à part dans le code, rien n’est deviné.</p>
+<ul>
+<li><strong>L’attente d’un appel entre services.</strong> Un appel <strong>attendu</strong> — <code>await</code>, ou une promesse rendue par
+<code>return</code> que l’appelant attend à son tour — a sa flèche de retour : de chaque fin de la suite
+appelée (le <code>non</code> d’une décision compris) vers ce qui suit chez l’appelant, et la suite ne reprend
+que de lui. Un appel dont le résultat est
+<strong>ignoré</strong> — une instruction seule, <code>void</code>, une variable que rien ne relit, une promesse rendue que
+l’appelant ignore — dit <code>sans attendre</code> sur sa requête. Rendue par l’entrée, ou par une fonction
+confiée, une promesse n’affirme rien. Sinon (un argument d’un autre
+appel, une chaîne <code>.then</code>, une variable relue) <strong>rien n’est affirmé</strong> : pas de retour, pas de mot,
+et ce qui suit repart de l’étape qui l’émet. « Détaché » ne se dit jamais : il faudrait une preuve
+de plus que « pas attendu ici ».</li>
+<li><strong>Le code de la réponse</strong> ne se dit que si la stack le prouve : le décorateur qui le fixe par un nombre
+écrit (<code>@HttpCode(204)</code>), sinon le défaut du framework pour le décorateur de la route (chez Nest,
+<code>@Post</code> 201, <code>@Get</code> 200). Un paramètre <code>@Res()</code>, un <code>@Redirect()</code> ou un <code>@HttpCode(HttpStatus.X)</code>
+— un nombre qui n’est pas écrit — et rien n’est dit, jamais le défaut à sa place.</li>
+<li><strong>Le statut d’une erreur</strong> ne se dit que pour une classe que la stack déclare, venue de son module
+(chez Nest, ses exceptions intégrées de <code>@nestjs/common</code>), et seulement quand elle sort d’une
+entrée HTTP : ni dans une fonction confiée, ni dans un <code>@Cron</code>. Jamais lu d’un argument
+(<code>new HttpException(…, 403)</code> ne dit rien).</li>
+<li><strong>Une fonction confiée</strong> (<code>setTimeout</code>, <code>then</code>, une référence passée en argument) : ce qu’elle
+contient se dessine à côté de l’étape qui la confie, sa flèche en tirets ; une requête ou une décision
+qu’elle contient le dit aussi. La suite repart de l’étape qui la confie, jamais de la fonction.</li>
+</ul>
+<h2 id="le-placement">Le placement</h2>
+<p>Chaque service a sa colonne, dans l’ordre où le scénario les atteint, son nom en tête et la couleur
+de son territoire — celle du fil de l’Arbre. Une décision range ses branches côte à côte ; seul un appel
+réseau (et sa réponse) change de colonne. Les flèches vont à angles droits par les bandes et couloirs
+vides, chacune sur son propre trait : <code>oui</code> et <code>non</code> ne se longent jamais. Aucune flèche ne traverse une
+boîte, aucune boîte n’en chevauche une autre, aucune étiquette n’en couvre une ; le module le vérifie
+après chaque dessin.</p>
+<h2 id="ouvrir-le-code-dune-boîte-lendosser">Ouvrir le code d’une boîte, l’endosser</h2>
+<p>Un clic sur une boîte fait ce que fait un clic dans l’Arbre : le <a href="/atlas-site/manuel/le-glossaire#noeud">nœud</a> est
+sélectionné, le <a href="/atlas-site/manuel/le-glossaire#panneau-code">panneau Code</a> s’ouvre. Une étape ouvre son symbole ;
+une décision ouvre le symbole qui l’écrit, <strong>à sa ligne</strong>, éclairée un instant ; le début, la réponse
+et la fin ouvrent l’entrée. La requête au-dessus d’une arrivée ouvre l’appel, là où il est écrit.</p>
+<p>Ce clic n’est pas un choix dans l’Arbre : même si le nœud ouvert appartient à un autre flux, le
+module garde son scénario. La boîte cliquée reste marquée tant que son nœud est celui que le Code
+montre. <code>0</code>, <code>1</code>–<code>4</code> et <code>?</code> agissent sur ce nœud, avec les mêmes règles que dans l’Arbre (voir
+<a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a>) : le diagramme ne porte aucun
+<a href="/atlas-site/manuel/le-glossaire#rond">rond</a>, il mène au code qu’on endosse.</p>
+<p>Aux flèches, <code>↑</code> <code>↓</code> <code>←</code> <code>→</code> passent à la boîte la plus proche dans ce sens et ouvrent son code, sans
+remplir l’historique ; <code>Entrée</code> ouvre la boîte qui a le focus. Les flèches veulent le focus dans le
+module : clique une boîte d’abord. Le <strong><code>?</code></strong> au bout de la barre ouvre la règle du jeu du diagramme.</p>
+<h2 id="les-effets-et-les-limites">Les effets et les limites</h2>
+<p>Sous le dessin, deux listes <strong>repliées sous leur compte</strong> (un clic les déplie ; à zéro, il n’y a rien à déplier et
+la phrase est en infobulle), pour <strong>tout le scénario</strong> — la tête et chaque
+entrée que ses appels atteignent dans un autre service :</p>
+<ul>
+<li><strong>Effets atteints</strong> — chaque effet que le scénario atteint, une fois : sa nature (<code>lecture</code>,
+<code>modification</code>, <code>publication</code>…), l’interface qu’il emprunte, sa ligne ; un clic ouvre son code ;</li>
+<li><strong>Limites</strong> — tout ce que le diagramme ne peut pas affirmer : les
+<a href="/atlas-site/manuel/le-glossaire#angle-mort">angles morts</a> de la carte sur les fichiers qu’il traverse, les
+constructions qu’Atlas n’interprète pas, un corps qu’il n’a pas pu lire dans l’ordre
+(<code>contexte non lu : l’ordre est celui de la lecture, pas de l’exécution</code>), un corps que la carte n’a
+pas soumis au juge, les appels évalués à la déclaration (un décorateur), une entrée atteinte dont la
+suite ne se lit pas (<code>suite non lue : …</code>). Un clic ouvre le fichier à la ligne, dans son service.</li>
+</ul>
+<h2 id="ce-que-lia-en-lit">Ce que l’IA en lit</h2>
+<p>L’outil <code>diagramme</code> sert le même flux à l’IA, en texte : une ligne par élément, indentée sous ce qui
+la contient — chaque appel, chaque construction et ses branches (<code>· condition : dto.ok</code>), les effets,
+les fonctions confiées, les sorties d’erreur (<code>sortie throw NotFoundException l.10 · statut : 404</code>) et
+les retours écrits dans une construction (<code>sortie return l.12</code>), un
+appel réseau et son attente quand le code la prouve (<code>· attendu ici</code>, <code>· sans attendre</code>), puis les
+limites. Il prend la tête du flux (<code>racine</code>) ; une tête que la carte n’isole pas est refusée,
+et le refus nomme celles qu’elle accepte. Un flux parti d’un fichier est refusé avec les mots de
+l’écran.</p>
+<p>Il le sert <strong>au repos</strong> : ce qui ne porte aucun fait du flux — les appels sans cible établie, les
+appels hors du flux, les constructions qui ne contiennent qu’eux — tient en une ligne
+<code>⋯ replié : … · l.A–B</code> qui le compte et nomme ses appels, et une ligne <code>replié au repos : …</code> en dit
+le total. Avec <code>tout: true</code>, il sert le contour entier. Le détail des outils est dans
+<a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l’IA lit et écrit</a>.</p>
+<h2 id="se-déplacer-dans-un-grand-diagramme">Se déplacer dans un grand diagramme</h2>
+<p><code>Maj</code> + <code>↑</code> <code>↓</code> <code>←</code> <code>→</code> le fait défiler (un clic sur le fond donne le focus), et <strong>glisser le fond</strong> — pas une boîte, pas un lien — le déplace. <code>Espace</code> reste la touche maîtresse.</p>
+<h2 id="raccourcis">Raccourcis</h2>
+<table>
+<thead>
+<tr>
+<th>Touche</th>
+<th>Effet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Espace</code> + flèche + <code>d</code></td>
+<td>installer le module Diagramme dans ce panneau</td>
+</tr>
+<tr>
+<td><code>Espace d l</code></td>
+<td>l’onglet du scénario montré (<code>←</code> <code>→</code> y changent de scénario)</td>
+</tr>
+<tr>
+<td><code>Espace d p</code></td>
+<td>le détail : 1 → 2 → tout → 1</td>
+</tr>
+<tr>
+<td><code>Maj</code> + <code>↑</code> <code>↓</code> <code>←</code> <code>→</code> · glisser le fond</td>
+<td>déplacer le diagramme</td>
+</tr>
+<tr>
+<td><code>↑</code> <code>↓</code> <code>←</code> <code>→</code> · <code>Entrée</code></td>
+<td>la boîte voisine (le Code suit) · ouvrir la boîte qui a le focus</td>
+</tr>
+<tr>
+<td><code>0</code> · <code>1</code>–<code>4</code> · <code>?</code></td>
+<td>endosser, noter, « pas compris » — sur le nœud de la boîte ouverte</td>
+</tr>
+<tr>
+<td><code>Échap</code></td>
+<td>refermer le Code ouvert ; la boîte choisie s’éteint avec lui</td>
+</tr>
+</tbody>
+</table>
+<p>Le reste du clavier est dans <a href="/atlas-site/manuel/le-clavier">Le clavier</a>.</p>
+<h2 id="ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</h2>
+<ul>
+<li><strong>Il ne trace aucune exécution.</strong> L’ordre est celui que le code écrit : combien de fois une boucle
+tourne, quelle branche est prise, si une fonction confiée sera appelée, rien ne le dit.</li>
+<li><strong>Il ne juge aucun lien.</strong> Ce qu’un appel atteint, et si la carte le retient, vient de la carte ; le
+diagramme le recopie. Il ne prolonge jamais un flux que la carte arrête.</li>
+<li><strong>Il ne se calcule pas avec la carte.</strong> Il se demande, un scénario à la fois ; ouvrir une feature
+n’en calcule aucun.</li>
+<li><strong>Il ne fusionne pas deux appels</strong> : deux occurrences du même appel dans deux branches restent
+deux chemins.</li>
+</ul>
+<h2 id="limites-connues">Limites connues</h2>
+<ul>
+<li><strong>Seul TypeScript (et JavaScript) lit l’ordre des appels.</strong> Dans un fichier Kotlin, Swift ou Java,
+le corps suit l’ordre de la lecture, sans décision, et une limite le dit (<code>contexte non lu</code>).</li>
+<li><strong>Chaque demande relit une carte entière.</strong> Sur une grosse feature, c’est le temps d’une carte, à
+chaque scénario demandé.</li>
+<li><strong>Au plus douze entrées suivies</strong> d’un service à l’autre par scénario ; au-delà, l’arrivée se
+dessine sans sa suite, et le dit.</li>
+<li><strong>Les codes et les statuts HTTP ne viennent que des stacks qui les déclarent</strong> — aujourd’hui Nest.
+Une entrée Express dit <code>réponse</code> sans code.</li>
+<li><strong>L’attente se lit sur la syntaxe de l’appel lui-même.</strong> <code>await firstValueFrom(this.http.post(…))</code>
+— l’appel réseau est l’argument d’un autre — n’affirme rien : pas de retour, pas de <code>sans attendre</code>.</li>
+<li><strong>Une sortie d’erreur ne se suit pas d’un service à l’autre</strong> : la fin <code>KO</code> dit ce qui sort du service
+qui l’écrit, pas ce que l’appelant en reçoit.</li>
+<li><strong>Le détail ne se retient pas</strong> d’une session à l’autre.</li>
+</ul>
+<nav class="suite" aria-label="Page suivante et précédente"><a href="/atlas-site/manuel/les-panneaux-et-les-modules"><small>← précédent</small>Les panneaux et les modules</a><a class="droite" href="/atlas-site/manuel/chercher-dans-le-harnais"><small>suivant →</small>Chercher dans le Harnais</a></nav></article><nav class="cote toc" aria-label="Sur cette page"><h2>Sur cette page</h2><ul><li><a href="#ce-quil-montre-et-ce-que-larbre-ne-dit-pas">Ce qu’il montre, et ce que l’Arbre ne dit pas</a></li><li><a href="#linstaller-et-quel-scénario-il-montre">L’installer, et quel scénario il montre</a></li><li><a href="#ce-qui-fait-une-étape">Ce qui fait une étape</a></li><li><a href="#lire-une-boîte">Lire une boîte</a></li><li><a href="#ce-que-le-dessin-dit-seulement-avec-une-preuve">Ce que le dessin dit seulement avec une preuve</a></li><li><a href="#le-placement">Le placement</a></li><li><a href="#ouvrir-le-code-dune-boîte-lendosser">Ouvrir le code d’une boîte, l’endosser</a></li><li><a href="#les-effets-et-les-limites">Les effets et les limites</a></li><li><a href="#ce-que-lia-en-lit">Ce que l’IA en lit</a></li><li><a href="#se-déplacer-dans-un-grand-diagramme">Se déplacer dans un grand diagramme</a></li><li><a href="#raccourcis">Raccourcis</a></li><li><a href="#ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</a></li><li><a href="#limites-connues">Limites connues</a></li></ul></nav></main><footer class="pied"><div class="dedans"><span>Atlas — suivi et validation de code.</span><a href="/atlas-site/manuel/prise-en-main">Manuel</a></div></footer><script>
+    document.getElementById('theme-bt')?.addEventListener('click', () => {
+      const r = document.documentElement;
+      // clair → sombre → système, et le tour recommence. « Système » RETIRE la clé : c'est ce qui
+      // rend le choix distinct d'une absence de choix.
+      const suite = { clair: 'sombre', sombre: '', '': 'clair' };
+      const v = suite[r.dataset.theme || ''];
+      if (v) { r.dataset.theme = v; try { localStorage.setItem('atlas-site-theme', v); } catch {} }
+      else { delete r.dataset.theme; try { localStorage.removeItem('atlas-site-theme'); } catch {} }
+    });
+  </script></body></html>

@@ -1,0 +1,401 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Chercher dans le Harnais · Atlas</title><meta name="description" content="Pose le problème sans connaître son fichier, relis les sources de chaque résultat et les six mesures qui disent ce qu'Atlas sait de son service."><link rel="canonical" href="https://gregoirelacoste.github.io/atlas-site/manuel/chercher-dans-le-harnais"><meta property="og:title" content="Chercher dans le Harnais · Atlas"><meta property="og:description" content="Pose le problème sans connaître son fichier, relis les sources de chaque résultat et les six mesures qui disent ce qu'Atlas sait de son service."><meta property="og:type" content="website"><meta property="og:url" content="https://gregoirelacoste.github.io/atlas-site/manuel/chercher-dans-le-harnais"><meta name="twitter:card" content="summary"><link rel="icon" href="/atlas-site/favicon.svg" type="image/svg+xml"><script>
+    (() => { try { const t = localStorage.getItem('atlas-site-theme');
+      if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t; } catch {} })();
+  </script><link rel="stylesheet" href="/atlas-site/_astro/Base.D32RNicN.css"></head><body><header class="tete"><a class="marque" href="/atlas-site">🗺️ Atlas</a><nav><a href="/atlas-site/installer">Installer</a><a href="/atlas-site/manuel/prise-en-main" aria-current="page">Manuel</a><a href="/atlas-site/articles">Écrits</a><button class="theme-bt" id="theme-bt" type="button" aria-label="Changer de thème">◐</button></nav></header><main class="doc"><nav class="cote" aria-label="Le manuel"><h2>Le manuel</h2><ol><li><a href="/atlas-site/manuel/prise-en-main">Prise en main</a></li><li><a href="/atlas-site/manuel/l-arbre">L&#39;Arbre</a></li><li><a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a></li><li><a href="/atlas-site/manuel/le-code">Le Code</a></li><li><a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a></li><li><a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et inventaire</a></li><li><a href="/atlas-site/manuel/le-panneau-git">Le panneau Git</a></li><li><a href="/atlas-site/manuel/le-tableau">Le Tableau</a></li><li><a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a></li><li><a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a></li><li><a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a></li><li><a href="/atlas-site/manuel/brancher-l-ia">Brancher l&#39;IA</a></li><li><a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l&#39;IA lit et écrit</a></li><li><a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a></li><li><a href="/atlas-site/manuel/la-ligne-de-commande">La ligne de commande</a></li><li><a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a></li><li><a href="/atlas-site/manuel/le-clavier">Le clavier</a></li><li><a href="/atlas-site/manuel/les-precedents">Les précédents</a></li><li><a href="/atlas-site/manuel/les-decisions-metier">Les décisions métier</a></li><li><a href="/atlas-site/manuel/le-glossaire">Le glossaire</a></li><li><a href="/atlas-site/manuel/la-recette">La recette</a></li><li><a href="/atlas-site/manuel/deposer-une-recette">Déposer une recette</a></li><li><a href="/atlas-site/manuel/la-vue-d-ensemble">La vue d&#39;ensemble</a></li><li><a href="/atlas-site/manuel/le-harnais">Le Harnais</a></li><li><a href="/atlas-site/manuel/les-criteres-les-cas-et-leur-preuve">Les critères, les cas et leur preuve</a></li><li><a href="/atlas-site/manuel/la-page-harnais">La page Harnais</a></li><li><a href="/atlas-site/manuel/les-panneaux-et-les-modules">Les panneaux et les modules</a></li><li><a href="/atlas-site/manuel/le-diagramme-d-un-flux">Le diagramme d&#39;un flux</a></li><li><a href="/atlas-site/manuel/chercher-dans-le-harnais" aria-current="page">Chercher dans le Harnais</a></li><li><a href="/atlas-site/manuel/amorcer-le-harnais">Amorcer le Harnais</a></li></ol></nav><article class="corps"><h1>Chercher dans le Harnais</h1><p class="chapo">Pose le problème sans connaître son fichier, relis les sources de chaque résultat et les six mesures qui disent ce qu&#39;Atlas sait de son service.</p><blockquote>
+<p>Pose le problème sans connaître son fichier, relis les sources de chaque résultat et les six mesures qui disent ce qu’Atlas sait de son service.</p>
+</blockquote>
+<p>Le <strong><a href="/atlas-site/manuel/le-glossaire#harnais">Harnais</a></strong> rassemble les règles, les engagements et la mémoire de ton
+<a href="/atlas-site/manuel/le-glossaire#projet">projet</a>. Tu peux le chercher avec les mots du problème, sans ouvrir de
+<a href="/atlas-site/manuel/le-glossaire#feature">feature</a>, le ticket et le code qui le porte. La recherche est <strong>en
+évaluation</strong> : elle est disponible, mais aucun gain de pertinence ni adoption comme nouveau service
+automatique n’est établi faute de panel humain réservé.</p>
+<h2 id="commencer-par-la-question">Commencer par la question</h2>
+<p>Dans la <a href="/atlas-site/manuel/la-page-harnais">page Harnais</a>, écris le problème et clique <strong>Chercher · nouvelle tâche</strong>.
+Les lieux sont facultatifs. Le filtre de la liste, lui, cherche seulement parmi les éléments déjà
+affichés : il ne lance pas cette recherche.</p>
+<p>Dans ta session de code, demande l’<a href="/atlas-site/manuel/le-glossaire#outil">outil</a> MCP <code>harnais</code> avec ce seul argument :</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">{ </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"recherche"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Comment garantir le retour arrière d'une migration ?"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> }</span></span></code></pre>
+<p>Tu n’as besoin ni de fichier, ni de symbole, ni de feature. Si tu les connais, <code>ou</code> et <code>feature</code>
+précisent la question. Un lieu s’écrit comme l’endroit d’une <a href="/atlas-site/manuel/le-glossaire#consigne">consigne</a>,
+une règle du projet : <code>fichier projet-api/src/migrations/retour.ts</code>, <code>famille migration</code>,
+<code>symbole projet-api::src/migrations/retour.ts::down</code>… Donner un fichier ne garantit pas que tout ce qui
+répond au problème se trouve dedans.</p>
+<table>
+<thead>
+<tr>
+<th>argument</th>
+<th>borne et usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>recherche</code></td>
+<td>4 000 caractères au plus ; les mots du problème</td>
+</tr>
+<tr>
+<td><code>ou</code></td>
+<td>dix lieux au plus, facultatifs avec une question</td>
+</tr>
+<tr>
+<td><code>feature</code></td>
+<td>facultative ; elle ne remplace pas la question ou les lieux</td>
+</tr>
+<tr>
+<td><code>limite</code></td>
+<td>un entier de 1 à 20 ; cinq résultats au plus par défaut</td>
+</tr>
+<tr>
+<td>réponse courte</td>
+<td>1 200 tokens estimés au plus, enveloppe et diagnostics compris</td>
+</tr>
+</tbody>
+</table>
+<p>Ce sont des plafonds : cinq résultats demandés ne promettent pas cinq résultats servis. Si un passage
+ne tient pas fidèlement dans le budget, Atlas le reporte et en donne la raison. Il ne coupe pas une
+condition pour faire entrer la règle. Les tokens sont une estimation de taille du texte, pas le
+décompte facturé par ton fournisseur de modèle.</p>
+<h2 id="reformuler-poursuivre-terminer">Reformuler, poursuivre, terminer</h2>
+<p>Un <strong><a href="/atlas-site/manuel/le-glossaire#contexte-de-recherche">contexte de recherche</a></strong> est l’identifiant qu’Atlas rend
+pour un problème dans ce projet. Ce n’est ni la feature entière, ni tous les travaux de ta conversation.
+Tu décides explicitement si la demande suivante poursuit le même problème.</p>
+<table>
+<thead>
+<tr>
+<th>ce que tu fais</th>
+<th>dans la page</th>
+<th>par l’outil <code>harnais</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>commencer une autre tâche</td>
+<td><strong>Chercher · nouvelle tâche</strong>, ou <strong>Nouvelle tâche</strong> pour vider les champs</td>
+<td>une nouvelle question <strong>sans</strong> <code>contexte</code></td>
+</tr>
+<tr>
+<td>reformuler le même problème</td>
+<td><strong>Reformuler ce problème</strong></td>
+<td>la nouvelle <code>recherche</code> avec le <code>contexte</code> rendu</td>
+</tr>
+<tr>
+<td>relire un résultat</td>
+<td><strong>Ouvrir le détail de cette version</strong></td>
+<td><code>identite</code> et <code>version</code> exactes, avec le même <code>contexte</code></td>
+</tr>
+<tr>
+<td>continuer une sélection</td>
+<td>le résultat peut rendre un curseur</td>
+<td><code>suite</code> rendu, avec le même <code>contexte</code> ; aucune nouvelle question ni lieu</td>
+</tr>
+<tr>
+<td>terminer explicitement le contexte</td>
+<td>par l’outil MCP</td>
+<td><code>cloreContexte</code> seul</td>
+</tr>
+</tbody>
+</table>
+<p>Les valeurs entre chevrons ci-dessous sont à remplacer par celles de la réponse, jamais à inventer :</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">{ </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"recherche"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Et si le retour arrière doit conserver les données ?"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"contexte"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"&lt;contexte rendu&gt;"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> }</span></span></code></pre>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">{ </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"identite"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"&lt;identite rendue&gt;"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"version"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"&lt;version rendue&gt;"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"contexte"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"&lt;contexte rendu&gt;"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> }</span></span></code></pre>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">{ </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"suite"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"&lt;curseur rendu&gt;"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"contexte"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"&lt;contexte rendu&gt;"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> }</span></span></code></pre>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">{ </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"cloreContexte"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"&lt;contexte rendu&gt;"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> }</span></span></code></pre>
+<p>La fermeture se donne seule : pas de recherche, de lieu ou d’autre argument dans cet appel. Elle
+conserve les preuves et empêche de reprendre le contexte fermé. Une autre tâche en ouvre un autre.
+Vider les champs de la page ne clôt pas le contexte conservé. Un contexte d’un autre projet est refusé ;
+une feature identique ne suffit pas à rattacher deux questions.</p>
+<h2 id="lire-ce-qui-est-revenu">Lire ce qui est revenu</h2>
+<p>Un <strong><a href="/atlas-site/manuel/le-glossaire#rapprochement">rapprochement</a></strong> est la proposition de lire un élément pour ce
+problème précis. Chaque résultat conserve son identité, sa version, sa clé de citation, sa famille,
+sa source et un passage. L’identité distingue l’élément ; la version distingue son contenu. La clé sert
+à citer ce qu’Atlas permet de citer : elle ne remplace pas les deux autres.</p>
+<p>Les faits du rapprochement disent quels mots et lieux ont compté et par quelle voie le résultat est
+arrivé. <strong>Le score sert à classer ; il n’est pas une probabilité de pertinence.</strong> Lis le passage et sa
+source avant de t’en servir comme règle. Un <a href="/atlas-site/manuel/le-glossaire#precedent">précédent</a>, un fil de review
+passé, reste une piste ; un résultat lexical ne prouve pas à lui seul une relation entre contrats.</p>
+<p>La réponse dit aussi son issue, la génération consultée, la fraîcheur et la santé des sources par
+type. Une famille représentée ne garantit pas que tous ses types ont été lus. Regarde les raisons
+des reports : plafond, budget, portée, retrait, source changée ou non vérifiable. Un résultat reporté
+n’est pas forcément absent du projet.</p>
+<table>
+<thead>
+<tr>
+<th>ce qui manque</th>
+<th>comment le lire</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>aucun résultat retenu, sources vérifiées dans le périmètre annoncé</td>
+<td>aucune réponse retenue par cette recherche</td>
+</tr>
+<tr>
+<td>une source partielle ou illisible</td>
+<td>la recherche ne prouve pas l’absence dans cette source</td>
+</tr>
+<tr>
+<td>un index en préparation ou non vérifié après redémarrage</td>
+<td>Atlas n’a pas pu certifier la recherche</td>
+</tr>
+<tr>
+<td>une ancienne projection après un changement connu</td>
+<td>découverte partielle jusqu’à reconstruction ; pas d’ancienne applicabilité garantie</td>
+</tr>
+</tbody>
+</table>
+<p>Le détail ouvre <strong>la version demandée</strong>, pas silencieusement celle d’aujourd’hui. Il a un budget
+séparé et peut se poursuivre. S’il faut préserver un passage indivisible au-delà de ce budget, le
+dépassement se dit. Un détail historique reste consultable sans réactiver une règle retirée.</p>
+<h3 id="les-pistes-issues-de-lhistoire">Les pistes issues de l’histoire</h3>
+<p>L’<a href="/atlas-site/manuel/le-glossaire#amorcage">amorçage</a> extrait le savoir des commits, documents et commentaires.
+Ces pistes rejoignent <strong>le même index</strong>, sans fichier ni feature obligatoire pour les retrouver.
+Une requête ne relit pas Git et n’appelle pas de modèle pour refaire cette extraction.</p>
+<p>La recherche joint à la cible les <strong>contradictions entrantes</strong>, les liens d’autres pistes qui la
+contredisent : état établi ou ambigu, identités et versions, formulation opposée, justification
+et preuves Git. Même si tu cherches seulement la cible, cette condition reste avec elle. Si
+l’ensemble dépasse le budget, le résultat est reporté, pas raccourci pour effacer l’avertissement.
+Une contradiction ne retire ni n’adopte sa cible ; mettre sa piste d’origine de côté ne retire
+pas non plus la cible.</p>
+<p>La <code>version</code> du résultat change quand cette condition change le texte présenté. <strong>La version
+importée reste dans <code>source.historique.version</code></strong>, avec son identité. L’ancien détail de recherche
+reste accessible à sa version, signalé historique. <strong>Ouvrir les preuves historiques et les gestes
+humains</strong> rejoint la version importée dans <strong>Amorçage historique</strong> : formulation de l’IA, citations
+exactes, dates des sources et de l’import. Une source inaccessible garde son texte importé et sa
+raison, sans substitution par le checkout courant. La recherche part de la dernière version
+importée de chaque identité ; l’espace d’amorçage garde toutes les versions.</p>
+<p>Une famille Règle ou une preuve explicite ne suffit pas à faire de la piste une consigne active.
+De même, juger son rapprochement pertinent ne l’active pas. <strong>Mettre cette version de côté</strong> retire
+la piste elle-même de la recherche ; ton jugement de rapprochement ne porte que sur le problème
+ou le nœud choisi. Aucun jugement ne passe silencieusement à une nouvelle interprétation.
+Reprise, preuves et activation humaine : <a href="/atlas-site/manuel/amorcer-le-harnais">Amorcer le Harnais</a>.</p>
+<h3 id="une-ancienne-source-peut-rester-valide">Une ancienne source peut rester valide</h3>
+<p>L’âge du texte ne décide pas de sa validité. Une règle ancienne peut toujours s’appliquer ; une règle
+récente peut être retirée. Vérifie son état et sa cause, sa portée, puis sa source. Pour une consigne
+adoptée, une retouche du fichier reste un brouillon signalé tant que l’humain n’adopte pas la nouvelle
+version. La recherche ne transforme pas ce brouillon en adoption.</p>
+<p>Les changements connus barrent l’ancienne projection. Une source non vérifiable n’est pas certifiée
+applicable. La fraîcheur globale reste visible : une vérification ciblée d’un résultat ne prouve pas
+que toute la bibliothèque vient d’être relue. Redémarrer l’instance ne suffit pas à rendre son index
+frais.</p>
+<p>L’ancien appel <strong>par endroit seulement</strong> reste disponible, avec ses règles de lecture historiques :</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">{ </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"ou"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: [</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"fichier projet-api/src/migrations/retour.ts"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">] }</span></span></code></pre>
+<p>Il ne lance pas la nouvelle recherche du problème. Ajoute <code>recherche</code> pour interroger l’index commun
+avec cet endroit comme précision.</p>
+<h2 id="signaler-ce-qui-ne-convient-pas">Signaler ce qui ne convient pas</h2>
+<p>Une <strong><a href="/atlas-site/manuel/le-glossaire#exposition">exposition</a></strong> est la preuve conservée de la présentation d’une
+version d’un élément dans une réponse. Après une recherche, l’IA donne son retour par <code>sonde</code>, sans
+feature ni nœud obligatoire :</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79B8FF">  "kind"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"ecarte"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79B8FF">  "id"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"retour-migration-1"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79B8FF">  "contexte"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"&lt;contexte rendu&gt;"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79B8FF">  "exposition"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"&lt;exposition rendue&gt;"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79B8FF">  "identite"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"&lt;identite rendue&gt;"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79B8FF">  "version"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"&lt;version rendue&gt;"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79B8FF">  "pourquoi"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"hors-sujet"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79B8FF">  "detail"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Cette règle concerne la création, pas le retour arrière."</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+<p>L’<code>id</code> est choisi pour ce retour. Réutilise-le pour rejouer <strong>le même contenu</strong> après une interruption :
+cela évite un doublon. Le changer crée un autre retour ; le réutiliser avec un contenu différent est
+refusé. Reprends les autres identifiants dans la réponse réellement reçue. Atlas vérifie leur accord
+avec le projet, le contexte et la version conservée.</p>
+<table>
+<thead>
+<tr>
+<th><code>pourquoi</code></th>
+<th>ce que l’IA constate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>hors-sujet</code></td>
+<td>le résultat parle d’autre chose pour ce problème</td>
+</tr>
+<tr>
+<td><code>deja-su</code></td>
+<td>elle avait déjà cette information</td>
+</tr>
+<tr>
+<td><code>perime</code></td>
+<td>le contenu lui paraît avoir vieilli</td>
+</tr>
+<tr>
+<td><code>contredit-code</code></td>
+<td>le code lui paraît dire l’inverse</td>
+</tr>
+</tbody>
+</table>
+<p><code>detail</code> explique le constat ; il ne remplace pas le motif fermé. <strong>Ce retour reste une observation
+IA, sans retrait automatique.</strong> Il ne devient ni un savoir, ni un verdict humain. L’ancienne sonde
+avec <code>feature</code>, <code>cle</code> et éventuellement <code>ref</code>, comme la forme <code>manque</code>, reste disponible pour son
+<a href="/atlas-site/manuel/les-precedents">usage historique</a>.</p>
+<h3 id="ton-jugement-humain">Ton jugement humain</h3>
+<p>Dans un résultat de la page, ouvre <strong>Juger ce rapprochement</strong>. Choisis <strong>Pertinent ici</strong>, <strong>Hors sujet
+ici</strong> ou <strong>Indécidable</strong> ; les deux derniers exigent une raison. Par défaut, ton jugement porte sur
+<strong>ce problème, cet élément et cette version</strong>. Pertinent le rend prioritaire ; hors sujet l’écarte de
+cette recherche ; indécidable le laisse recevable. Tu ne modifies pas la validation de sa source.</p>
+<p>La case <strong>Étendre explicitement au nœud</strong> demande un choix supplémentaire et un
+<a href="/atlas-site/manuel/le-glossaire#noeud">nœud</a> prouvé par l’exposition, désigné par <code>repo::fichier::symbole</code>. Elle peut
+étendre le jugement à d’autres tâches sur ce nœud, toujours pour cette identité et cette version.
+Sans preuve, l’extension est refusée. Aucun verdict ne passe à une autre version par simple ressemblance.</p>
+<p>Une nouvelle observation après ton jugement le signale <strong>à réexaminer</strong>. Ton geste précédent et les
+observations restent conservés ; reconfirmer exige un nouveau geste. Les anciens verdicts de nœud
+sans version prouvée restent de l’histoire, sans devenir automatiquement des verdicts contextuels.</p>
+<h2 id="les-six-mesures">Les six mesures</h2>
+<p>La page affiche <strong>Les six questions</strong>. Clique une carte pour ouvrir ses cas, inconnus et preuves.
+Un <strong><a href="/atlas-site/manuel/le-glossaire#releve">relevé</a></strong> rassemble ces mesures pour un projet, une fenêtre et un
+recul donnés. Lis ce périmètre avant les pourcentages : début inclus, fin exclue, en UTC ; horizon
+de 48 heures ; état provisoire ou mature ; collecte complète ou incomplète. Ces deux derniers états
+disent des choses différentes : assez de recul n’efface pas une collecte manquante.</p>
+<table>
+<thead>
+<tr>
+<th>question affichée</th>
+<th>ce qui est compté</th>
+<th>ce qui reste à lire à côté</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sait-on ce qui a été observé ?</strong></td>
+<td>requêtes avec issue / requêtes reçues au registre durable ; événements archivés / annoncés</td>
+<td>requêtes sans issue, trous de séquence, détails perdus, limite atteinte par l’archivage</td>
+</tr>
+<tr>
+<td><strong>Combien de rapprochements sont déclarés hors sujet ?</strong></td>
+<td>premières relations contexte × élément × version déclarées hors sujet / premières relations ayant le même recul</td>
+<td>relations immatures, contextes inconnus, sans retour ; ventilation des quatre motifs avec son propre dénominateur</td>
+</tr>
+<tr>
+<td><strong>Les résultats concernent-ils vraiment le problème ?</strong></td>
+<td>livraisons pertinentes / livraisons humainement tranchées dans un tirage probabiliste conservé</td>
+<td>tirées, non jugées, indécidables, diagnostics hors estimation, incertitude</td>
+</tr>
+<tr>
+<td><strong>Toutes les contraintes nécessaires arrivent-elles ?</strong></td>
+<td>cas entièrement couverts / cas aux attendus vérifiés et figés</td>
+<td>exigences manquantes une par une, abstentions, cas indécidables ou exclus de la réserve</td>
+</tr>
+<tr>
+<td><strong>Répète-t-on le même texte sans nouvelle portée ?</strong></td>
+<td>tokens répétés / tokens composés avec destinataire et contexte connus</td>
+<td>même destinataire, contexte, élément, version et applicabilité ; répétitions incertaines, détails demandés et nouvelles portées</td>
+</tr>
+<tr>
+<td><strong>Quel volume sert-on ?</strong></td>
+<td>tokens estimés du bloc final complet, médiane et p95</td>
+<td>familles, canaux, premières présentations, rappels et détails ; réponses vides, erreurs, interruptions et coûts inconnus</td>
+</tr>
+</tbody>
+</table>
+<p>Le taux de hors-sujet décrit des <strong>déclarations</strong>, pas une précision du moteur. Une relation sans
+retour reste au dénominateur quand elle a le recul requis ; le silence n’en fait pas une relation
+pertinente. Plusieurs présentations de la même version dans le même contexte ne créent pas plusieurs
+premières relations.</p>
+<p>La pertinence humaine se contrôle par <strong>Demander un tirage probabiliste</strong>, dans le détail de la
+troisième carte. La population, la graine et les probabilités sont conservées, y compris les cas sans
+retour IA. Relis les preuves puis juge chaque livraison. Un cas choisi pour diagnostiquer un problème
+ne représente pas à lui seul les livraisons ordinaires. Des tirages chevauchants ou à probabilités
+inégales ne sont pas agrégés naïvement en un pourcentage.</p>
+<p>Le détail distingue la <strong>Population attendue</strong> et les <strong>Preuves indisponibles</strong>. Une livraison dont
+la preuve disparaît reste attendue ; la fraction devient <strong>Non mesurable</strong>, sans améliorer le taux
+en retirant ce cas. Les preuves encore conservées restent ouvrables.</p>
+<p>Un nouveau tirage porte uniquement sur les expositions qui n’ont encore appartenu à aucune
+population tirée, y compris celles que le hasard n’avait pas retenues. Sans nouvelle exposition,
+le bouton rouvre le dernier tirage : recliquer ne change ni sa graine ni ses jugements.</p>
+<p>La couverture complète exige toutes les contraintes nécessaires d’un cas : retrouver une règle sur
+trois ne réussit pas ce cas. Elle se mesure sur des attendus vérifiés avant comparaison. Un label
+déjà utilisé pour régler le moteur ne reste pas une question réservée. Sans ce panel et son rejeu,
+la couverture est <strong>non mesurable</strong>. Une livraison pertinente ne prouve pas qu’aucune autre exigence
+n’a été perdue.</p>
+<p>La répétition certaine exige un destinataire connu, conversation et agent compris. Sans ces preuves,
+elle reste incertaine. Un détail explicitement demandé ou une nouvelle portée ne se lit pas comme
+une répétition inutile. Le volume comprend l’enveloppe et les diagnostics ; les lectures
+supplémentaires et tokens facturés restent inconnus si aucun adaptateur ne les renseigne.</p>
+<h2 id="relire-les-preuves-et-lhistoire">Relire les preuves et l’histoire</h2>
+<p><strong>Actuel</strong> montre un relevé évolutif ; <strong>Actualiser les relevés</strong> le relit. Les boutons datés ouvrent
+les relevés fermés disponibles. Leur détail conserve la fenêtre, les définitions, la collecte et les
+preuves : question, bloc composé, version présentée, retours et jugements disponibles. Il ne
+reconstitue pas le passé en relisant les tickets actuels. Une correction ajoute un relevé qui
+remplace explicitement l’ancien avec sa raison ; elle n’efface pas l’ancien.</p>
+<p>L’ingestion tardive annoncée est de sept jours après la fin de fenêtre et le recul. Une requête
+interrompue sans issue reste inconnue. Une preuve perdue ne réduit pas le nombre de requêtes attendues
+pour rendre la fraction plus belle. Une carte sans dénominateur exploitable dit <strong>Non mesurable</strong>,
+pas zéro pour cent de défauts.</p>
+<p><a id="rejeu-amorcage"></a></p>
+<h2 id="rejouer-un-amorçage-à-terrain-égal">Rejouer un amorçage à terrain égal</h2>
+<p>Le rejeu technique prépare un ancien <strong><a href="/atlas-site/manuel/le-glossaire#t0">T0</a></strong>, les commits fixés avant
+extraction, puis compare deux recherches et reçoit les jugements humains. <strong>L’outil est prêt ;
+aucun panel réel n’établit actuellement un gain.</strong> Les données fabriquées des vérifications
+techniques éprouvent le mécanisme, pas la qualité du savoir sur un projet réel. Ce rejeu se lance
+depuis le dépôt de développement d’Atlas ; ce n’est pas une commande <code>atlas</code> installée.</p>
+<p>L’évaluateur choisit d’abord dépôts, références, chemins et questions. Il conserve séparément les
+besoins exhaustifs, les attendus et les corrections futures. Le modèle d’extraction reçoit le
+corpus préparé et le skill, jamais ces réserves ni le dépôt actuel. Une session ayant déjà vu
+les réponses ne devient pas aveugle parce qu’on lui cache ensuite un fichier.</p>
+<p>Prépare un plan local, en adaptant le dossier et le commit :</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79B8FF">  "schema"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">1</span><span style="color:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79B8FF">  "depots"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: [{</span><span style="color:#005CC5;--shiki-dark:#79B8FF">"repo"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"projet-api"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"dossier"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"/chemin/absolu/projet-api"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"ref"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"&lt;commit T0&gt;"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"inclus"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: [</span><span style="color:#032F62;--shiki-dark:#9ECBFF">""</span><span style="color:#24292E;--shiki-dark:#E1E4E8">], </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"exclus"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: [</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"vendor"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">]}],</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79B8FF">  "bornes"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: {</span><span style="color:#005CC5;--shiki-dark:#79B8FF">"commits"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">100</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"fichiers"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">300</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"sourcesLot"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#005CC5;--shiki-dark:#79B8FF">12</span><span style="color:#24292E;--shiki-dark:#E1E4E8">},</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#79B8FF">  "questions"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: [{</span><span style="color:#005CC5;--shiki-dark:#79B8FF">"id"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Q1"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"recherche"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Comment conserver le retour arrière d'une migration ?"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"origine"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"reconstruite"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">}]</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+<p>Les chemins sont des préfixes ; les bornes omises gardent leurs défauts. Une question choisie
+après coup reste <code>reconstruite</code>. Une question <code>contemporaine</code> exige
+<code>preuve: {repo,commit,nature,chemin?,ligne,fin,extrait}</code> : la question entière doit être une
+citation exacte de la source T0. Le programme refuse une origine contemporaine non prouvée.</p>
+<p>Choisis une sortie <strong>neuve, hors des dépôts analysés</strong>, dont le dossier parent existe :</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">npm</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> run</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> replay:amorcage-harnais</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> --</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> preparer</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> --plan</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> /chemin/plan.json</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> --out</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> /tmp/opencode/experience-neuve</span></span></code></pre>
+<p><code>corpus.json</code> conserve questions, références résolues, textes, empreintes et limites.
+<code>extraction-gabarit.json</code> donne l’empreinte de ce corpus et les lots à renseigner. Dans une session
+réservée à l’extraction, fais interpréter seulement ce corpus avec le skill <code>amorcer-harnais</code>,
+puis reporte les propositions dans une copie du gabarit. C’est une extraction pour comparaison,
+pas un dépôt dans le Harnais du projet. Chaque lot doit figurer, éventuellement vide. Renseigne
+<code>modele</code> et <code>coutDeclare</code> : temps en millisecondes, tokens d’entrée et de sortie. Atlas contrôle
+leur présence ; il ne mesure pas lui-même ce coût IA.</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">npm</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> run</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> replay:amorcage-harnais</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> --</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> comparer</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> --experience</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> /tmp/opencode/experience-neuve</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> --extraction</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> /chemin/extraction.json</span></span></code></pre>
+<p><code>comparer</code> vérifie les citations et fige <code>extraction.json</code> et <code>comparaison.json</code>. Le bras <code>temoin</code>
+cherche les sources brutes T0 ; le bras <code>amorce</code> cherche les pistes interprétées, dans deux index
+bâtis par <strong>le même moteur, avec les mêmes questions et budgets de sortie</strong>. Le témoin ne représente
+pas une recherche humaine manuelle. Les temps de construction des index, le coût d’extraction
+déclaré, les temps de consultation et les réponses complètes restent distincts.</p>
+<p>Copie <code>panel-gabarit.json</code> hors de la session d’extraction. Chaque humain renseigne son identifiant,
+son rôle et la date, les besoins de chaque question — y compris ceux qu’aucun résultat ne couvre —,
+puis les deux bras. Chaque résultat reçoit fidélité (<code>fidele</code>, <code>infidele</code>, <code>incertaine</code>), utilité,
+faux ami et besoins couverts. Sans résultat, juge l’abstention <code>justifiee</code> ou <code>manquee</code> ; avec
+résultats, <code>sans-objet</code>. Un besoin compte couvert seulement par un résultat fidèle, utile et sans
+faux ami. Une réponse utile ne prouve donc pas la couverture complète du problème.</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">npm</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> run</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> replay:amorcage-harnais</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> --</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> juger</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> --experience</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> /tmp/opencode/experience-neuve</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> --panel</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> /chemin/panel-reserve.json</span></span></code></pre>
+<p><code>juger</code> est le premier geste qui lit le panel. <code>jugement.json</code> conserve manques, mesures et
+différences entre bras par humain et par question : fidélité, utilité, faux amis, besoins couverts
+et abstentions. Un fichier produit n’est jamais remplacé. Sans jugements complets, le gain reste
+<strong>non établi</strong> ; avec eux, les gains <strong>et les pertes</strong> restent à interpréter. L’identité humaine
+est déclarée, pas authentifiée par le script. Ni le nombre de pistes ni un panel incomplet ne
+permettent de conclure. Les réserves de cette expérience ne servent pas à régler le skill.</p>
+<h2 id="ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</h2>
+<ul>
+<li><strong>Il n’atteste pas la réception par le modèle.</strong> Le journal couvre la recherche de la page, l’outil
+de recherche MCP et le hook côté HTTP. « Composé » n’est pas « envoyé » ; une réponse HTTP terminée
+n’est pas une lecture par l’IA. Le stdout du hook et l’agent MCP ne sont pas attestés.</li>
+<li><strong>Il ne couvre pas tous les clients et tous les canaux.</strong> L’ouverture MCP et les prologues restent
+dans les traces historiques ; les clients sans adaptateur restent hors de cette collecte durable.</li>
+<li><strong>Il ne transforme pas les écarts IA en jugements humains</strong>, ni un score de classement en
+pertinence mesurée. Un ancien verdict sans preuve de version ne vaut pas pour la version actuelle.</li>
+<li><strong>Il ne démontre aucun progrès par une variation hebdomadaire seule.</strong> Compare fenêtres, populations,
+horizons et collecte. Les inconnus et les pertes d’exigences comptent autant que les cas gagnés.</li>
+</ul>
+<h2 id="limites-connues">Limites connues</h2>
+<p>La recherche reste <strong>en évaluation</strong>. Les vérifications techniques établissent des invariants, pas
+un gain de qualité sur des problèmes réels. Faute de panel humain réservé, ni la pertinence générale,
+ni un gain justifiant l’adoption automatique ne sont démontrés. Les six mesures ne se fondent pas
+en une note globale. La santé des sources et les inconnus restent nécessaires à leur lecture.</p>
+<nav class="suite" aria-label="Page suivante et précédente"><a href="/atlas-site/manuel/le-diagramme-d-un-flux"><small>← précédent</small>Le diagramme d&#39;un flux</a><a class="droite" href="/atlas-site/manuel/amorcer-le-harnais"><small>suivant →</small>Amorcer le Harnais</a></nav></article><nav class="cote toc" aria-label="Sur cette page"><h2>Sur cette page</h2><ul><li><a href="#commencer-par-la-question">Commencer par la question</a></li><li><a href="#reformuler-poursuivre-terminer">Reformuler, poursuivre, terminer</a></li><li><a href="#lire-ce-qui-est-revenu">Lire ce qui est revenu</a></li><li><a class="h3" href="#les-pistes-issues-de-lhistoire">Les pistes issues de l’histoire</a></li><li><a class="h3" href="#une-ancienne-source-peut-rester-valide">Une ancienne source peut rester valide</a></li><li><a href="#signaler-ce-qui-ne-convient-pas">Signaler ce qui ne convient pas</a></li><li><a class="h3" href="#ton-jugement-humain">Ton jugement humain</a></li><li><a href="#les-six-mesures">Les six mesures</a></li><li><a href="#relire-les-preuves-et-lhistoire">Relire les preuves et l’histoire</a></li><li><a href="#rejouer-un-amorçage-à-terrain-égal">Rejouer un amorçage à terrain égal</a></li><li><a href="#ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</a></li><li><a href="#limites-connues">Limites connues</a></li></ul></nav></main><footer class="pied"><div class="dedans"><span>Atlas — suivi et validation de code.</span><a href="/atlas-site/manuel/prise-en-main">Manuel</a></div></footer><script>
+    document.getElementById('theme-bt')?.addEventListener('click', () => {
+      const r = document.documentElement;
+      // clair → sombre → système, et le tour recommence. « Système » RETIRE la clé : c'est ce qui
+      // rend le choix distinct d'une absence de choix.
+      const suite = { clair: 'sombre', sombre: '', '': 'clair' };
+      const v = suite[r.dataset.theme || ''];
+      if (v) { r.dataset.theme = v; try { localStorage.setItem('atlas-site-theme', v); } catch {} }
+      else { delete r.dataset.theme; try { localStorage.removeItem('atlas-site-theme'); } catch {} }
+    });
+  </script></body></html>
