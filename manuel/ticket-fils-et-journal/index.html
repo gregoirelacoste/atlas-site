@@ -1,0 +1,459 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Ticket, fils et Journal · Atlas</title><meta name="description" content="Lire la compréhension discutée et l'attendu d'une feature, puis retrouver ses conversations et publier celles qui concernent une review."><link rel="canonical" href="https://gregoirelacoste.github.io/atlas-site/manuel/ticket-fils-et-journal"><meta property="og:title" content="Ticket, fils et Journal · Atlas"><meta property="og:description" content="Lire la compréhension discutée et l'attendu d'une feature, puis retrouver ses conversations et publier celles qui concernent une review."><meta property="og:type" content="website"><meta property="og:url" content="https://gregoirelacoste.github.io/atlas-site/manuel/ticket-fils-et-journal"><meta name="twitter:card" content="summary"><link rel="icon" href="/atlas-site/favicon.svg" type="image/svg+xml"><script>
+    (() => { try { const t = localStorage.getItem('atlas-site-theme');
+      if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t; } catch {} })();
+  </script><link rel="stylesheet" href="/atlas-site/_astro/Base.D32RNicN.css"></head><body><header class="tete"><a class="marque" href="/atlas-site">🗺️ Atlas</a><nav><a href="/atlas-site/installer">Installer</a><a href="/atlas-site/manuel/prise-en-main" aria-current="page">Manuel</a><a href="/atlas-site/articles">Écrits</a><button class="theme-bt" id="theme-bt" type="button" aria-label="Changer de thème">◐</button></nav></header><main class="doc"><nav class="cote" aria-label="Le manuel"><h2>Le manuel</h2><ol><li><a href="/atlas-site/manuel/prise-en-main">Prise en main</a></li><li><a href="/atlas-site/manuel/l-arbre">L&#39;Arbre</a></li><li><a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a></li><li><a href="/atlas-site/manuel/le-code">Le Code</a></li><li><a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a></li><li><a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et inventaire</a></li><li><a href="/atlas-site/manuel/le-panneau-git">Le panneau Git</a></li><li><a href="/atlas-site/manuel/le-tableau">Le Tableau</a></li><li><a href="/atlas-site/manuel/ticket-fils-et-journal" aria-current="page">Ticket, fils et Journal</a></li><li><a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a></li><li><a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a></li><li><a href="/atlas-site/manuel/brancher-l-ia">Brancher l&#39;IA</a></li><li><a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l&#39;IA lit et écrit</a></li><li><a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a></li><li><a href="/atlas-site/manuel/la-ligne-de-commande">La ligne de commande</a></li><li><a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a></li><li><a href="/atlas-site/manuel/le-clavier">Le clavier</a></li><li><a href="/atlas-site/manuel/les-precedents">Les précédents</a></li><li><a href="/atlas-site/manuel/les-decisions-metier">Les décisions métier</a></li><li><a href="/atlas-site/manuel/le-glossaire">Le glossaire</a></li><li><a href="/atlas-site/manuel/la-recette">La recette</a></li><li><a href="/atlas-site/manuel/deposer-une-recette">Déposer une recette</a></li><li><a href="/atlas-site/manuel/la-vue-d-ensemble">La vue d&#39;ensemble</a></li><li><a href="/atlas-site/manuel/le-harnais">Le Harnais</a></li><li><a href="/atlas-site/manuel/les-criteres-les-cas-et-leur-preuve">Les critères, les cas et leur preuve</a></li><li><a href="/atlas-site/manuel/la-page-harnais">La page Harnais</a></li><li><a href="/atlas-site/manuel/les-panneaux-et-les-modules">Les panneaux et les modules</a></li><li><a href="/atlas-site/manuel/le-diagramme-d-un-flux">Le diagramme d&#39;un flux</a></li><li><a href="/atlas-site/manuel/chercher-dans-le-harnais">Chercher dans le Harnais</a></li><li><a href="/atlas-site/manuel/amorcer-le-harnais">Amorcer le Harnais</a></li><li><a href="/atlas-site/manuel/le-suivi-d-un-ticket">Le suivi d&#39;un ticket</a></li></ol></nav><article class="corps"><h1>Ticket, fils et Journal</h1><p class="chapo">Lire la compréhension discutée et l&#39;attendu d&#39;une feature, puis retrouver ses conversations et publier celles qui concernent une review.</p><blockquote>
+<p>Lire la compréhension discutée et l’attendu d’une feature, puis retrouver ses conversations et
+publier celles qui concernent une review.</p>
+</blockquote>
+<p>Une <strong><a href="/atlas-site/manuel/le-glossaire#feature">feature</a></strong> rassemble un ticket et le code qui le porte, sous un
+identifiant comme <code>PROJ-412</code>. Sa <strong><a href="/atlas-site/manuel/le-glossaire#spec">spec</a></strong> dit ce qui est attendu ; ses
+<strong><a href="/atlas-site/manuel/le-glossaire#fil">fils</a></strong> sont des conversations datées, attachées à un endroit précis.
+La compréhension discutée, la spec et les messages restent trois choses distinctes.</p>
+<h2 id="le-module-ticket--deux-onglets">Le module Ticket : deux onglets</h2>
+<p>Installe <strong>Ticket</strong> avec <code>Espace</code>, une flèche, puis <code>t</code>. Clique ensuite sur <strong>Conception</strong> ou
+<strong>Ticket</strong>, ou tape <code>Espace t c</code> et <code>Espace t t</code>. Ces lettres se tapent successivement, sans garder
+Espace enfoncée. Le choix de l’onglet est conservé dans ton navigateur ; sans choix précédent,
+Atlas ouvre Ticket.</p>
+<table>
+<thead>
+<tr>
+<th>Onglet</th>
+<th>Ce que tu y lis</th>
+<th>Ce qu’il ne remplace pas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Conception</code></td>
+<td>un document de compréhension, réécrit au fil de la discussion</td>
+<td>la spec et la validation du code</td>
+</tr>
+<tr>
+<td><code>Ticket</code></td>
+<td>le document de spec entier, avec une marge d’évaluation sur ses critères</td>
+<td>le suivi du travail et les conversations</td>
+</tr>
+</tbody>
+</table>
+<p>Le <strong><a href="/atlas-site/manuel/le-glossaire#journal">Journal</a></strong>, la liste des conversations, vit dans Résolution. Il reçoit aussi le fil qui parle
+de la feature entière : aucun fil ne s’ajoute sous le document du Ticket. Pour installer ou déplacer
+les modules, voir <a href="/atlas-site/manuel/les-panneaux-et-les-modules">Les panneaux et les modules</a> ; pour Todo,
+Parcours et l’historique, voir <a href="/atlas-site/manuel/le-suivi-d-un-ticket">Le suivi d’un ticket</a>.</p>
+<h2 id="conception--tenir-ce-que-tu-comprends">Conception : tenir ce que tu comprends</h2>
+<p>La conception est le <strong>premier moment, facultatif, avant le ticket</strong>. Elle garde les mots, le problème
+et le mécanisme discutés avec ton IA, pas l’ordre des messages. Elle se lit à côté de votre conversation,
+sans ajouter de chat. Tu peux commencer directement par le ticket.</p>
+<p>Pour en ouvrir une, demande explicitement <code>/atlas:conception PROJ-412</code> à ton IA. Un
+<strong><a href="/atlas-site/manuel/le-glossaire#skill">skill</a></strong>, une procédure que suit l’IA, conduit cette discussion sans
+coder ni rédiger la spec. L’IA clarifie un cas réel avec un exemple ou un schéma, puis explore un
+contre-exemple. Elle questionne pour approfondir, pas pour remplir un questionnaire. Tu reformules
+avant la réécriture ; un « oui » général ne confirme pas tout. Voir
+<a href="/atlas-site/manuel/brancher-l-ia">Brancher l’IA</a>.</p>
+<p>Le document commence par <strong>Vocabulaire</strong>, puis garde le problème, le mécanisme et les pistes
+abandonnées avec leur raison. Critères d’acceptation, implémentation et avancement appartiennent
+au ticket ou à son suivi, pas à cette compréhension.</p>
+<h3 id="lire-les-trois-états">Lire les trois états</h3>
+<p>Chaque partie porte son propre état. Une partie comprise ne confirme pas automatiquement les
+autres : tu peux être d’accord sur le vocabulaire et encore discuter le mécanisme.</p>
+<table>
+<thead>
+<tr>
+<th>Mention du document</th>
+<th>Ce qu’elle dit</th>
+<th>Ce qui l’accompagne</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>proposée par l’IA</code></td>
+<td>une explication est soumise à la discussion</td>
+<td>son texte, sans confirmation implicite</td>
+</tr>
+<tr>
+<td><code>confirmée par l’humain</code></td>
+<td>la session déclare que tu as confirmé cette partie</td>
+<td>tes mots cités et une date</td>
+</tr>
+<tr>
+<td><code>en désaccord</code></td>
+<td>la discussion n’a pas tranché</td>
+<td>une position humaine et une position de l’IA</td>
+</tr>
+</tbody>
+</table>
+<p>La date d’une confirmation s’écrit <code>AAAA-MM-JJ</code>. L’écriture exige une citation non vide et une
+date valide ; sans elles, une partie ne peut pas être enregistrée comme confirmée.</p>
+<blockquote>
+<p>⚠️ Une confirmation est <strong>déclarée par la session</strong>, pas attestée par le serveur. Atlas vérifie
+la présence des mots et la date, pas que tu les as réellement prononcés. Relis la citation : elle
+ne prouve ni ton identité, ni la justesse de l’explication, ni la qualité du code.</p>
+</blockquote>
+<p>Si tu ne te reconnais pas dans une partie, demande de la reprendre. Une explication donnée par
+l’IA ne suffit pas à dire que tu l’as comprise : reformule-la. Le désaccord reste tant que la
+discussion ne l’a pas tranché.</p>
+<h3 id="un-document-réécrit-pas-une-pile-de-messages">Un document réécrit, pas une pile de messages</h3>
+<p>La conception vit à <code>.atlas-workspace/features/PROJ-412/conception.md</code>. L’outil de l’IA remplace
+<strong>tout le texte</strong> à chaque écriture ; il ne colle pas un compte rendu à la fin. Les états sont
+fournis partie par partie, pas devinés depuis la prose. Tu lis ainsi une compréhension courante,
+alors que les messages du Journal gardent leurs dates et leurs auteurs.</p>
+<p>Une écriture comporte de 1 à 24 parties, aux titres distincts, pour au plus 24 000 caractères de
+Markdown produit. Au-delà, le skill doit condenser, pas créer un second document.</p>
+<p>Quand l’IA écrit par l’outil prévu, l’onglet visible se rafraîchit au prochain battement d’Atlas,
+sans recharger la page. Une conception arrivée par la synchronisation du workspace est également
+signalée à cette lecture. La position de défilement est conservée. Quand l’onglet n’est pas visible,
+Atlas ne relit pas le document en boucle : il le reprend à son ouverture.</p>
+<h3 id="absente-illisible-ou-reprise-de-lepic">Absente, illisible ou reprise de l’epic</h3>
+<table>
+<thead>
+<tr>
+<th>Ce que tu vois</th>
+<th>Ce que cela signifie</th>
+<th>Que faire</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Pas de conception</code></td>
+<td>aucune conception utilisable n’a été trouvée pour cette lecture</td>
+<td>continuer sans, ou lancer le skill indiqué</td>
+</tr>
+<tr>
+<td><code>Pas pu lire la conception</code></td>
+<td>une lecture a échoué ; la raison est affichée</td>
+<td>regarder cette raison, pas conclure que le document n’existe pas</td>
+</tr>
+<tr>
+<td><code>Conception de l’epic PROJ-380</code></td>
+<td>le document affiché appartient au ticket parent indiqué dans la spec</td>
+<td>le lire comme un contexte partagé, pas comme une conception propre</td>
+</tr>
+</tbody>
+</table>
+<p>L’epic est le ticket parent indiqué par <code>epic:</code>. Atlas ne s’y replie que si la conception propre
+est <strong>absente</strong>. Un fichier propre vide est illisible ; il ne déclenche pas ce repli. Une conception
+propre illisible n’est jamais masquée par celle du parent. Le parent doit pouvoir être retrouvé sans
+ambiguïté dans le workspace ; plusieurs features portant sa clé donnent une erreur explicite.</p>
+<p>Le repli ne fusionne ni ne copie les documents. Une conception propre prend ensuite sa place.
+Pour changer celle du parent, demande-le explicitement à l’IA.</p>
+<h2 id="la-spec--lire-tout-ticketmd">La spec : lire tout <code>ticket.md</code></h2>
+<p>La spec est <strong>à toi</strong>. Elle vit dans le projet analysé, à
+<code>.atlas-workspace/features/PROJ-412/ticket.md</code>. L’onglet Ticket affiche son corps Markdown entier,
+dans l’ordre du fichier : terrain, tableaux, pistes écartées, exclusions et autres sections ne sont
+plus réduits à l’objectif et aux critères. Le frontmatter, les métadonnées entre deux <code>---</code> en tête,
+alimente l’en-tête plutôt que le corps ; les commentaires HTML sont retirés de la lecture.</p>
+<table>
+<thead>
+<tr>
+<th>Dans l’en-tête</th>
+<th>Provenance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>numéro et lien externe</td>
+<td><code>id:</code> et <code>jira:</code> ; lien seulement en HTTP ou HTTPS</td>
+</tr>
+<tr>
+<td>titre</td>
+<td><code>title:</code></td>
+</tr>
+<tr>
+<td>type, statut, priorité</td>
+<td><code>type:</code>, <code>status:</code>, <code>priority:</code>, seulement s’ils sont renseignés</td>
+</tr>
+<tr>
+<td>parent</td>
+<td><code>epic:</code> ; lien seulement si sa clé se déduit de l’URL du ticket</td>
+</tr>
+</tbody>
+</table>
+<h3 id="écrire-un-fichier-lisible-et-des-critères-reconnus">Écrire un fichier lisible et des critères reconnus</h3>
+<p>Le frontmatter est plat : une clé et une valeur par ligne, rien d’imbriqué. Voici un exemple :</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">---</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">id: PROJ-412</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">title: Relancer les factures impayées</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">jira: https://example.com/browse/PROJ-412</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">epic: PROJ-380 — Paiements</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">type: Story</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">status: En cours</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">priority: Major</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">---</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">## Objectif</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">Le besoin, en langage produit.</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">## Critères d'acceptation</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">1.</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> une relance part à J+7</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">2.</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> [</span><span style="color:#032F62;--shiki-light-text-decoration:underline;--shiki-dark:#DBEDFF;--shiki-dark-text-decoration:underline">x</span><span style="color:#24292E;--shiki-dark:#E1E4E8">] l'utilisateur peut l'annuler</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">## Ne fait pas</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">-</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> les relances par SMS</span></span></code></pre>
+<p>Les clés reconnues sont celles de cet exemple ; leur casse ne compte pas. L’epic accepte la clé
+seule ou <code>CLÉ — titre</code>, avec <code>—</code>, <code>–</code>, <code>·</code>, <code>:</code> ou <code>-</code> comme séparateur.</p>
+<p>Tu peux ajouter d’autres sections : elles restent visibles. Pour les lectures structurées, le
+<strong><a href="/atlas-site/manuel/le-glossaire#brief">brief</a></strong>, le résumé de l’objectif servi à l’IA, vient d’une section
+<code>## Objectif</code> exactement ; <code>## Objectifs</code> reste lisible à l’écran mais ne remplit pas ce résumé.
+Les titres de sections sont comparés en minuscules sans accents.</p>
+<p>Un <strong><a href="/atlas-site/manuel/le-glossaire#critere">critère</a></strong> est un attendu vérifiable, écrit en item sous une
+section dont le titre commence par <code>crit</code>. Atlas prend la première section distincte ainsi nommée ;
+si le même titre revient, son dernier exemplaire prime. Garde une seule section de critères pour
+éviter cette ambiguïté. Un item reconnu commence par <code>-</code>, <code>*</code>, <code>1.</code> ou <code>1)</code>, suivi d’un espace,
+avec au plus trois espaces de retrait. Une liste ailleurs dans le document reste une liste, pas une
+série de critères supplémentaires.</p>
+<p>Les lignes plus indentées sous un critère peuvent préciser son endroit et sa portée pour le
+<strong><a href="/atlas-site/manuel/le-glossaire#harnais">Harnais</a></strong>, les consignes qu’Atlas sert à l’IA là où elles
+s’appliquent : voir <a href="/atlas-site/manuel/les-criteres-les-cas-et-leur-preuve">Les critères, les cas et leur preuve</a>.</p>
+<p>Sans spec disponible, Atlas montre <code>Pas de spec</code>, l’endroit où écrire le fichier et la commande
+<code>/atlas:ticket PROJ-412</code>. Il garde le numéro, le titre déclaré et les branches qui nomment la
+feature. Un gabarit existant mais non rempli peut, lui, afficher ses titres vides : complète le
+fichier, ne prends pas ces titres pour un attendu déjà rédigé.</p>
+<p>Atlas peut créer un gabarit à trois sections, sans écraser un fichier existant. Le skill de ticket
+peut rédiger la spec avec toi ou l’importer ; cela ne se confond pas avec l’outil de conception.
+Les droits et les gestes de l’IA sont détaillés dans
+<a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l’IA lit et écrit</a>.</p>
+<h2 id="la-marge-des-critères--évaluation-et-preuve">La marge des critères : évaluation et preuve</h2>
+<p>Le document garde son ordre ; Atlas ajoute une marge aux <strong>lignes des critères reconnus</strong>, avec le
+même découpage que ses autres lectures du ticket. Les listes voisines et les précisions indentées
+ne sont pas recomptées pour fabriquer des cases.</p>
+<table>
+<thead>
+<tr>
+<th>Case et couleur</th>
+<th>État en infobulle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cochée, verte</td>
+<td><code>couvert</code></td>
+</tr>
+<tr>
+<td>vide, ambre</td>
+<td><code>couvert en partie</code></td>
+</tr>
+<tr>
+<td>vide, rouge</td>
+<td><code>pas couvert</code></td>
+</tr>
+<tr>
+<td>vide, sans couleur de verdict</td>
+<td><code>couverture pas encore lue</code></td>
+</tr>
+</tbody>
+</table>
+<p>La couverture est l’évaluation de l’IA à la relecture du code, séparée de ta spec. Elle peut citer
+une <strong>preuve</strong>, les symboles qui couvrent le critère. Clique le critère pour allumer ces endroits
+dans l’Arbre et le schéma. Sans symbole cité, il n’a pas de destination inventée. En mode recette,
+le clic suit plutôt les endroits rattachés par la recette lue ; l’écran dit quand aucun test ne
+permet ce clic. Voir <a href="/atlas-site/manuel/la-recette">La recette</a>.</p>
+<p>Deux règles restent importantes : ta coche <code>[x]</code> dans le fichier prime sur la couverture de l’IA,
+<strong>en conservant sa preuve</strong> si elle existe ; reformuler le texte fait perdre l’évaluation attachée
+à l’ancien texte. Une virgule différente suffit. La case de marge n’est pas un bouton pour modifier
+ta spec : une coche humaine s’écrit dans le fichier.</p>
+<p>Le verdict de la dernière recette fermée s’affiche à côté de la couverture, sans la remplacer.
+« Couvert par le code » et « testé avec succès » ne disent pas la même chose.</p>
+<h2 id="images-et-versions-croisées">Images et versions croisées</h2>
+<p>Les deux documents acceptent titres, listes, tableaux, citations et blocs de code. Le HTML brut
+reste du texte, il ne s’exécute pas. Les liens HTTP, HTTPS et <code>mailto:</code> peuvent s’ouvrir ; les liens
+de fichiers relatifs restent inertes.</p>
+<p>Pour une image, utilise un chemin relatif <strong>au dossier de la feature</strong> : par exemple
+<code>![Le mécanisme](conception/schema.svg)</code>. L’image doit rester dans ce dossier, même après résolution
+d’un lien symbolique. Ni chemin absolu, ni sortie par <code>..</code>, ni image distante. Atlas sert SVG, PNG,
+JPG/JPEG, WebP et GIF, jusqu’à 10 Mio par image ; une image refusée ou introuvable ne devient pas une
+image distante de secours.</p>
+<p>L’outil de conception peut déposer des schémas SVG avec sa réécriture : au plus douze, de 128 000
+caractères chacun, sans script ni ressource externe. Les autres images locales ne sont pas pour
+autant des schémas produits ou approuvés par l’IA. Un lien vers une image distante se montre comme
+une image non chargée, avec son texte alternatif : lire un ticket ne contacte pas cet hébergeur.</p>
+<p>Réécrire un schéma conserve le dessin avec l’ancien texte, relisible par l’outil de l’IA.
+Les dessins déjà écrasés avant cette conservation ne sont pas reconstitués.</p>
+<p>Si des écritures se croisent, Atlas affiche <code>Deux versions de la conception se sont croisées</code> ou
+<code>Deux versions de la spec se sont croisées</code>. Le document courant reste lisible ; l’autre version
+est gardée à côté, avec son chemin, son auteur et sa date. Lis les deux fichiers avant de départager :
+le bandeau n’est ni une fusion des explications ni un accord entre leurs auteurs.</p>
+<h2 id="le-fil-de-feature--au-journal-uniquement">Le fil de feature : au Journal uniquement</h2>
+<p>Le <strong><a href="/atlas-site/manuel/le-glossaire#fil-de-feature">fil de feature</a></strong> parle du ticket entier plutôt que d’une
+ligne de code. Il garde conclusions d’enquête, décisions, questions et signatures des
+<strong><a href="/atlas-site/manuel/le-glossaire#moment">moments</a></strong>, les passages datés des skills. Il s’allonge par messages ;
+la conception, elle, se réécrit. Une signature de conception ne transforme donc pas ce fil en copie
+du document.</p>
+<p>Ouvre <code>Espace p j</code> et repère <code>le ticket</code>. C’est là que se lit ce fil, même quand le module Ticket
+est installé. Le clic qui vise une signature y amène son message. Si Résolution n’est dans aucun
+panneau, Atlas le signale et ne l’installe pas en cachette.</p>
+<p>Sous cette ligne, <code>Ce qu'on a compris</code> garde le fil entier et ses boutons de réponse et de
+rangement. La ligne <code>état</code> reprend la première ligne du dernier message qui n’est pas une
+signature ; s’il n’y a que des signatures, elle reprend la dernière. Ce n’est donc pas seulement
+un aperçu déplacé : tu peux continuer la conversation au Journal.</p>
+<p>Un seul fil de feature non rangé peut exister à la fois ; les messages suivants s’y ajoutent.
+Il ne porte ni fichier ni ligne et ne se publie pas chez l’hébergeur : aucune
+<strong><a href="/atlas-site/manuel/le-glossaire#ancre">ancre</a></strong>, l’endroit auquel attacher une conversation, ne lui correspond
+sur la review. Le <a href="/atlas-site/manuel/le-suivi-d-un-ticket">Journal et son suivi</a> expliquent sa navigation ;
+les outils d’ouverture et de réponse sont décrits dans <a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">la page de l’IA</a>.</p>
+<h2 id="les-fils-ancrés-sur-du-code">Les fils ancrés sur du code</h2>
+<p>Un fil peut viser une ligne ou un symbole entier, avec ou sans code déjà écrit. Le
+<strong><a href="/atlas-site/manuel/le-glossaire#temoin">témoin</a></strong>, le contenu exact de la ligne commentée, permet de constater
+qu’elle a disparu : le fil porte alors <code>⚠ à revoir</code>. Ouvrir un fil sur une ligne, retrouver son
+symbole et lire une hypothèse relève du <a href="/atlas-site/manuel/le-code">Code</a>, pas de l’onglet Conception.</p>
+<h2 id="répondre-résoudre-ranger">Répondre, résoudre, ranger</h2>
+<p>Chaque fil porte les mêmes boutons ; ce qui les sépare est <strong>ce qu’ils jugent</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>geste</th>
+<th>ce qu’il juge</th>
+<th>qui peut</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Répondre</code></td>
+<td>rien — il ajoute un message</td>
+<td>toi et l’IA</td>
+</tr>
+<tr>
+<td><code>Résoudre</code> / <code>Rouvrir</code></td>
+<td>le <strong>contenu</strong> : la question a une réponse</td>
+<td><strong>toi seul</strong></td>
+</tr>
+<tr>
+<td><code>Ranger</code> / <code>↩ Remettre</code></td>
+<td>la <strong>pertinence</strong> : ça ne s’applique plus</td>
+<td>toi, et l’IA sous conditions</td>
+</tr>
+<tr>
+<td><code>Supprimer</code></td>
+<td>l’existence — ça efface</td>
+<td><strong>toi seul</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Résoudre est un verdict sur le fond : l’IA n’a aucun outil pour ça, et ne répond pas dans un fil
+<a href="/atlas-site/manuel/le-glossaire#resolu">résolu</a>. Un fil résolu s’ouvre <strong>replié</strong> sur sa première ligne — entier s’il a bougé depuis
+ta dernière ouverture.</p>
+<p><strong><a href="/atlas-site/manuel/le-glossaire#ranger">Ranger</a></strong> juge autre chose : une hypothèse contournée par le code n’a pas de réponse, la « résoudre »
+mentirait. Le rangement est <strong>daté, signé, réversible</strong>, et il porte un motif — Atlas te
+le demande ; annuler la boîte annule le
+rangement, la laisser vide range sans motif. Le fil sort alors de tout ce où un commentaire protège
+un nœud — le badge <code>💬</code> de l’<a href="/atlas-site/manuel/le-glossaire#arbre">Arbre</a>, la révélation du symbole, ce qui est rendu à l’IA — et il
+<strong>libère son ancre</strong>. Rien n’est effacé.</p>
+<p>Les restrictions de rangement propres à l’IA sont décrites dans
+<a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l’IA lit et écrit</a>.</p>
+<h2 id="publier-un-fil-chez-lhébergeur">Publier un fil chez l’hébergeur</h2>
+<p><strong><a href="/atlas-site/manuel/le-glossaire#publier">Publier</a></strong> envoie une conversation locale chez
+l’<strong><a href="/atlas-site/manuel/le-glossaire#hebergeur">hébergeur</a></strong>, le service où vit la review.
+GitLab et GitHub sont pris en charge. Le bouton <code>↗ Publier…</code> ouvre une confirmation ; ouvrir la
+boîte n’envoie rien. Vérifie la review et le dépôt destinataires, les droits du jeton, les messages
+qui partiront et ceux déjà publiés. Le dépôt vient de l’ancre du fil, pas d’un choix libre.</p>
+<p>Les droits restent en trois états : écriture permise, lecture seule, ou impossibilité de trancher.
+Cette dernière situation n’est pas un refus prouvé. La confirmation détaille également l’auteur
+de chaque message et comment il part sous ton jeton ; voir
+<a href="16-gitlab-et-github.md#qui-a-%C3%A9crit-dans-ce-qui-part">GitLab et GitHub</a>.</p>
+<blockquote>
+<p>⚠️ Le fil part <strong>entier</strong>, sous ton jeton. Pas de retour : Atlas ne sait pas supprimer
+une note publiée — la boîte le répète avant le bouton.</p>
+</blockquote>
+<p>Un message déjà publié ne repart pas au deuxième envoi. La publication cherche une position dans
+le diff de la review ; si elle ne peut pas y placer le fil, rien ne part sous cette forme. La boîte
+propose une discussion générale, avec le contexte de l’ancre. Un fil sur le symbole entier part
+également en discussion générale. Les réponses de l’hébergeur reviennent à la lecture de la Revue.</p>
+<p>Tes fils non publiés partent aussi ensemble, en une confirmation : « Publier mes fils… »
+(<a href="/atlas-site/manuel/le-suivi-d-un-ticket">Le suivi d’un ticket</a>).</p>
+<p>Le fil de feature et le <a href="/atlas-site/manuel/le-glossaire#fil-detape">fil d’étape</a>, qui discute une étape du Parcours, ne se publient pas : ils
+n’ont pas d’ancre chez l’hébergeur. Un fil vide ou déjà entièrement publié n’a rien à envoyer.</p>
+<h2 id="les-fils-importés">Les fils importés</h2>
+<p>Un <strong><a href="/atlas-site/manuel/le-glossaire#fil-importe">fil importé</a></strong> reprend un constat d’un ticket passé sur le code
+qu’il désigne. La marque <code>importé du ticket</code> distingue cette reprise d’une conversation nouvelle.
+Tu peux y répondre, le résoudre ou le ranger, mais il ne se publie jamais, même après une réponse.
+Si le constat vaut encore pour le code actuel, ouvre un fil neuf : celui-là pourra partir sur la
+review. L’effet de l’import sur ta lecture est décrit dans
+<a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a>, son usage comme piste dans
+<a href="/atlas-site/manuel/les-precedents">Les précédents</a>.</p>
+<h2 id="retrouver-les-conversations-au-journal">Retrouver les conversations au Journal</h2>
+<p>Le <strong><a href="/atlas-site/manuel/le-glossaire#journal">Journal</a></strong> rassemble les fils par date du dernier message, les
+plus récents en tête. La tête garde le premier message ; les réponses se déplient. Un message
+<strong><a href="/atlas-site/manuel/le-glossaire#non-lu">non lu</a></strong> est arrivé après ta dernière ouverture du fil : le repère
+appartient à ta lecture, pas à celle des autres.</p>
+<p><a id="qui-a-ecrit"></a>Chaque message nomme son auteur : l’IA d’une personne se distingue de sa
+réponse humaine. Un auteur inconnu reste inconnu. Une suite restée privée après publication est
+signalée séparément ; elle n’a pas été envoyée parce qu’elle apparaît dans le même fil.</p>
+<p>Pour les comptes, les non-lus, le rappel des fils rangés, les destinations du clic et la publication
+groupée, poursuis dans <a href="/atlas-site/manuel/le-suivi-d-un-ticket">Le suivi d’un ticket</a>. Le Journal ne remplace ni
+le document de conception ni la spec : il conserve les paroles datées autour d’eux.</p>
+<h2 id="raccourcis">Raccourcis</h2>
+<p>Un <strong>accord</strong> se tape <code>Espace</code> (la <a href="/atlas-site/manuel/le-glossaire#touche-maitresse">touche maîtresse</a>), puis une flèche ou une lettre :</p>
+<table>
+<thead>
+<tr>
+<th>Accord</th>
+<th>Effet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Espace</code> + flèche + <code>t</code></td>
+<td>installe le <strong>Ticket</strong> dans ce panneau (<a href="/atlas-site/manuel/les-panneaux-et-les-modules">Les panneaux et les modules</a>)</td>
+</tr>
+<tr>
+<td><code>Espace t c</code></td>
+<td>affiche l’onglet <strong>Conception</strong> du Ticket installé</td>
+</tr>
+<tr>
+<td><code>Espace t t</code></td>
+<td>affiche l’onglet <strong>Ticket</strong> du Ticket installé</td>
+</tr>
+<tr>
+<td><code>Espace</code> + flèche + <code>p</code></td>
+<td>installe <strong>Résolution</strong> : Todo, Parcours, Journal</td>
+</tr>
+<tr>
+<td><code>Espace p j</code></td>
+<td>affiche le <strong>Journal</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Voir <a href="/atlas-site/manuel/le-clavier">Le clavier</a>.</p>
+<h2 id="ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</h2>
+<ul>
+<li><strong>Il ne rend pas la conception obligatoire</strong> et ne transforme pas une confirmation de compréhension
+en validation du code.</li>
+<li><strong>Il n’atteste pas les paroles humaines</strong> citées dans la conception : leur date et leur présence
+sont vérifiées, pas leur authenticité.</li>
+<li><strong>Il ne fusionne pas la conception, la spec et le fil de feature.</strong> Aucun message du fil n’est
+ajouté sous les deux documents.</li>
+<li><strong>Il n’écrit pas ta spec</strong>, hors le template d’une feature sans branche ; l’IA n’a aucun outil pour
+ça.</li>
+<li><strong>Il n’interroge jamais Jira</strong> : l’import est un geste de ton IA.</li>
+<li><strong>Il ne crée pas de review</strong>, ne la ferme pas, ne la merge pas.</li>
+<li><strong>Il ne supprime ni ne modifie une note publiée.</strong> Ranger, résoudre ou supprimer un fil chez
+toi ne change rien chez l’hébergeur.</li>
+<li><strong>Il ne publie rien de lui-même</strong>, l’IA non plus (aucun outil) : seul ton clic sur <code>↗ Publier…</code>,
+ou sur « Publier mes fils… » du Todo, envoie un fil.</li>
+<li><strong>Il ne résout ni ne supprime un fil à ta place</strong>, ni ne laisse l’IA le faire.</li>
+<li><strong>Il ne déduit pas « lu »</strong> : sans un geste de ta part, aucun fil ne l’est — pas de repère
+implicite « tout est lu ».</li>
+<li><strong>« Résolu » n’est pas un <a href="/atlas-site/manuel/le-glossaire#endossement">endossement</a></strong> — ni ici, ni chez l’hébergeur : valider le code est un
+autre axe, décrit dans <a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a>.</li>
+</ul>
+<h2 id="limites-connues">Limites connues</h2>
+<ul>
+<li>Le rafraîchissement de la conception suit les écritures annoncées par Atlas et la synchronisation
+du workspace. Ce n’est pas une surveillance générale des modifications faites à la main sur disque.</li>
+<li>Le Markdown est une lecture, pas un éditeur : ni HTML actif, ni cases de tâches interactives,
+ni navigation vers les fichiers liés. Le contenu reste lisible sans ces fonctions.</li>
+<li>Un fil publié dont tu changes le texte localement ne se met pas à jour chez l’hébergeur : seuls les
+<strong>nouveaux</strong> messages partent.</li>
+</ul>
+<nav class="suite" aria-label="Page suivante et précédente"><a href="/atlas-site/manuel/le-tableau"><small>← précédent</small>Le Tableau</a><a class="droite" href="/atlas-site/manuel/configurer-un-projet"><small>suivant →</small>Configurer un projet</a></nav></article><nav class="cote toc" aria-label="Sur cette page"><h2>Sur cette page</h2><ul><li><a href="#le-module-ticket--deux-onglets">Le module Ticket : deux onglets</a></li><li><a href="#conception--tenir-ce-que-tu-comprends">Conception : tenir ce que tu comprends</a></li><li><a class="h3" href="#lire-les-trois-états">Lire les trois états</a></li><li><a class="h3" href="#un-document-réécrit-pas-une-pile-de-messages">Un document réécrit, pas une pile de messages</a></li><li><a class="h3" href="#absente-illisible-ou-reprise-de-lepic">Absente, illisible ou reprise de l’epic</a></li><li><a href="#la-spec--lire-tout-ticketmd">La spec : lire tout ticket.md</a></li><li><a class="h3" href="#écrire-un-fichier-lisible-et-des-critères-reconnus">Écrire un fichier lisible et des critères reconnus</a></li><li><a href="#la-marge-des-critères--évaluation-et-preuve">La marge des critères : évaluation et preuve</a></li><li><a href="#images-et-versions-croisées">Images et versions croisées</a></li><li><a href="#le-fil-de-feature--au-journal-uniquement">Le fil de feature : au Journal uniquement</a></li><li><a href="#les-fils-ancrés-sur-du-code">Les fils ancrés sur du code</a></li><li><a href="#répondre-résoudre-ranger">Répondre, résoudre, ranger</a></li><li><a href="#publier-un-fil-chez-lhébergeur">Publier un fil chez l’hébergeur</a></li><li><a href="#les-fils-importés">Les fils importés</a></li><li><a href="#retrouver-les-conversations-au-journal">Retrouver les conversations au Journal</a></li><li><a href="#raccourcis">Raccourcis</a></li><li><a href="#ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</a></li><li><a href="#limites-connues">Limites connues</a></li></ul></nav></main><footer class="pied"><div class="dedans"><span>Atlas — suivi et validation de code.</span><a href="/atlas-site/manuel/prise-en-main">Manuel</a></div></footer><script>
+    document.getElementById('theme-bt')?.addEventListener('click', () => {
+      const r = document.documentElement;
+      // clair → sombre → système, et le tour recommence. « Système » RETIRE la clé : c'est ce qui
+      // rend le choix distinct d'une absence de choix.
+      const suite = { clair: 'sombre', sombre: '', '': 'clair' };
+      const v = suite[r.dataset.theme || ''];
+      if (v) { r.dataset.theme = v; try { localStorage.setItem('atlas-site-theme', v); } catch {} }
+      else { delete r.dataset.theme; try { localStorage.removeItem('atlas-site-theme'); } catch {} }
+    });
+  </script></body></html>

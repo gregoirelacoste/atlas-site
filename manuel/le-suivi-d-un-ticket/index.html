@@ -1,0 +1,371 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Le suivi d&#39;un ticket · Atlas</title><meta name="description" content="Ce qui s'est passé depuis ton dernier passage, et quoi faire ensuite : le module Résolution, sa liste « à faire », l'historique du ticket, et la comparaison de deux moments de cet historique."><link rel="canonical" href="https://gregoirelacoste.github.io/atlas-site/manuel/le-suivi-d-un-ticket"><meta property="og:title" content="Le suivi d'un ticket · Atlas"><meta property="og:description" content="Ce qui s'est passé depuis ton dernier passage, et quoi faire ensuite : le module Résolution, sa liste « à faire », l'historique du ticket, et la comparaison de deux moments de cet historique."><meta property="og:type" content="website"><meta property="og:url" content="https://gregoirelacoste.github.io/atlas-site/manuel/le-suivi-d-un-ticket"><meta name="twitter:card" content="summary"><link rel="icon" href="/atlas-site/favicon.svg" type="image/svg+xml"><script>
+    (() => { try { const t = localStorage.getItem('atlas-site-theme');
+      if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t; } catch {} })();
+  </script><link rel="stylesheet" href="/atlas-site/_astro/Base.D32RNicN.css"></head><body><header class="tete"><a class="marque" href="/atlas-site">🗺️ Atlas</a><nav><a href="/atlas-site/installer">Installer</a><a href="/atlas-site/manuel/prise-en-main" aria-current="page">Manuel</a><a href="/atlas-site/articles">Écrits</a><button class="theme-bt" id="theme-bt" type="button" aria-label="Changer de thème">◐</button></nav></header><main class="doc"><nav class="cote" aria-label="Le manuel"><h2>Le manuel</h2><ol><li><a href="/atlas-site/manuel/prise-en-main">Prise en main</a></li><li><a href="/atlas-site/manuel/l-arbre">L&#39;Arbre</a></li><li><a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a></li><li><a href="/atlas-site/manuel/le-code">Le Code</a></li><li><a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a></li><li><a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et inventaire</a></li><li><a href="/atlas-site/manuel/le-panneau-git">Le panneau Git</a></li><li><a href="/atlas-site/manuel/le-tableau">Le Tableau</a></li><li><a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a></li><li><a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a></li><li><a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a></li><li><a href="/atlas-site/manuel/brancher-l-ia">Brancher l&#39;IA</a></li><li><a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l&#39;IA lit et écrit</a></li><li><a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a></li><li><a href="/atlas-site/manuel/la-ligne-de-commande">La ligne de commande</a></li><li><a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a></li><li><a href="/atlas-site/manuel/le-clavier">Le clavier</a></li><li><a href="/atlas-site/manuel/les-precedents">Les précédents</a></li><li><a href="/atlas-site/manuel/les-decisions-metier">Les décisions métier</a></li><li><a href="/atlas-site/manuel/le-glossaire">Le glossaire</a></li><li><a href="/atlas-site/manuel/la-recette">La recette</a></li><li><a href="/atlas-site/manuel/deposer-une-recette">Déposer une recette</a></li><li><a href="/atlas-site/manuel/la-vue-d-ensemble">La vue d&#39;ensemble</a></li><li><a href="/atlas-site/manuel/le-harnais">Le Harnais</a></li><li><a href="/atlas-site/manuel/les-criteres-les-cas-et-leur-preuve">Les critères, les cas et leur preuve</a></li><li><a href="/atlas-site/manuel/la-page-harnais">La page Harnais</a></li><li><a href="/atlas-site/manuel/les-panneaux-et-les-modules">Les panneaux et les modules</a></li><li><a href="/atlas-site/manuel/le-diagramme-d-un-flux">Le diagramme d&#39;un flux</a></li><li><a href="/atlas-site/manuel/chercher-dans-le-harnais">Chercher dans le Harnais</a></li><li><a href="/atlas-site/manuel/amorcer-le-harnais">Amorcer le Harnais</a></li><li><a href="/atlas-site/manuel/le-suivi-d-un-ticket" aria-current="page">Le suivi d&#39;un ticket</a></li></ol></nav><article class="corps"><h1>Le suivi d&#39;un ticket</h1><p class="chapo">Ce qui s&#39;est passé depuis ton dernier passage, et quoi faire ensuite : le module Résolution, sa liste « à faire », l&#39;historique du ticket, et la comparaison de deux moments de cet historique.</p><blockquote>
+<p>Ce qui s’est passé depuis ton dernier passage, et quoi faire ensuite : le module Résolution, sa liste
+« à faire », l’historique du ticket, et la comparaison de deux moments de cet historique.</p>
+</blockquote>
+<p>En revenant sur une <a href="/atlas-site/manuel/le-glossaire#feature">feature</a> : <em>qu’est-ce qui a changé, par quoi je
+reprends ?</em> <strong>Résolution</strong> range les commits, les étapes signées et tes gestes dans l’ordre du temps.</p>
+<h2 id="le-module-résolution">Le module Résolution</h2>
+<p>Installe Résolution dans le <a href="/atlas-site/manuel/les-panneaux-et-les-modules">panneau</a> de ton choix : <code>Espace</code>, une
+flèche, puis <code>p</code>. Absent de la disposition initiale, il est indisponible sans feature ouverte
+(« sans feature »). Il porte trois onglets :</p>
+<table>
+<thead>
+<tr>
+<th>Onglet</th>
+<th>Accord</th>
+<th>Ce qu’il montre</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Todo</strong></td>
+<td><code>Espace p t</code></td>
+<td>le bilan de relecture, les actions et l’historique avec la version lue ; l’Inventaire en détail</td>
+</tr>
+<tr>
+<td><strong>Parcours</strong></td>
+<td><code>Espace p p</code></td>
+<td>les étapes du voyage de la donnée, écrites par l’IA ; un clic allume leurs nœuds</td>
+</tr>
+<tr>
+<td><strong>Journal</strong></td>
+<td><code>Espace p j</code></td>
+<td>tous les fils de la feature, par date</td>
+</tr>
+</tbody>
+</table>
+<p>Le Todo s’ouvre par défaut ; l’onglet choisi est retenu sur cette machine. Le
+<a href="/atlas-site/manuel/le-glossaire#parcours">Parcours</a> se décrit dans <a href="/atlas-site/manuel/la-vue-d-ensemble">La vue d’ensemble</a>, le
+<a href="/atlas-site/manuel/le-glossaire#journal">Journal</a> dans <a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a>, les
+comptes dans <a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a>.</p>
+<p><code>Espace p f</code> reste le filtre d’étape : une étape allumée ne laisse voir que ses nœuds, ou s’allume sans
+rien cacher. Son picto, « étape filtrée », vit dans la barre de Résolution, quel que soit l’onglet ouvert.</p>
+<p>Le module <strong>Ticket</strong> garde la conception facultative et la <a href="/atlas-site/manuel/le-glossaire#spec">spec</a>, avec ses critères.
+Le <a href="/atlas-site/manuel/le-glossaire#fil-de-feature">fil de feature</a> se lit toujours au Journal de Résolution,
+sur son message ; un critère indique comment installer le Ticket si celui-ci est rangé :
+<code>Espace</code> + une flèche + <code>t</code>. Il ne s’installe pas seul. Un fil d’étape cliqué au Journal ouvre le
+Parcours de Résolution sous cette étape.</p>
+<blockquote>
+<p>⚠️ Une disposition ancienne qui plaçait Parcours retrouve Résolution <strong>à la même place</strong>, sur son
+Parcours. Un ancien Ticket reste le Ticket réduit à la spec : installe Résolution à côté.</p>
+</blockquote>
+<h2 id="longlet-todo-de-haut-en-bas">L’onglet Todo, de haut en bas</h2>
+<ol>
+<li>Le <strong>bilan de relecture</strong> : les <a href="/atlas-site/manuel/le-glossaire#lignes-a-relire">lignes à relire</a> sur tout le
+ticket. Déplie cette ligne pour les <a href="/atlas-site/manuel/le-glossaire#restes">restes</a> et l’état local.</li>
+<li><strong>À faire</strong> : les étapes à reprendre sur le même rail que l’historique, chacune avec sa commande à copier, et le bouton
+<strong>« Publier mes fils… »</strong> à droite du titre.</li>
+<li><strong>Historique</strong> : la lecture affichée, le choix de comparaison, puis la version lue, les commits et les passages.</li>
+<li><strong>« Détails de la carte »</strong>, replié : <a href="/atlas-site/manuel/le-glossaire#jauge">jauge</a>, ventilations par classe et
+repo, attente, propositions d’Atlas, angles morts et <a href="/atlas-site/manuel/fichiers-et-inventaire">Inventaire</a>.</li>
+</ol>
+<p>Le suivi se lit à l’ouverture de la feature, puis se relit seul quand tu écris un fil, endosses, poses
+un <code>?</code>, quand le workspace partagé fait son tour, et quand tu reviens dans la fenêtre. Si la lecture
+échoue, la liste dit « pas pu lire le suivi », jamais une liste vide.</p>
+<h2 id="la-liste--à-faire-">La liste « à faire »</h2>
+<p>Six étapes : <code>ticket</code> → <code>resolve</code> → <code>review</code> → <code>resolve-review</code> → <code>as-coded</code> → <code>recette</code>.
+Les étapes en attente gardent cet ordre ; celles qui sont faites se rangent sous <strong>« Étapes faites »</strong>,
+où leur commande reste disponible. Ce sont les six <a href="/atlas-site/manuel/le-glossaire#moment">moments</a> : chacun est porté par un
+<a href="/atlas-site/manuel/le-glossaire#skill">skill</a> de ton IA, qui <strong>signe</strong> son passage dans le fil de feature en fin de
+run (<a href="/atlas-site/manuel/brancher-l-ia">Brancher l’IA</a>). Chaque ligne porte une case, le nom de l’étape et un bouton
+<strong>Copier</strong>. Les états à reprendre ou incertains sont précisés ; « à faire » et « fait » ne se répètent
+pas sur chaque ligne : leur section et leur case les disent.
+Une <strong>flèche</strong> désigne la première étape encore en attente dans cet ordre : la prochaine action conseillée.</p>
+<table>
+<thead>
+<tr>
+<th>État</th>
+<th>Quand</th>
+<th>La case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>à faire</code></td>
+<td>l’étape n’a jamais été signée</td>
+<td>vide</td>
+</tr>
+<tr>
+<td><code>fait</code></td>
+<td>l’étape est signée, et rien ne dit qu’elle soit à reprendre</td>
+<td>cochée, en vert</td>
+</tr>
+<tr>
+<td><code>à refaire</code></td>
+<td><code>review</code>, <code>as-coded</code> ou <code>recette</code> : le code a bougé depuis leur dernier passage — « le code a bougé depuis · 3 commits »</td>
+<td>cochée</td>
+</tr>
+<tr>
+<td><code>à relancer</code></td>
+<td><code>resolve-review</code> : une review signée après son dernier passage a ouvert des fils qui attendent une réponse — « 2 fils »</td>
+<td>cochée</td>
+</tr>
+<tr>
+<td><code>pas pu regarder</code></td>
+<td>une étape qui constate, passée sur une copie modifiée ou sans commits relevés : Atlas ne sait pas si le code a bougé depuis</td>
+<td>cochée</td>
+</tr>
+</tbody>
+</table>
+<p>Seules les trois étapes qui <strong>constatent</strong> passent « à refaire ». Les autres restent « fait », sauf
+<code>resolve-review</code> : un fil ouvert depuis son dernier passage compte s’il est vivant (ni résolu, ni
+rangé), avec un dernier message humain ou son seul constat. Sont exclus : fil de feature, fil
+d’étape, hypothèse d’avant le code et fil importé.</p>
+<p><strong>Une case ne se coche que par un fait</strong> : une étape signée. Aucun clic ne la coche, aucun ne la
+décoche. Et rien ici n’est obligatoire : sauter une étape ne change ni la jauge, ni les restes, ni la
+<a href="/atlas-site/manuel/le-glossaire#colonne">colonne</a> du ticket dans le <a href="/atlas-site/manuel/le-tableau">Tableau</a>.</p>
+<p><strong>Copier</strong> met la commande dans le presse-papier : <code>/atlas:review PROJ-412</code>. Colle-la dans ta session
+de code ; Atlas ne lance rien. L’infobulle explique l’étape ; celle du bouton donne la commande.
+Pendant une comparaison, <code>review</code> copie une commande limitée aux changements.</p>
+<h3 id="-endosser-n-nœuds-">« Endosser N nœuds »</h3>
+<p>Sous les six étapes, une dernière ligne, nommée <code>endossement</code>, compte ce qu’il te faudrait
+<a href="/atlas-site/manuel/le-glossaire#endossement">endosser</a> de nouveau : les nœuds changés depuis ta dernière ligne
+« endossement » de l’historique (plus bas) — ton dernier passage, endossement, <code>?</code> ou message —,
+jusqu’à maintenant. Sans ligne à ton nom, elle n’apparaît pas. Trois états :</p>
+<table>
+<thead>
+<tr>
+<th>Ce qu’elle dit</th>
+<th>Ce que ça veut dire</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>« Endosser 4 nœuds · dont 1 déjà endossé »</td>
+<td>4 nœuds ont changé depuis ; tu en avais endossé 1, qui a bougé depuis</td>
+</tr>
+<tr>
+<td>« rien à endosser depuis »</td>
+<td>rien n’a changé depuis — sa case se coche, par ce seul fait</td>
+</tr>
+<tr>
+<td>pas pu regarder</td>
+<td>la comparaison n’a pas pu se lire : les repos en cause sont nommés, ou la raison au survol</td>
+</tr>
+</tbody>
+</table>
+<p>Un repo qu’Atlas n’a pas pu lire garde <strong>tous</strong> ses nœuds dans le compte : jamais un zéro gagné sur une
+ignorance. Le bouton <strong>montrer</strong> pose la comparaison depuis ce point jusqu’à maintenant :
+l’<a href="/atlas-site/manuel/le-glossaire#arbre">Arbre</a> ne garde que ces nœuds. Il n’endosse rien et ne copie rien : endosser
+reste ton geste, dans l’Arbre, avec <code>0</code> ou <code>1</code>-<code>4</code>.</p>
+<h3 id="-publier-mes-fils-">« Publier mes fils… »</h3>
+<p>Ce bouton prépare tes <a href="/atlas-site/manuel/le-glossaire#fil">fils</a> pour la review de
+l’<a href="/atlas-site/manuel/le-glossaire#hebergeur">hébergeur</a>. La boîte « Publier mes fils sur la review » lit ton
+identité, les reviews ouvertes et les droits du jeton avant la confirmation.</p>
+<p>Sont « tes fils » ceux dont <strong>tu</strong> as écrit le premier message (ton identité git le prouve), vivants,
+avec au moins un message pas encore parti. Jamais un fil ouvert par l’IA, même celle de ta session, ni
+celui d’un collègue où tu as répondu, ni le fil de feature, un fil d’étape ou un fil importé.</p>
+<p>La boîte range tes fils repo par repo : destination, droits du jeton, ou refus — pas de remote,
+de jeton ou de review ouverte, écriture interdite, review illisible. Pour chaque
+fil, sa première ligne, son lieu, et ce qui part, message par message, comme la confirmation d’un fil
+seul (<a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a>). Sans ton identité git, rien n’est à
+toi et rien ne part ; sans fil à publier, la boîte le dit.</p>
+<p><strong>« ↗ Publier ces N fils »</strong> les envoie un par un ; un échec n’arrête pas les autres. La boîte donne
+pour chacun son lien <strong>ouvrir</strong> ou sa raison d’échec, puis le bilan des envois. La fermer n’arrête pas
+l’envoi. Une position refusée ne devient pas automatiquement une discussion générale : ouvre le fil
+et utilise son <code>↗ Publier…</code>. Le jeton à poser :
+<a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a>.</p>
+<h2 id="lhistorique-du-ticket">L’historique du ticket</h2>
+<p>Sous la liste, l’<strong>Historique</strong> se lit comme le log du <a href="/atlas-site/manuel/le-panneau-git">panneau Git</a>, le plus
+récent en haut, la base en bas. Une différence : il réunit <strong>tous les repos</strong> de la feature, un
+<strong>couloir</strong> par repo, à la couleur que ce repo porte dans l’Arbre (son
+<a href="/atlas-site/manuel/le-glossaire#territoire">territoire</a>) ; avec plusieurs repos, la légende est à droite du titre. Un repo que la carte
+ne colore pas a un couloir gris.</p>
+<p><strong>Un commit</strong> montre son sujet entier, puis son SHA court ; dessous, l’auteur (« toi » pour les tiens)
+et la date, relative sous un jour, horodatée au-delà. Son point occupe le couloir du repo ; le texte
+passe à la ligne. L’infobulle précise repo, adresse de l’auteur et date complète. Seuls figurent les
+commits de la feature non rentrés dans sa base, jamais ceux d’autres branches déjà intégrées.</p>
+<p>En tête du rail, <strong>Version lue</strong> situe le présent, même avant le premier commit du ticket. Elle nomme
+le repo, sa branche et son worktree éventuel ; le chemin complet et la base restent au survol.
+<strong>local</strong> distingue le dossier de travail d’une lecture <strong>sur commit</strong>. Le non-commité vient de la
+même lecture que <strong>● Local</strong>. Une lecture absente, ancienne ou impossible se dit ; les changements du
+dossier ne se déduisent jamais d’une signature <code>resolve</code>.
+Cette version se choisit aussi comme borne dans <strong>Comparer une période…</strong>.</p>
+<p>Entre les commits, des <strong>jalons</strong> : des lignes qui traversent tous les couloirs, sans aplat particulier.</p>
+<table>
+<thead>
+<tr>
+<th>Jalon</th>
+<th>Ce qu’il dit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>une <strong>étape signée</strong></td>
+<td>son nom (<code>review</code>, <code>as-coded</code>…), qui l’a signée, quand, les commits relevés en chips <strong>repo + SHA court</strong> ; si le code a bougé, « le code a bougé depuis · N commits ». <strong>« Lire le fil »</strong>, toujours visible, ouvre son message</td>
+</tr>
+<tr>
+<td>une ligne <strong>« endossement »</strong></td>
+<td>qui, quand, « 5 nœuds · 2 fils · 1 ? » (une part à zéro ne se dit pas), et le commit sur lequel l’endossement a été posé, repo par repo — ou « non commité » quand il l’a été sur des changements pas encore commités</td>
+</tr>
+</tbody>
+</table>
+<p>Deux reviews font deux jalons. Chaque commit relevé nomme son repo dans sa chip ; le SHA complet est au survol.</p>
+<p><strong>La ligne « endossement »</strong> rassemble ce qu’une personne a fait entre deux commits d’un <strong>autre</strong>
+auteur : ses endossements, ses <code>?</code> et ses messages dans les fils. Tes commits à toi ne coupent pas ta
+ligne. Elle se déduit seule des dates : aucun geste ne la crée ni ne la ferme. Un fil rangé compte
+encore, un message importé jamais. Tes collègues ont les leurs, à leur nom. Un endossement d’avant que
+les endossements portent leur date ne se place pas : il est compté à part, sous l’historique,
+« 3 endossements sans date » et son auteur.</p>
+<p><strong>Les replis.</strong> Une suite d’au moins deux commits sous un jalon se replie en <strong>« N commits »</strong>, un
+point creux dans chaque couloir qu’elle cache ; un clic la déplie, un second la replie. La suite
+au-dessus du jalon le plus récent reste dépliée : c’est ce qui est arrivé depuis. Les replis ouverts
+valent pour la feature, et se referment quand tu en changes.</p>
+<p><strong>En bas</strong>, la ligne de base : « base » suivi du nom de la base, ou du nom de chaque repo et de sa base
+quand elles diffèrent. Sous l’historique, les repos dont les commits ne se lisent pas sont signalés par
+<strong>« Historique des commits incomplet »</strong> ou <strong>« indisponible »</strong>. Déplie cette ligne pour les raisons,
+repo par repo ; elles concernent les commits, pas le travail non commité de la version lue.
+Un historique tronqué (au-delà de 1 000 commits, les plus récents seuls — tout reste dans git) et les
+endossements sans date se disent à part. Sans aucun commit, si tous les repos sont lus : « Aucun commit. »</p>
+<h2 id="comparer-deux-points-de-lhistorique">Comparer deux points de l’historique</h2>
+<p>L’encart au-dessus des commits dit ce qui est affiché : tout le ticket depuis sa base,
+ou la comparaison. Un clic sur un commit montre toujours ses changements contre son parent ;
+les autres repos ne montrent rien. Les passages restent informatifs.</p>
+<p><strong>« Comparer une période… »</strong> ouvre <strong>Version de départ</strong> et <strong>Comparée à</strong>. Choisis une version dans
+l’historique : un commit, un passage ou la base. Elle sera comparée à <strong>Version lue</strong>, le worktree
+ou la branche nommée en tête du rail. Un seul choix suffit donc pour comparer depuis un commit.
+Pour comparer à une version passée, choisis une autre ligne de l’historique après la première.
+Les deux versions restent modifiables par leurs boutons ; <strong>Version lue</strong> rétablit le choix proposé.</p>
+<p>La lecture change seulement avec <strong>Comparer</strong>. Deux versions identiques sont refusées. <strong>Annuler</strong>
+ferme la préparation et garde la lecture précédente ; <strong>Tout le ticket</strong> lève la comparaison.
+Une étape passée sur une copie modifiée n’est pas sélectionnable : sa ligne dit pourquoi.</p>
+<p>Un commit est un point <strong>du temps</strong> : son repo à ce commit, les autres à leur dernier commit
+d’avant, sinon leur base. Un jalon désigne ses commits relevés ; les autres repos suivent la même règle.</p>
+<p>Les lignes choisies se marquent dans l’historique. En tête de l’historique, la comparaison se dit par ses
+deux points — <code>⇄ comparé : review 26/10 → feat/factures · 1a2b3c4</code>, ou <code>⇄ comparé : 1a2b3c4 contre son parent 9d8e7f6</code> —, avec <strong>« Tout le ticket »</strong>. « Maintenant » devient la branche lue et son SHA court,
+avec <strong>+ non commité</strong> si nécessaire, repo par repo. C’est la branche lue, pas sa cible.
+Les deux SHA effectivement lus restent visibles : dans le libellé pour un commit seul, repo par repo
+pour une période. L’arrivée locale garde sa branche et son état non commité. Sous le libellé d’un
+commit seul, le parent porte son titre, même s’il est hors de l’historique du ticket. <strong>Parent · fourche</strong> précise quand ce parent est
+aussi le point de séparation avec la base. Un titre qui n’a pas pu être lu le dit ; le SHA reste visible.</p>
+<p>La <a href="/atlas-site/manuel/le-glossaire#carte">carte</a> garde ses flux. Les représentations suivent la période choisie :</p>
+<ul>
+<li><strong>le Code</strong> lit entre les deux points ; sa tête dit <code>⇄ comparé : …</code> et offre <strong>revenir à la base</strong>.
+L’infobulle précise les commits lus et leur fourche commune éventuelle. Un repo illisible se dit
+dans la puce et revient à la base. Une arrivée passée se lit sans les fils courants. Les lectures
+imposées (Local, Git, recherche) restent indépendantes (<a href="/atlas-site/manuel/le-code">Le Code</a>) ;</li>
+<li><strong>l’Arbre</strong> ne garde que les <strong>nœuds changés</strong> entre les deux points et, en gris, le chemin qui y
+mène, comme une étape allumée. Une barre en tête dit les deux points, le nombre de nœuds changés et ce
+qui n’a pas pu se lire, avec <strong>revenir à la base</strong>. Rien n’a changé : l’Arbre se vide, et la barre le
+dit.</li>
+<li><strong>la vue d’ensemble</strong> ne dessine que les nœuds concernés, avec sa barre de comparaison et le retour à la base ;</li>
+<li><strong>Fichiers</strong>, dans « Ce ticket » comme dans « Projet » et sa recherche, ne garde que les fichiers concernés. « Ce ticket » ne montre que leurs symboles changés. Dans « Projet », les marques « neuf » et « supprimé » suivent aussi la période comparée.</li>
+</ul>
+<p>Avec une étape allumée, la <strong>dernière posée</strong> l’emporte, l’étape ou la comparaison. <code>Espace p f</code> (tout
+montrer) ne lève que l’étape : la comparaison se lève par « revenir à la base ». Une
+<a href="/atlas-site/manuel/le-glossaire#loupe">loupe</a> d’inventaire ou d’impact les suspend toutes deux. Le nœud ouvert reste toujours dessiné.</p>
+<p><strong>Trois états par repo, jamais un diff vide sur une ignorance</strong> :</p>
+<table>
+<thead>
+<tr>
+<th>Ce qu’Atlas trouve</th>
+<th>Ce que tu vois</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>des changements entre les deux points</td>
+<td>les nœuds qu’ils touchent</td>
+</tr>
+<tr>
+<td>aucun changement</td>
+<td>rien de ce repo</td>
+</tr>
+<tr>
+<td>un commit qui n’est plus dans le clone (branche réécrite), un endossement « non commité », une base illisible</td>
+<td>le repo <strong>pas pu regarder</strong>, avec sa raison — et <strong>tous</strong> ses nœuds gardés</td>
+</tr>
+</tbody>
+</table>
+<p>Un nœud est changé quand une ligne changée tombe dans son étendue. Quand des lignes changées entre les
+deux points ont été réécrites depuis, Atlas ne sait plus où elles sont aujourd’hui : il garde le fichier
+entier, au grain du fichier, et le dit. Une étape passée sur une copie modifiée ne sert pas de point :
+sa ligne explique « passé sur une copie modifiée — pas de point de comparaison ».</p>
+<p>La comparaison appartient à sa feature : en changer la lève. Une carte relue la redemande, car
+« maintenant » a pu bouger.</p>
+<h2 id="une-review-limitée-à-ce-qui-a-changé">Une review limitée à ce qui a changé</h2>
+<p>Pendant une comparaison, le bouton copier de l’étape <code>review</code> donne :</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">/atlas:review</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> PROJ-412</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> depuis</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> projet-api@1a2b3c4,web@base</span><span style="color:#6A737D;--shiki-dark:#6A737D">   # à coller dans ta session de code</span></span></code></pre>
+<p>Le <strong>point</strong> s’écrit en texte court : chaque repo et son commit (sept caractères), <code>repo@base</code> pour un
+repo à sa base, <code>base</code> ou <code>maintenant</code> pour tous. Un repo absent du texte se lit depuis sa base. Pour
+« ce commit seul », le point de départ est le moment juste avant lui : la review juge ce commit et tout
+ce qui a suivi, jamais moins.</p>
+<p>Avec <code>depuis</code>, <code>review</code> juge les nœuds changés ; le reste sert de contexte. Sa restitution commence
+par « review limitée : … ». Un repo « pas pu regarder » garde tous ses nœuds. Si le point est
+illisible, le skill le dit et relit tout le diff.</p>
+<p>La commande qu’il lance se tape aussi à la main :</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> changements</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> PROJ-412</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> depuis</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> projet-api@1a2b3c4,web@base</span><span style="color:#6A737D;--shiki-dark:#6A737D">   # les nœuds changés depuis ce point</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> changements</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> PROJ-412</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> depuis</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> base</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> --json</span><span style="color:#6A737D;--shiki-dark:#6A737D">                    # la même réponse, en JSON</span></span></code></pre>
+<p>Elle passe par l’instance du projet du dossier courant (démarrée si besoin), calcule la carte contre la
+base comme l’écran, et imprime une première ligne, une référence de nœud par ligne, puis ce qui ne se
+lit pas : un nœud gardé au grain du fichier, un repo pas pu regarder (« tous ses nœuds sont gardés »), un
+repo que le point ne nomme pas. Un point mal écrit est refusé avec la forme attendue. Voir
+<a href="/atlas-site/manuel/la-ligne-de-commande">La ligne de commande</a>.</p>
+<h2 id="tes-propres-retours-corrigés-par-lia">Tes propres retours, corrigés par l’IA</h2>
+<p><code>/atlas:resolve-review</code> traite les fils <strong>qui attendent une réponse</strong>, qu’ils aient été ouverts par la
+review de l’IA ou par toi en relisant. Dans un fil que tu as ouvert, ton dernier message est la
+demande : le skill la suit, même s’il n’est pas d’accord, et le dit. Une question reçoit une réponse,
+sans commit. Il ne touche jamais au fil de feature, à une hypothèse posée avant le code, ni à un fil
+d’étape, et ne résout aucun fil : c’est toi qui résous, après avoir vu la correction. Puis
+« Publier mes fils… » envoie ce qui doit partir sur la review.</p>
+<h2 id="raccourcis">Raccourcis</h2>
+<table>
+<thead>
+<tr>
+<th>Accord</th>
+<th>Effet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Espace</code> + flèche + <code>p</code></td>
+<td>installe Résolution dans ce panneau</td>
+</tr>
+<tr>
+<td><code>Espace p t</code></td>
+<td>l’onglet Todo</td>
+</tr>
+<tr>
+<td><code>Espace p p</code></td>
+<td>l’onglet Parcours</td>
+</tr>
+<tr>
+<td><code>Espace p j</code></td>
+<td>l’onglet Journal</td>
+</tr>
+<tr>
+<td><code>Espace p f</code></td>
+<td>étape filtrée ⇄ tout montrer — ne lève pas une comparaison</td>
+</tr>
+</tbody>
+</table>
+<p>La lettre <code>p</code> n’ouvre ces commandes que si Résolution est installée (<a href="/atlas-site/manuel/le-clavier">Le clavier</a>).</p>
+<h2 id="ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</h2>
+<ul>
+<li><strong>Il ne lance aucun run.</strong> Les boutons copient une commande ; tu la colles dans ta session de code.</li>
+<li><strong>Il ne rend aucune étape obligatoire.</strong> La liste conseille : elle n’entre ni dans la jauge, ni dans
+les restes, ni dans la colonne du Tableau.</li>
+<li><strong>Il ne coche rien sur un clic</strong>, et aucun geste ne crée ni ne ferme une ligne « endossement ».</li>
+<li><strong>Il ne recalcule jamais la carte contre un autre point que la base.</strong> Une comparaison change ce que
+le Code lit et ce que l’Arbre garde, pas les flux.</li>
+<li><strong>Il ne change pas le panneau Git</strong>, dont l’historique reste par repo et par branche.</li>
+<li><strong>Il ne publie rien sans ton clic</strong>, et l’IA n’a aucun outil pour publier.</li>
+</ul>
+<h2 id="limites-connues">Limites connues</h2>
+<ul>
+<li><strong>Une comparaison ne survit pas au rechargement</strong> de la page, ni les replis dépliés de l’historique.</li>
+</ul>
+<nav class="suite" aria-label="Page suivante et précédente"><a href="/atlas-site/manuel/amorcer-le-harnais"><small>← précédent</small>Amorcer le Harnais</a></nav></article><nav class="cote toc" aria-label="Sur cette page"><h2>Sur cette page</h2><ul><li><a href="#le-module-résolution">Le module Résolution</a></li><li><a href="#longlet-todo-de-haut-en-bas">L’onglet Todo, de haut en bas</a></li><li><a href="#la-liste--à-faire-">La liste « à faire »</a></li><li><a class="h3" href="#-endosser-n-nœuds-">« Endosser N nœuds »</a></li><li><a class="h3" href="#-publier-mes-fils-">« Publier mes fils… »</a></li><li><a href="#lhistorique-du-ticket">L’historique du ticket</a></li><li><a href="#comparer-deux-points-de-lhistorique">Comparer deux points de l’historique</a></li><li><a href="#une-review-limitée-à-ce-qui-a-changé">Une review limitée à ce qui a changé</a></li><li><a href="#tes-propres-retours-corrigés-par-lia">Tes propres retours, corrigés par l’IA</a></li><li><a href="#raccourcis">Raccourcis</a></li><li><a href="#ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</a></li><li><a href="#limites-connues">Limites connues</a></li></ul></nav></main><footer class="pied"><div class="dedans"><span>Atlas — suivi et validation de code.</span><a href="/atlas-site/manuel/prise-en-main">Manuel</a></div></footer><script>
+    document.getElementById('theme-bt')?.addEventListener('click', () => {
+      const r = document.documentElement;
+      // clair → sombre → système, et le tour recommence. « Système » RETIRE la clé : c'est ce qui
+      // rend le choix distinct d'une absence de choix.
+      const suite = { clair: 'sombre', sombre: '', '': 'clair' };
+      const v = suite[r.dataset.theme || ''];
+      if (v) { r.dataset.theme = v; try { localStorage.setItem('atlas-site-theme', v); } catch {} }
+      else { delete r.dataset.theme; try { localStorage.removeItem('atlas-site-theme'); } catch {} }
+    });
+  </script></body></html>

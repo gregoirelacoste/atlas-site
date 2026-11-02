@@ -1,0 +1,158 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Personne n&#39;écrit la spec · Atlas</title><meta name="description" content="Lier le ticket, les critères d'acceptation, les tests et le code : trente ans de recherche disent que ça paie. Mes propres chiffres disent que je ne le fais pas. Ce que j'ai trouvé en cherchant pourquoi."><link rel="canonical" href="https://gregoirelacoste.github.io/atlas-site/articles/2026-09-11-personne-necrit-la-spec"><meta property="og:title" content="Personne n'écrit la spec · Atlas"><meta property="og:description" content="Lier le ticket, les critères d'acceptation, les tests et le code : trente ans de recherche disent que ça paie. Mes propres chiffres disent que je ne le fais pas. Ce que j'ai trouvé en cherchant pourquoi."><meta property="og:type" content="website"><meta property="og:url" content="https://gregoirelacoste.github.io/atlas-site/articles/2026-09-11-personne-necrit-la-spec"><meta name="twitter:card" content="summary"><link rel="icon" href="/atlas-site/favicon.svg" type="image/svg+xml"><script>
+    (() => { try { const t = localStorage.getItem('atlas-site-theme');
+      if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t; } catch {} })();
+  </script><link rel="stylesheet" href="/atlas-site/_astro/Base.D32RNicN.css"></head><body><header class="tete"><a class="marque" href="/atlas-site">🗺️ Atlas</a><nav><a href="/atlas-site/installer">Installer</a><a href="/atlas-site/manuel/prise-en-main">Manuel</a><a href="/atlas-site/articles" aria-current="page">Écrits</a><button class="theme-bt" id="theme-bt" type="button" aria-label="Changer de thème">◐</button></nav></header><main class><article class="corps" style="margin: 0 auto; padding-left: 1.25rem; padding-right: 1.25rem;"><div style="color: var(--encre-2); font-size: .85rem;">11 septembre 2026</div><h1 id="personne-nécrit-la-spec">Personne n’écrit la spec</h1>
+<p>Une enquête finit toujours pareil. On cherche pourquoi un traitement ne rend pas deux fois le
+même résultat, on trouve la cause racine, on livre le correctif sur trois dépôts, on ouvre deux
+demandes de fusion. Et puis plus rien. Le 10 septembre, la question a été posée dans ces termes :</p>
+<blockquote>
+<p>« je voudrais réfléchir à la mise en place d’une gestion des tickets (écrit) dans atlas. Le
+but, quand on fait de l’investigation avec l’ia. […] Où on peut stocker ces findings ?? Idem
+pour les critères d’acceptation, idem pour la définition du ticket de base, ces évolutions au
+cours du temps… »</p>
+</blockquote>
+<p>La réponse honnête, ce jour-là, était : nulle part. Le raisonnement existait dans une
+conversation, le correctif existait dans trois dépôts, et il n’y avait aucun endroit où les
+deux se rejoignaient.</p>
+<h2 id="ce-que-la-chaîne-promet">Ce que la chaîne promet</h2>
+<p>L’idée de relier l’intention au code n’a rien de neuf et elle est mieux étayée que la plupart
+des choses auxquelles on croit en développement.</p>
+<p>L’étude qui compte est celle de Patrick Mäder et Alexander Egyed, publiée en 2012 et prolongée
+en revue en 2015. Des développeurs d’expérience variée, deux projets tiers qu’ils ne
+connaissaient pas — un outil de planification, une application médicale — et des tâches de
+maintenance réelles rejouées à l’identique. La moitié des sujets disposait des liens entre
+exigences et code, l’autre non. Ceux qui les avaient ont travaillé 21 % plus vite et produit
+60 % de solutions correctes en plus. Pas un sondage d’opinion, pas de la télémétrie d’éditeur :
+une expérience contrôlée, sur des gens qui font le travail.</p>
+<p>Une seconde étude, en 2016, sur vingt-quatre projets libres, a relié la <em>complétude</em> de cette
+traçabilité au taux de défauts. Et dans les domaines où l’on n’a pas le droit de se tromper —
+logiciel embarqué d’aéronef, dispositif médical — la chaîne est une condition de certification :
+chaque exigence doit se tracer jusqu’au code et aux tests, et chaque ligne de code doit se
+justifier par une exigence.</p>
+<p>Reste un détail. Dès 1994, l’article fondateur d’Orlena Gotel et Anthony Finkelstein expliquait
+pourquoi aucune solution englobante n’arriverait jamais, et constatait que l’essentiel des
+problèmes venait de l’amont — de ce qui se passe avant que la spec ne soit écrite. Trente ans
+plus tard, une étude sur les barrières en pratique (55 praticiens interrogés, 14 entretiens)
+trouve toujours la même chose : un accord unanime sur la valeur, et presque personne qui trace.</p>
+<h2 id="mes-chiffres">Mes chiffres</h2>
+<p>Atlas s’écrit en se servant de lui-même, ce qui a l’inconvénient de rendre les reproches
+impossibles à adresser à quelqu’un d’autre.</p>
+<p>Le ticket qui fait de la spec un fichier du projet, versionné à côté du code, est daté du 8
+juillet. Il est toujours ouvert. Le 10 septembre, j’ai compté sur mon dépôt de travail réel :
+72 fonctionnalités déclarées, 20 avec une spec écrite. En deux mois, le fichier qui porte les
+specs a été modifié deux fois. Sur la même période, celui qui porte les fils de discussion, où
+l’IA et moi nous répondons au fil du code : trente fois.</p>
+<p>Ce n’est pas que la chaîne serait inutile ; c’est qu’elle ne s’écrit pas. Et la raison tient en
+une asymétrie : celui qui paie le lien n’est pas celui qui en profite. J’écris la spec
+maintenant, quelqu’un la lira peut-être dans six mois, et ce quelqu’un n’existe peut-être pas.
+Un travail dont le bénéfice est différé et externalisé ne survit à aucune semaine chargée.
+C’est aussi le diagnostic d’une proposition de 2025 sur les liens de traçabilité, qui cherche à
+les rendre utiles à celui qui les pose, à l’instant où il les pose — faute de quoi ils ne sont
+pas posés du tout.</p>
+<h2 id="ce-qui-change-quand-lhumain-ne-code-plus">Ce qui change quand l’humain ne code plus</h2>
+<p>Aucune discipline nouvelle n’a corrigé cette asymétrie. Elle s’est déplacée toute seule, le
+jour où le bénéficiaire a changé de place.</p>
+<p>Quand j’écrivais le code, je savais ce que ce diff était censé faire : je venais de le décider.
+La chaîne ne me servait à rien, elle servait à l’auditeur. Quand l’IA écrit et que je valide,
+je suis l’auditeur. Le ticket, les critères, les tests attachés au bout de code que je regarde
+cessent alors d’être une preuve pour plus tard : ils deviennent la seule chose qui me dise ce
+que cette ligne était supposée accomplir. Le coût n’a pas bougé ; le bénéfice a changé de
+propriétaire, et il est devenu immédiat.</p>
+<p>Il y a un second lecteur, et c’est celui qu’on oublie. L’IA qui relit derrière moi lit la même
+chaîne. La question m’a été posée exactement comme ça, le 9 septembre :</p>
+<blockquote>
+<p>« est-ce que la présence de test sur un nœud sera visible par l’IA lors de review […] ? c’est
+bien au niveau du nœud qu’on peut voir ça ? à terme l’idée est de permettre à l’IA de lire ça et
+de l’exploiter en cas d’absence ou autrement. »</p>
+</blockquote>
+<p>C’est là que la chaîne cesse d’être de la documentation et devient de la donnée de travail. Un
+bout de code qu’un humain a jugé critique et qu’aucun test n’atteint : voilà un fait que ni
+l’humain seul ni la machine seule ne possède, et qui ne se calcule qu’en croisant deux
+maillons.</p>
+<p>2026 a d’ailleurs redécouvert le sujet sous le nom de <em>spec-driven development</em>, avec des
+outils qui posent que « les specs ne servent pas le code, c’est le code qui sert les specs »
+(<a href="https://github.com/github/spec-kit/blob/main/spec-driven.md">Spec Kit</a> : <em>« Specifications don’t
+serve code—code serves specifications. »</em>).
+L’instinct est bon, le centre de gravité est faux : on se retrouve avec une mer de documents à
+maintenir, et un waterfall réinventé. Le travail théorique de janvier 2026 sur le sujet
+distingue utilement trois degrés — la spec d’abord, la spec comme ancre, la spec comme source.
+Je n’ai de conviction que pour le deuxième.</p>
+<h2 id="ce-qui-se-dérive-ce-qui-se-déclare">Ce qui se dérive, ce qui se déclare</h2>
+<p>Le tri qui décide de tout est là, et il ne se discute pas au niveau de la chaîne entière mais
+maillon par maillon.</p>
+<p>Entre le ticket et les branches, les commits, les demandes de fusion : rien à écrire, tout se
+lit dans le dépôt. Entre un test et le code qu’il éprouve : rien à écrire non plus, le corps du
+test appelle une méthode, et le type du receveur dit laquelle. Entre un critère d’acceptation
+et le code qui le remplit : la preuve se construit, le texte du critère, lui, s’écrit à la
+main. Restent deux choses qu’aucune machine ne dérivera jamais — ce qu’on voulait, et ce qu’on
+a compris.</p>
+<p>D’où la règle : <strong>un lien déclaré à la main meurt, un lien dérivé survit</strong>. Et son corollaire,
+qui est la vraie décision du 10 septembre : pour les deux maillons qui doivent se déclarer, on
+écrit là où les gens écrivent déjà. Le compris d’une enquête est allé dans un fil de discussion
+attaché à la fonctionnalité, où l’hypothèse, sa confirmation et le correctif s’empilent en
+messages datés et jamais réécrits, plutôt que dans une section d’un document que personne ne
+rouvre. L’écran met le fil sous les critères. Le fichier de spec, lui, ne bouge pas.</p>
+<p>C’est un choix contre-intuitif et il a une raison précise. Si l’IA avait eu le droit d’écrire
+une section dans le fichier de spec, plus personne n’aurait su quelle ligne était l’attendu et
+quelle ligne était une hypothèse en cours. Deux propriétaires pour une même règle, et l’écran
+finit par se contredire tout seul — j’ai déjà payé ça une fois, sur un statut que deux endroits
+calculaient différemment.</p>
+<h2 id="ce-que-jai-écarté-et-ce-que-jai-raté">Ce que j’ai écarté, et ce que j’ai raté</h2>
+<p>Écarté : un dossier de tickets central, parce qu’un ticket vit dans l’espace de sa
+fonctionnalité et pas dans un classeur parallèle. Un champ « statut » dans la spec, parce qu’il
+se dérive de l’état des branches et qu’un statut écrit à la main est un statut faux. Et toute
+synchronisation avec l’outil de gestion de projet, formulé le jour même sans ambiguïté : « <em>je
+veux pas intégrer jira à atlas, l’automatisation se passe ailleurs</em> ».</p>
+<p>Raté, dans le même lot : j’ai nommé le drapeau qui ouvre un fil de fonctionnalité du même mot
+que l’identifiant de la fonctionnalité. L’appel aurait écrasé l’identifiant à chaque écriture.
+Un banc de test l’a vu avant moi — il s’était mis à poster n’importe quoi. Dans la même
+relecture : l’état affiché en tête du panneau était celui de la fonctionnalité précédente
+pendant une fraction de seconde, et un paramètre laissé optionnel faisait dire « rien consigné »
+à un résumé qui n’avait tout simplement pas regardé. Trois manières différentes d’affirmer
+quelque chose qu’on ne sait pas.</p>
+<p>Et une erreur de méthode, la veille, sur les tests : j’allais écarter d’office les fichiers de
+données simulées d’après leur nom, alors que la décision revient à la structure. En comptant,
+j’ai trouvé un service de production qui en importait trois — les écarter sur leur nom aurait
+masqué de la donnée factice servie à de vrais utilisateurs.</p>
+<h2 id="le-grain">Le grain</h2>
+<p>La leçon la plus utile du mois porte moins sur le principe que sur l’échelle à laquelle on
+l’applique. Lier un document à un autre document ne sert à rien. La chaîne ne paie qu’au grain
+du bout de code qu’on est en train de regarder.</p>
+<p>Le grain d’un test, c’est donc la phrase, posée sous la méthode que son corps appelle. Les
+chiffres l’imposent : environ huit cas par fichier de test sur trois mille trois cents mesurés,
+ce qui fait deux à cinq phrases sous une méthode — lisible — alors qu’accrocher le fichier
+entier sous chacune des huit méthodes qu’il éprouve l’aurait répété sept fois pour ne rien
+dire. La demande d’origine tenait en une ligne : « <em>on ne veut pas relire le code, on ne veut
+pas le considérer comme hors du diff, on veut juste savoir ce que ça fait</em> ».</p>
+<p>Et à ce grain-là, la chaîne dit surtout des absences. Sur 58 fonctionnalités et 5 209 bouts de
+code modifiés, 215 seulement — 4 % — sont atteints par un test. Ce qui oblige à une discipline
+qu’on ne s’impose jamais dans un tableau de bord : <strong>« aucun test résolu » n’est pas « non
+testé »</strong>. Ce sont trois états, pas deux, et le troisième est « je n’ai pas pu regarder ». Sept
+tests désactivés traînent dans le dépôt que j’analyse, et un test désactivé a exactement
+l’apparence d’une garantie.</p>
+<p>Le fait brut ne vaut d’ailleurs que par ce qu’il déclenche. Un bout de code que quelqu’un a
+noté critique et vers lequel aucun test ne mène remonte désormais en tête de la relecture
+automatique. C’est le seul croisement du lot qui produise quelque chose qu’aucun des deux
+maillons ne contenait.</p>
+<h2 id="ce-que-je-ne-sais-pas-encore">Ce que je ne sais pas encore</h2>
+<p>Si un fil par fonctionnalité tient à l’usage, ou si une enquête à deux pistes en réclame deux.
+Si l’hypothèse de départ doit s’ouvrir d’office — une hypothèse ancrée nulle part est-elle
+encore une hypothèse ? Si la place du compris est bien sous les critères ou au-dessus. Et, du
+côté de la machine : servir « aucun test résolu » sur 96 % des bouts de code va-t-il pousser
+l’IA à le répéter jusqu’à ce que ça ne veuille plus rien dire. Ça se mesurera sur trois
+relectures, pas en y réfléchissant.</p>
+<p>Il me manque surtout la mesure qui compte, et je ne l’ai pas : je n’ai aucune preuve que cette
+chaîne change ce que l’IA trouve. J’ai la littérature, qui parle d’humains et d’avant 2026, et
+j’ai deux mois d’usage. Le jour où le fichier de spec sera modifié aussi souvent que le fil de
+discussion, je saurai que quelque chose a pris.</p>
+</article></main><footer class="pied"><div class="dedans"><span>Atlas — suivi et validation de code.</span><a href="/atlas-site/manuel/prise-en-main">Manuel</a></div></footer><script>
+    document.getElementById('theme-bt')?.addEventListener('click', () => {
+      const r = document.documentElement;
+      // clair → sombre → système, et le tour recommence. « Système » RETIRE la clé : c'est ce qui
+      // rend le choix distinct d'une absence de choix.
+      const suite = { clair: 'sombre', sombre: '', '': 'clair' };
+      const v = suite[r.dataset.theme || ''];
+      if (v) { r.dataset.theme = v; try { localStorage.setItem('atlas-site-theme', v); } catch {} }
+      else { delete r.dataset.theme; try { localStorage.removeItem('atlas-site-theme'); } catch {} }
+    });
+  </script></body></html>
