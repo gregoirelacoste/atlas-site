@@ -1,0 +1,78 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Les précédents — retiré au 422 · Atlas</title><meta name="description" content="Atlas ne sert plus de précédents. Cette page dit ce qui a été retiré, ce qui reste à la place, et ce que deviennent les fichiers et les fils déjà écrits."><link rel="canonical" href="https://gregoirelacoste.github.io/atlas-site/manuel/les-precedents"><meta property="og:title" content="Les précédents — retiré au 422 · Atlas"><meta property="og:description" content="Atlas ne sert plus de précédents. Cette page dit ce qui a été retiré, ce qui reste à la place, et ce que deviennent les fichiers et les fils déjà écrits."><meta property="og:type" content="website"><meta property="og:url" content="https://gregoirelacoste.github.io/atlas-site/manuel/les-precedents"><meta name="twitter:card" content="summary"><link rel="icon" href="/atlas-site/favicon.svg" type="image/svg+xml"><script>
+    (() => { try { const t = localStorage.getItem('atlas-site-theme');
+      if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t; } catch {} })();
+  </script><link rel="stylesheet" href="/atlas-site/_astro/Base.D32RNicN.css"></head><body><header class="tete"><a class="marque" href="/atlas-site">🗺️ Atlas</a><nav><a href="/atlas-site/installer">Installer</a><a href="/atlas-site/manuel/prise-en-main" aria-current="page">Manuel</a><a href="/atlas-site/articles">Écrits</a><button class="theme-bt" id="theme-bt" type="button" aria-label="Changer de thème">◐</button></nav></header><main class="doc"><nav class="cote" aria-label="Le manuel"><h2>Le manuel</h2><ol><li><a href="/atlas-site/manuel/prise-en-main">Prise en main</a></li><li><a href="/atlas-site/manuel/l-arbre">L&#39;Arbre</a></li><li><a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a></li><li><a href="/atlas-site/manuel/le-code">Le Code</a></li><li><a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a></li><li><a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et inventaire</a></li><li><a href="/atlas-site/manuel/le-panneau-git">Le panneau Git</a></li><li><a href="/atlas-site/manuel/le-tableau">Le Tableau</a></li><li><a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a></li><li><a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a></li><li><a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a></li><li><a href="/atlas-site/manuel/brancher-l-ia">Brancher l&#39;IA</a></li><li><a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l&#39;IA lit et écrit</a></li><li><a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a></li><li><a href="/atlas-site/manuel/la-ligne-de-commande">La ligne de commande</a></li><li><a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a></li><li><a href="/atlas-site/manuel/le-clavier">Le clavier</a></li><li><a href="/atlas-site/manuel/les-precedents" aria-current="page">Les précédents — retiré au 422</a></li><li><a href="/atlas-site/manuel/les-decisions-metier">Les décisions métier</a></li><li><a href="/atlas-site/manuel/le-glossaire">Le glossaire</a></li><li><a href="/atlas-site/manuel/la-recette">La recette</a></li><li><a href="/atlas-site/manuel/deposer-une-recette">Déposer une recette</a></li><li><a href="/atlas-site/manuel/la-vue-d-ensemble">La vue d&#39;ensemble</a></li><li><a href="/atlas-site/manuel/les-panneaux-et-les-modules">Les panneaux et les modules</a></li><li><a href="/atlas-site/manuel/le-diagramme-d-un-flux">Le diagramme d&#39;un flux</a></li><li><a href="/atlas-site/manuel/le-suivi-d-un-ticket">Le suivi d&#39;un ticket</a></li><li><a href="/atlas-site/manuel/la-console">La Console</a></li></ol></nav><article class="corps"><h1>Les précédents — retiré au 422</h1><p class="chapo">Atlas ne sert plus de précédents. Cette page dit ce qui a été retiré, ce qui reste à la place, et ce que deviennent les fichiers et les fils déjà écrits.</p><blockquote>
+<p>Atlas ne sert plus de précédents. Cette page dit ce qui a été retiré, ce qui reste à la place, et
+ce que deviennent les fichiers et les fils déjà écrits.</p>
+</blockquote>
+<p>Le vocabulaire, une fois. Une <strong><a href="/atlas-site/manuel/le-glossaire#feature">feature</a></strong> est le ticket qu’Atlas suit,
+et le code qui le porte. Un <strong><a href="/atlas-site/manuel/le-glossaire#noeud">nœud</a></strong> est une ligne de sa
+<a href="/atlas-site/manuel/le-glossaire#carte">carte</a> : un symbole ou un fichier. Un <strong><a href="/atlas-site/manuel/le-glossaire#fil">fil</a></strong>
+est une conversation ancrée sur un nœud (<a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a>).</p>
+<p>Un <strong><a href="/atlas-site/manuel/le-glossaire#precedent">précédent</a></strong> était un fil passé, pris dans une autre feature et
+resservi à un nœud du même genre. Mesuré sur l’usage réel : sur 2 403 retours de l’IA, 2 237
+précédents servis avaient été écartés, dont 1 983 parce qu’ils parlaient d’autre chose. Leur index
+coûtait une reconstruction d’une heure, et une de ses lectures prenait 2,5 s. Le service est donc
+retiré.</p>
+<h2 id="ce-qui-part">Ce qui part</h2>
+<ul>
+<li>l’index des précédents et sa reconstruction, seule ou par <code>atlas precedents --build</code> ;</li>
+<li>le contrôle humain de « voisin » (<code>atlas precedents --controle</code>) ;</li>
+<li>le service des précédents par nœud ;</li>
+<li>l’outil <code>sonde</code> de l’IA, qui disait ce qu’elle avait fait d’un précédent ;</li>
+<li>la Chronologie de Config › Projet, et la case « Précédents importés » (la clé
+<code>precedents.serveImports</code> de <code>project.json</code> ne sert plus à rien).</li>
+</ul>
+<h2 id="ce-qui-reste--le-prologue">Ce qui reste : le prologue</h2>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> prologue</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> PROJ-412</span><span style="color:#6A737D;--shiki-dark:#6A737D">           # la Garde et les décisions métier de cette feature</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">atlas</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> prologue</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> PROJ-412</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> --json</span><span style="color:#6A737D;--shiki-dark:#6A737D">    # la même chose, brute</span></span></code></pre>
+<p>Les moments de l’IA (<code>ticket</code>, <code>resolve</code>, <code>review</code>, <code>resolve-review</code>) le lancent avant leur
+première ligne. Il sert deux choses, chacune en trois états — servi, rien, ou « pas pu regarder » :</p>
+<table>
+<thead>
+<tr>
+<th>ce qui est servi</th>
+<th>ce que c’est</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>la <strong>Garde</strong></td>
+<td>par nœud touché : les tests qui l’atteignent, ce qui en dépend, les scénarios de socle de son service ; et les endroits que le ticket nomme</td>
+</tr>
+<tr>
+<td>les <strong><a href="/atlas-site/manuel/le-glossaire#decision-metier">décisions métier</a></strong></td>
+<td>une règle du projet posée sur un contrat, servie au nœud de ce contrat et à ceux qui l’importent, lue dans les fils à chaque appel</td>
+</tr>
+</tbody>
+</table>
+<p>Une décision qui oriente le code se <strong>cite</strong> par sa clé, dans le champ <code>precedents</code> d’un fil (le champ
+garde son nom). La citation n’est reçue que si la décision concerne <strong>maintenant</strong> un nœud de la
+feature ; une clé de précédent est refusée. Une décision lue qui ne s’applique pas ne se cite pas,
+et c’est tout : plus rien ne s’écarte. Le détail : <a href="/atlas-site/manuel/les-decisions-metier">Les décisions métier</a>.</p>
+<p><code>atlas precedents PROJ-412</code>, lancé par un ancien skill, dit qu’il est retiré et sert le prologue.
+<code>--build</code>, <code>--full</code>, <code>--out</code> et <code>--controle</code> sont refusés sans rien démarrer.</p>
+<h2 id="ce-qui-reste-sur-le-disque">Ce qui reste sur le disque</h2>
+<p><code>.atlas-workspace/precedents.json</code> et le dossier <code>precedents/</code> restent où ils sont, <strong>inertes</strong> :
+aucune commande ne les lit ni ne les écrit. Tu peux les garder ou les supprimer à la main.</p>
+<p>Les fils déjà écrits qui citent un précédent se lisent comme avant : la citation reste dans le fil.
+Un <a href="/atlas-site/manuel/le-glossaire#fil-importe">fil importé</a> reste un fil marqué <code>📥 importé du ticket</code> ; il n’est
+plus resservi ailleurs.</p>
+<h2 id="ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</h2>
+<ul>
+<li><strong>Il ne resservira plus un fil passé par ressemblance</strong> : seule une décision métier revient, par
+son contrat.</li>
+<li><strong>Il ne supprime pas</strong> <code>precedents.json</code> ni <code>precedents/</code> : c’est ton geste.</li>
+<li><strong>Il ne réécrit pas</strong> les fils qui citent un précédent.</li>
+</ul>
+<nav class="suite" aria-label="Page suivante et précédente"><a href="/atlas-site/manuel/le-clavier"><small>← précédent</small>Le clavier</a><a class="droite" href="/atlas-site/manuel/les-decisions-metier"><small>suivant →</small>Les décisions métier</a></nav></article><nav class="cote toc" aria-label="Sur cette page"><h2>Sur cette page</h2><ul><li><a href="#ce-qui-part">Ce qui part</a></li><li><a href="#ce-qui-reste--le-prologue">Ce qui reste : le prologue</a></li><li><a href="#ce-qui-reste-sur-le-disque">Ce qui reste sur le disque</a></li><li><a href="#ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</a></li></ul></nav></main><footer class="pied"><div class="dedans"><span>Atlas — suivi et validation de code.</span><a href="/atlas-site/manuel/prise-en-main">Manuel</a></div></footer><script>
+    document.getElementById('theme-bt')?.addEventListener('click', () => {
+      const r = document.documentElement;
+      // clair → sombre → système, et le tour recommence. « Système » RETIRE la clé : c'est ce qui
+      // rend le choix distinct d'une absence de choix.
+      const suite = { clair: 'sombre', sombre: '', '': 'clair' };
+      const v = suite[r.dataset.theme || ''];
+      if (v) { r.dataset.theme = v; try { localStorage.setItem('atlas-site-theme', v); } catch {} }
+      else { delete r.dataset.theme; try { localStorage.removeItem('atlas-site-theme'); } catch {} }
+    });
+  </script></body></html>

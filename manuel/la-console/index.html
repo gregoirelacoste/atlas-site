@@ -1,0 +1,427 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>La Console · Atlas</title><meta name="description" content="Lancer depuis Atlas les commandes que tu tapes chaque jour — le serveur de dev, les tests, un build —, suivre leur sortie en direct, et laisser ton IA s'en servir sans lui ouvrir ton terminal."><link rel="canonical" href="https://gregoirelacoste.github.io/atlas-site/manuel/la-console"><meta property="og:title" content="La Console · Atlas"><meta property="og:description" content="Lancer depuis Atlas les commandes que tu tapes chaque jour — le serveur de dev, les tests, un build —, suivre leur sortie en direct, et laisser ton IA s'en servir sans lui ouvrir ton terminal."><meta property="og:type" content="website"><meta property="og:url" content="https://gregoirelacoste.github.io/atlas-site/manuel/la-console"><meta name="twitter:card" content="summary"><link rel="icon" href="/atlas-site/favicon.svg" type="image/svg+xml"><script>
+    (() => { try { const t = localStorage.getItem('atlas-site-theme');
+      if (t === 'clair' || t === 'sombre') document.documentElement.dataset.theme = t; } catch {} })();
+  </script><link rel="stylesheet" href="/atlas-site/_astro/Base.D32RNicN.css"></head><body><header class="tete"><a class="marque" href="/atlas-site">🗺️ Atlas</a><nav><a href="/atlas-site/installer">Installer</a><a href="/atlas-site/manuel/prise-en-main" aria-current="page">Manuel</a><a href="/atlas-site/articles">Écrits</a><button class="theme-bt" id="theme-bt" type="button" aria-label="Changer de thème">◐</button></nav></header><main class="doc"><nav class="cote" aria-label="Le manuel"><h2>Le manuel</h2><ol><li><a href="/atlas-site/manuel/prise-en-main">Prise en main</a></li><li><a href="/atlas-site/manuel/l-arbre">L&#39;Arbre</a></li><li><a href="/atlas-site/manuel/ce-qui-depend-de-quoi">Ce qui dépend de quoi</a></li><li><a href="/atlas-site/manuel/le-code">Le Code</a></li><li><a href="/atlas-site/manuel/relire-et-endosser">Relire et endosser</a></li><li><a href="/atlas-site/manuel/fichiers-et-inventaire">Fichiers et inventaire</a></li><li><a href="/atlas-site/manuel/le-panneau-git">Le panneau Git</a></li><li><a href="/atlas-site/manuel/le-tableau">Le Tableau</a></li><li><a href="/atlas-site/manuel/ticket-fils-et-journal">Ticket, fils et Journal</a></li><li><a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a></li><li><a href="/atlas-site/manuel/les-stacks-et-project-json">Les stacks et project.json</a></li><li><a href="/atlas-site/manuel/brancher-l-ia">Brancher l&#39;IA</a></li><li><a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l&#39;IA lit et écrit</a></li><li><a href="/atlas-site/manuel/quand-atlas-ne-voit-pas">Quand Atlas ne voit pas</a></li><li><a href="/atlas-site/manuel/la-ligne-de-commande">La ligne de commande</a></li><li><a href="/atlas-site/manuel/gitlab-et-github">GitLab et GitHub</a></li><li><a href="/atlas-site/manuel/le-clavier">Le clavier</a></li><li><a href="/atlas-site/manuel/les-precedents">Les précédents — retiré au 422</a></li><li><a href="/atlas-site/manuel/les-decisions-metier">Les décisions métier</a></li><li><a href="/atlas-site/manuel/le-glossaire">Le glossaire</a></li><li><a href="/atlas-site/manuel/la-recette">La recette</a></li><li><a href="/atlas-site/manuel/deposer-une-recette">Déposer une recette</a></li><li><a href="/atlas-site/manuel/la-vue-d-ensemble">La vue d&#39;ensemble</a></li><li><a href="/atlas-site/manuel/les-panneaux-et-les-modules">Les panneaux et les modules</a></li><li><a href="/atlas-site/manuel/le-diagramme-d-un-flux">Le diagramme d&#39;un flux</a></li><li><a href="/atlas-site/manuel/le-suivi-d-un-ticket">Le suivi d&#39;un ticket</a></li><li><a href="/atlas-site/manuel/la-console" aria-current="page">La Console</a></li></ol></nav><article class="corps"><h1>La Console</h1><p class="chapo">Lancer depuis Atlas les commandes que tu tapes chaque jour — le serveur de dev, les tests, un build —, suivre leur sortie en direct, et laisser ton IA s&#39;en servir sans lui ouvrir ton terminal.</p><blockquote>
+<p>Lancer depuis Atlas les commandes que tu tapes chaque jour — le serveur de dev, les tests, un build —,
+suivre leur sortie en direct, et laisser ton IA s’en servir sans lui ouvrir ton terminal.</p>
+</blockquote>
+<h2 id="un-script-une-exécution">Un script, une exécution</h2>
+<p>Un <strong><a href="/atlas-site/manuel/le-glossaire#script">script</a></strong> est une commande que tu déclares une fois, sous un nom, sur
+un <a href="/atlas-site/manuel/le-glossaire#repo">repo</a> du projet : <code>api dev</code> lance <code>npm run dev</code> dans <code>projet-api</code>. C’est
+l’équivalent des configurations d’exécution d’un IDE. Une <strong><a href="/atlas-site/manuel/le-glossaire#execution">exécution</a></strong>
+est un lancement de ce script : un processus, son état, et son log.</p>
+<p>La <strong><a href="/atlas-site/manuel/le-glossaire#console">Console</a></strong> est le module qui les montre : la liste des scripts du
+projet, où tu les déclares, et les exécutions récentes avec leur sortie en direct. Elle vit au niveau
+du projet : elle s’ouvre avec ou sans <a href="/atlas-site/manuel/le-glossaire#feature">feature</a> ouverte, et n’est jamais
+indisponible.</p>
+<p>Les scripts se rangent dans <code>project.json</code>, sous la clé <code>scripts</code> :</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#032F62;--shiki-dark:#9ECBFF">"scripts"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: [</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  { </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"nom"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"api dev"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"repo"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"projet-api"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"commande"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"npm run dev"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"pret"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"listening on"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  { </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"nom"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"api tests"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"repo"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"projet-api"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">"commande"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">: </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"npm test"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> }</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">]</span></span></code></pre>
+<p><code>project.json</code> fait partie de la conf partagée du workspace : un script déclaré ici l’est pour toute
+l’équipe, et un script déclaré par un coéquipier arrive chez toi avec le partage
+(<a href="/atlas-site/manuel/configurer-un-projet">Configurer un projet</a>). Tu peux éditer la clé à la main ; la Console fait
+la même chose sans risque de casser le fichier.</p>
+<h2 id="déclarer-un-script">Déclarer un script</h2>
+<p>Ouvre la Console, onglet <strong>Scripts</strong>, puis <strong>« ＋ Déclarer un script »</strong>. Le formulaire demande :</p>
+<table>
+<thead>
+<tr>
+<th>champ</th>
+<th>ce qu’il attend</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>« Nom »</td>
+<td>40 caractères au plus : lettres, chiffres, espaces et <code>. _ : / + -</code>, en commençant par une lettre ou un chiffre. Unique dans le projet</td>
+</tr>
+<tr>
+<td>« Repo »</td>
+<td>un repo membre du chapeau, choisi dans la liste</td>
+</tr>
+<tr>
+<td>« Commande »</td>
+<td>ce que le shell exécutera, telle quelle, 2 000 caractères au plus</td>
+</tr>
+<tr>
+<td>« Prêt quand la sortie montre ce texte (facultatif, tel quel) »</td>
+<td>un texte sur une ligne, 200 caractères au plus — voir plus bas</td>
+</tr>
+</tbody>
+</table>
+<p><strong>« Enregistrer »</strong> écrit le script ; une déclaration qui ne se lit pas est refusée avec sa raison
+(« sans repo, un script ne sait pas où tourner », « … est déjà un script du projet »), et rien n’est
+écrit. Chaque ligne de la liste porte ensuite le nom, le repo, la commande, le texte « prêt » s’il y en
+a un, la case <strong>« l’IA peut le lancer »</strong>, un ▶ et deux liens, <strong>« modifier »</strong> et <strong>« retirer »</strong>.
+« retirer » demande confirmation : le lien devient <strong>« confirmer : retirer du projet »</strong>, et c’est ce
+second clic qui retire — le retrait s’écrit dans <code>project.json</code>, il part donc à toute l’équipe. Tout
+autre clic dans la Console annule.</p>
+<p>Chaque geste — ajouter, modifier, retirer — ne touche qu’<strong>un</strong> script : le reste de la liste repart
+tel qu’il est dans le fichier. Un script qu’un coéquipier a déclaré sur un repo que tu n’as pas cloné
+ne disparaît donc pas parce que tu as modifié le tien.</p>
+<p>Ce qui ne se lit pas dans <code>project.json</code> s’affiche en tête de la liste, en rouge, avec sa raison : un
+nom pris deux fois (le premier l’emporte), un repo qui n’est pas membre du projet, plus de 50
+scripts. Si <code>scripts</code> n’est pas une liste du tout, aucun script ne se lit et la Console refuse tout
+geste tant que tu ne l’as pas corrigé à la main — jamais « aucun script » sur une déclaration
+illisible.</p>
+<h2 id="lancer--le--du-header">Lancer : le ▶ du header</h2>
+<p>En haut à droite de l’écran, juste avant les boutons Tableau et Config, Atlas montre les scripts du projet :</p>
+<table>
+<thead>
+<tr>
+<th>ce que tu vois</th>
+<th>ce que ça fait</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>une liste déroulante</td>
+<td>le script à lancer ; son infobulle montre la commande. Un <code>●</code> devant un nom : il tourne. Ton choix est retenu dans ce navigateur</td>
+</tr>
+<tr>
+<td>▶</td>
+<td>« lancer « … » » — le lance</td>
+</tr>
+<tr>
+<td>↻</td>
+<td>à la place du ▶ quand il tourne : « relancer « … » (l’arrêter, puis le relancer) »</td>
+</tr>
+<tr>
+<td>■</td>
+<td>quand il tourne : l’arrête</td>
+</tr>
+<tr>
+<td>« N en cours »</td>
+<td>combien d’exécutions tournent ; un clic ouvre la Console</td>
+</tr>
+<tr>
+<td>« Scripts » seul</td>
+<td>aucun script déclaré : un clic ouvre la Console sur l’onglet Scripts</td>
+</tr>
+</tbody>
+</table>
+<p>Un lancement montre la Console sur la nouvelle exécution : là où elle est installée, sinon dans le
+panneau du bas, à la place de ce qui s’y trouvait (Git, d’ordinaire) — sauf quand une page (Tableau,
+Config) est ouverte : la Console ne s’installe pas derrière elle. Si le lancement est refusé, la
+raison s’affiche quelques secondes à côté des boutons.</p>
+<p>Un même script ne tourne qu’<strong>une fois à la fois</strong>. Un second ▶ sur un script en cours est refusé
+(« « … » tourne déjà (lancé …) — relancer l’arrête puis le relance ») ; ↻ fait les deux d’un geste.
+Pendant qu’un lancement part, son ▶ et son ↻ attendent la réponse : deux clics rapides ne font pas
+deux serveurs.</p>
+<h2 id="la-console--le-module">La Console : le module</h2>
+<p>La Console est un module comme les autres — une vue qui s’installe dans un panneau
+(<a href="/atlas-site/manuel/les-panneaux-et-les-modules">Les panneaux et les modules</a>) : <code>Espace</code>, la flèche du panneau,
+puis <code>o</code> ; <code>Espace ↓ o</code> la pose en bas. Elle a deux onglets,
+<strong>Exécutions</strong> et <strong>Scripts</strong>, et sa tête compte « N en cours ».</p>
+<p>L’onglet <strong>Exécutions</strong> met la liste à gauche — celles qui tournent d’abord, puis la plus récente —
+et à droite celle que tu suis. Chaque ligne dit le script, son état, et « par l’IA » quand ce n’est
+pas toi, depuis quand, et la feature ouverte au lancement. Un clic sur une ligne la suit.</p>
+<p>La tête de l’exécution suivie dit :</p>
+<ul>
+<li>le nom, l’état, « lancée par toi » ou « lancée par l’IA », depuis quand, la durée en secondes ;</li>
+<li>↻ (relancer) et, tant qu’elle tourne, ■ (arrêter) ;</li>
+<li>la commande, telle qu’elle a été lancée ;</li>
+<li>le dossier où elle tourne, sa branche et son commit — « branche illisible ou HEAD détaché » ou
+« sha illisible » quand git ne les a pas rendus, jamais une valeur devinée ;</li>
+<li><strong>pourquoi</strong> ce dossier, en clair sous la ligne précédente — c’est elle qui te dit qu’un script tourne
+hors de la branche de la feature ;</li>
+<li>la raison d’une fin inconnue ou d’un lancement qui n’a pas pu partir.</li>
+</ul>
+<h3 id="les-états-dune-exécution">Les états d’une exécution</h3>
+<table>
+<thead>
+<tr>
+<th>état</th>
+<th>le rond</th>
+<th>quand</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>« en cours »</td>
+<td>accent</td>
+<td>le processus tourne</td>
+</tr>
+<tr>
+<td>« prête »</td>
+<td>vert</td>
+<td>il tourne, et le texte « prêt » est apparu dans sa sortie</td>
+</tr>
+<tr>
+<td>« réussie »</td>
+<td>vert</td>
+<td>il a fini avec le code 0</td>
+</tr>
+<tr>
+<td>« échouée — code N »</td>
+<td>rouge</td>
+<td>il a fini avec un autre code ; « échouée — SIGKILL » s’il a été tué par un signal venu d’ailleurs ; « échouée — sans code » si rien ne l’a dit</td>
+</tr>
+<tr>
+<td>« arrêtée par toi » · « arrêtée par l’IA » · « arrêtée avec l’instance »</td>
+<td>gris</td>
+<td>quelqu’un l’a arrêtée — un arrêt n’est jamais compté comme un échec</td>
+</tr>
+<tr>
+<td>« fin inconnue »</td>
+<td>ambre</td>
+<td>Atlas est tombé pendant qu’elle tournait : il n’a pas vu sa fin</td>
+</tr>
+</tbody>
+</table>
+<p>Un lancement qui n’a pas pu partir — un log impossible à ouvrir, un shell introuvable — est une
+exécution « échouée », avec sa raison dans la tête.</p>
+<h2 id="où-un-script-tourne">Où un script tourne</h2>
+<p>Un script tourne dans un dossier de son repo, choisi au lancement, et Atlas dit lequel et pourquoi :</p>
+<table>
+<thead>
+<tr>
+<th>la situation</th>
+<th>le dossier</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>aucune feature ouverte</td>
+<td>le dossier principal du repo</td>
+</tr>
+<tr>
+<td>le repo ne porte pas la feature ouverte</td>
+<td>le dossier principal du repo</td>
+</tr>
+<tr>
+<td>la branche de la feature n’est sortie dans aucun dossier</td>
+<td>le dossier principal du repo, <strong>sur sa branche à lui</strong></td>
+</tr>
+<tr>
+<td>Atlas n’a pas pu lire où la branche est sortie</td>
+<td>le dossier principal du repo, et la raison</td>
+</tr>
+<tr>
+<td>la branche de la feature est sortie dans un dossier — le principal ou un <a href="/atlas-site/manuel/le-glossaire#worktree">worktree</a></td>
+<td>ce dossier : le script tourne sur le code de la feature</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>⚠️ Le troisième cas surprend : la feature est ouverte, mais sa branche n’est sortie nulle part sur ce
+poste. Le script tourne alors sur ce qui est sorti dans le dossier principal, pas sur le code de la
+feature. La ligne du pourquoi le dit (<code>… n'est sortie dans aucun dossier : le dossier principal du repo, sur sa branche à lui</code>) ; sors la branche ou crée un worktree avant de relancer.</p>
+</blockquote>
+<p>Si le dossier choisi n’existe pas, le lancement est refusé et le dit. Le dossier, la branche et le
+commit sont notés au lancement : une exécution d’hier dit sur quel code elle a tourné.</p>
+<p>Le script reçoit l’environnement de l’<a href="/atlas-site/manuel/le-glossaire#instance">instance</a>, sauf ce qui n’est pas
+à lui : les variables d’Atlas (<code>ATLAS_WORKSPACE</code>, <code>ATLAS_PORT</code>), celles de la session de code qui a pu
+démarrer l’instance (<code>CLAUDECODE</code>, <code>CLAUDE_CODE_…</code>), et <code>PORT</code> quand il vaut le port d’Atlas — ton
+serveur de dev ne prend pas le port d’Atlas ; une valeur à toi reste.</p>
+<h2 id="la-sortie-en-direct">La sortie en direct</h2>
+<p>La sortie du script va dans un fichier, sur ce poste ; l’écran en lit la suite par morceaux, quatre
+fois par seconde tant qu’elle défile, une fois par seconde quand elle se tait. La Console cachée, Atlas
+ne lit plus le log, seulement l’état ; l’onglet du navigateur caché, il ne lit plus rien.</p>
+<table>
+<thead>
+<tr>
+<th>ce que fait le script</th>
+<th>ce que tu vois</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>des couleurs</td>
+<td>la couleur du texte (les seize du terminal), peinte avec les couleurs du thème, et le gras. Les fonds, l’italique, le souligné, l’inversé, le pâle et la vraie couleur (RVB) se taisent, le texte reste</td>
+</tr>
+<tr>
+<td><code>\r</code> seul</td>
+<td>la ligne se réécrit : une barre de progression reste une ligne</td>
+</tr>
+<tr>
+<td>des déplacements de curseur, un titre de fenêtre, un lien</td>
+<td>la séquence se tait, son texte reste</td>
+</tr>
+<tr>
+<td>une ligne de plus de 4 000 caractères</td>
+<td>coupée à l’écran : « … N caractères de plus, dans le log »</td>
+</tr>
+<tr>
+<td>plus de 5 000 lignes</td>
+<td>les plus anciennes sortent de l’écran ; elles restent dans le log</td>
+</tr>
+</tbody>
+</table>
+<p>Comme la sortie va dans un fichier et non dans un terminal, beaucoup d’outils coupent leurs couleurs
+d’eux-mêmes : Atlas leur pose <code>FORCE_COLOR=1</code>, sauf si <code>NO_COLOR</code> ou <code>FORCE_COLOR</code> disent déjà ton
+choix.</p>
+<p>La Console suit le bas tant que tu ne remontes pas. Remonte pour relire, et la sortie continue sans te
+ramener en bas ; <strong>« ↓ reprendre le direct »</strong> apparaît, et un clic te replace sur la dernière ligne.</p>
+<p>Ouvrir une exécution montre la fin de son log : au-delà de 256 Ko, la bande « le début du log (N Ko)
+reste dans le fichier, sur ce poste » le dit. Un script plus bavard que l’écran ne peut afficher ne le
+distance pas sans fin : quand l’écran a plus de 256 Ko de retard, il saute au plus près de la fin, et
+une ligne grise le dit à sa place dans le flot — « — N Ko sautés pour rester au direct (ils restent dans
+le log, sur ce poste) — ». Jamais une sortie recousue en silence.</p>
+<h3 id="pas-de-saisie">Pas de saisie</h3>
+<p>Un script tourne <strong>sans entrée</strong>, comme en CI : la Console ne transmet pas le clavier. Un script qui
+pose une question n’aura pas de réponse — il échoue, ou prend sa valeur par défaut. Déclare la
+commande avec ses options non interactives (<code>--yes</code>, <code>--ci</code>…).</p>
+<h3 id="le-texte--prêt-">Le texte « prêt »</h3>
+<p>Un serveur ne finit pas : il tourne. Le texte « prêt » dit à Atlas quand le considérer comme démarré.
+Dès que ce texte paraît dans la sortie — couleurs retirées —, l’exécution passe de « en cours » à
+« prête », et son rond au vert.</p>
+<p>C’est un <strong>texte cherché tel quel</strong>, jamais une expression régulière : <code>listening on</code> trouve
+<code>Server listening on :8080</code>, mais <code>listening on :\d+</code> ne trouve rien. Il tient sur une ligne. Sans
+texte « prêt », un serveur reste « en cours » jusqu’à son arrêt, ce qui est exact. Ton IA s’en sert
+pour savoir quand ton serveur répond.</p>
+<h2 id="arrêter-et-quand-atlas-sarrête">Arrêter, et quand Atlas s’arrête</h2>
+<p>■ envoie l’arrêt au script et à <strong>tout</strong> ce qu’il a lancé (<code>npm run dev</code> lance un shell, qui lance npm,
+qui lance node) : un signal de fin d’abord, puis, au bout de 3 secondes, un arrêt forcé à ce qui reste.
+L’exécution passe à « arrêtée par toi ».</p>
+<p>L’<a href="/atlas-site/manuel/le-glossaire#instance">instance</a> d’Atlas et tes scripts sont liés :</p>
+<table>
+<thead>
+<tr>
+<th>ce qui arrive à Atlas</th>
+<th>ce qui arrive aux scripts</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>l’instance reste sans activité</td>
+<td>une exécution qui tourne compte comme une activité : l’instance ne s’arrête pas seule tant qu’un script tourne</td>
+</tr>
+<tr>
+<td><code>atlas stop</code>, <code>atlas restart</code>, <code>atlas update</code></td>
+<td>Atlas arrête chaque exécution (« arrêtée avec l’instance ») et attend leur fin avant de partir</td>
+</tr>
+<tr>
+<td>l’instance tombe (tuée, machine éteinte)</td>
+<td>au démarrage suivant, chaque exécution restée en cours devient « fin inconnue » : ni réussie, ni échouée</td>
+</tr>
+</tbody>
+</table>
+<p>Une « fin inconnue » dit le numéro du processus : « le processus N a pu lui survivre ». Atlas ne le tue
+jamais après coup — rien ne prouve que ce numéro est encore celui de ton script. Si un port reste pris,
+c’est ce processus qu’il faut regarder.</p>
+<h2 id="ce-qui-se-garde-et-où">Ce qui se garde, et où</h2>
+<p>Les exécutions et leurs logs restent <strong>sur ce poste</strong>, dans le dossier d’état d’Atlas
+(<code>~/.local/state/atlas/executions/</code>, ou sous <code>$XDG_STATE_HOME/atlas</code>), un dossier par projet. Jamais
+dans le workspace : un log peut porter des secrets, il ne part pas avec le partage.</p>
+<p>Atlas garde les <strong>30 dernières exécutions finies</strong> de chaque projet, avec leur log ; une plus ancienne
+s’oublie, son log avec. Une exécution qui tourne ne s’oublie jamais, et son log n’a pas de plafond.</p>
+<h2 id="ce-que-lia-peut-faire">Ce que l’IA peut faire</h2>
+<p>Ton IA de code peut lancer tes scripts <strong>par Atlas</strong>, plutôt que dans son propre terminal : tu vois sa
+sortie en direct dans la Console, tu gardes le log, et tu reprends la main d’un clic. Elle a quatre
+outils (<a href="/atlas-site/manuel/ce-que-l-ia-lit-et-ecrit">Ce que l’IA lit et écrit</a>) :</p>
+<table>
+<thead>
+<tr>
+<th>outil</th>
+<th>ce qu’il fait</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>scripts</code></td>
+<td>lit les scripts déclarés, si chacun lui est permis, et les dix exécutions les plus récentes</td>
+</tr>
+<tr>
+<td><code>lancer_script</code></td>
+<td>lance un script <strong>par son nom</strong> ; attend sa fin, son texte « prêt » ou 20 secondes (120 au plus), puis rend l’état et les 40 dernières lignes, sans couleurs</td>
+</tr>
+<tr>
+<td><code>sortie_script</code></td>
+<td>relit la fin d’un log, ou la suite depuis là où elle s’était arrêtée</td>
+</tr>
+<tr>
+<td><code>arreter_script</code></td>
+<td>arrête une exécution que <strong>sa</strong> session a lancée</td>
+</tr>
+</tbody>
+</table>
+<p>Une exécution lancée par l’IA porte « par l’IA » dans la liste et « lancée par l’IA » dans sa tête.
+Tu peux l’arrêter ou la relancer comme les tiennes.</p>
+<h3 id="la-case--lia-peut-le-lancer-">La case « l’IA peut le lancer »</h3>
+<p>L’IA ne lance qu’un script que tu as <strong>déclaré</strong> et <strong>coché</strong> « l’IA peut le lancer » dans l’onglet
+Scripts. La case est ta décision, <strong>sur ce poste seulement</strong> : elle se range dans le
+<a href="/atlas-site/manuel/le-glossaire#registre">registre</a> de ta machine, jamais dans <code>project.json</code>. Cocher un script
+chez toi n’autorise pas l’IA de tes coéquipiers.</p>
+<p>La case couvre le script <strong>tel que tu l’as coché</strong> : son nom, son repo et sa commande. Si la commande
+ou le repo changent ensuite — un coéquipier a modifié le script et le partage l’a apporté —, la case ne
+vaut plus rien : elle s’affiche décochée, avec <strong>« case périmée : le script a changé »</strong>, et l’IA est
+refusée. Coche-la de nouveau après avoir relu la nouvelle commande.</p>
+<table>
+<thead>
+<tr>
+<th>l’IA demande…</th>
+<th>Atlas répond</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>un nom qui n’est pas déclaré</td>
+<td>refusé, avec la liste des scripts déclarés</td>
+</tr>
+<tr>
+<td>un script non coché</td>
+<td>refusé : c’est ta décision ; elle te demande de le cocher, ou de le lancer toi-même</td>
+</tr>
+<tr>
+<td>un script dont la case est périmée</td>
+<td>refusé : la case ne vaut plus, elle te demande de la reposer</td>
+</tr>
+<tr>
+<td>d’arrêter ou relancer ce que tu as lancé, ou une autre session</td>
+<td>refusé : c’est ton geste, ou celui de cette session</td>
+</tr>
+</tbody>
+</table>
+<h2 id="raccourcis">Raccourcis</h2>
+<table>
+<thead>
+<tr>
+<th>touche</th>
+<th>effet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Espace</code> + flèche + <code>o</code></td>
+<td>installe la Console dans ce panneau</td>
+</tr>
+<tr>
+<td><code>Espace ↓ o</code></td>
+<td>la Console dans le panneau du bas</td>
+</tr>
+</tbody>
+</table>
+<p>Lancer, relancer et arrêter n’ont pas de touche : ce sont les boutons du header et de la Console.</p>
+<h2 id="ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</h2>
+<ul>
+<li><strong>L’IA ne déclare aucun script, ne modifie aucune commande et ne coche aucune case</strong> : aucun outil ne
+l’atteint. Elle ne lance jamais une commande, seulement un nom que tu as déclaré.</li>
+<li><strong>Il ne transmet aucune saisie</strong> au script, et ne lui donne pas de vrai terminal.</li>
+<li><strong>Il ne tue jamais un processus qu’il n’a pas vu finir</strong> après être tombé : il le nomme.</li>
+<li><strong>Il ne met pas les logs dans le workspace</strong> et ne les partage avec personne.</li>
+<li><strong>Il ne lance pas deux fois le même script en même temps.</strong></li>
+<li><strong>La Console n’est pas un terminal</strong> : on n’y tape rien, on y lance ce qui est déclaré.</li>
+</ul>
+<h2 id="limites-connues">Limites connues</h2>
+<ul>
+<li><strong>Sous Windows</strong>, ■ n’arrête que le premier processus du script, pas ceux qu’il a lancés : un serveur
+lancé par <code>npm run dev</code> peut survivre à l’arrêt.</li>
+<li><strong>Le log d’un serveur bavard laissé tourner des jours grossit sans limite</strong> sur le disque, jusqu’à ce
+que l’exécution s’arrête puis sorte des 30 gardées : arrête-le, ou relance-le.</li>
+<li><strong>L’écran ne garde que 5 000 lignes</strong> : pour relire plus haut, ouvre le fichier du log dans le
+dossier d’état.</li>
+</ul>
+<nav class="suite" aria-label="Page suivante et précédente"><a href="/atlas-site/manuel/le-suivi-d-un-ticket"><small>← précédent</small>Le suivi d&#39;un ticket</a></nav></article><nav class="cote toc" aria-label="Sur cette page"><h2>Sur cette page</h2><ul><li><a href="#un-script-une-exécution">Un script, une exécution</a></li><li><a href="#déclarer-un-script">Déclarer un script</a></li><li><a href="#lancer--le--du-header">Lancer : le ▶ du header</a></li><li><a href="#la-console--le-module">La Console : le module</a></li><li><a class="h3" href="#les-états-dune-exécution">Les états d’une exécution</a></li><li><a href="#où-un-script-tourne">Où un script tourne</a></li><li><a href="#la-sortie-en-direct">La sortie en direct</a></li><li><a class="h3" href="#pas-de-saisie">Pas de saisie</a></li><li><a class="h3" href="#le-texte--prêt-">Le texte « prêt »</a></li><li><a href="#arrêter-et-quand-atlas-sarrête">Arrêter, et quand Atlas s’arrête</a></li><li><a href="#ce-qui-se-garde-et-où">Ce qui se garde, et où</a></li><li><a href="#ce-que-lia-peut-faire">Ce que l’IA peut faire</a></li><li><a class="h3" href="#la-case--lia-peut-le-lancer-">La case « l’IA peut le lancer »</a></li><li><a href="#raccourcis">Raccourcis</a></li><li><a href="#ce-quatlas-ne-fait-pas">Ce qu’Atlas ne fait pas</a></li><li><a href="#limites-connues">Limites connues</a></li></ul></nav></main><footer class="pied"><div class="dedans"><span>Atlas — suivi et validation de code.</span><a href="/atlas-site/manuel/prise-en-main">Manuel</a></div></footer><script>
+    document.getElementById('theme-bt')?.addEventListener('click', () => {
+      const r = document.documentElement;
+      // clair → sombre → système, et le tour recommence. « Système » RETIRE la clé : c'est ce qui
+      // rend le choix distinct d'une absence de choix.
+      const suite = { clair: 'sombre', sombre: '', '': 'clair' };
+      const v = suite[r.dataset.theme || ''];
+      if (v) { r.dataset.theme = v; try { localStorage.setItem('atlas-site-theme', v); } catch {} }
+      else { delete r.dataset.theme; try { localStorage.removeItem('atlas-site-theme'); } catch {} }
+    });
+  </script></body></html>
